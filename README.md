@@ -66,6 +66,8 @@ Statespace-Free Physics
 
 Timeline of the Far Future  
 
+Theory of Humanocentric Evolution
+
 Undiscovered Countries  
 
 diamond-bulerite
