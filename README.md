@@ -14,6 +14,8 @@ Active Inference Glossary
 
 Archetypal Ark Stories  
 
+Autocatalytic Altruism
+
 Boundary Construction for Lorentz Surfaces  
 
 Brain Constructs Perceptions  
