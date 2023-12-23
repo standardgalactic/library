@@ -16,6 +16,8 @@ Archetypal Ark Stories
 
 Autocatalytic Altruism
 
+Bash Script Review
+
 Boundary Construction for Lorentz Surfaces  
 
 Brain Constructs Perceptions  
@@ -31,6 +33,8 @@ Exploring Genetic Similarities
 Free Lunch Vibes  
 
 Hoarding for Sustainability  
+
+Imaginative Earth Perspective  
 
 Kelp-based Frozen Yogurt  
 
@@ -71,5 +75,7 @@ Timeline of the Far Future
 Theory of Humanocentric Evolution
 
 Undiscovered Countries  
+
+Unix History and Future
 
 diamond-bulerite
