@@ -24,7 +24,11 @@ Brain Constructs Perceptions
 
 Brain as Complex Adaptive System  
 
+Complex Phenomena Ontology  
+
 Consciousness as Perceptual Control  
+
+Diamond Bulerite  
 
 Dismantling the Brain for Understanding  
 
@@ -79,5 +83,3 @@ Theory of Humanocentric Evolution
 Undiscovered Countries  
 
 Unix History and Future
-
-diamond-bulerite
