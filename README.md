@@ -68,6 +68,8 @@ Quenched Disorder Techniques
 
 Revolutionizing Open-Source AI  
 
+Sith Methods of Rationality  
+
 Statespace-Free Physics  
 
 Timeline of the Far Future  
