@@ -70,6 +70,8 @@ Program Writing Experiments
 
 Quenched Disorder Techniques  
 
+Reality Distortion Field  
+
 Revolutionizing Open-Source AI  
 
 Sith Methods of Rationality  
