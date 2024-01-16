@@ -48,6 +48,8 @@ Layers of Time
 
 Logarithmic History of the World  
 
+Magic Art Gallery  
+
 Make It Seem Rebellious  
 
 Mechanical Design Principles  
