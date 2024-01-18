@@ -82,9 +82,11 @@ Sith Methods of Rationality
 
 Statespace-Free Physics  
 
-Timeline of the Far Future  
+The Equanimity Machine  
 
-Theory of Humanocentric Evolution
+Theory of Humanocentric Evolution  
+
+Timeline of the Far Future  
 
 Undiscovered Countries  
 
