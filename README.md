@@ -14,6 +14,8 @@ Active Inference Glossary
 
 Archetypal Ark Stories  
 
+Attribution Theory  
+
 Autocatalytic Altruism
 
 Bash Script Review
