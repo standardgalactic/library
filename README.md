@@ -88,6 +88,8 @@ Statespace-Free Physics
 
 The Equanimity Machine  
 
+The Meaning of Life  
+
 Theory of Humanocentric Evolution  
 
 Timeline of the Far Future  
