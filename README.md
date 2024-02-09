@@ -30,6 +30,8 @@ Complex Phenomena Ontology
 
 Consciousness as Perceptual Control  
 
+Dialectal Synthesis  
+
 Diamond Bulerite  
 
 Dismantling the Brain for Understanding  
@@ -60,6 +62,8 @@ Mechanical Design Principles
 
 Mind Reading Not Necessary  
 
+Multiordinal Terms  
+
 Müllerian mimicry explained  
 
 Neuron Efficiency Analysis  
@@ -81,6 +85,8 @@ Quenched Disorder Techniques
 Reality Distortion Field  
 
 Revolutionizing Open-Source AI  
+
+Rhizomatic Superstructures  
 
 Sith Methods of Rationality  
 
