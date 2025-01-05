@@ -2,6 +2,7 @@
 
 Enacting cognitive landscapes
 
+<!--
 *To Activate Your Built Ark, Wait for rain*
 
 TAY-BAW
@@ -74,3 +75,4 @@ The collapse of intersubjectivity, as illustrated by the Tower of Babel and entr
 Entropy, on the other hand, provides a scientific metaphor for the increasing disorder and fragmentation that occurs when shared understanding is lost. Together, these concepts offer a rich understanding of the challenges facing modern society, where the collapse of intersubjectivity can lead to alienation, division, and confusion.
 
 Restoring intersubjectivity — rebuilding the shared understanding that allows us to connect with one another — is essential if we are to navigate the complexities of the modern world and find ways to collaborate in an increasingly fragmented landscape.
+-->
