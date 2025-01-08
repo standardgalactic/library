@@ -2,6 +2,7 @@
 
 Enacting cognitive landscapes
 
+![](background.png)
 <!--
 *To Activate Your Built Ark, Wait for rain*
 
