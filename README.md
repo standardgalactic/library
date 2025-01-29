@@ -1,6 +1,131 @@
+![](template.png)
+
 # Library 
 
 Enacting cognitive landscapes
+
+# On Noah's Ark
+
+That makes sense! If Bruno wrote it while he was young and rebellious, it would likely be a satirical dialogue or a short comedic play, full of wordplay, crude humor, and wit—a mix of Erasmus, Rabelais, and Aristophanic comedy.
+
+A Satirical Play: On the Ark of Noah by Giordano Bruno
+(A Lost Work, Reconstructed in Bruno’s Spirit)
+
+Dramatis Personae  <br>
+ASINUS PRIMUS (First Donkey) – A hardworking but dim-witted donkey.  <br>
+ASINUS SECUNDUS (Second Donkey) – A more cynical, sarcastic donkey.  <br>
+VULPES (The Fox) – The charismatic and scheming leader of the Ark.  <br>
+PORCUS MAIOR (Chief Pig) – A high-ranking bureaucrat of the Ark.  <br>
+ELEPHAS (Elephant) – An arrogant aristocrat on the upper deck.  <br>
+NOAH (Offstage, never seen) – A distant, godlike figure, possibly drunk.  <br>
+
+Scene: The Lower Deck of the Ark  <br>
+(Dark, damp, and filled with the stench of animal dung. Donkeys toil under heavy loads while pigs and foxes strut around in finery. The sound of waves and occasional thunder is heard.)
+
+ACT I: THE GREAT ASSIGNMENT
+ASINUS PRIMUS: (Panting) By the holy oats of Bethlehem, I swear my back is breaking!
+
+ASINUS SECUNDUS: That’s what she said.
+
+ASINUS PRIMUS: She who?
+
+ASINUS SECUNDUS: The mare who carried Noah’s beer barrels last night. She complained of the same thing.
+
+ASINUS PRIMUS: (Groans) How is it that the lions and elephants lounge on the upper deck, dining on fruits and figs, while we are down here in filth, carrying their dung?
+
+ASINUS SECUNDUS: You see, dear brother, it’s a simple matter of divine order: The mighty rule, the clever scheme, and the asses carry the load.
+
+(Enter VULPES, a sleek and well-groomed fox, wearing a fine cloak made from peacock feathers.)
+
+VULPES: Ah, my dear hard-working friends! How the sight of your labor fills me with joy and admiration!
+
+ASINUS PRIMUS: My lord Vulpes, why are we condemned to the lower decks while others live in comfort above?
+
+VULPES: Condemned? No, my dear long-eared simpletons, you are blessed! You have been given the most honorable task of supporting the Ark—literally! Without you, it would surely sink. Do you wish to see everyone drown?
+
+ASINUS PRIMUS: Well… no.
+
+ASINUS SECUNDUS: But what of the lions and elephants? Do they support the Ark?
+
+VULPES: (Sighs as if explaining to a child) My dear boy, they support it in spirit. It is their noble presence that brings dignity to this great vessel. Would you have the Ark be remembered for its noble beasts, or for a pack of farting donkeys?
+
+ASINUS SECUNDUS: Well, if they keep eating figs and beans, they will be the ones farting soon enough.
+
+(PORCUS MAIOR, a fat and pompous pig, waddles in, belching loudly.)
+
+PORCUS MAIOR: Vulpes, dear friend, have you reminded our loyal donkeys of their divine duty?
+
+VULPES: But of course! They are most grateful for their sacred burden.
+
+ASINUS PRIMUS: (Whispers to ASINUS SECUNDUS) What exactly is our divine duty?
+
+ASINUS SECUNDUS: To carry their divine behinds.
+
+(Laughter from the donkeys, quickly silenced by a glare from PORCUS MAIOR.)
+
+ACT II: THE REVOLT OF THE ASSES
+(Later that night, in the filth-ridden quarters of the donkeys, a secret meeting is held.)
+
+ASINUS PRIMUS: Brothers, we have suffered long enough! The fox and pigs feast while we break our backs! I say we demand equality!
+
+ASINUS SECUNDUS: A fine idea! And when they refuse, we kick them overboard!
+
+ASINUS PRIMUS: (Excitedly) Yes! And then we will—wait, what do we do after that?
+
+ASINUS SECUNDUS: … I hadn’t thought that far.
+
+(Enter ELEPHAS, stumbling drunk, holding a goblet of wine.)
+
+ELEPHAS: (Slurring) What… are… you little beasts doing down here? Planning a rebellion?
+
+ASINUS PRIMUS: (Nervous) No, no! Just… practicing our prayers!
+
+ELEPHAS: (Laughs) Foolish creatures! The Ark belongs to the strong, and strength is measured in weight! And who weighs more than me? (Falls asleep mid-sentence)
+
+(The donkeys stare in silence.)
+
+ASINUS SECUNDUS: Well, that’s one way to throw them overboard.
+
+(The donkeys laugh and prepare their rebellion.)
+
+ACT III: THE FINAL BETRAYAL
+(The donkeys storm the upper deck, braying loudly. VULPES and PORCUS MAIOR stand in front of the frightened elite.)
+
+ASINUS PRIMUS: No more! We demand equal rations, equal rest, and equal… seating arrangements!
+
+VULPES: (Feigning sadness) Oh, my dear donkeys, you wound me! Have I not always been your friend?
+
+ASINUS SECUNDUS: (Scoffs) Friend? A friend doesn’t make another friend sleep next to the latrine!
+
+PORCUS MAIOR: But surely you would not dare to—
+
+(Suddenly, NOAH’S VOICE booms from the heavens.)
+
+NOAH (OFFSTAGE): WHO THE HELL LET THE DONKEYS ON THE UPPER DECK?
+
+(Chaos ensues. The donkeys scatter in panic as the fox and pigs laugh victoriously.)
+
+VULPES: Oh, dear fools. Did you truly believe the Ark would be ruled by the asses?
+
+(The donkeys are herded back below deck, their rebellion crushed. The fox and pigs feast once more, raising a toast to divine order.)
+
+Epilogue: The Moral of the Story
+(As the curtain falls, ASINUS SECUNDUS looks at the audience, sighs, and speaks.)
+
+ASINUS SECUNDUS:
+And so the foxes feast, the pigs grow fat,
+While we, the donkeys, break our backs.
+For in this world, as all can see,
+It’s never the ass who holds the key.
+
+(Blackout. End of play.)
+
+Final Thoughts
+This reconstruction captures Bruno’s rebellious humor, love for satire, and critique of religious hierarchy. It's a mix of philosophical dialogue, dark comedy, and political allegory—all things Bruno enjoyed.
+
+Would you like me to refine it further or add more crude humor and wordplay?
+
+[Giordano Bruno's Lost Book](https://github.com/standardgalactic/library/blob/main/lost-book.mp3)
 
 ![](background.png)
 <!--
