@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Documentation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            max-width: 800px;
+        }
+        h3, h4 {
+            color: #333;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 0;
+        }
+        ul, ol {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h3>Note on Split Files: <code>chat.html</code> and <code>conversation.json</code></h3>
+    
+    <p>
+        The original <code>chat.html</code> and <code>conversation.json</code> files were too large (approximately 200 MB each) to upload directly to GitHub, exceeding the free Git LFS storage limit and causing upload issues. To resolve this, we split both files into smaller chunks of approximately 5 MB each using a Bash script. These chunks are stored in the <code>chunks/</code> directory with prefixes <code>chat_part_</code> and <code>conversation_part_</code> (e.g., <code>chunks/chat_part_aa</code>, <code>chunks/conversation_part_ab</code>, etc.).
+    </p>
+
+    <h4>Why We Did This</h4>
+    <ul>
+        <li>GitHub imposes limits on file sizes and LFS quotas (1 GB free storage). Splitting the files allowed us to upload them within these constraints while utilizing Git LFS for efficient tracking of large files.</li>
+        <li>Smaller chunks are easier to manage, especially on systems with limited resources.</li>
+    </ul>
+
+    <h4>How to Reassemble the Original Files</h4>
+    <p>
+        To restore the original <code>chat.html</code> or <code>conversation.json</code> files from their chunks, use the provided Bash script <code>split_or_join.sh</code> with the <code>-r</code> flag. Follow these steps:
+    </p>
+    <ol>
+        <li><strong>Ensure You Have the Chunks</strong>: Clone the repository or download the <code>chunks/</code> directory containing all <code>chat_part_*</code> and <code>conversation_part_*</code> files.</li>
+        <li><strong>Run the Script</strong>:
+            <ul>
+                <li>For <code>chat.html</code>: 
+                    <pre>./split.sh -r chat.html</pre>
+                    Output: <code>chat.reassembled</code> (the restored original <code>chat.html</code>).
+                </li>
+                <li>For <code>conversation.json</code>: 
+                    <pre>./split.sh -r conversation.json</pre>
+                    Output: <code>conversation.reassembled</code> (the restored original <code>conversation.json</code>).
+                </li>
+            </ul>
+        </li>
+        <li><strong>Verify</strong>: The reassembled files should match the originals exactly.</li>
+    </ol>
+
+    <h4>Script Details</h4>
+    <ul>
+        <li>The script is included in the repository as <code>split.sh</code>. It splits files into 5 MB chunks by default or reassembles them when the <code>-r</code> flag is used.</li>
+        <li>Requirements: Bash (available on Linux, macOS, or WSL on Windows).</li>
+    </ul>
+</body>
+</html>
