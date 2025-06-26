@@ -1,0 +1,59 @@
+1
+Monoidal Pop Functor
+Definition 1 (Monoidal Pop Functor). The functor Pop : Sphere →[Field, Field] is defined as:
+• On objects: Pop(Ω) = [FΩ, FΩ].
+• On morphisms: Pop(σ) = Cσ : FΩ1 →FΩ2.
+• Tensor product: For supp(σ1) ∩supp(σ2) = ∅,
+Pop(σ1 ⊗σ2) = Pop(σ1) ⊗Field Pop(σ2),
+where (Cσ1 ⊗Field Cσ2)(FΩ1⊔Ω2) = (Cσ1(FΩ1), Cσ2(FΩ2)).
+• Unit: Pop(I) = idF∅.
+With coherence maps:
+• Associator: αPop : Pop((σ1 ⊗σ2) ⊗σ3) ∼
+−→Pop(σ1 ⊗(σ2 ⊗σ3)).
+• Left unitor: λPop : Pop(I ⊗σ) ∼
+−→Pop(σ).
+• Right unitor: ρPop : Pop(σ ⊗I) ∼
+−→Pop(σ).
+Theorem 1. Pop is a monoidal functor, satisfying:
+Pop(σ1 ⊗σ2) ∼= Pop(σ1) ⊗Field Pop(σ2),
+Pop(I) ∼= idF∅.
+2
+2-Category Sphere2
+Definition 2 (2-Category Sphere2). The 2-category Sphere2 consists of:
+• 0-cells: Regions Ω⊆Rn.
+• 1-cells: Spheres σ : Ω1 →Ω2, where σ = (supp(σ), Cσ).
+• 2-cells: Natural transformations τ : σ1 ⇒σ2, a family of morphisms τF : Cσ1(F) →Cσ2(F),
+natural in F ∈Field(Ω1), satisfying:
+F
+Cσ1(F)
+Cσ2(F)
+Cσ2(F)
+Cσ1
+Cσ2
+τF
+id
+Composition:
+• Horizontal: (υ ◦τ)F = υCσ2(F) ◦τF.
+• Vertical: (τ ′ · τ)F = τ ′
+F ◦τF.
+Identities: 1-cell idΩ= (∅, idFΩ), 2-cell idσ with components idCσ(F).
+Theorem 2. Sphere2 satisfies the 2-category axioms, including associativity, identity laws, and
+the interchange law.
+1
+
+3
+Topos Structure
+Definition 3 (Presheaf Category). The presheaf category Sphereop = [Sphereop, Set] consists of
+functors P : Sphereop →Set, where:
+• P(Ω): Field observations over Ω.
+• P(σ : Ω1 →Ω2): Observation pullback P(Ω2) →P(Ω1).
+Theorem 3. Sphereop is a topos with:
+• Subobject classifier: ΩSphere = {open regions}.
+• Exponentials: P Q(Ω) = HomPresheaf(Q|Sphere/Ω, P|Sphere/Ω).
+• Finite limits and colimits: Computed pointwise in Set.
+Theorem 4 (Internal Logic). Sphereop supports intuitionistic higher-order logic, with:
+• Propositions: Subspheres of the truth sphere.
+• Proofs: Sphere morphisms preserving truth.
+• Quantification: Over regions and field states.
+2
+
