@@ -1,106 +1,138 @@
 #!/usr/bin/env python3
 """
-A script to extract plain text from MHTML files. It can process a single file passed as an argument
-or all MHTML files in the current directory if no argument is provided (with user confirmation).
-It parses each MHTML file as a MIME message, extracts text from its HTML (or plain text) parts,
-removes tags using BeautifulSoup, and writes the results to separate .txt files.
+A script to extract plain text from PDF, EPUB, and MHTML files.
+
+It can process specific files passed as arguments, or scan the current directory.
 
 Usage:
-    python extract_mhtml_text.py [file.mhtml]  # Process a specific file
-    python extract_mhtml_text.py               # Prompt to process all files in directory
+    python extract_text.py file1.pdf file2.epub
+    python extract_text.py                 # processes all PDF, EPUB, and MHTML in current dir
 
-Ensure you have installed BeautifulSoup (e.g., pip install beautifulsoup4)
+Dependencies:
+    pip install PyMuPDF ebooklib beautifulsoup4
 """
 
-import glob
 import os
 import sys
-import argparse
+import fitz  # PyMuPDF
+import ebooklib
+from ebooklib import epub
+from bs4 import BeautifulSoup
 from email import policy
 from email.parser import BytesParser
-from bs4 import BeautifulSoup
 
-def extract_text_from_mhtml(file_path):
-    """
-    Extract plain text from an MHTML file by parsing its MIME structure.
-    It processes both HTML parts (removing tags) and plain text parts.
-    """
-    with open(file_path, 'rb') as f:
-        msg = BytesParser(policy=policy.default).parse(f)
-    
+def normalize_quotes(text):
+    """Replace smart quotes, dashes, and other problematic characters."""
+    replacements = {
+        "\u2018": "'", "\u2019": "'",  # Single quotes
+        "\u201c": '"', "\u201d": '"',  # Double quotes
+        "\u2014": "—", "\u2013": "-",  # Dashes
+        "\u2026": "...", "\u00a0": " "  # Ellipsis, non-breaking space
+    }
+    for smart, plain in replacements.items():
+        text = text.replace(smart, plain)
+    return text
+
+def extract_text_from_pdf(pdf_path):
+    text = ""
+    try:
+        doc = fitz.open(pdf_path)
+        for page in doc:
+            text += page.get_text("text") + "\n"
+    except Exception as e:
+        print(f"[!] Error extracting text from {pdf_path}: {e}")
+    return normalize_quotes(text)
+
+def extract_text_from_epub(epub_path):
+    text = ""
+    try:
+        book = epub.read_epub(epub_path)
+        for item in book.get_items():
+            if item.get_type() == ebooklib.ITEM_DOCUMENT:
+                soup = BeautifulSoup(item.get_content(), "html.parser")
+                text += soup.get_text() + "\n"
+    except Exception as e:
+        print(f"[!] Error extracting text from {epub_path}: {e}")
+    return normalize_quotes(text)
+
+def extract_text_from_mhtml(mhtml_path):
     text_parts = []
+    try:
+        with open(mhtml_path, 'rb') as f:
+            msg = BytesParser(policy=policy.default).parse(f)
 
-    if msg.is_multipart():
-        for part in msg.walk():
-            content_type = part.get_content_type()
-            # Process HTML content by removing HTML tags
-            if content_type == 'text/html':
-                html_content = part.get_content()
-                soup = BeautifulSoup(html_content, 'html.parser')
-                text_parts.append(soup.get_text(separator="\n", strip=True))
-            # If plain text is available, extract it as well
-            elif content_type == 'text/plain':
-                text_parts.append(part.get_content())
-    else:
-        content_type = msg.get_content_type()
-        if content_type == 'text/html':
-            soup = BeautifulSoup(msg.get_content(), 'html.parser')
-            text_parts.append(soup.get_text(separator="\n", strip=True))
+        def decode_part(part):
+            charset = part.get_content_charset() or 'utf-8'
+            try:
+                return part.get_payload(decode=True).decode(charset, errors='replace')
+            except Exception as e:
+                print(f"[!] Decode error in {mhtml_path}: {e}")
+                return ''
+
+        if msg.is_multipart():
+            for part in msg.walk():
+                ctype = part.get_content_type()
+                if ctype == 'text/html':
+                    html = decode_part(part)
+                    soup = BeautifulSoup(html, 'html.parser')
+                    text_parts.append(soup.get_text(separator="\n", strip=True))
+                elif ctype == 'text/plain':
+                    text_parts.append(decode_part(part))
         else:
-            text_parts.append(msg.get_content())
+            content = decode_part(msg)
+            ctype = msg.get_content_type()
+            if ctype == 'text/html':
+                soup = BeautifulSoup(content, 'html.parser')
+                text_parts.append(soup.get_text(separator="\n", strip=True))
+            else:
+                text_parts.append(content)
+    except Exception as e:
+        print(f"[!] Error reading MHTML {mhtml_path}: {e}")
     
-    return "\n\n".join(text_parts)
+    return normalize_quotes("\n\n".join(text_parts))
+
+def save_text(text, original_path):
+    output_file = os.path.splitext(original_path)[0] + ".txt"
+    try:
+        with open(output_file, "w", encoding="utf-8") as f:
+            f.write(text)
+        print(f"[✓] Text saved to: {output_file}")
+    except Exception as e:
+        print(f"[!] Error writing to {output_file}: {e}")
 
 def process_file(file_path):
-    """Process a single MHTML file and write the extracted text to a .txt file."""
-    if not os.path.exists(file_path):
-        print(f"Error: File '{file_path}' does not exist.")
+    if not os.path.isfile(file_path):
+        print(f"[!] File not found: {file_path}")
         return
-    if not file_path.endswith('.mhtml'):
-        print(f"Error: '{file_path}' is not an MHTML file.")
-        return
+
+    ext = file_path.lower()
+    print(f"[•] Processing {file_path}...")
     
-    print(f'Processing {file_path} ...')
-    extracted_text = extract_text_from_mhtml(file_path)
-    output_file = os.path.splitext(file_path)[0] + ".txt"
-    with open(output_file, "w", encoding="utf-8") as out:
-        out.write(extracted_text)
-    print(f"Extracted text written to {output_file}")
-
-def main():
-    # Set up argument parser
-    parser = argparse.ArgumentParser(
-        description="Extract plain text from MHTML files."
-    )
-    parser.add_argument(
-        "file",
-        nargs="?",
-        help="Path to a specific MHTML file to process (optional)"
-    )
-    args = parser.parse_args()
-
-    # If a file is provided as an argument, process only that file
-    if args.file:
-        process_file(args.file)
-        return
-
-    # If no argument is provided, look for MHTML files in the current directory
-    mhtml_files = glob.glob("*.mhtml")
-    if not mhtml_files:
-        print("No MHTML files found in the current directory.")
-        return
-
-    # Prompt the user to process all files
-    print(f"Found {len(mhtml_files)} MHTML files in the current directory:")
-    for f in mhtml_files:
-        print(f" - {f}")
-    response = input("Do you want to process all of these files? (yes/no): ").strip().lower()
-    
-    if response in ('yes', 'y'):
-        for file_path in mhtml_files:
-            process_file(file_path)
+    if ext.endswith(".pdf"):
+        text = extract_text_from_pdf(file_path)
+    elif ext.endswith(".epub"):
+        text = extract_text_from_epub(file_path)
+    elif ext.endswith((".mhtml", ".mht")):
+        text = extract_text_from_mhtml(file_path)
     else:
-        print("No files were processed.")
+        print(f"[!] Unsupported file type: {file_path}")
+        return
+
+    if text.strip():
+        save_text(text, file_path)
+    else:
+        print(f"[!] No text extracted from: {file_path}")
+
+def process_directory(directory):
+    for filename in os.listdir(directory):
+        if filename.lower().endswith((".pdf", ".epub", ".mhtml", ".mht")):
+            process_file(os.path.join(directory, filename))
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) > 1:
+        for file in sys.argv[1:]:
+            process_file(file)
+    else:
+        print("[i] No files specified. Processing current directory...")
+        process_directory(os.getcwd())
+
