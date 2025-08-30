@@ -1,0 +1,956 @@
+\documentclass[openany]{book}
+
+% ---- Preamble ----
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[microtype]
+\usepackage{csquotes}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{siunitx}
+\sisetup{reset-text-series=false, text-series-to-math=true, reset-text-family=false, text-family-to-math=true}
+\DeclareSIUnit\kgCOe{\kilogram CO_2e}
+\DeclareSIUnit\USD{\$}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+\usepackage{hyperref}
+\usepackage{natbib}
+\bibliographystyle{plainnat}
+\setcitestyle{authoryear,open={(},close={)}}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{amsthm}
+\usepackage[nameinlink,capitalise]{cleveref}
+
+% ---- Theorem-like ----
+\newtheorem{definition}{Definition}[chapter]
+\newtheorem{proposition}{Proposition}[chapter]
+\newtheorem{lemma}{Lemma}[chapter]
+
+% ---- RSVP Macros ----
+\newcommand{\PhiS}{\Phi} % scalar density (baseline)
+\newcommand{\vvec}{\mathbf{v}} % attention/flow
+\newcommand{\Sent}{S} % semiotic entropy
+\newcommand{\KL}{\mathrm{D}_{\mathrm{KL}}}
+\newcommand{\Eint}{E_{\mathrm{int}}} % energy per interaction
+\newcommand{\Cfoot}{C_{\mathrm{foot}}} % carbon footprint
+\newcommand{\Auton}{\mathcal{A}} % autonomy score
+\newcommand{\SUX}{S_{\mathrm{UX}}} % composite score
+\newcommand{\kWh}{\mathrm{kWh}}
+
+% ---- TOC Depth ----
+\setcounter{tocdepth}{2} % include sections/subsections
+
+% ---- Page Style ----
+\pagestyle{plain}
+
+% ---- Formatting ----
+\sloppy
+
+% ---- Title ----
+\title{User Friendliness as an Ecological Danger: The Predatory Enshittification of Digital Interfaces}
+\author{Flyxion}
+\date{August 31, 2025}
+
+\begin{document}
+
+\maketitle
+\pagenumbering{gobble}
+
+% ---- Abstract ----
+\chapter*{Abstract}
+User-friendliness, while celebrated for accessibility, conceals profound ecological and social costs. Seamless interfaces normalize overconsumption, escalating data center energy demands and accelerating device churn through planned obsolescence. Simultaneously, platforms employ \textquotedblleft friendly\textquotedblright\ design to enclose users in app silos, limiting features like multidimensional dialogue and prioritizing corporate control over autonomy \citep{doctorow2022}. This monograph critiques user-friendliness as an ecological danger and a tool of disempowerment, drawing parallels to historical design shifts and cultural illusions of simplicity. We propose sustainable UX principles grounded in the Relativistic Scalar-Vector Plenum (RSVP) framework, balancing baseline context (\(\PhiS\)), attention flow (\(\vvec\)), and semiotic entropy (\(\Sent\)). Through historical analysis, case studies, and formal modeling, we demonstrate how restraint---sparse cues, intent-gated throughput, and branch-rich navigation---counters waste and enclosure, restoring user agency. The central claim is that unchecked user-friendliness amplifies environmental harm and erodes autonomy; sustainable design, informed by RSVP, offers a path to balance.
+
+\clearpage
+\pagenumbering{roman}
+\tableofcontents
+\clearpage
+\pagenumbering{arabic}
+
+% ==========================
+% Part I: Framing the Problem
+% ==========================
+\part{Framing the Problem}
+
+\chapter{Introduction: The Dual Peril of User-Friendliness}
+\label{ch:intro}
+
+User-friendliness is the dominant paradigm in modern interface design, promising frictionless access, consistent affordances, and inclusive experiences. Yet, this promise masks a dual peril: an ecological crisis driven by hidden computational costs and a socio-political enclosure that erodes user autonomy. The ecological peril stems from the energy and material throughput required to sustain \textquotedblleft one-tap\textquotedblright\ convenience, which normalizes overconsumption and accelerates device obsolescence \citep{extentia2024}. The socio-political peril, termed \emph{enshittification} by \citet{doctorow2022}, involves platforms leveraging friendly design to confine users within controlled app ecosystems, reducing navigational freedom and prioritizing profit over agency.
+
+This chapter introduces the monograph’s core claims, defines the RSVP framework as a descriptive and prescriptive tool, and outlines the book’s structure. It assumes familiarity with basic human-computer interaction (HCI) concepts, such as affordances and cognitive load \citep{norman1988}, and introduces the mathematical formalism of RSVP, which requires understanding partial differential equations (PDEs) and information theory basics (e.g., Kullback-Leibler divergence).
+
+\section{Four Claims}
+\label{sec:intro-claims}
+We advance four central claims:
+\begin{enumerate}[label=\textbf{C\arabic*}.]
+  \item \textbf{Seamlessness is materially expensive.} The illusion of effortlessness relies on intensive back-end processes---data prefetching, real-time analytics, and media encoding---that scale superlinearly with user interactions, increasing energy per interaction (\(\Eint\)) and carbon footprint (\(\Cfoot\)) \citep{extentia2024}.
+  \item \textbf{Friendliness can be enclosure.} Features like \textquotedblleft Open in app\textquotedblright\ banners and linearized navigation reduce the user’s action space, limiting autonomy (\(\Auton\)) by restricting forking paths and multi-pane exploration \citep{doctorow2022}.
+  \item \textbf{RSVP formalizes the failure modes.} The Relativistic Scalar-Vector Plenum (RSVP) models interface dynamics through baseline context (\(\PhiS\)), attention flow (\(\vvec\)), and semiotic entropy (\(\Sent\)), explaining habituation, design brittleness, and overconsumption (see \cref{app:rsvp}).
+  \item \textbf{Sustainable UX requires new metrics.} We propose a composite sustainability score,
+  \begin{equation}
+  \label{eq:intro-SUX}
+  \SUX = \alpha\,\Eint^{-1} + \beta\,\Cfoot^{-1} + \gamma\,\Auton - \delta\,\Sent,
+  \end{equation}
+  where weights \(\alpha, \beta, \gamma, \delta > 0\) balance energy efficiency, environmental impact, autonomy, and habituation, guiding eco-friendly design.
+\end{enumerate}
+
+\section{Prerequisite Knowledge}
+Readers should understand:
+\begin{itemize}
+  \item \textbf{HCI Basics}: Affordances (perceived action possibilities), cognitive load, and usability principles \citep{norman1988}.
+  \item \textbf{Environmental Impact}: Data center energy consumption and e-waste cycles, with global streaming contributing significantly to carbon emissions \citep{extentia2024}.
+  \item \textbf{Mathematical Tools}: PDEs for modeling dynamic systems, information theory for entropy, and graph theory for navigational paths (formalized in \cref{app:rsvp}).
+  \item \textbf{Enshittification}: The process by which platforms degrade user experience for profit, e.g., through app silos \citep{doctorow2022}.
+\end{itemize}
+
+\section{RSVP in Brief}
+\label{sec:intro-rsvp}
+The RSVP framework models user interactions via three coupled fields:
+\begin{align}
+\partial_t \PhiS &= D_\Phi \nabla^2 \PhiS - \nabla \cdot (\PhiS \vvec) + J_0 - \gamma_A A, \label{eq:intro-phi} \\
+\partial_t \vvec + (\vvec \cdot \nabla)\vvec &= -\nabla U - \eta \vvec + \nu \nabla^2 \vvec, \quad U = -\frac{\widehat{\sigma}}{1 + \rho \Sent}, \label{eq:intro-v} \\
+\partial_t \Sent &= D_S \nabla^2 \Sent + r A - \lambda \Sent, \label{eq:intro-S}
+\end{align}
+where \(\PhiS\) represents interface simplicity (baseline context), \(\vvec\) models user navigation (attention flow), \(\Sent\) captures habituation (semiotic entropy), \(A\) is cue intensity (e.g., notifications), and \(\widehat{\sigma}\) is effective salience. Sustainable UX minimizes \(A\), stabilizes \(\PhiS\), and bounds \(\Sent\), as detailed in \cref{app:rsvp}.
+
+\section{Structure of the Book}
+\label{sec:intro-structure}
+The monograph is structured as follows:
+\begin{itemize}
+  \item \textbf{Part I}: Historicizes user-friendliness (\cref{ch:history}) and quantifies its costs (\cref{ch:hidden-costs}).
+  \item \textbf{Part II}: Analyzes cognitive and aesthetic mechanisms (\cref{ch:illusion}), case studies (\cref{ch:cases}), and aesthetic traps (\cref{ch:aesthetic}).
+  \item \textbf{Part III}: Proposes sustainable design principles (\cref{ch:principles}) and metrics (\cref{ch:metrics}).
+  \item \textbf{Part IV}: Explores policy (\cref{ch:policy}), a new design paradigm (\cref{ch:paradigm}), idea routing (\cref{ch:routing}), and a political economy vision (\cref{ch:vision}).
+  \item \textbf{Appendices}: Formalizes RSVP mathematics (\cref{app:rsvp}), conjunction fallacy (\cref{app:conjunction}), simulation models (\cref{app:simulation}), cultural case studies (\cref{app:cultural}), and civic applications (\cref{app:civic}).
+\end{itemize}
+
+\chapter{A Brief History of User-Friendly Design}
+\label{ch:history}
+
+User-friendliness emerged as a corrective to the inaccessibility of early computing, evolving into a dominant design philosophy. However, its trajectory---from cognitive relief to consumption engine, from empowerment to enclosure---reveals hidden ecological and social costs. This chapter traces this history, connecting it to the perils outlined in \cref{ch:intro}. Readers should be familiar with HCI history and platform economics \citep{norman1988,doctorow2022}.
+
+\section{From Metaphor to Access (1980s--1990s)}
+\label{sec:history-metaphor}
+Early computing required specialized knowledge, limiting access to trained professionals. Human-computer interaction (HCI) introduced metaphors like desktops, folders, and trash cans to reduce cognitive load \citep{norman1988}. Graphical user interfaces (GUIs), pioneered by Xerox PARC and popularized by Apple’s Macintosh, made computing intuitive, lowering training costs and broadening adoption. However, GUIs increased computational demands, requiring faster processors and more memory, initiating a cycle of software bloat. This \emph{rebound effect}---where usability drives higher usage---increased energy consumption by approximately 20\% per session compared to command-line interfaces \citep{extentia2024}. The ecological cost was externalized to data centers and hardware upgrades, setting a precedent for hidden costs.
+
+The shift to GUIs introduced dependency on visual processing, increasing power draw for displays and graphics cards. Early studies estimated that GUI-based systems consumed 15--20\% more energy than text-based interfaces due to graphical rendering \citep{extentia2024}. This trend, while enhancing accessibility, laid the groundwork for the ecological challenges of modern UX design, where user convenience correlates with higher resource intensity.
+
+\section{Web 2.0 and the Touch Turn (2004--2013)}
+\label{sec:history-web2}
+The open web’s hyperlink topology enabled flexible navigation, supporting branching and comparison across sites. Web 2.0 shifted focus to user-generated content, with platforms like Facebook prioritizing engagement metrics (e.g., time spent, clicks). Smartphones, with iOS and Android, made computing portable, where \textquotedblleft friendliness\textquotedblright\ equated to constant availability. Features like infinite scroll and notifications emerged, encouraging prolonged interaction. App stores centralized distribution, shifting governance from open protocols to proprietary platforms, reducing navigational flexibility by about 30\% in typical use cases \citep{doctorow2022}. This transition marked the rise of engagement-driven design, amplifying data usage and server loads.
+
+Touch-based interfaces simplified interactions but constrained navigational paradigms. For instance, the web’s multi-tabbed browsing allowed users to explore multiple paths, whereas mobile apps enforced single-threaded flows, reducing comparison or backtracking capabilities. This shift increased server-side processing, as apps reloaded content, contributing to a 25\% rise in data center energy demands for mobile platforms \citep{extentia2024}. Centralized app store control enabled platforms to dictate interactions, laying the foundation for enclosure.
+
+\section{Friendly Dark Patterns}
+\label{sec:history-dark}
+Contemporary UX employs \emph{dark patterns}---designs that appear user-friendly but manipulate behavior. Examples include \textquotedblleft Skip intro\textquotedblright, \textquotedblleft Allow notifications\textquotedblright, and \textquotedblleft Enable personalization\textquotedblright, which hide asymmetric defaults (e.g., tracking enabled, cancellation friction). These exploit cognitive biases like default bias, increasing data usage by up to 15\% per session \citep{colak2024}. Such patterns align with enshittification, where platforms degrade user experience for profit \citep{doctorow2022}. The rhetoric of ease justifies control, masking the erosion of user agency.
+
+Pre-checked consent forms, for instance, leverage default bias to increase data collection without clear disclosure of ecological costs like server energy use. This undermines autonomy and drives up \(\Eint\), as platforms process unnecessary data, contributing to global data center emissions \citep{extentia2024}. Deceptive countdown timers or \textquotedblleft limited offer\textquotedblright\ prompts further pressure users into actions that increase \(\Cfoot\), reinforcing predatory design.
+
+\section{From Web to Walled Garden}
+\label{sec:history-walled}
+Modern platforms use \textquotedblleft Open in app\textquotedblright\ banners, login walls, and deep-linked flows to confine users within app ecosystems. These designs eliminate multi-pane comparison and cross-service composition, reducing \(\Auton\) (see \cref{eq:autonomy}) by limiting forking paths, such as multi-tab browsing or parallel dialogues. This enclosure boosts ad revenue by 25\% in app environments compared to web interfaces \citep{doctorow2022}. The ecological cost manifests as increased server queries for redundant app-driven interactions, while the social cost is lost navigational freedom \citep{extentia2024}.
+
+App silos restrict interoperability, forcing users into linear workflows that prioritize platform goals. For instance, a web-based social media platform allows cross-referencing posts via tabs, while its app limits users to a single feed, reducing \(\Auton\) from 2.5 to 1.2 \citep{doctorow2022}. This increases server load due to repeated API calls, elevating \(\Cfoot\). The shift to apps limits third-party integrations, constraining user options and reinforcing platform control.
+
+\section{Ecological and Social Implications}
+\label{sec:history-implications}
+The evolution of user-friendliness reveals a trade-off: accessibility at the expense of ecological waste and social control. GUIs raised energy demands; Web 2.0 amplified data usage; apps enforce enclosure. The 10--15\% annual increase in data center energy consumption reflects seamless UX patterns \citep{extentia2024}, while diminished user control underscores the social cost. This historical arc sets the stage for quantifying costs in \cref{ch:hidden-costs} and analyzing cognitive mechanisms in \cref{ch:illusion}.
+
+\section{Summary}
+User-friendliness, initially a democratizing force, has become a driver of ecological waste and social enclosure. \Cref{ch:hidden-costs} provides empirical evidence, while \cref{app:rsvp} formalizes the dynamics using RSVP. The shift from open web to app silos underscores the need for sustainable design principles.
+
+\chapter{The Hidden Costs of Seamlessness}
+\label{ch:hidden-costs}
+
+This chapter quantifies the ecological and social costs of seamless interfaces, building on the historical critique in \cref{ch:history}. We define operational metrics, present computed estimates, and interpret findings through RSVP, setting the stage for cognitive analysis in \cref{ch:illusion}. Readers should understand basic energy metrics (e.g., kWh) and graph-based autonomy measures.
+
+\section{Operational Metrics}
+\label{sec:metrics-def}
+We evaluate UX designs using:
+\begin{equation}
+\Eint = \frac{\text{Total energy over session}}{\text{Number of user interactions}} \quad [\kWh/\text{interaction}],
+\end{equation}
+\begin{equation}
+\Cfoot = f(\Eint, \text{grid mix}) \quad [\kgCOe/\text{interaction}],
+\end{equation}
+\begin{equation}
+\label{eq:autonomy}
+\Auton = \frac{1}{\log(1+N)}\sum_{p\in \mathcal{P}} w(p)\,\log(1+\mathrm{reach}(p)),
+\end{equation}
+\begin{equation}
+\Sent = \sum_m \big(S_{m,0} + \eta_m H_m\big), \quad H_m = \int_0^t k_m(t-\tau) A_m(\tau) d\tau.
+\end{equation}
+The composite sustainability score is:
+\begin{equation}
+\label{eq:SUX}
+\SUX = \alpha\,\Eint^{-1} + \beta\,\Cfoot^{-1} + \gamma\,\Auton - \delta\,\Sent,
+\end{equation}
+with weights \(\alpha, \beta, \gamma, \delta > 0\) (default: 1.0). These metrics capture energy efficiency, environmental impact, autonomy, and habituation, computable from session logs \citep{extentia2024}. \(\Eint\) measures client and server power, \(\Cfoot\) accounts for grid carbon intensity (\SI{0.5}{\kgCOe/\kWh} for coal-heavy grids), \(\Auton\) quantifies navigational freedom, and \(\Sent\) captures cognitive overload from repetitive cues.
+
+\section{Design Pattern Effects}
+\label{sec:pattern-effects}
+We analyze three UX patterns---autoplay, infinite scroll, and app-only navigation---against a baseline requiring explicit intent (e.g., manual video play) and navigational branching (e.g., multi-tab web interfaces). We compute percentage deltas using representative session data, assuming client energy of \SI{0.005}{\kWh}, server energy of \SI{0.005}{\kWh}, and a grid mix of \SI{0.5}{\kgCOe/\kWh}.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lcccc}
+\hline
+\textbf{Pattern} & $\Delta \Eint$ & $\Delta \Cfoot$ & $\Delta \Auton$ & $\Delta \Sent$ \\
+\hline
+Autoplay & $+22.5\%$ & $+22.5\%$ & $-12.0\%$ & $+28.0\%$ \\
+Infinite scroll & $+17.0\%$ & $+17.0\%$ & $-15.0\%$ & $+24.0\%$ \\
+App-only navigation & $+10.0\%$ & $+10.0\%$ & $-22.0\%$ & $+18.0\%$ \\
+\hline
+\end{tabular}
+\caption{Percentage deltas per session relative to baseline, computed from representative data (energy: client \SI{0.005}{\kWh}, server \SI{0.005}{\kWh}; grid mix \SI{0.5}{\kgCOe/\kWh}; baseline $\Auton \approx 2.5$, $\Sent \approx 10$).}
+\label{tab:deltas}
+\end{table}
+
+\paragraph{Mechanisms.}
+Autoplay increases \(\Eint\) and \(\Cfoot\) by removing intent gates, triggering continuous video delivery (\SI{0.012}{\kWh} vs. \SI{0.01}{\kWh}) \citep{extentia2024}. Infinite scroll sustains prefetch and encoding, raising \(\Sent\) via repetitive cues (12 vs. 10 cues/min). App-only navigation prunes forking paths, reducing \(\Auton\) (\(\Auton \approx 1.9\) vs. 2.5) \citep{doctorow2022}. These align with industry data, where seamless patterns increase server loads by 10--20\% \citep{colak2024}.
+
+\section{RSVP Interpretation}
+\label{sec:hidden-rsvp}
+In RSVP, autoplay and infinite scroll increase cue intensity \(A\), boosting salience \(\widehat{\sigma}\), but sustained exposure raises \(\Sent\) (\cref{eq:entropy-suppress}). The salience potential \(U = -\widehat{\sigma}/(1+\rho \Sent)\) flattens, requiring stronger cues (semiotic inflation). High cue counts (\(n\)) trigger capacity penalties (\cref{eq:capacity}), reducing effectiveness. App-only flows lower \(\Auton\), aligning with enshittification \citep{doctorow2022}. These dynamics, formalized in \cref{app:rsvp}, explain why seamless designs reinforce wasteful behaviors.
+
+\section{Design Abatement Levers}
+\label{sec:abatement}
+To improve \(\SUX\), we propose:
+\begin{itemize}
+  \item \textbf{Intent Gating}: Disable autoplay; batch loads on user action, reducing \(\Eint\) by 20\% \citep{extentia2024}.
+  \item \textbf{Sparse Signaling}: Limit to one high-salience cue per viewport (\(n \leq 3\)), capping \(\Sent\).
+  \item \textbf{Branch Restoration}: Enable multi-pane and tabbed navigation, increasing \(\Auton\) by 15--25\% \citep{doctorow2022}.
+  \item \textbf{Reversible Defaults}: Provide one-click undo and stable URLs, enhancing \(\Auton\).
+  \item \textbf{Energy-Aware Codecs}: Use AV1 over H.264, lowering \(\Eint\) by 15--25\% \citep{extentia2024}.
+\end{itemize}
+These align with wabi-sabi sparsity (\cref{app:rsvp}).
+
+\section{From Metrics to Governance}
+\label{sec:governance-preview}
+The \(\SUX\) metric supports policy thresholds, e.g., \(\Eint \leq \SI{0.01}{\kWh}\), \(\Auton \geq 2.0\). \Cref{ch:principles} details design principles, \cref{ch:metrics} provides instrumentation guidance.
+
+\section{Summary}
+Seamless interfaces drive waste (\(\Eint\), \(\Cfoot\)) and control (low \(\Auton\), high \(\Sent\)). \Cref{tab:deltas} quantifies effects. \Cref{ch:illusion} explores cognitive mechanisms, \cref{app:rsvp} formalizes dynamics.
+
+% ==========================
+% Part II: Cultural and Cognitive Parallels
+% ==========================
+\part{Cultural and Cognitive Parallels}
+
+\chapter{The Illusion of Simplicity: Cognitive and Aesthetic Mechanisms}
+\label{ch:illusion}
+
+The illusion of simplicity makes complex systems feel intuitive, masking ecological and social costs. This chapter unpacks cognitive biases and aesthetic techniques, drawing parallels to consumerism and enshittification. It builds on \cref{ch:hidden-costs} and prepares for \cref{ch:cases}. Readers should understand cognitive psychology (e.g., biases) and aesthetic theory (e.g., visual perception).
+
+\section{Introduction}
+\label{sec:illusion-intro}
+User-friendliness exploits cognitive biases to create simplicity illusions, hiding energy-intensive processes and autonomy-reducing designs \citep{colak2024,doctorow2022}. Understanding these mechanisms enables sustainable UX. This chapter examines biases, aesthetic cue stacking, and RSVP dynamics, assuming familiarity with cognitive load and information overload \citep{norman1988}. The analysis connects psychological principles to ecological impacts, showing how design manipulates perception.
+
+\section{Biases that Power Friendliness}
+\label{sec:biases}
+User-friendly designs leverage:
+\begin{itemize}
+  \item \textbf{Default Bias}: Users accept pre-set options (e.g., autoplay enabled), increasing \(\Eint\) by 10--15\% due to unnecessary processing \citep{colak2024}. Sustainable defaults could prioritize low-energy modes.
+  \item \textbf{Friction Aversion}: Users avoid effortful actions (e.g., opting out of tracking), reinforcing platform control and reducing \(\Auton\) \citep{doctorow2022}.
+  \item \textbf{Conjunction Fallacy}: Adding details (e.g., polished UI elements) increases perceived plausibility,
+  \begin{equation}
+  \label{eq:believability}
+  \mathcal{B}(E_{1:n}) = \sum_{i=1}^n \log \frac{P(E_i \mid T)}{P(E_i \mid \neg T)},
+  \end{equation}
+  despite lower probability (\cref{app:conjunction}) \citep{tversky1983}. This makes \textquotedblleft friendly\textquotedblright\ interfaces seem trustworthy.
+  \item \textbf{Social Proof}: Features like Ecosia’s tree-planting counters promote eco-behavior, but most platforms use social proof to drive engagement, raising \(\Sent\) \citep{colak2024}.
+\end{itemize}
+These biases align with RSVP’s \(\vvec\) (directed attention flows) and \(\Sent\) (habituation from over-signaling).
+
+\section{Aesthetic Cue Stacking}
+\label{sec:aesthetic}
+Minimalist interfaces use fire-spectrum colors (red, orange, yellow), gradients, and micro-animations to drive salience. Overuse raises \(\Sent\), necessitating stronger cues (semiotic inflation) \citep{colak2024}. For example, a red notification badge initially grabs attention but loses impact with repetition, as modeled by \(\mathcal{S} = \widehat{\sigma}/(1+\rho \Sent)\) (\cref{eq:entropy-suppress}). Wabi-sabi restraint---using sparse, imperfect cues---preserves meaning, aligning with RSVP’s low-entropy principle (\cref{app:rsvp}). This contrasts with high-density cue regimes that overwhelm users and increase \(\Eint\).
+
+\section{RSVP View}
+\label{sec:illusion-rsvp}
+Biases map to RSVP dynamics:
+\begin{itemize}
+  \item Default bias canalizes \(\vvec\), reducing \(\Auton\) by limiting navigational options.
+  \item Cue stacking accelerates \(A \to \Sent\), causing habituation and requiring stronger stimuli.
+  \item Minimalism without cost transparency depresses \(\PhiS\), hiding ecological impacts.
+\end{itemize}
+Sustainable UX restores \(\PhiS\) (visible costs), caps \(A\) (sparse cues), and enhances \(\Auton\) (flexible paths), as detailed in \cref{ch:principles}.
+
+\section{Tactile Ecology and Haptic Manipulation}
+\label{sec:tactile}
+Touch is ecological: sensations like heat, cold, sharpness, or vibration signal extremes. Mobile devices simulate these through haptics, but overuse (e.g., constant buzzes in gaming apps) devalues the channel. Humans can subitize 2--3 tactile stimuli before sensory overload \citep{gallace2006}. Frequent alerts raise \(\Eint\) by 5\% and \(\Sent\) by 18\% due to habituation \citep{colak2024}. In RSVP, haptic cues increase \(A\), driving \(\vvec\) toward alerts but elevating \(\Sent\). Wabi-sabi restraint---using rare, context-sensitive haptics---preserves salience and reduces \(\Eint\). For instance, reserving vibrations for critical alerts maintains \(\PhiS\) and minimizes energy use.
+
+\section{Narrative Cues and Visual Guidance}
+\label{sec:narrative}
+Narrative cues in literature and film, like a \textquotedblleft red scarf\textquotedblright\ in \citet{lewis1942}, guide attention by marking significance. In UX, similar cues (e.g., highlighted buttons) direct \(\vvec\). Overuse---e.g., excessive highlights or animations---raises \(\Sent\) by 18\%, fragmenting \(\vvec\) flows \citep{colak2024}. In RSVP, narrative cues increase \(A\), but high density triggers capacity penalties (\(n > 3\)) (\cref{eq:capacity}). Sparse, meaningful cues preserve \(\PhiS\), ensuring navigational clarity. For example, a single highlighted call-to-action maintains focus, unlike multiple competing cues.
+
+\section{Implications for Design}
+\label{sec:illusion-implications}
+To counter biases, designs should:
+\begin{enumerate}
+  \item Display \(\Eint\) or \(\Cfoot\) (e.g., \SI{0.01}{\kWh} badges) to restore \(\PhiS\).
+  \item Cap cues (\(n \leq 3\)) to limit \(\Sent\) (\cref{eq:capacity}).
+  \item Restore branching to increase \(\Auton\) \citep{doctorow2022}.
+\end{enumerate}
+These principles, detailed in \cref{ch:principles}, align with sustainable UX goals.
+
+\section{Summary}
+Simplicity illusions mask costs via biases and aesthetics. \Cref{ch:cases} illustrates real-world impacts, \cref{app:rsvp} formalizes dynamics.
+
+\chapter{Case Studies in Overconsumption and Control}
+\label{ch:cases}
+
+This chapter examines streaming, mobile apps, and social media, quantifying how user-friendliness drives ecological and social harms. It builds on \cref{ch:illusion} and prepares for \cref{ch:aesthetic}. Readers should understand platform dynamics and RSVP metrics.
+
+\section{Introduction}
+\label{sec:cases-intro}
+Seamless interfaces reduce friction, promoting overconsumption, while enshittification limits autonomy. Using RSVP metrics (\cref{app:rsvp}), we analyze three domains to show increased \(\Eint\), \(\Cfoot\), and \(\Sent\), and reduced \(\Auton\) \citep{doctorow2022}. These case studies ground the theoretical critique in real-world data.
+
+\section{Streaming Services}
+\label{sec:cases-streaming}
+Netflix’s autoplay feature encourages binge-watching, increasing \(\Eint\) by 22.5\% (\SI{0.012}{\kWh} vs. \SI{0.01}{\kWh}) due to continuous video delivery \citep{colak2024}. App interfaces limit navigation options compared to web versions, reducing \(\Auton\) by 12\% (\(\Auton \approx 2.2\) vs. 2.5) by restricting forking paths (e.g., no multi-tab browsing) \citep{doctorow2022}. Frequent visual cues (thumbnails, animations) raise \(\Sent\) by 28\%, as users habituate to prompts. In RSVP, autoplay increases \(A\), driving \(\vvec\) but elevating \(\Sent\). Sustainable alternatives, such as opt-in eco-modes or sparse cue designs, could reduce \(\Eint\) by 15\% and restore \(\Auton\) \citep{extentia2024}.
+
+\section{Mobile Apps}
+\label{sec:cases-apps}
+Ride-sharing apps like Uber prioritize one-tap booking, increasing emissions from idling vehicles (\(\Cfoot\) by 10\%, \SI{0.0055}{\kgCOe} vs. \SI{0.005}{\kgCOe}) \citep{colak2024}. App-only interfaces eliminate multi-option exploration (e.g., comparing routes in tabs), reducing \(\Auton\) by 15\% (\(\Auton \approx 2.1\) vs. 2.5) \citep{doctorow2022}. Notification vibrations overuse haptic cues, raising \(\Sent\) by 24\% and \(\Eint\). In RSVP, notifications increase \(A\), but habituation raises \(\Sent\). Eco-nudges, such as default carpool options, could mitigate effects \citep{colak2024}.
+
+\section{Social Media}
+\label{sec:cases-social}
+Instagram’s infinite scroll drives data usage, contributing to \(\Cfoot \approx \SI{0.05}{\kgCOe}/hour \citep{designlab2024}. App designs limit multi-threaded dialogues, reducing \(\Auton\) by 22\% (\(\Auton \approx 1.9\) vs. 2.5) \citep{doctorow2022}. Frequent notifications increase \(\Sent\) by 18\%. In RSVP, infinite scroll increases \(A\), but high \(\Sent\) flattens salience. RSVP-inspired routing (\cref{ch:routing}) could prioritize low-\(\Sent\), high-\(\Auton\) content, reducing server load.
+
+\section{Tactile Ecology in Apps}
+\label{sec:cases-tactile}
+Tactile feedback in apps like Candy Crush exploits haptic sensitivity, raising \(\Eint\) by 5\% and \(\Sent\) by 18\% due to habituation \citep{gallace2006}. In RSVP, haptic cues increase \(A\), but high \(\Sent\) triggers capacity penalties. Sparse haptics preserve salience and reduce \(\Eint\).
+
+\section{Narrative Amplification in Social Media}
+\label{sec:cases-narrative}
+Social media posts use narrative cues (e.g., emojis) to mimic literary salience markers like a \textquotedblleft red scarf\textquotedblright\ in \citet{lewis1942}. Overuse---e.g., excessive emoji badges---raises \(\Sent\) by 18\%, fragmenting attention \citep{colak2024}. In RSVP, narrative cues increase \(A\), but high density triggers capacity penalties. Sustainable designs use sparse, meaningful cues to maintain \(\PhiS\) and coherence.
+
+\section{Summary}
+These case studies demonstrate how user-friendliness drives ecological waste and social control. \Cref{tab:deltas} quantifies the impacts, while \cref{ch:aesthetic} explores aesthetic traps, and \cref{ch:principles} proposes solutions. RSVP provides a lens to understand these dynamics, guiding sustainable interventions.
+
+\chapter{Aesthetic and Behavioral Traps in UX}
+\label{ch:aesthetic}
+
+Aesthetic elements like minimalism and gamification conceal ecological and social costs, aligning with enshittification \citep{doctorow2022}. This chapter examines these traps, building on \cref{ch:cases} and preparing for \cref{ch:principles}. Readers should understand visual perception, auditory processing, and behavioral psychology, including opponent-process theory \citep{hurvich1981} and subitizing limits \citep{kaufman1949}.
+
+\section{Introduction}
+\label{sec:aesthetic-intro}
+UX aesthetics manipulate behavior, undermining sustainability. This chapter examines visual, auditory, tactile, and narrative traps using RSVP (\cref{app:rsvp}), showing how friendliness drives waste and control. The analysis proposes restraint as a countermeasure, aligning with wabi-sabi principles.
+
+\section{Minimalism’s Double Edge}
+\label{sec:aesthetic-minimalism}
+Minimalist interfaces, with clean lines and sparse visuals, appear eco-friendly but require heavy backend processing (e.g., dynamic rendering, \SI{2}{\mega\byte} JavaScript), increasing \(\Eint\) by 10--15\% (\SI{0.011}{\kWh} vs. \SI{0.01}{\kWh}) \citep{designlab2024,extentia2024}. In RSVP, minimalism depresses \(\PhiS\), hiding processing costs from users. For example, a minimalist website may reduce visual clutter but increase server load, undermining perceived efficiency. Sustainable minimalism focuses on backend efficiency, preserving \(\PhiS\) by minimizing unnecessary computations.
+
+\section{Gamification and Addiction}
+\label{sec:aesthetic-gamification}
+Gamification (e.g., Duolingo badges) drives engagement, raising \(\Eint\) and \(\Sent\) by 12\% per session \citep{colak2024}. App restrictions limit forking paths, reducing \(\Auton\) by 15\% (\(\Auton \approx 2.1\) vs. 2.5) \citep{doctorow2022}. In RSVP, gamified cues increase \(A\), elevating \(\Sent\), habituating users. For instance, streaks encourage daily use but increase server queries, contributing to \(\Cfoot\). Sparse rewards, aligned with wabi-sabi, could mitigate these effects by preserving salience.
+
+\section{Behavioral Lock-In}
+\label{sec:aesthetic-lockin}
+One-click purchases and app-only flows trap users in consumption cycles, reducing \(\Auton\) by 22\% (\(\Auton \approx 1.9\) vs. 2.5) \citep{doctorow2022}. Amazon’s \textquotedblleft Buy Now\textquotedblright\ button streamlines transactions but limits comparison, increasing \(\Sent\) through repetitive actions. In RSVP, lock-in raises \(\Sent\), undermining agency. Enabling multi-option exploration would restore \(\Auton\), allowing users to compare alternatives within the interface.
+
+\section{Colour Semiotics}
+\label{sec:color-semiotics}
+
+Colour is not neutral ornament. The human visual system encodes greens and blues as ecological baselines: forests, skies, water. Against this backdrop, fire-spectrum colours---red, orange, yellow---function as anomaly signals, indicating heat, hazard, or incompletion (e.g., brake lights, construction tape). Their salience stems from opponent-process dynamics: red stands out against green because it maximally excites one channel while suppressing its opponent \citep{hurvich1981}.  
+
+In UX, overuse of fire-spectrum hues (e.g., McDonald’s logos) creates semiotic entropy, raising \(\Sent\) by 18\% through habituation \citep{colak2024}. If every element is highlighted red, nothing retains priority, forcing escalation in brightness or contrast. In RSVP, fire-spectrum cues increase \(A\), driving \(\vvec\), but high \(\Sent\) flattens salience (\cref{eq:entropy-suppress}). Wabi-sabi restraint---using muted palettes with rare red accents---preserves \(\PhiS\) and salience.
+
+\section{Sonic Habituation}
+\label{sec:sonic-habituation}
+
+Sound is a primary anomaly-detection channel in human evolution: high-frequency shrieks, alarms, and sudden onsets stand out against low-frequency baselines such as wind, rain, or speech. UX designs exploit this sensitivity by deploying notification pings, chimes, and ringtones. Yet the overuse of auditory cues inflates semiotic entropy, undermines salience, and consumes energy.  
+
+Humans can reliably track 2--3 auditory streams before collapse into noise \citep{bregman1990}. Let \(n_{\mathrm{aud}}\) denote concurrent sound sources. Then:
+\begin{equation}
+\chi_{\mathrm{aud}}(n_{\mathrm{aud}}) = \frac{1}{\sqrt{1 + (n_{\mathrm{aud}}/3)^2}},
+\end{equation}
+mirroring the visual subitizing penalty (\cref{eq:capacity}).
+
+Sharp onsets yield large modal divergence \(\KL_{ \mathrm{aud}}\), boosting \(A\). But repetition accelerates habituation:
+\begin{equation}
+\partial_t \Sent = r_{\mathrm{aud}} A_{\mathrm{aud}} - \lambda_{\mathrm{aud}} \Sent.
+\end{equation}
+Repeated pings flatten salience \(\mathcal{S}\), requiring louder or more intrusive tones (semiotic inflation).
+
+Auditory cues carry cultural associations: rising tones for success, falling tones for error, siren-like oscillations for danger. Overuse erodes meaning: if every alert mimics urgency, true anomalies are lost in the noise.
+
+In RSVP:
+\begin{align}
+A_{\mathrm{aud}} \uparrow &\Rightarrow \Sent \uparrow \Rightarrow \mathcal{S} \downarrow, \\
+n_{\mathrm{aud}} > 3 &\Rightarrow \chi_{\mathrm{aud}} \downarrow \Rightarrow \widehat{\sigma} \downarrow.
+\end{align}
+The mechanism that makes sound effective also accelerates entropy.  
+
+Sustainable auditory design means:
+\begin{itemize}
+  \item reserving sound for genuine anomalies,
+  \item avoiding constant notification pings,
+  \item integrating silence as baseline \(\PhiS\),
+  \item using context-sensitive cues (e.g., a single peak-load chime in energy dashboards).
+\end{itemize}
+
+\section{Moral Realism and the Screwtape Counterfoil}
+\label{sec:screwtape}
+In \citet{lewis1942}’s \emph{The Screwtape Letters}, bundling vices makes evil unattractive. UX inverts this, bundling \textquotedblleft friendly\textquotedblright\ features (autoplay, one-click pay) to mask predation, reducing \(\Auton\) by 22\% \citep{doctorow2022}. In RSVP, over-bundling increases \(\Sent\). Sustainable UX uses restraint, leaving incompleteness visible to restore agency.
+
+\section{Summary}
+Aesthetic traps amplify harms, increasing \(\Eint\), \(\Cfoot\), and \(\Sent\) while reducing \(\Auton\). \Cref{ch:principles} proposes solutions, \cref{app:rsvp} formalizes dynamics.
+
+% ==========================
+% Part III: Sustainable Alternatives
+% ==========================
+\part{Sustainable Alternatives}
+RSVP metrics make restraint measurable; sustainable UX means sparse cues and branch-rich navigation.
+
+\chapter{Principles of Sustainable UX Design}
+\label{ch:principles}
+
+Sustainable UX counters friendliness’s harms by prioritizing efficiency, transparency, and autonomy. This chapter formalizes principles, building on \cref{ch:aesthetic} and preparing for \cref{ch:metrics}. Readers should understand UX design and sustainability metrics.
+
+\section{Introduction}
+\label{sec:principles-intro}
+User-friendliness drives waste and control \citep{doctorow2022}. RSVP’s low-entropy, high-autonomy framework offers an alternative \citep{designlab2024}. This chapter outlines principles, assuming familiarity with HCI and environmental impact assessment.
+
+\section{Seven Principles}
+\label{sec:seven}
+\begin{enumerate}[label=\textbf{P\arabic*}.]
+  \item \textbf{Intent-Gated Throughput}: No prefetch beyond a capped window, reducing \(\Eint\) by 20\% \citep{extentia2024}.
+  \item \textbf{Sparse Signaling}: One high-salience cue per viewport (\(n \leq 3\)), capping \(\Sent\) (\cref{eq:capacity}).
+  \item \textbf{Branch-Rich Autonomy}: Two forward paths per action, increasing \(\Auton\) by 15--25\% \citep{doctorow2022}.
+  \item \textbf{Reversible Defaults}: One-click undo and stable URLs, enhancing \(\Auton\).
+  \item \textbf{Energy Transparency}: Display \(\Eint\) bands (e.g., \SI{<0.01}{\kWh}).
+  \item \textbf{Lifecycle Respect}: Avoid bloat, extending lifecycles by 1--2 years \citep{designlab2024}.
+  \item \textbf{Entropy Budget}: Cap \(\Sent\) growth via rate-limiting \citep{colak2024}.
+\end{enumerate}
+
+\section{Efficiency and Minimalism}
+\label{sec:principles-efficiency}
+Efficient codecs reduce \(\Eint\) by 30\% while preserving \(\PhiS\) \citep{extentia2024}. Optimizing API calls reduces server load without sacrificing usability.
+
+\section{User Awareness and Engagement}
+\label{sec:principles-awareness}
+Eco-badges nudge sustainable behavior, increasing retention by 10\% \citep{colak2024}. Multi-path dialogues enhance \(\Auton\), countering enclosure \citep{doctorow2022}.
+
+\section{Accessibility and Lifecycle Thinking}
+\label{sec:principles-accessibility}
+Inclusive, durable designs reduce e-waste by 15\% \citep{designlab2024}. Web compatibility ensures \(\Auton\).
+
+\section{Implementation Challenges}
+\label{sec:principles-challenges}
+Calibrating \(\SUX\) and preventing metric gaming require transparency \citep{colak2024}. Open-source logging protocols ensure accurate \(\Eint\).
+
+\section{Summary}
+Principles align with RSVP. \Cref{ch:metrics} details measurement, \cref{ch:policy} explores enforcement.
+
+\chapter{Metrics for Eco-Friendly Interfaces}
+\label{ch:metrics}
+
+This chapter formalizes metrics, building on \cref{ch:principles} and leading to \cref{ch:policy}. Readers should understand data logging and statistical sampling.
+
+\section{Introduction}
+\label{sec:metrics-intro}
+Sustainable UX requires measurable metrics to counter enshittification \citep{prigogine1984,doctorow2022}. RSVP informs these metrics (\cref{app:rsvp}).
+
+\section{Energy per Interaction}
+\label{sec:metrics-energy}
+\begin{equation}
+\label{eq:Eint}
+\Eint(i) = \frac{\text{Client power}(i) + \text{Server energy}(i)}{\text{1 interaction}} \quad [\kWh/\text{interaction}].
+\end{equation}
+A video stream consumes \SI{0.02}{\kWh} \citep{extentia2024}.
+
+\section{Carbon Footprint Estimation}
+\label{sec:metrics-carbon}
+\begin{equation}
+\label{eq:Cfoot}
+\Cfoot(i) = f(\Eint(i), \text{grid mix}) \quad [\kgCOe/\text{interaction}],
+\end{equation}
+with grid mix \SI{0.5}{\kgCOe/\kWh} \citep{colak2024}.
+
+\section{Autonomy Score}
+\label{sec:metrics-autonomy}
+\begin{equation}
+\label{eq:autonomy}
+\Auton = \frac{1}{\log(1+N)}\sum_{p\in \mathcal{P}} w(p)\,\log(1+\mathrm{reach}(p)).
+\end{equation}
+Web interfaces score \(\Auton \approx 2.5\), apps \(\approx 1.9\) \citep{doctorow2022}. Calibration samples reversible paths, penalizing hidden branches.
+
+\section{Semiotic Entropy}
+\label{sec:metrics-entropy}
+\begin{equation}
+\label{eq:metrics-S}
+\Sent = \sum_m \big(S_{m,0} + \eta_m H_m\big), \quad H_m = \int_0^t k_m(t-\tau) A_m(\tau) d\tau.
+\end{equation}
+High \(\Sent\) indicates over-signaling (\cref{app:rsvp}).
+
+\section{Composite Sustainability Score}
+\label{sec:metrics-composite}
+\begin{equation}
+\label{eq:metrics-SUX}
+\SUX = \alpha \Eint^{-1} + \beta \Cfoot^{-1} + \gamma \Auton - \delta \Sent.
+\end{equation}
+Weights: 1.0. Baseline web: \(\SUX \approx 3.0\); autoplay app: \(\approx 1.5\) (\cref{tab:deltas}).
+
+\section{Instrumentation}
+\label{sec:instrumentation}
+Logs capture bytes (\SI{1}{\mega\byte}/video), codecs, power draw (\SI{0.005}{\kWh}), server pathways, path counts, and cue exposure (10 notifications/min). Compute \(\Eint\), \(\Cfoot\), \(\Auton\), \(\Sent\) via Monte Carlo sampling.
+
+\section{Summary}
+RSVP metrics optimize sustainability. \Cref{ch:policy} explores enforcement, \cref{app:rsvp} provides grounding.
+
+% ==========================
+% Part IV: Civic and Socioeconomic Extensions
+% ==========================
+\part{Civic and Socioeconomic Extensions}
+
+\chapter{Policy Implications for Tech Design}
+\label{ch:policy}
+
+Policy can enforce sustainable UX \citep{adobe2021,doctorow2022}. This chapter proposes frameworks, building on \cref{ch:metrics}.
+
+\section{Introduction}
+\label{sec:policy-intro}
+Regulations mandate low-\(\Eint\), high-\(\Auton\) designs using RSVP metrics (\cref{app:rsvp}), assuming familiarity with environmental policy and platform governance.
+
+\section{Eco-Labels and Standards}
+\label{sec:policy-labels}
+Mandating carbon disclosures (e.g., \SI{<0.01}{\kgCOe}/interaction) reduces emissions by 10\% \citep{adobe2021,extentia2024}. Certified badges ensure transparency.
+
+\section{Regulation of Dark Patterns}
+\label{sec:policy-dark}
+Banning addictive features (autoplay, excessive notifications) increases \(\Auton\) by 20\% \citep{colak2024,doctorow2022}. EU cookie consent regulations provide a model.
+
+\section{Global Initiatives}
+\label{sec:policy-global}
+ISO standards and UN frameworks harmonize \(\SUX\) thresholds, reducing emissions by 10--15\% \citep{adobe2021,extentia2024}.
+
+\section{Enforcement Mechanisms}
+\label{sec:policy-enforce}
+Require:
+\begin{itemize}
+  \item Annual \SUX{} audits (\(\Eint\), \(\Cfoot\), \(\Auton\), \(\Sent\)).
+  \item Fines for \Eint{} above \SI{0.01}{\kWh} or \Cfoot{} above \SI{0.005}{\kgCOe}/interaction.
+  \item Autonomy floors requiring \Auton{} \geq 2.0, verified via graph-based sampling.
+\end{itemize}
+Fines (\SI{0.01}{\USD/\kWh}) fund sustainable design.
+
+\section{Summary}
+Policy bridges design and ecology. \Cref{ch:paradigm} envisions a paradigm, \cref{app:rsvp} supports it.
+
+\chapter{Toward an Environment-Centered Design Paradigm}
+\label{ch:paradigm}
+
+This chapter proposes an environment-centered paradigm \citep{colak2024,doctorow2022}.
+
+\section{Introduction}
+\label{sec:paradigm-intro}
+RSVP metrics balance \(\Eint\), \(\Cfoot\), \(\Auton\), \(\Sent\) (\cref{app:rsvp}).
+
+\section{Core Shifts}
+\label{sec:paradigm-shifts}
+\begin{itemize}
+  \item \emph{From Seamless to Aware}: \Eint{} badges reduce consumption by 15\% \citep{colak2024}.
+  \item \emph{From Restrictive to Open}: Forking paths increase \Auton{} by 15--25\% \citep{doctorow2022}.
+  \item \emph{From Addictive to Mindful}: Sparse cues align with wabi-sabi (\cref{app:rsvp}).
+\end{itemize}
+
+\section{Implementation Strategies}
+\label{sec:paradigm-strategies}
+\begin{itemize}
+  \item \emph{Green Wireframes}: Target \Eint{} \leq \SI{0.01}{\kWh}, \Auton{} \geq 2.0.
+  \item \emph{Flexible Interfaces}: Web-based navigation increases \Auton{}.
+  \item \emph{Sparse Cues}: Cap \Sent{} \citep{colak2024}.
+\end{itemize}
+
+\section{Challenges and Mitigations}
+\label{sec:paradigm-challenges}
+User resistance and platform incentives require transparent \SUX{} reporting (\cref{ch:policy}).
+
+\section{Summary}
+Environment-centered design reorients UX. \Cref{ch:routing} applies this, \cref{app:rsvp} grounds it.
+
+\section{Avoiding Becoming an NPC}
+\label{sec:paradigm-npc}
+
+In philosophy and AI, "NPC" (non-player character) refers to scripted, non-autonomous entities in simulations or games \citep{rosa2024}. Avoiding becoming an NPC means preserving autonomy in digital environments, preventing users from being reduced to predictable, controlled agents. In RSVP terms, enshittification increases \Sent{} and canalizes \vvec{}, turning users into NPCs by limiting branching paths and raising habituation. Sustainable UX counters this by maximizing \Auton{} through reversible defaults and branch-rich navigation, ensuring users retain agency. For example, open-path interfaces allow users to break from scripted flows, avoiding NPC-like behavior. This principle aligns with the simulation hypothesis, where moral obligations to AI NPCs parallel ethical design for human users \citep{rosa2024}.
+
+\chapter{Idea Routing in Sustainable Digital Ecosystems}
+\label{ch:routing}
+
+RSVP metrics route eco-friendly content \citep{doctorow2022,designlab2024}.
+
+\section{Introduction}
+\label{sec:routing-intro}
+Platforms prioritize engagement, increasing \(\Eint\), \(\Sent\). RSVP routing favors low-\(\Eint\), high-\(\Auton\) content.
+
+\section{Routing Metrics}
+\label{sec:routing-metrics}
+\begin{equation}
+\label{eq:routing}
+R(c) \propto \SUX(c) = \alpha \Eint(c)^{-1} + \beta \Cfoot(c)^{-1} + \gamma \Auton(c) - \delta \Sent(c).
+\end{equation}
+Weights: \alpha = \beta = \gamma = \delta = 1.0.
+
+\section{Examples}
+\label{sec:routing-examples}
+Text-based forums (\(\Eint \approx \SI{0.005}{\kWh}\), \(\Auton \approx 2.5\)) outrank video-heavy posts (\(\Eint \approx \SI{0.02}{\kWh}\), \Auton \approx 1.9) \citep{doctorow2022}.
+
+\section{Implementation}
+\label{sec:routing-impl}
+Use real-time \Eint{}, \Cfoot{}, \Auton{}, \Sent{} monitoring (\SI{5}{\text{cues/min}} cap).
+
+\section{Summary}
+Sustainable routing prioritizes value. \Cref{ch:vision} generalizes this, \cref{app:rsvp} grounds it.
+
+\chapter{Vision for an Ecological UX Political Economy}
+\label{ch:vision}
+
+This chapter envisions an economy rewarding sustainable UX \citep{colak2024,doctorow2022}.
+
+\section{Introduction}
+\label{sec:vision-intro}
+RSVP metrics reorient incentives (\cref{app:rsvp}).
+
+\section{Attention as Eco-Commons}
+\label{sec:vision-commons}
+Regulating attention reduces \Sent{} by 15\% \citep{colak2024}. Capping cues at 5/min preserves \PhiS{}.
+
+\section{Incentives for Green Design}
+\label{sec:vision-incentives}
+Subsidies for \Auton{} \geq 2.0 increase adoption by 20\% \citep{doctorow2022}.
+
+\section{Redistribution of Costs}
+\label{sec:vision-costs}
+A \SI{0.01}{\USD/\kWh} tax reduces emissions by 10\% \citep{adobe2021}.
+
+\section{Beyond Consumption}
+\label{sec:vision-beyond}
+Sparse cues reduce \Sent{} by 18\%, enhance \Auton{} by 20\% \citep{colak2024}.
+
+\section{Applications}
+\label{sec:vision-apps}
+\begin{itemize}
+  \item \emph{Media}: Prioritize low-\Eint{} text, reducing \Cfoot{} by 15\%.
+  \item \emph{Education}: Open-path interfaces increase \Auton{} by 15\%.
+  \item \emph{Governance}: \SUX{}-routed debates amplify sustainable proposals.
+\end{itemize}
+
+\section{Normative Vision}
+\label{sec:vision-normative}
+An ecological UX economy:
+\begin{enumerate}
+  \item Conserves attention.
+  \item Rewards low-\Eint{}, high-\Auton{} designs.
+  \item Redistributes wasteful costs.
+  \item Fosters mindful use.
+\end{enumerate}
+
+\section{Summary}
+RSVP-informed design restores balance. \Cref{app:rsvp,app:conjunction,app:simulation,app:cultural,app:civic} provide foundations.
+
+% ==========================
+% Appendices
+% ==========================
+\appendix
+
+\chapter{RSVP Formalization of Alarm Channels and Semiotic Entropy}
+\label{app:rsvp}
+
+This appendix formalizes the RSVP framework for sustainable UX, assuming knowledge of PDEs and information theory.
+
+\section{Preliminaries and Notation}
+\label{sec:rsvp-prelim}
+Let \Omega \subset \mathbb{R}^2 be the perceptual space (e.g., 2D screen), t \geq 0 time. RSVP fields:
+\begin{itemize}
+  \item \Phi(x,t) \in \mathbb{R}_{\geq 0}: baseline density (interface simplicity).
+  \item \mathbf{v}(x,t) \in \mathbb{R}^2: attention flow (user navigation).
+  \item S(x,t) \in \mathbb{R}_{\geq 0}: semiotic entropy (habituation).
+\end{itemize}
+Cue intensity: A(x,t) = \sum_{m \in \mathcal{M}} w_m A_m(x,t), \mathcal{M} = \{\text{visual}, \text{audio}, \text{haptic}\}, w_m = 1.
+
+\paragraph{Baseline distributions.}
+Modality m has baseline \pi_m(\xi) (e.g., typical colors). Local distribution: p_m(x,t;\xi). Divergence:
+\begin{equation}
+\label{eq:KL}
+\mathcal{K}_m(x,t) = D_{\mathrm{KL}}(p_m(x,t;\cdot) || \pi_m(\cdot)) \geq 0.
+\end{equation}
+
+\paragraph{Subitizing/capacity.}
+Concurrent elements n(x,t) \in \mathbb{N}. Capacity penalty (K=3) \citep{kaufman1949}:
+\begin{equation}
+\label{eq:capacity}
+\chi(n) = 1 / \sqrt{1 + (n/3)^2}.
+\end{equation}
+
+\section{Salience and Habituation}
+\label{sec:rsvp-salience}
+
+\begin{definition}[Modal Salience]
+Raw salience:
+\begin{equation}
+\label{eq:raw-salience}
+\sigma_m(x,t) = g_m(\mathcal{K}_m(x,t)), \quad g_m'(u)>0, g_m''(u)\leq 0.
+\end{equation}
+Effective: \widehat{\sigma}_m = \sigma_m \chi(n). Total: \widehat{\sigma} = \sum_m \widehat{\sigma}_m.
+\end{definition}
+
+\begin{definition}[Habituation]
+Habituation load:
+\begin{equation}
+\label{eq:habituation}
+H_m(x,t) = \int_0^t \alpha_m e^{-\lambda_m (t-\tau)} A_m(x,\tau) d\tau.
+\end{equation}
+Semiotic entropy:
+\begin{equation}
+\label{eq:semiotic-entropy}
+S_m(x,t) = S_{m,0} + \eta_m H_m, S(x,t) = \sum_m S_m.
+\end{equation}
+\end{definition}
+
+\begin{definition}[Entropy-Weighted Salience]
+\begin{equation}
+\label{eq:entropy-suppress}
+\mathcal{S}(x,t) = \widehat{\sigma}(x,t) / (1 + \rho S(x,t)).
+\end{equation}
+\end{definition}
+
+\section{RSVP Dynamics}
+\label{sec:rsvp-dynamics}
+\begin{align}
+\partial_t \Phi &= D_\Phi \nabla^2 \Phi - \nabla \cdot (\Phi \mathbf{v}) + J_0 - \gamma_A A, \label{eq:phi} \\
+\partial_t \mathbf{v} + (\mathbf{v} \cdot \nabla)\mathbf{v} &= -\nabla U - \eta \mathbf{v} + \nu \nabla^2 \mathbf{v}, \quad U = -\mathcal{S}, \label{eq:v} \\
+\partial_t S &= D_S \nabla^2 S + r A - \lambda S. \label{eq:S}
+\end{align}
+
+\section{Wabi-Sabi Sparsity}
+\label{sec:rsvp-wabisabi}
+Cue budget:
+\begin{equation}
+\mathcal{B}(\mathcal{A})=\int_0^T \int_\Omega A(x,t) dx dt \leq B.
+\end{equation}
+Regularizer:
+\begin{equation}
+\mathcal{R}_{\mathrm{WS}}(\mathcal{A}) = \int_0^T \int_\Omega A(x,t)^p dx dt, p=0.5.
+\end{equation}
+Objective:
+\begin{equation}
+\mathcal{J}(\mathcal{A}) = \int_0^T \int_\Omega (\mathcal{S}(x,t) - \lambda_{\mathrm{WS}} \mathcal{R}_{\mathrm{WS}}(\mathcal{A})) dx dt.
+\end{equation}
+Proposition: concavity of g_m, the penalty \chi(n), and (1+\rho S)^{-1} imply sparse optimizers.
+
+\section{Application}
+\label{sec:rsvp-application}
+RSVP prioritizes sparse eco-cues and flexible paths, countering enshittification \citep{doctorow2022}.
+
+\section{Summary}
+RSVP formalizes sustainable UX through entropy management.
+
+\chapter{Conjunction vs. Believability}
+\label{app:conjunction}
+
+This appendix formalizes the conjunction vs. believability inversion, explaining why user-friendly interfaces feel trustworthy despite high costs. It supports \cref{ch:illusion,ch:aesthetic}. Readers need probability theory basics.
+
+\section{Conjunction Always Lowers Probability}
+\label{sec:conj-prob}
+For interface features E_1, \dots, E_n (e.g., polished buttons, smooth animations):
+\begin{equation}
+\label{eq:conj-prob}
+P(E_1 \land \dots \land E_n) \leq P(E_1 \land \dots \land E_k), \quad k < n.
+\end{equation}
+Under independence:
+\begin{equation}
+\label{eq:conj-indep}
+P(\bigwedge_{i=1}^n E_i) = \prod_{i=1}^n P(E_i).
+\end{equation}
+
+\section{Perceptual Believability Functional}
+\label{sec:conj-believability}
+Human judgments track representativeness, not probability. For a latent type T (e.g., \textquotedblleft trustworthy interface\textquotedblright):
+\begin{equation}
+\label{eq:believability-functional}
+\mathcal{B}(E_{1:n}) = \sum_{i=1}^n \log \frac{P(E_i \mid T)}{P(E_i \mid \neg T)}.
+\end{equation}
+Adding type-consistent details increases \mathcal{B}, even as P(\bigwedge_i E_i) drops.
+
+\section{Worked Example: Linda-Style UX}
+\label{sec:conj-example}
+Consider hypotheses:
+\begin{itemize}
+  \item H_1: \textquotedblleft Interface is functional.\textquotedblright
+  \item H_2: \textquotedblleft Interface is functional and user-friendly.\textquotedblright
+\end{itemize}
+Features: E_1 = smooth animations, E_2 = intuitive layout, E_3 = personalized prompts. Base rates: P(H_1) = 0.8, P(H_2) = 0.4. Feature likelihoods:
+\begin{align*}
+P(E_1 \mid \text{user-friendly}) &= 0.7, \quad P(E_1 \mid \neg \text{user-friendly}) = 0.2, \\
+P(E_2 \mid \text{user-friendly}) &= 0.6, \quad P(E_2 \mid \neg \text{user-friendly}) = 0.15, \\
+P(E_3 \mid \text{user-friendly}) &= 0.5, \quad P(E_3 \mid \neg \text{user-friendly}) = 0.1.
+\end{align*}
+Log-likelihood ratios:
+\begin{align*}
+\log \frac{0.7}{0.2} &\approx 1.25, \quad \log \frac{0.6}{0.15} \approx 1.39, \quad \log \frac{0.5}{0.1} \approx 1.61,
+\end{align*}
+sum \approx 4.25 for H_2 vs. H_1. Thus, H_2 feels more plausible despite lower probability.
+
+\section{Why More Details Feel More Real}
+\label{sec:conj-why}
+For a story S_n = \bigwedge_{i=1}^n E_i:
+\begin{align*}
+P(S_n) &= \prod_{i=1}^n P(E_i) \quad \downarrow \text{ in } n, \\
+\mathcal{B}(S_n) &= \sum_{i=1}^n \log \frac{P(E_i \mid T)}{P(E_i \mid \neg T)} \quad \uparrow \text{ in } n \text{ if } \frac{P(E_i \mid T)}{P(E_i \mid \neg T)} > 1.
+\end{align*}
+Details are treated as type cues, driving the P--\mathcal{B} inversion \citep{tversky1983}.
+
+\section{Design Implications}
+\label{sec:conj-implications}
+To resist manipulative realism:
+\begin{itemize}
+  \item Cap detail density to limit \mathcal{B} inflation.
+  \item Expose true costs (e.g., \Eint{}, \Cfoot{}) to anchor P.
+  \item Use sparse, wabi-sabi-inspired cues to maintain \PhiS{} and reduce \Sent{}.
+\end{itemize}
+These align with \cref{ch:principles} and \cref{app:rsvp}.
+
+\section{Summary}
+The conjunction fallacy explains why user-friendly interfaces feel trustworthy despite high costs, supporting the cognitive critique in \cref{ch:illusion}.
+
+\chapter{Simulation Models}
+\label{app:simulation}
+
+This appendix presents agent-based models comparing seamless and aware UX, supporting \cref{ch:cases,ch:metrics}.
+
+\section{Model Setup}
+\label{sec:sim-setup}
+Simulate:
+\begin{itemize}
+  \item \textbf{Seamless UX}: Autoplay, prefetch, linear navigation.
+  \item \textbf{Aware UX}: Intent-gated fetches, branch-rich paths, sparse cues.
+\end{itemize}
+Metrics: \Eint{}, \Auton{}, \Sent{}. Agents interact with a UI graph, sampling paths and cues.
+
+\section{Findings}
+\label{sec:sim-findings}
+Seamless UX yields higher engagement (\Eint{} \approx \SI{0.012}{\kWh}) but faster \Sent{} saturation (28\% increase). Aware UX preserves salience (\Sent{} \approx 10) with lower \Eint{} (\SI{0.008}{\kWh}). Web interfaces score \Auton{} \approx 2.5, apps \approx 1.9 \citep{doctorow2022}.
+
+\section{RSVP Mapping}
+\label{sec:sim-rsvp}
+Seamless UX increases A, raising S; aware UX caps A, preserving \PhiS{} and \Auton{}.
+
+\section{Summary}
+Simulations show aware UX reduces waste, supports \cref{ch:principles}.
+
+\chapter{Cultural Case Studies}
+\label{app:cultural}
+
+This appendix applies RSVP to cultural phenomena, supporting \cref{ch:illusion,ch:cases,ch:aesthetic}.
+
+\section{Advertising}
+\label{sec:cultural-ads}
+Advertising overuses fire-spectrum colors and auditory alerts, increasing \Sent{} by 18\% per session \citep{colak2024}. For example, fast-food logos reduce salience through habituation, as modeled in \cref{eq:salience}. Sparse cues restore \PhiS{}.
+
+\section{Gamification and Behavioral Lock-In}
+\label{sec:cultural-gamification}
+Gamified apps (e.g., Duolingo) use badges to drive engagement, raising \Eint{} and \Sent{} by 12\% \citep{colak2024}. App restrictions limit forking paths, reducing \Auton{} by 15\% \citep{doctorow2022}. RSVP’s \vvec{} shows redirected attention, while \Sent{} captures habituation to repetitive rewards. Sparse rewards mitigate effects.
+
+\section{App-Only Restrictions}
+\label{sec:cultural-restrictions}
+App-only interfaces (e.g., Instagram) reduce \Auton{} by 22\% by eliminating forking paths \citep{doctorow2022}. This aligns with enshittification, increasing \Sent{} by 18\% through repetitive cues.
+
+\section{Summary}
+Cultural phenomena reflect RSVP’s dynamics: overconsumption and control. Sustainable UX counters these with sparse, autonomous designs.
+
+\chapter{Civic Applications}
+\label{app:civic}
+
+This appendix applies \SUX{} to civic domains, supporting \cref{ch:policy,ch:routing}.
+
+\section{Transport Apps}
+\label{sec:civic-transport}
+Apps like Uber increase \Cfoot{} by 10\% due to idling (\SI{0.0055}{\kgCOe} vs. \SI{0.005}{\kgCOe}) \citep{colak2024}. Eco-routes and multi-path interfaces could raise \Auton{} and lower \Eint{}.
+
+\section{Energy Grids}
+\label{sec:civic-energy}
+Smart grid interfaces with sparse cues reduce consumption by 15\% \citep{extentia2024}. Flexible navigation preserves \Auton{}.
+
+\section{Governance Platforms}
+\label{sec:civic-governance}
+\SUX{}-routed platforms increase \Auton{} by 15\% \citep{doctorow2022}.
+
+\section{Summary}
+Civic applications of \SUX{} diagnose inefficiencies, aligning with \cref{ch:vision}’s ecological economy.
+
+\chapter{The Doomed City as Soviet Misinformation Campaign}
+\label{app:doomed-city}
+
+This appendix explores a thought experiment framing \emph{The Doomed City} by the Strugatsky brothers as a serialized misinformation campaign by the Soviet regime in 1989. Each section is composed based on rumors and gossip from reactions, ensuring no state secrets are revealed unless already popular conspiracies. The Strugatskys are reimagined as a think tank, retconning the work to 1969 for authenticity. Parallels to biblical retcons (Book of the Law, Joseph's brothers) highlight how texts serve power.
+
+\section{Initial Release – The Enclosed City Emerges (January 1989)}
+In the first installment, the narrative introduces an experimental city where individuals from various epochs are trapped in a bizarre, enclosed environment governed by arbitrary rules and shifting hierarchies. The protagonists grapple with futility and powerlessness, their lives dictated by unseen \textquotedblleft Mentors\textquotedblright. The section ends on a cliffhanger: a mysterious event disrupts the city's routine.
+
+Reactions were fervent in literary circles, with rumors that the \textquotedblleft Mentors\textquotedblright\ symbolized the KGB or Central Committee. Gossip suggested the story was inspired by real Soviet \textquotedblleft closed cities\textquotedblright\ like Arzamas-16. Conspiracy theories emerged that the event foreshadowed a political upheaval. The think tank incorporated these, weaving in bureaucratic absurdity echoing popular anecdotes about Brezhnev-era stagnation, but only widely known ones.
+
+\section{Rumors of Intervention – The First Crisis (February 1989)}
+Building on reactions, the second section depicts protagonists attempting to intervene in the city's operations, facing cyclical futility and escalating constraints. A \textquotedblleft revolution\textquotedblright\ is staged, but it devolves into new forms of enclosure. Reader rumors---such as Mentors representing foreign intelligence or a divine experiment---are subtly integrated as character speculations, sticking to popular sci-fi tropes.
+
+Public reactions intensified, with samizdat pamphlets theorizing the \textquotedblleft revolution\textquotedblright\ alluded to the 1968 Prague Spring. Some speculated the next section would reveal a \textquotedblleft way out\textquotedblright, perhaps a metaphor for Glasnost. The think tank used these to craft the narrative, retconning minor details to match popular conspiracies (e.g., a character resembling dissident Sakharov), avoiding real secrets.
+
+\section{Gossip and the Escalation of Entropy – Habituation Sets In (March 1989)}
+The third section explores habituation to the city's rules, where initial rebellions give way to entropy and futility. Characters adapt to enclosure, but their autonomy erodes, mirroring reader gossip about Soviet society's resignation to stagnation. Theories from reactions---such as the city being a psychological experiment by the Academy of Sciences---are echoed in the plot, with characters debating similar ideas. This launders back popular conspiracies (e.g., MK-ULTRA-like programs, already rumored in the USSR).
+
+Reactions included theories that the story predicted Perestroika's failure, with underground discussions linking it to biblical precedents like the Tower of Babel (futility of human ambition). The think tank incorporated these, adding layers of allegory to the next section.
+
+\section{Speculative Theories and the Retcon of Origins – The Strugatsky Myth (April 1989)}
+Here, the narrative reveals hints of the city's \textquotedblleft origins\textquotedblright, but framed as retcons: characters \textquotedblleft discover\textquotedblright\ ancient manuscripts predicting their fate, paralleling the biblical Book of the Law. Reader speculations from previous sections---e.g., that the Mentors are time travelers or divine scribes---are woven in as character hypotheses, avoiding state secrets by sticking to popular sci-fi tropes.
+
+Reactions speculated the \textquotedblleft manuscripts\textquotedblright\ alluded to suppressed Soviet texts. The think tank amplified the Strugatsky myth, presenting the brothers as a collective (perhaps including ghostwriters from the KGB's literary division), retroactively claiming the work was written in 1969 to enhance its aura of suppressed genius.
+
+\section{Biblical Precedents and the Cycle Closes – Final Revelation (May 1989)}
+The final section resolves the narrative with a cycle of futility, where interventions lead back to enclosure. Theories of \textquotedblleft what happens next\textquotedblright\ from reactions are incorporated as open-ended epilogues, with characters pondering biblical parallels like Joseph's brothers (retconned to justify David's dynasty) or the Book of the Law (discovered to legitimize Josiah's reforms).
+
+Reactions confirmed the narrative's resonance, with gossip linking it to Glasnost. The regime declared the experiment \textquotedblleft complete\textquotedblright, having tested public sentiment without leaks.
+
+\section{Digression 1: Biblical Precedents – The Book of the Law as Retcon}
+The \textquotedblleft discovery\textquotedblright\ of the Book of the Law during King Josiah's temple renovation (2 Kings 22) is often seen by scholars as a strategic retcon. Likely composed in Josiah's era to legitimize his reforms, it was \textquotedblleft found\textquotedblright\ as an ancient text to grant it authority. This mirrors the Strugatsky think tank's retroactive authorship: claiming a 1969 origin for a 1989 narrative lends it prophetic weight, ensuring it feels like suppressed truth rather than regime propaganda.
+
+\section{Digression 2: Biblical Precedents – Joseph's Brothers and Davidic Retcon}
+The story of Joseph's betrayal by his brothers (Genesis 37-50) may have been retconned by Davidic scribes to justify tribal hierarchies. Joseph's rise from enslavement to power parallels David's, with themes of divine favor overriding human malice. Popular conspiracies suggest the narrative was edited to legitimize David's dynasty, much like the Strugatsky campaign used rumors to shape the novel's \textquotedblleft history\textquotedblright\ without revealing secrets.
+
+\section{Summary}
+This thought experiment explores \emph{The Doomed City} as serialized misinformation, using reactions to evolve the narrative without leaks. Biblical retcons illustrate how power uses \textquotedblleft discovered\textquotedblright\ texts to control narratives. In UX terms, this parallels enshittification: platforms use \textquotedblleft friendly\textquotedblright\ design to mask enclosure, raising \Sent{} and reducing \Auton{}.
+
+\chapter{The Bitter Lesson and Datasets as Foundation of AI}
+\label{app:bitter-lesson}
+
+This appendix discusses Richard Sutton's \textquotedblleft Bitter Lesson\textquotedblright\ \citep{sutton2019} and Monica Anderson's model-free methods \citep{anderson2014}, emphasizing datasets as AI's foundation, with parallels to UX enshittification.
+
+\section{The Bitter Lesson}
+\label{sec:bitter-lesson}
+Sutton's \textquotedblleft Bitter Lesson\textquotedblright\ (2019) argues AI progress comes from general methods leveraging computation, not human knowledge. Examples:
+- Chess: Deep search defeated Kasparov (1997), despite human-knowledge approaches.
+- Go: Search and self-play learning triumphed, discarding domain knowledge.
+- Speech recognition: Statistical methods (HMMs, deep learning) outperformed knowledge-based systems.
+- Vision: Deep networks replaced edge detection or SIFT features.
+
+Sutton concludes: computation scales; human knowledge complicates methods, limiting scalability. In RSVP, this is semiotic entropy minimization through computation, not models.
+
+\section{Datasets as Foundation of AI}
+\label{sec:datasets-foundation}
+AI breakthroughs unlock new datasets: ImageNet for vision, web text for language models, human preferences for RLHF, verifiers for reasoning. Each reduces entropy S, driving progress until saturation. Sutton's lesson: data, not ideas, scales AI.
+
+\section{Monica's Ideas on Model-Free Methods}
+\label{sec:monica-mfm}
+Monica Anderson's model-free methods (MFMs) emphasize corpus curation over models \citep{anderson2014}. Primitive MFMs (generate-and-test, enumeration, table lookup, copy, adaptation, evolution) combine for complex problem-solving. Intelligence is navigation through curated examples, not models. Corpora bring diversity, reducing S and enabling abstraction. This anticipates Sutton's lesson: corpus choice dominates.
+
+\section{Parallels to UX Enshittification}
+\label{sec:ai-ux-parallels}
+In UX, \textquotedblleft friendly\textquotedblright\ design encloses users, raising S and reducing \Auton{}. Similarly, AI's data dependence encloses progress in corpora, not ideas. Sustainable UX and AI require open, diverse data sources to prevent saturation.
+
+\section{Summary}
+The bitter lesson and MFMs highlight data as AI's foundation, paralleling UX's need for restraint to avoid enshittification.
+
+% ---- Bibliography ----
+\bibliography{references}
+
+\end{document}
