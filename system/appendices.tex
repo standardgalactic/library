@@ -1,0 +1,170 @@
+\appendix
+
+\chapter{Philological Notes (Hebrew, Greek, Arabic, Cross-Tradition)}
+This appendix collects philological and comparative notes that support the scriptural exegesis in the main chapters. 
+
+\section*{Hebrew: Job 31:33}
+The Hebrew verb \emph{kasah} (כָּסָה, “to cover, conceal”) is central to Job 31:33. 
+Its semantic field includes both the concrete (covering physical matter such as waste) and the abstract (covering guilt, words, or meaning). 
+The ambiguity allowed scribes to encode dual layers: a hygienic injunction and a hermeneutic strategy of concealment.  
+Cognates in Aramaic and Ugaritic preserve similar double valences, reinforcing the idea that concealment carried ritual, moral, and epistemic weight.  
+Robert Alter’s rendering emphasizes this interpretive density \citep{alter2010wisdom}.  
+Clines’s commentary further explores how concealment in Job reflects broader Ancient Near Eastern practices of scarcity in revelation \citep{clines1989job}.  
+
+\section*{Greek: The Parable of the Sower}
+The Synoptic Gospels (Matthew 13, Mark 4, Luke 8) present the Parable of the Sower.  
+Greek terms such as \emph{speirō} (“to sow”) and \emph{ge} (“earth, ground”) highlight the agricultural imagery, 
+while the Stoic notion of the \emph{logos spermatikos} (“seminal reason”) infuses the parable with philosophical overtones.  
+Seeds are replicators, soils are environments: a natural selection allegory that anticipates Darwinian logic and Bayesian inference, 
+where each seed is a hypothesis tested by conditions of growth.  
+
+\section*{Arabic: \emph{Iqraʾ}}
+The Qur’anic command \emph{iqraʾ} (\emph{أقرأ}) admits seven attested meanings:  
+\begin{enumerate}
+  \item to read or study,  
+  \item to rhyme or versify,  
+  \item to draw near or return,  
+  \item to be delayed or held back,  
+  \item to become pregnant (retaining seed),  
+  \item to menstruate (retaining blood),  
+  \item to rise and warn.  
+\end{enumerate}
+These meanings collectively form a proto-algorithm of cognition: gathering, ordering, delaying, retaining, and broadcasting.  
+They align with later computational metaphors such as buffering, queuing, and triggering.  
+
+\section*{Cross-Tradition Parallels}
+\begin{itemize}
+  \item In Buddhism, the doctrine of \emph{pratītyasamutpāda} (dependent origination) resonates with the parable’s conditional growth: nothing thrives outside relational soil.  
+  \item In Hinduism, the Vedic \emph{ṛta} signifies cosmic order restored through ritual, comparable to the algebraic balance of Al-Khwarizmi.  
+  \item Indigenous oral traditions often employ concealment and delayed disclosure as pedagogical devices: wisdom is revealed only in cycles, preserving scarcity.  
+\end{itemize}
+
+---
+
+\chapter{Full Equations and Proofs (PCT, Active Inference, CTM, RSVP)}
+This appendix contains detailed derivations of the main formal systems referenced in the text.
+
+\section*{Perceptual Control Theory}
+Behavior is modeled as perception control:
+\[
+u(t) = G \big( r(t) - p(t) \big),
+\]
+where $r(t)$ is a reference signal, $p(t)$ the perceived signal, and $G$ the controller gain.  
+Closed-loop stability analysis demonstrates that control requires minimizing the error $e(t) = r(t) - p(t)$ across environments.  
+
+\section*{Active Inference}
+Active inference minimizes variational free energy:
+\[
+F(q) = \mathrm{KL}(q(z)\,\|\,p(z|x)) - \log p(x).
+\]
+Proof: agents act to minimize surprise ($-\log p(x)$), approximating hidden causes $z$ with beliefs $q(z)$.  
+This unifies Bayesian inference with embodied action.  
+
+\section*{Conscious Turing Machine}
+In the CTM, the probability of a chunk $c$ winning access to short-term memory is
+\[
+P(c \text{ wins}) = \frac{w_c}{\sum_i w_i},
+\]
+independent of processor location.  
+Two axioms govern the system: the Global Broadcast Axiom (attention) and the Inspection Axiom (awareness).  
+
+\section*{RSVP PDEs}
+The RSVP dynamics are:
+\[
+\partial_t \Phi + \nabla \cdot (\Phi \mathbf{v}) = -\alpha S,
+\]
+\[
+\partial_t \mathbf{v} + (\mathbf{v}\cdot\nabla)\mathbf{v} = -\nabla \Phi + \beta \nabla S,
+\]
+\[
+\partial_t S + \nabla\cdot(S\mathbf{v}) = \gamma \Delta \Phi - \delta S^2.
+\]
+Fourier analysis reveals smoothing effects, with $-\delta S^2$ ensuring entropy decay and preventing torsion runaway.  
+
+---
+
+\chapter{Computational Complexity and Information Bounds}
+\section*{Complexity Classes}
+RSVP concealment thresholds can be viewed as NP-like barriers: below a given entropy bound, local reconstruction of global state is computationally infeasible.  
+
+\section*{Information-Theoretic Bounds}
+Define the entropy-dependent threshold $\theta(S)$.  
+Any observable $O$ with $\|O\| < \theta(S)$ becomes irretrievable, amounting to lossy compression.  
+This bound ensures structural scarcity of interpretation across observers.  
+
+---
+
+\chapter{Catalogue Entry — Coran Cubic Orthohedron Rectangular and Neat}
+\section*{Description}
+A physical artifact: a 3×2×19 bookshelf designed to house daily and evening scrolls across a Metonic cycle.  
+The acronym “CORAN” encodes Cubic, Orthohedron, Rectangular, and Neat.  
+
+\section*{Symbolism}
+The geometry encodes concealment, restoration, and balance.  
+Its form alludes simultaneously to scriptural cycles, algebraic symmetry, and cosmological recurrence.  
+
+---
+
+\chapter{The Seven Meanings of \emph{Iqraʾ} Poem}
+\section*{Text}
+\begin{quote}
+Read and study, collect, piece it together and know.\\
+Match portion to portion.\\
+Draw near or go back after being away.\\
+Cite, recite, quote.\\
+Be behind, held back, or delayed.\\
+Wait a month.\\
+Get up and Warn.
+\end{quote}
+
+\section*{Analysis}
+Each verse encodes one of the philological senses of \emph{iqraʾ}.  
+Together they form a poetic algorithm of concealment, delay, and revelation.  
+Parallels include Buddhist chanting, Vedic recitation, and liturgical cycles in Judaism and Christianity.  
+
+---
+
+\chapter{LaTeX Macros and Code for Simulations}
+\section*{Macros}
+\begin{verbatim}
+\newcommand{\RSVPphi}{\Phi}
+\newcommand{\RSVPv}{\mathbf{v}}
+\newcommand{\RSVPs}{S}
+\end{verbatim}
+
+\section*{Python Simulation Snippet}
+\begin{verbatim}
+for t in range(T):
+    Phi = Phi - alpha*S*dt - div(Phi*v)*dt
+    v   = v - grad(Phi)*dt + beta*grad(S)*dt
+    S   = S + gamma*laplacian(Phi)*dt - delta*S**2*dt
+\end{verbatim}
+Toy lattice models capture entropy smoothing and vector torsion suppression.  
+
+---
+
+\chapter{Extended Mathematical Infrastructure}
+\section*{Category Theory}
+RSVP formalized as a symmetric monoidal category: objects are field configurations, morphisms are entropy-respecting transformations.  
+
+\section*{Sheaf Theory}
+Sheaf-theoretic gluing encodes how local sections of reality must be combined to reconstruct the plenum.  
+Entropy on overlaps prevents trivial gluing, enforcing viewpoint diversity.  
+
+\section*{Topological Analysis}
+Homotopy colimits guarantee coherence of global states.  
+Spectral gaps in Fourier space reveal crystalline reset and Poincaré recurrence.  
+
+---
+
+\chapter{Bibliographic Annotations}
+\begin{itemize}
+    \item Alter: literary translation of Job as philological grounding.  
+    \item Clines: commentary on Job’s concealment motifs.  
+    \item Baars: Global Workspace Theory.  
+    \item Blum \& Blum: Conscious Turing Machine.  
+    \item Friston: Free Energy Principle.  
+    \item Smolin: Cosmological Natural Selection.  
+    \item Al-Khwarizmi: Algebraic restoration and balancing.  
+    \item Mac Lane and Awodey: category and sheaf theory foundations.  
+\end{itemize}
