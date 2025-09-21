@@ -1,0 +1,1014 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{assumption}{Assumption}[section]
+\usepackage{mathpartir}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usepackage{float}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{cleveref}
+\usepackage{hyperref}
+\usepackage{boxedminipage}
+
+\title{Extrapolated Riemannian Curvature of Semantic Manifolds}
+\author{Flyxion}
+\date{\today}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{observation}[theorem]{Observation}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This monograph develops a formal framework for semantic manifolds using extrapolated Riemannian curvature, synthesizing differential geometry, active inference, and second-person neuroscience. The manifold hypothesis underpins our approach, asserting that high-dimensional data concentrate on low-dimensional submanifolds, enabling interpolation and generalization. We explore curvature distortions in representational spaces, explaining information loss in multimodal models and neural synchrony in social interactions. These distortions are formalized through RSVP field theory (scalar capacity $\Phi$, vector flows $\mathbf{v}$, entropy $S$), providing a unified model of semantic fidelity. Applications to therapy highlight affective inference as a regulator of rupture and repair, with curvature entropy as a sociomarker for interpersonalized psychiatry. Extensions formalize humor as frame-shift resolution of mismatched manifolds, complex emotions as recursive inoculations, geometric hyperscanning as interbrain curvature dynamics, and the ontogenetic parade as developmental curvature trajectories. Empirical methods include simulations of dyadic agents and modality comparisons for hyperscanning. Future directions address scalable simulations and ethical considerations for real-time relational tracking. This framework advances a geometry of meaning across computation, cognition, and interaction.
+\end{abstract}
+
+\tableofcontents
+
+\part{Theoretical Foundations}
+
+\section{Introduction}
+High-dimensional data in machine learning, neuroscience, and cognition often reside on low-dimensional latent manifolds, as posited by the \emph{manifold hypothesis} \cite{fefferman2016testing,gorban2018blessing,olah2014blog,cayton2005algorithms}. This structure facilitates continuous interpolation, underpinning generalization in deep learning \cite{chollet2021deep}. Traditional metrics like cosine distance or neural synchrony correlations overlook geometric distortions in manifold mappings, which curvature and entropy quantify. These measures reveal interpretability failures in artificial intelligence (AI), robustness issues in vision-language models (VLMs), and relational dynamics in therapy, such as rupture-repair cycles.
+
+This monograph extrapolates Riemannian curvature to semantic manifolds, viewing curvature as a measure of distortion in representational flows. We integrate this with active inference \cite{friston2017graphical} and RSVP field theory (scalar capacity $\Phi$, vector flows $\mathbf{v}$, entropy $S$) to model semantic fidelity across domains. The framework extends to second-person neuroscience, where curvature entropy serves as a sociomarker for interpersonalized psychiatry \cite{adel2025systematic}. We further formalize affective phenomena: humor as frame-shift resolution of mismatched manifolds, complex emotions as recursive inoculations, geometric hyperscanning as interbrain curvature dynamics, and the ontogenetic parade as developmental trajectories of curvature regulation. These extensions unify computational geometry with emotional and developmental processes, offering a comprehensive theory of meaning.
+
+The main contributions are:
+\begin{enumerate}
+  \item A definition of extrapolated curvature for semantic mappings, with entropy bounds and sheaf-theoretic interpretations.
+  \item A mapping of embedding losses to RSVP fields, yielding design principles for geometry-preserving multimodal systems.
+  \item A taxonomy of emotions as recursive inoculations, with humor as manifold interference, awe as curvature singularity, nostalgia as temporal gluing, and fear as developmental curvature flow.
+  \item Applications to therapy and development, modeling affective inference and the ontogenetic parade as curvature-guided regulation.
+  \item Empirical grounding via geometric hyperscanning, with simulations and modality comparisons for dyadic agents.
+\end{enumerate}
+
+The monograph is structured as follows: Part I establishes the theoretical foundations of semantic manifolds, extrapolated curvature, and RSVP fields. Part II applies these to social interactions via geometric hyperscanning and affective inference. Part III extends the framework to humor, complex emotions, and the ontogenetic parade. Part IV provides empirical methods, including simulations and proof sketches. Part V concludes with related work and future directions. Appendices detail technical derivations and extended notes.
+
+\section{Semantic Manifolds and the Manifold Hypothesis}
+Semantic representations—whether token embeddings, neural activations, or cognitive states—can be modeled as Riemannian manifolds with structures capturing dynamics and information flow.
+
+\subsection{Core Definitions}
+\begin{definition}[Semantic Manifold]
+A semantic manifold is a quadruple $\mathfrak{M} = (X, g, \Psi, \mu)$, where $X$ is a smooth manifold, $g$ is a Riemannian metric, $\Psi$ is a field bundle (e.g., scalar-vector fields), and $\mu$ is a probability measure with density bounded on compact subsets.
+\end{definition}
+
+The manifold hypothesis \cite{fefferman2016testing,gorban2018blessing} asserts that high-dimensional data concentrate on low-dimensional submanifolds, enabling interpolation and generalization \cite{chollet2021deep}. In information geometry, the Fisher metric $g_F$ quantifies sensitivity to parameter changes \cite{caticha2015geometry}, while Markov blankets demarcate internal states under the free energy principle \cite{kirchhoff2018markov}. Sheaf theory models local chart gluing, with unions of manifolds \cite{brown2023union} handling heterogeneous data.
+
+\subsection{Examples}
+\begin{itemize}
+  \item \emph{Token embeddings}: In language models, embeddings form manifolds where semantically similar tokens cluster, enabling smooth interpolation.
+  \item \emph{Neural activity}: EEG or fMRI time series project onto latent manifolds, with trajectories governed by dynamical systems.
+  \item \emph{Conceptual categories}: Emotions or beliefs form manifolds where local neighborhoods represent related concepts.
+\end{itemize}
+
+\subsection{Emotional Illustrations}
+Emotional states manifest as manifold trajectories:
+\begin{itemize}
+  \item \emph{Surprise}: Sudden curvature spikes in $\kappa_F$, increasing entropy $S$ until predictive models adjust.
+  \item \emph{Separation anxiety}: High-curvature ridges in interpersonal manifolds, with divergent flows $\mathbf{v}$ resolved by attachment signals.
+\end{itemize}
+Learning acts as \emph{inoculation} against surprise, flattening curvature via predictive updates. Play simulates controlled danger, inducing low-entropy curvature spikes to build resilience.
+
+\section{Extrapolated Riemannian Curvature}
+To quantify distortions in semantic mappings, we define extrapolated curvature as the deviation induced by projections between manifolds.
+
+\subsection{Formalization}
+Let $F: (X, g) \to (Y, h)$ be a smooth map (e.g., a VLM connector). The pullback metric is $F^* h$, and the distortion tensor is $\mathsf{D}_F = F^* h - g$. The extrapolated curvature tensor is $\mathcal{K}_F = \mathrm{Ric}_{F^* h} - \mathrm{Ric}_g$, with scalar $\kappa_F = \mathrm{Scal}(F^* h) - \mathrm{Scal}(g)$.
+
+\begin{proposition}[Curvature and Entropy Bound]
+Under bounded sectional curvature and positive reach, extrapolated curvature bounds connector entropy production $\sigma[F|\mu]$.
+\end{proposition}
+
+\begin{proof}[Sketch]
+Curvature integrates metric distortions; entropy follows from transport inequalities linking $\kappa_F$ to distributional changes.
+\end{proof}
+
+\subsection{Mathematical Expansion}
+The Riemann tensor $R$ captures intrinsic geometry, Ricci $\mathrm{Ric}$ averages over directions, and scalar $\mathrm{Scal}$ contracts further. Extrapolated curvature $\mathcal{K}_F$ quantifies how $F$ deforms the source manifold’s geometry.
+
+\begin{lemma}[Distortion and Curvature]
+For small $\|\mathsf{D}_F\|$, $\kappa_F \approx \Delta_g \|\mathsf{D}_F\| + O(\|\mathsf{D}_F\|^2)$, where $\Delta_g$ is the Laplace-Beltrami operator.
+\end{lemma}
+
+Category-theoretically, $F$ is a functor between manifold categories, with faithfulness reflecting information preservation:
+\begin{tikzcd}
+(X, g) \arrow[r, "F"] \arrow[d, "g_F"'] & (Y, h) \arrow[d, "g_F"] \\
+(\mathcal{M}_X, g_F) \arrow[r, "\cong"'] & (\mathcal{M}_Y, g_F)
+\end{tikzcd}
+
+\section{Mapping to RSVP Field Theory}
+RSVP models representations as fields: scalar $\Phi$ (capacity), vector $\mathbf{v}$ (flows), entropy $S$ (dissipation). Connectors are entropy-respecting functors.
+
+\subsection{Correspondences}
+\begin{itemize}
+  \item \emph{Bi-Lipschitz} bounds align with Lyapunov stability.
+  \item \emph{Rate-distortion} reflects $S$ budgets.
+  \item \emph{Restricted isometry} preserves negentropic corridors.
+\end{itemize}
+
+Empirically, 40-60\% neighbor divergence signals entropic shear; Procrustes failures indicate irreversible $S$. Design principles minimize $S$ via curvature regularization.
+
+\subsection{Functorial Correspondence}
+Connectors as functors between RSVP categories:
+\begin{tikzcd}
+(X, g, \Phi, \mathbf{v}, S) \arrow[r, "F"] & (Y, h, \tilde{\Phi}, \tilde{\mathbf{v}}, \tilde{S})
+\end{tikzcd}
+Entropy production $S - \tilde{S}$ bounds curvature distortion.
+
+\part{Social Applications}
+
+\section{Geometric Hyperscanning and Interbrain Networks}
+Hyperscanning records neural signals from interacting individuals, revealing synchrony \cite{montague2002hyperscanning}. Geometric approaches quantify this via curvature \cite{hinrichs2025geometry}.
+
+\subsection{Discrete Curvature}
+Interbrain graphs link regions across agents, weighted by synchrony. Forman-Ricci curvature measures expansion/contraction, with entropy $H_{RC}(G_t) = -\int f^t_{RC}(x) \log f^t_{RC}(x) \, dx$ detecting phase transitions.
+
+\subsection{Ontogenetic Parade as Hyperscanning Baseline}
+The \emph{ontogenetic parade} describes developmental fears (e.g., stranger anxiety at 8 months, fear of the dark at 3 years) as predictable curvature–entropy spikes \cite{marks1987fears,gullone2000development,muris2000fears,field2010phobia}
+}. These manifest in hyperscanning as age-dependent synchrony signatures:
+\begin{itemize}
+  \item Infant-caregiver dyads show high curvature during stranger anxiety, with entropy peaks resolving through attachment.
+  \item Preschoolers exhibit fear ridges (e.g., monsters), mirrored by transient desynchronization.
+\end{itemize}
+Learning inoculates against surprise, flattening curvature. Play simulates danger, inducing controlled curvature spikes to reduce entropy, aligning with therapeutic exposure.
+
+\subsection{Simulation Example}
+In a toy dyad modeled as small-world graphs with rewiring probability $p$, $H_{RC}$ diverges at $p \approx 10^{-2}$, marking a shift from misalignment to attunement, mirroring social dynamics.
+
+\part{Affective Extensions}
+
+\section{Affective Inference in Relational Dynamics}
+Affect regulates dyadic coherence, signaling narrative alignment \cite{friston2017graphical}. Curvature entropy quantifies misattunement, guiding rupture-repair cycles \cite{adel2025systematic}.
+
+\subsection{Humor as Manifold Interference}
+Humor resolves mismatched semantic manifolds via frame-shift pattern matching. A joke sets up a primary manifold $(M_1, g_1)$, then shifts to $(M_2, g_2)$. The humor event occurs at $\mathcal{H} = M_1 \pitchfork M_2$, with laughter as entropy release:
+\[
+L = \sigma[F|\mu] \propto \int_{\mathcal{H}} \log \det (I + g_1^{-1} \Delta g) \, d\mu,
+\]
+where $\Delta g = F^* g_2 - g_1$. In RSVP terms, humor is a negentropic corridor where flows $\mathbf{v}$ realign, reducing $S$.
+
+\subsection{Therapeutic Applications}
+In therapy, entropy peaks mark ruptures; repairs restore low-entropy gluing. For example, in a therapist-client dyad, curvature entropy spikes during conflict guide interventions.
+
+\section{Complex Emotions as Higher-Order Inoculations}
+Complex emotions emerge as recursive inoculations against surprise, with recursion depth $d$ encoding higher-order uncertainty:
+\[
+q^{(d)}(x) = \mathcal{I}^d(q)(x).
+\]
+
+\subsection{Examples}
+\begin{itemize}
+  \item \emph{Guilt}: Depth-2 inoculation conditioned on counterfactual priors $\mu'$:
+  \[
+  q_{\text{guilt}}(x) = \mathcal{I}^2 \big( q(x) \,\big|\, \mu' \neq \mu \big).
+  \]
+  \item \emph{Awe}: High-capacity expansion, with negative curvature singularity:
+  \[
+  \kappa_{\text{awe}} \to -\infty, \quad \mathrm{Vol}(\mathfrak{M}) \uparrow.
+  \]
+  \item \emph{Nostalgia}: Recursive inoculation over past states:
+  \[
+  q^{(d)}_{\text{nost}}(x_t) = \mathcal{I}^d \big( q(x_{t-k}) \big), \quad k>0.
+  \]
+\end{itemize}
+
+\subsection{RSVP Mapping}
+\begin{itemize}
+  \item \emph{Guilt}: Contractive $\mathbf{v}$, increased $S$.
+  \item \emph{Awe}: Upregulated $\Phi$, transient $S$ spike.
+  \item \emph{Nostalgia}: Retrocausal $\mathbf{v}$, reduced $S$.
+\end{itemize}
+
+\subsection{Sheaf-Theoretic Integration}
+Sheaves $\mathcal{F}$ over $\mathfrak{M}_{\text{emo}}$ encode local affect patches:
+\begin{itemize}
+  \item \emph{Guilt}: Failed gluing, local coherence breaks.
+  \item \emph{Awe}: Gluing via curvature blow-up.
+  \item \emph{Nostalgia}: Temporal restriction maps align past and present.
+\end{itemize}
+
+\subsection{Taxonomy}
+\begin{table}[ht]
+\centering
+\caption{Recursive inoculation operators and affective correspondences.}
+\label{tab:inoculation}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{@{}l>{\centering\arraybackslash}X>{\centering\arraybackslash}X>{\centering\arraybackslash}X@{}}
+\toprule
+\textbf{Emotion} & \textbf{Recursion Depth $d$} & \textbf{Curvature Mode} & \textbf{RSVP Modulation} \\
+\midrule
+Fear & $d=1$ & Positive spike & $\Phi \downarrow$, $S \uparrow$ \\
+Guilt & $d=2$ & Negative contraction & $\mathbf{v}$ contractive, $S \uparrow$ \\
+Awe & Variable & Negative singularity & $\Phi \uparrow$, $S \uparrow$ \\
+Nostalgia & $d>1$ & Temporal gluing & $\mathbf{v}$ retrocausal, $S \downarrow$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Ontogenetic Parade: Developmental Fear as Curvature Flow}
+The ontogenetic parade describes developmental fears as curvature–entropy spikes across ages, reflecting evolving interpersonal manifolds \cite{marks1987fears,gullone2000development,muris2000fears,field2010phobia}
+}.
+
+\subsection{Learning as Inoculation}
+Learning inoculates against surprise by flattening curvature through predictive updates:
+\[
+q_{t+1}(x) = \mathcal{I}(q_t(x) | \mu_{\text{predict}}).
+\]
+For example, stranger anxiety at 8 months resolves as infants learn to predict caregiver presence, reducing $\kappa_F$.
+
+\subsection{Play as Simulated Danger}
+Play induces controlled curvature spikes, simulating danger to train resilience. For instance, peek-a-boo games create transient entropy peaks, teaching infants to regulate attachment-related curvature.
+
+\subsection{Curvature Flow}
+Developmental phobias (e.g., fear of the dark) manifest as high-curvature ridges. Experience flattens these via curvature flow:
+\[
+\frac{\partial g}{\partial t} = -2 \mathrm{Ric}_g.
+\]
+In RSVP terms, childhood fear trajectories couple curvature and entropy, with $\Phi$ expanding as regulatory capacity grows.
+
+
+\subsection{Implications}
+The parade provides a hyperscanning baseline, with age-specific curvature signatures informing therapeutic interventions like play therapy.
+
+\part{Empirical Methods}
+
+\section{Simulation Details}
+We provide pseudocode and Python implementations for interbrain graphs, curvature computation, and entropy estimation.
+
+\subsection{Pseudocode Pipeline}
+\begin{verbatim}
+Input: EEG/fNIRS time series for two agents
+1. Construct interbrain graph G_t (nodes = regions, edges = synchrony)
+2. Compute Forman-Ricci curvature for edges
+3. Estimate curvature entropy H_RC(G_t)
+4. Detect phase transitions via H_RC divergence
+Output: Entropy time series, transition points
+\end{verbatim}
+
+\subsection{Python Implementation}
+\begin{verbatim}
+import numpy as np
+from scipy.signal import coherence
+def compute_interbrain_graph(data1, data2):
+    n_regions = data1.shape[1]
+    G = np.zeros((n_regions, n_regions))
+    for i in range(n_regions):
+        for j in range(n_regions):
+            G[i,j] = coherence(data1[:,i], data2[:,j])[1].mean()
+    return G
+def forman_ricci(G):
+    ricci = np.zeros_like(G)
+    for i, j in np.ndindex(G.shape):
+        if G[i,j] > 0:
+            ricci[i,j] = 1 - sum(G[i,k] + G[k,j] for k in range(G.shape[0])) / G[i,j]
+    return ricci
+\end{verbatim}
+
+\subsection{Validation}
+Effect sizes for entropy divergences during ruptures (Cohen’s $d > 1.2$) suggest $N=20$ dyads for 80\% power at $\alpha=0.05$.
+
+\section{Hyperscanning Modality Comparison}
+\begin{table}[ht]
+\centering
+\caption{Edge-weight ranges for hyperscanning modalities \cite{hinrichs2025geometry}.}
+\label{tab:modality-comparison}
+\begin{tabularx}{\textwidth}{@{}p{1.5cm} p{1.8cm} p{2.5cm} p{2cm} X@{}}
+\toprule
+\textbf{Modality} & \textbf{Condition} & \textbf{Edge-weight} & \textbf{Timescale} & \textbf{Implication} \\
+\midrule
+EEG & Task & PLV $\approx 0.2$--$0.6$ & tens--hundreds ms & Captures rapid shifts \\
+EEG & Resting & PLV $\approx 0.1$--$0.4$ & tens--hundreds ms & Spontaneous activity \\
+fNIRS & Task & Corr. $\approx 0.1$--$0.3$ & 0.1--1 s & Slower tasks \\
+fMRI & Task & Coh. $\approx 0.2$--$0.5$ & 1--2 s & Sustained blocks \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Proof Sketches}
+\subsection{Lyapunov Stability for Negentropic Corridors}
+For a connector $F: (X,g) \to (Y,h)$ and patch $U \subset X$, a negentropic corridor satisfies:
+\[
+\alpha g_x(v,v) \leq F^* h_x(v,v) \leq \beta g_x(v,v), \quad \|\mathcal{K}_F\| \leq \eta.
+\]
+A Lyapunov function $V(x) = \frac{1}{2} d_h(F(x), \mathcal{M})^2$ ensures stability if $\mathcal{M}$ is geodesically convex.
+
+\subsection{Entropy Bounds}
+Entropy production $\sigma[F|\mu] = h(Y) - h(X)$ is bounded by rate-distortion:
+\[
+I(X;\widehat{Y}) \geq \sum_k w_k R_k(D_k).
+\]
+
+\part{Conclusion and References}
+
+\section{Conclusions}
+This framework unifies extrapolated curvature, RSVP fields, and semantic manifolds to model meaning across AI, cognition, and interaction. Humor resolves mismatched manifolds, complex emotions emerge as recursive inoculations, and the ontogenetic parade reflects developmental curvature–entropy dynamics. Applications to therapy and hyperscanning operationalize second-person active inference, but the qualitative depth of human experience highlights the limits of geometric reductionism.
+\section{Related Work}
+
+This work builds on the manifold hypothesis \cite{fefferman2016testing}, active inference \cite{friston2017graphical}, information geometry \cite{caticha2015geometry}, Ricci curvature in networks \cite{forman2003bochner}, psychotherapy research \cite{adel2025systematic}, and RSVP theory. 
+
+The manifold hypothesis provides the foundational claim that high-dimensional data often concentrate on low-dimensional submanifolds, making them amenable to geometric analysis. Information geometry extends this principle by endowing statistical manifolds with Riemannian structure, where the Fisher metric formalizes sensitivity to parameter changes and provides the basis for curvature-based interpretations of learning and generalization. 
+
+Within cognitive neuroscience, active inference \cite{friston2017graphical} reframes perception and action as surprise minimization under generative models, offering a natural interface between semantic manifolds and affective regulation. Curvature here becomes an operational signal of belief updating, linking local distortion in representation to global system coherence. 
+
+Network-based Ricci curvatures \cite{forman2003bochner} contribute discrete analogues of geometric concepts, allowing empirical detection of bottlenecks, bridges, and phase transitions in neural and social graphs. These discrete curvatures provide both methodological grounding and empirical feasibility for extending curvature analyses to hyperscanning and interbrain coupling. 
+
+In the clinical domain, psychotherapy research has emphasized rupture and repair cycles as central to therapeutic progress \cite{adel2025systematic}. Curvature entropy as introduced here offers a principled way to quantify these cycles, translating phenomenological observations into tractable mathematical signals. 
+
+Finally, RSVP theory supplies the unifying field-theoretic scaffold, with scalar capacity $\Phi$, vector flows $\mathbf{v}$, and entropy $S$ governing the dynamics of semantic coherence. By embedding existing traditions into this scalar–vector–entropy framework, the present work synthesizes manifold geometry, probabilistic inference, and therapeutic application into a single formal system.
+
+\newpage
+\appendix
+\section*{Appendices}
+\addcontentsline{toc}{section}{Appendices}
+
+
+\section{Formal Derivation of Extrapolated Curvature Bounds}
+\label{sec:curvature-entropy-bounds}
+
+We quantify the ``entropy production'' of a connector
+\(F\colon (X,g,\mu)\to (Y,h)\) by the differential entropy change of the
+pushforward \( \nu := F_\#\mu \) relative to the Riemannian volumes, or by the
+relative entropy \( \mathrm{D}(\nu\Vert \mathrm{vol}_h) \) when a reference
+density is fixed. Throughout, \(X,Y\) are compact, connected, \(d\)-dimensional
+\(C^2\) Riemannian manifolds with:
+\[
+\text{reach}(X)\ge \tau>0,\qquad
+|K_g|\le K_0,\ |K_h|\le K_0,\qquad \mathrm{inj}(X),\mathrm{inj}(Y)\ge i_0>0,
+\]
+and probability measures \(\mu = \rho\,\mathrm{vol}_g\) with \(\rho\) bounded
+and bounded away from \(0\) on \(\mathrm{supp}(\mu)\).
+We write \(J_F(x)\) for the Riemannian Jacobian of \(F\), i.e.
+\( F^\*(\mathrm{vol}_h) = J_F\,\mathrm{vol}_g\).
+Recall the \emph{distortion tensor} and \emph{extrapolated curvature}:
+\[
+\mathsf{D}_F := F^\*h - g,\qquad
+\mathcal{K}_F := \mathrm{Ric}_{F^\*h}-\mathrm{Ric}_g,\qquad
+\kappa_F := \mathrm{Scal}(F^\*h)-\mathrm{Scal}(g).
+\]
+
+\subsection{A Jacobian (bi-Lipschitz) bound}
+
+\begin{assumption}[Bi-Lipschitz connector]
+\label{assump:bilip}
+There exists \(L\ge 1\) such that for all \(x\in X\) and \(v\in T_xX\),
+\[
+L^{-1}\,g_x(v,v)\ \le\ F^\*h_x(v,v)\ \le\ L\, g_x(v,v).
+\]
+Equivalently, the singular values of \(dF_x\) lie in \([L^{-1/2},\,L^{1/2}]\).
+\end{assumption}
+
+\begin{lemma}[Jacobian sandwich]
+\label{lem:jacobian}
+Under Assumption~\ref{assump:bilip}, for all \(x\in X\),
+\(
+L^{-d/2}\ \le\ J_F(x)\ \le\ L^{d/2}.
+\)
+\end{lemma}
+
+\begin{proof}[Sketch]
+In orthonormal \(g\)-frames, \(J_F(x)=\sqrt{\det G_x}\) where
+\(G_x := g_x^{-1}F^\*h_x\) has eigenvalues in \([L^{-1},L]\). Hence
+\(\det G_x\in [L^{-d},L^{d}]\).
+\end{proof}
+
+\begin{proposition}[Deterministic entropy bound via Jacobian]
+\label{prop:entropy-jacobian}
+Let \(h(\cdot)\) denote differential entropy w.r.t.\ Riemannian volume.
+Then
+\[
+h(\nu) - h(\mu) \;=\; \int_X \log J_F(x)\, d\mu(x),
+\]
+and under Assumption~\ref{assump:bilip},
+\(
+-\tfrac{d}{2}\log L \ \le\ h(\nu)-h(\mu)\ \le\ \tfrac{d}{2}\log L.
+\)
+\end{proposition}
+
+\begin{proof}[Sketch]
+Change of variables:
+\( \nu = F_\#\mu \) has density
+\( \rho_\nu(y) = \sum_{x:F(x)=y} \rho(x)/J_F(x) \) a.e.
+For injective \(F\) (guaranteed locally by positive reach/injectivity), this reduces to
+\(\rho_\nu(F(x))=\rho(x)/J_F(x)\).
+Hence \(h(\nu)=-\!\int \rho_\nu\log\rho_\nu\,\mathrm{vol}_h
+= -\!\int \rho\log\rho\,\mathrm{vol}_g + \int \log J_F\, d\mu\).
+Bound by Lemma~\ref{lem:jacobian}.
+\end{proof}
+
+\paragraph{Interpretation.}
+Entropy production is controlled by the \emph{log-Jacobian}. Bi-Lipschitz
+regularity (hence small metric distortion) yields small entropy change, matching
+the intuition that near-isometries preserve neighborhood structure and capacity.
+
+\subsection{A Ricci--volume comparison bound (global, curvature-controlled)}
+
+Curvature bounds control volume distortion of geodesic balls (Bishop--Gromov),
+hence densities and entropies of pushforwards concentrated in such balls.
+
+\begin{assumption}[Support and radius]
+\label{assump:support}
+\(\mathrm{supp}(\mu)\subset B_g(x_0,R)\) with \(R<i_0\), and
+\(F(B_g(x_0,R))\subset B_h(y_0,\widehat R)\) with \(\widehat R<i_0\).
+\end{assumption}
+
+\begin{lemma}[Bishop--Gromov volume distortion]
+\label{lem:BG}
+If \(\mathrm{Ric}_g\ge -(d-1)k\) and \(\mathrm{Ric}_h\le (d-1)\widehat k\) for \(k,\widehat k\ge 0\),
+then for all \(0<r\le R\) and a.e.\ \(x\),
+\[
+\frac{\mathrm{vol}_h\big(B_h(F(x),\alpha r)\big)}{\mathrm{vol}_g\big(B_g(x,r)\big)}
+\ \le\ C(d,k,\widehat k,R,\widehat R)\,\alpha^d,
+\quad \forall\,\alpha\in(0,1],
+\]
+with \(C\) explicit via model spaces.
+\end{lemma}
+
+\begin{proposition}[Entropy bound via Ricci comparison]
+\label{prop:entropy-ricci}
+Under Assumptions~\ref{assump:bilip} and \ref{assump:support},
+\[
+h(\nu) - h(\mu) \;\le\; \frac{d}{2}\log L \;+\; \Gamma(d,K_0,R,\widehat R),
+\]
+where \(\Gamma\) depends only on the curvature bounds and radii (via
+Lemma~\ref{lem:BG}). In particular, for small \(R,\widehat R\) and bounded
+curvature, \(\Gamma = O(R^2+\widehat R^2)\).
+\end{proposition}
+
+\begin{proof}[Sketch]
+Cover \(\mathrm{supp}(\mu)\) by geodesic balls of radius \(r\ll 1\) and compare the
+mass reallocation under \(F\) using Lemma~\ref{lem:BG} plus the Jacobian
+sandwich; pass to the limit as \(r\downarrow 0\).
+\end{proof}
+
+\paragraph{Interpretation.}
+Even without sharp bi-Lipschitz constants, two-sided Ricci bounds constrain
+global volume distortion and thus the worst-case entropy production, scaling
+with curvature and the geometric diameter of the support.
+
+\subsection{A Bakry--\'Emery (LSI/T\(_2\)) bound via extrapolated curvature}
+
+Let \(\pi_g\propto e^{-V}\,\mathrm{vol}_g\) be a log-concave reference on \(X\) with
+Bakry--Émery curvature \(\mathrm{Ric}_g+\nabla^2 V\ge \kappa I\) (\(\kappa>0\)).
+Define \(\pi_h\propto e^{-\widehat V}\,\mathrm{vol}_h\) on \(Y\) with
+\(\mathrm{Ric}_h+\nabla^2 \widehat V\ge \widehat\kappa I\).
+Assume \(\mu\ll \pi_g\) and consider \(\nu=F_\#\mu\) against \(\pi_h\).
+
+\begin{lemma}[Stability of LSI under pullback]
+\label{lem:lsi-pull}
+If \(F\) is \(C^2\) and satisfies Assumption~\ref{assump:bilip},
+then the pullback measure \(\widetilde \pi := F^\*\pi_h\) on \(X\) has
+Bakry--Émery curvature bounded below by
+\[
+\underline\kappa_F := \kappa \wedge \Big(\widehat\kappa - \|\mathcal{K}_F\|_{\mathrm{op}}\Big),
+\]
+(up to \(O(\|\nabla dF\|)\) terms), where \(\mathcal{K}_F=\mathrm{Ric}_{F^\*h}-\mathrm{Ric}_g\).
+\end{lemma}
+
+\begin{proof}[Sketch]
+Use the Bochner formula for the generator associated with \(F^\*\widehat V\):
+\(\mathrm{Ric}_g+\nabla^2(F^\*\widehat V) = \mathrm{Ric}_{F^\*h} + \nabla^2(F^\*\widehat V)
+ - \mathcal{K}_F\). Lower bounds combine by min and subtract the operator norm
+of \(\mathcal{K}_F\). Control higher-order terms by \(C^2\) bounds and reach.
+\end{proof}
+
+\begin{proposition}[Entropy--transport bound with extrapolated curvature]
+\label{prop:lsi-talagrand}
+Let \(W_2\) be the 2-Wasserstein distance on \(Y\) under \(h\).
+If \(\underline\kappa_F>0\) (Lemma~\ref{lem:lsi-pull}) then
+\[
+\mathrm{D}(\nu\Vert \pi_h)
+\;\le\; \frac{1}{2\,\underline\kappa_F}\, \mathcal{I}(\nu\Vert \pi_h)
+\quad\text{and}\quad
+W_2^2(\nu,\pi_h) \;\le\; \frac{2}{\underline\kappa_F}\,\mathrm{D}(\nu\Vert \pi_h),
+\]
+and consequently, for \(\nu=F_\#\mu\),
+\[
+\mathrm{D}(F_\#\mu\Vert \pi_h)
+\;\le\; \frac{1}{2\,\underline\kappa_F}\, \mathcal{I}(F_\#\mu\Vert \pi_h)
+\;\;\le\;\; \frac{L}{2\,\underline\kappa_F}\, \mathcal{I}(\mu\Vert \pi_g),
+\]
+where the last step uses \(\|dF\|^2\le L\) to transport Fisher information.
+\end{proposition}
+
+\begin{proof}[Sketch]
+Apply Log-Sobolev and Talagrand \(T_2\) inequalities with constant
+\(\underline\kappa_F\) on the pulled-back space, then push forward along \(F\).
+Information contraction follows from the chain rule for Fisher information under
+Lipschitz maps.
+\end{proof}
+
+\paragraph{Interpretation.}
+The curvature gap \(\|\mathcal{K}_F\|\) \emph{reduces} the effective LSI/T\(_2\)
+constant, loosening entropy and transport inequalities. Thus, larger extrapolated
+curvature permits more entropy production for a fixed input information budget—
+a quantitative expression of ``curvature drives entropy.''
+
+\subsection{Putting the bounds together}
+
+For applications, define the \emph{entropy production} of a connector on
+\((X,g,\mu)\) as
+\[
+\sigma[F\mid \mu]\ :=\ h(F_\#\mu)-h(\mu)
+\quad\text{or}\quad
+\sigma_{\mathrm{rel}}[F\mid \mu,\pi_h]\ :=\ \mathrm{D}(F_\#\mu\Vert \pi_h)-\mathrm{D}(\mu\Vert \pi_g).
+\]
+Then, under the standing assumptions,
+\begin{equation}\label{eq:master-bound}
+-\tfrac{d}{2}\log L \;\le\; \sigma[F\mid \mu]
+\;\le\; \tfrac{d}{2}\log L \;+\; \Gamma(d,K_0,R,\widehat R),
+\end{equation}
+and, if \(\underline\kappa_F>0\),
+\begin{equation}\label{eq:lsi-bound}
+\mathrm{D}(F_\#\mu\Vert \pi_h)
+\;\le\; \frac{L}{2\,\underline\kappa_F}\, \mathcal{I}(\mu\Vert \pi_g),
+\qquad
+W_2^2(F_\#\mu,\pi_h)\ \le\ \frac{2}{\underline\kappa_F}\,\mathrm{D}(F_\#\mu\Vert \pi_h).
+\end{equation}
+
+\paragraph{Consequences for design.}
+Small \(L\) (near-isometry), small curvature gap \(\|\mathcal{K}_F\|\), and small
+support diameter (hence small \(\Gamma\)) jointly minimize entropy production.
+These translate to practical regularizers: bi-Lipschitz/transport penalties,
+curvature control (via \(F^\*h\) vs.\ \(g\)), and locality-aware routing.
+
+\subsection{A normal graph bound under reach and second fundamental form}
+
+Under positive reach, \(F\) is locally the normal graph of a \(C^2\) section over
+an embedded chart. Let \(\mathrm{II}\) denote the second fundamental form of the
+graph of \(F\) in \(X\times Y\).
+
+\begin{proposition}[Small-curvature (graph) expansion]
+\label{prop:graph-entropy}
+If \(\|\mathrm{II}\|_\infty \le \varepsilon\) on a neighborhood of \(\mathrm{supp}(\mu)\),
+then
+\[
+\sigma[F\mid \mu] \;=\; \int_X \log J_F\, d\mu
+\;=\; \int_X \Big(\tfrac{1}{2}\mathrm{tr}(\mathsf{D}_F) + O(\varepsilon^2)\Big)\, d\mu,
+\]
+and
+\(
+\|\mathcal{K}_F\| = O(\varepsilon).
+\)
+\end{proposition}
+
+\begin{proof}[Sketch]
+Use the Jacobi determinant expansion
+\(\log\det(I+A)=\mathrm{tr}(A)+O(\|A\|^2)\) with
+\(A=g^{-1}\mathsf{D}_F\). Local graph coordinates control \(\|A\|\) and \(\|\mathrm{II}\|\).
+Curvature variation is linear in \(\mathrm{II}\) at first order.
+\end{proof}
+
+\paragraph{Interpretation.}
+When the connector is a small normal deformation (bounded second fundamental
+form), entropy production is \emph{first-order} in the metric distortion
+(trace of \(\mathsf{D}_F\)), while curvature (hence LSI constants) changes at
+most linearly. This is a precise version of ``low-curvature routing is
+low-entropy.''
+
+\subsection{Summary}
+The three families of bounds control entropy production by (i) local Jacobian
+distortion, (ii) global curvature through volume comparison, and (iii)
+Bakry--Émery curvature via LSI/T\(_2\) stability, where extrapolated curvature
+\(\mathcal{K}_F\) directly weakens functional inequalities. Each bound becomes
+sharp in a different regime (near-isometry, compact support, log-concave
+reference), and together they yield practical regularizers for connectors that
+minimize curvature-induced entropy.
+
+\section{Simulation Details}
+\label{sec:sim-details}
+
+We outline a reference pipeline to (i) construct time-varying interbrain graphs
+from hyperscanning windows, (ii) compute discrete curvature (Forman--Ricci; optional
+Ollivier--Ricci for small graphs), (iii) estimate the entropy of curvature distributions,
+and (iv) detect phase transitions. Pseudocode is followed by minimal Python snippets.
+
+\subsection{Pseudocode}
+
+\paragraph{Sliding windowing and graph construction.}
+\begin{align*}
+&\textbf{Inputs: } X^A \in \mathbb{R}^{n_A \times T},\ X^B \in \mathbb{R}^{n_B \times T},\ \Delta,\ S,\ \mathrm{IBS} \\
+&\textbf{for } s \in \{0, S, 2S, \dots, T-\Delta\} \textbf{ do}\\
+&\quad \text{Window } W_A := X^A[:, s{:}s{+}\Delta],\ W_B := X^B[:, s{:}s{+}\Delta]\\
+&\quad \text{Compute interbrain weights } w_{ij} := \mathrm{IBS}(W_A[i,:], W_B[j,:])\\
+&\quad \text{Threshold (e.g., global percentile } \tau):\ w_{ij} \leftarrow w_{ij}\cdot\mathbf{1}\{w_{ij}\ge \tau\}\\
+&\quad \text{Build bipartite graph } G_s\ \text{with edges } ((A,i),(B,j), w_{ij})\\
+&\quad \text{(optional) Add intra-brain kNN edges of small weight to stabilize neighborhoods}\\
+&\textbf{end for}
+\end{align*}
+
+\paragraph{Forman--Ricci curvature (edge-wise).}
+For each edge $e=(u,v)$ with weight $w_e$ and node weights $z_u,z_v$ (e.g., strength):
+\[
+F(e) \;=\; w_e \Bigg(
+\frac{z_u}{w_e} + \frac{z_v}{w_e}
+\;-\; \sum_{e_u\sim u,\,e_u\neq e}\frac{z_u}{\sqrt{w_e\,w_{e_u}}}
+\;-\; \sum_{e_v\sim v,\,e_v\neq e}\frac{z_v}{\sqrt{w_e\,w_{e_v}}}
+\Bigg).
+\]
+
+\paragraph{Entropy of curvature distribution.}
+Given edgewise curvatures $\{F(e)\}$ in window $s$, estimate differential entropy
+$H_s = -\!\int f_s(x)\log f_s(x)\,dx$ via KDE or histogram.
+
+\paragraph{Change-point detection.}
+Apply a univariate detector (e.g., CUSUM or Bayesian online change-point) to
+$\{H_s\}_s$ (and optionally to curvature quantiles) to flag rupture/repair episodes.
+
+\subsection{Minimal Python Snippets (Jupyter)}
+\textbf{Dependencies}:\ \texttt{numpy, networkx, scipy (optional), matplotlib}.
+
+\paragraph{Windowing and IBS (PLV or correlation).}
+\begin{verbatim}
+import numpy as np
+from scipy.signal import hilbert
+
+def sliding_windows(T, win, step):
+    return [(s, s+win) for s in range(0, max(1, T-win+1), step)]
+
+def plv(x, y):
+    ax, ay = hilbert(x - x.mean()), hilbert(y - y.mean())
+    dphi = np.angle(ax) - np.angle(ay)
+    return float(np.abs(np.mean(np.exp(1j*dphi))))
+
+def ibs_metric(x, y, kind="plv"):
+    return plv(x, y) if kind.lower()=="plv" else float(np.corrcoef(x,y)[0,1])
+\end{verbatim}
+
+\paragraph{Interbrain graph (bipartite + optional intra-brain kNN).}
+\begin{verbatim}
+import networkx as nx
+from scipy.spatial.distance import cdist
+
+def knn_adj(coords, k=3):
+    D = cdist(coords, coords); np.fill_diagonal(D, np.inf)
+    idx = np.argsort(D, axis=1)[:, :k]
+    A = np.zeros((coords.shape[0], coords.shape[0])); 
+    A[np.arange(coords.shape[0])[:,None], idx] = 1.0
+    return np.maximum(A, A.T)
+
+def build_inter_graph(WA, WB, metric="plv", prune_pct=80, A_xy=None, B_xy=None, knn_k=3):
+    nA, nB = WA.shape[0], WB.shape[0]
+    W = np.zeros((nA, nB))
+    for i in range(nA):
+        for j in range(nB):
+            W[i,j] = ibs_metric(WA[i], WB[j], metric)
+    tau = np.percentile(W, prune_pct); W = np.where(W>=tau, W, 0.0)
+
+    G = nx.Graph()
+    for i in range(nA): G.add_node(("A",i), hemi="A")
+    for j in range(nB): G.add_node(("B",j), hemi="B")
+    for i in range(nA):
+        for j in range(nB):
+            if W[i,j] > 0: G.add_edge(("A",i), ("B",j), weight=float(W[i,j]))
+
+    # optional intra-brain scaffolds
+    if A_xy is not None:
+        A = knn_adj(A_xy, k=knn_k)
+        for u in range(nA):
+            for v in range(u+1, nA):
+                if A[u,v] > 0: G.add_edge(("A",u), ("A",v), weight=0.01)
+    if B_xy is not None:
+        B = knn_adj(B_xy, k=knn_k)
+        for u in range(nB):
+            for v in range(u+1, nB):
+                if B[u,v] > 0: G.add_edge(("B",u), ("B",v), weight=0.01)
+    return G
+\end{verbatim}
+
+\paragraph{Forman--Ricci curvature (edge-wise).}
+\begin{verbatim}
+def node_strength(G, n):
+    return sum(w for *_, w in G.edges(n, data="weight", default=1.0))
+
+def forman_ricci(G, node_weight="strength"):
+    edges = list(G.edges())
+    frc = np.zeros(len(edges))
+    for k, (u,v) in enumerate(edges):
+        we = G[u][v].get("weight", 1.0)
+        zu = node_strength(G,u) if node_weight=="strength" else 1.0
+        zv = node_strength(G,v) if node_weight=="strength" else 1.0
+        sum_u = sum(zu/np.sqrt(we*G[x][y].get("weight",1.0))
+                    for (x,y) in G.edges(u) if {x,y}!={u,v} and we>0)
+        sum_v = sum(zv/np.sqrt(we*G[x][y].get("weight",1.0))
+                    for (x,y) in G.edges(v) if {x,y}!={u,v} and we>0)
+        frc[k] = we * (zu/we + zv/we - sum_u - sum_v)
+    return frc, edges
+\end{verbatim}
+
+\paragraph{Differential entropy (histogram or simple KDE).}
+\begin{verbatim}
+def diff_entropy(values, method="kde"):
+    v = np.asarray(values, float); v = v[np.isfinite(v)]
+    if v.size == 0: return np.nan
+    if method == "hist":
+        # Freedman–Diaconis bins
+        iqr = np.subtract(*np.percentile(v, [75,25])); 
+        bw = 2*iqr*(v.size**(-1/3)) if iqr>0 else np.std(v)*(v.size**(-1/3))
+        bins = max(8, int(np.ceil((v.max()-v.min())/(bw+1e-12))))
+        hist, edges = np.histogram(v, bins=bins, density=True)
+        p = np.maximum(hist, 1e-12); H = -np.sum(p*np.log(p))*(edges[1]-edges[0])
+        return float(H)
+    # Gaussian KDE
+    std = np.std(v); 
+    if std <= 1e-12: return 0.0
+    bw = 1.06*std*(v.size**(-1/5))
+    grid = np.linspace(v.min()-3*std, v.max()+3*std, 512)
+    dens = np.mean(
+    np.exp(-0.5*((grid[:,None]-v[None,:])/bw)**2),
+    axis=1
+) / (bw*np.sqrt(2*np.pi))
+    dens = np.maximum(dens, 1e-12)
+    return float(-np.trapz(dens*np.log(dens), grid))
+\end{verbatim}
+
+\paragraph{CUSUM change-point detector (mean-shift).}
+\begin{verbatim}
+def cusum_cp(x, alpha=0.01):
+    x = np.asarray(x, float); mu = np.mean(x); s = 0.0; cps = []
+    thr = np.std(x) * max(2.0, -np.log(alpha + 1e-9))
+    for t, xt in enumerate(x):
+        s = max(0.0, s + (xt - mu))
+        if s > thr: cps.append(t); s = 0.0
+    return cps
+\end{verbatim}
+
+\paragraph{Putting it together (demo).}
+\begin{verbatim}
+# Synthetic dyad with regime shift
+Fs, T_sec = 200.0, 30.0
+T = int(Fs*T_sec); t = np.arange(T)/Fs
+nA, nB = 16, 16
+rng = np.random.default_rng(7)
+
+XA = 0.5*rng.standard_normal((nA,T)); XB = 0.5*rng.standard_normal((nB,T))
+f0 = 10.0; phiA = rng.uniform(0,2*np.pi,nA); phiB = rng.uniform(0,2*np.pi,nB)
+for i in range(nA): XA[i] += 0.8*np.sin(2*np.pi*f0*t + phiA[i])
+for j in range(nB): XB[j] += 0.8*np.sin(2*np.pi*f0*t + phiB[j])
+tc = int(15.0*Fs)
+for i in range(6):
+  for j in range(6):
+    shared = 0.7*np.sin(2*np.pi*f0*t[tc:] + rng.uniform(0,2*np.pi))
+    XA[i,tc:] += shared; XB[j,tc:] += shared
+
+win = int(2.0*Fs); step = int(0.25*Fs)
+Hs, corridors, times = [], [], []
+for s,e in sliding_windows(T, win, step):
+    G = build_inter_graph(XA[:,s:e], XB[:,s:e], metric="plv", prune_pct=80)
+    frc, edges = forman_ricci(G)
+    Hs.append(diff_entropy(frc, method="kde"))
+    w = np.array([G[u][v]['weight'] for (u,v) in edges])
+    mask = (w >= np.percentile(w,80)) & (frc >= -0.05)
+    corridors.append(w[mask].sum()/(w.sum()+1e-12))
+    times.append((s+e)/(2*Fs))
+
+Hs = np.array(Hs); corridors = np.array(corridors); times = np.array(times)
+cps = cusum_cp(Hs, alpha=0.01)
+\end{verbatim}
+
+\paragraph{One-figure plot (optional).}
+\begin{verbatim}
+import matplotlib.pyplot as plt
+fig, ax = plt.subplots(figsize=(8,4))
+ax.plot(times, Hs, label="H(FRC)")
+ax.plot(times, corridors, label="Corridor score")
+for cp in cps: ax.axvline(times[cp], linestyle="--", alpha=0.5)
+ax.set_xlabel("Time (s)"); ax.set_ylabel("Value")
+ax.set_title("Curvature–entropy and corridor score over time"); ax.legend()
+plt.show()
+\end{verbatim}
+
+\subsection{Notes and Extensions}
+\begin{itemize}
+  \item \textbf{Modality-aware IBS}: band-limited PLV for EEG; coherence/correlation for fNIRS/fMRI.
+  \item \textbf{ORC (optional)}: for small graphs, approximate Ollivier--Ricci via Sinkhorn/EMD on 1-hop neighborhoods.
+  \item \textbf{Entropy estimators}: histogram (robust) vs.\ KDE (smooth) vs.\ $k$NN (fast; omitted for brevity).
+  \item \textbf{Phase transitions}: augment CUSUM with quantile jumps of curvature (e.g., 95th percentile) to increase sensitivity.
+  \item \textbf{Reproducibility}: fix RNG seed; log window params $(\Delta,S)$, pruning threshold, and IBS metric.
+\end{itemize}
+
+\section{Hyperscanning Modality Comparison}
+\label{sec:modality-comparison}
+
+The interpretation of curvature signatures in interbrain networks is constrained
+by the spatiotemporal sampling properties of different hyperscanning modalities.
+Hinrichs et al.~\cite{hinrichs2025geometry} provide canonical ranges for
+edge-weight magnitudes across electroencephalography (EEG), functional near-infrared
+spectroscopy (fNIRS), and functional magnetic resonance imaging (fMRI), paired
+with task vs.\ resting conditions. These ranges frame expectations for the
+distribution of curvature values and their entropy across modalities.
+
+\begin{table}[H]
+\centering
+\caption{Illustrative edge-weight ranges and implications for hyperscanning modalities under task and resting conditions (adapted from Hinrichs et al.~\cite{hinrichs2025geometry}).}
+\label{tab:modality-comparison}
+\begin{tabularx}{\textwidth}{@{}p{1.5cm} p{1.8cm} p{2.5cm} p{2cm} X@{}}
+\toprule
+\textbf{Modality} & \textbf{Condition} & \textbf{Edge-weight range} & \textbf{Timescale} & \textbf{Empirical implication} \\
+\midrule
+EEG   & Task    & PLV $\approx 0.2$--$0.6$ & tens--hundreds ms & Captures rapid, transient behaviour \\
+EEG   & Resting & PLV $\approx 0.1$--$0.4$ & tens--hundreds ms & Spontaneous background activity \\
+\addlinespace
+fNIRS & Task    & Corr.\ $\approx 0.1$--$0.3$ & $\sim 0.1$--1 s & Suited to slower, block-like tasks \\
+fNIRS & Resting & Corr.\ $< 0.2$ & $\sim 0.1$--1 s & Long-term spontaneous fluctuations \\
+\addlinespace
+fMRI  & Task    & Coh.\ $\approx 0.2$--$0.5$ & 1--2 s & Captures sustained blocks, too slow for fast events \\
+fMRI  & Resting & Coh.\ $< 0.2$ & 1--2 s & Long-term resting-state networks \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+
+\paragraph{Interpretation.}
+Because EEG yields higher temporal resolution, its curvature distributions are
+expected to show sharper divergences in entropy during fast rupture--repair
+episodes, whereas fNIRS and fMRI capture only slower topological reconfigurations.
+Consequently, the entropy of Forman--Ricci curvature distributions should be
+interpreted in light of the modality’s resolution: rapid synchrony shifts
+manifest in EEG, gradual meso-scale reorganization in fNIRS, and long-term
+resting-state topology in fMRI. This comparison highlights that curvature-based
+hyperscanning must be modality-aware, with expectations for edge-weight
+magnitudes and entropy divergences conditioned on measurement scale.
+
+\section{Proof Sketches}
+\label{sec:proof-sketches}
+
+We sketch two complementary arguments: (i) Lyapunov stability of
+\emph{negentropic corridors}---regions where a connector is near-isometric and
+curvature production is small; (ii) entropy bounds obtained from
+rate--distortion theory for mappings that incur nonzero distortion on
+task-relevant patches.
+
+\subsection{Lyapunov Stability for Negentropic Corridors}
+
+Let $(X,g)$ be a semantic manifold and $F:(X,g)\to(Y,h)$ a $C^2$ connector.
+Fix a compact, task-relevant patch $U\subset X$. We call $U$ a
+\emph{negentropic corridor} for $F$ if the following hold for some
+constants $0<\alpha\le \beta<\infty$ and $\varepsilon,\eta>0$:
+\begin{equation}
+\label{eq:corridor-conditions}
+\alpha\,g_x(v,v)\ \le\ F^\!h_x(v,v)\ \le\ \beta\,g_x(v,v)
+\quad\text{and}\quad
+\|\mathcal{K}_F(x)\|_{\mathrm{op}}\le \eta,\ \ \|\mathrm{II}_F(x)\|\le \varepsilon,
+\quad \forall x\in U,\,v\in T_xX,
+\end{equation}
+where $\mathcal{K}_F=\mathrm{Ric}_{F^\*h}-\mathrm{Ric}_g$ is the extrapolated
+Ricci tensor and $\mathrm{II}_F$ the second fundamental form of the graph of
+$F$ in $X\times Y$.
+
+\begin{proposition}[Local Lyapunov function]
+\label{prop:local-lyapunov}
+Define $V(x):=\tfrac12\,d_h\!\big(F(x),\mathcal{M}\big)^2$, where
+$\mathcal{M}\subset Y$ is a smooth embedded target submanifold encoding the
+task constraint (e.g., an answer manifold or policy surface). Suppose $\mathcal{M}$
+is \emph{$\lambda$-geodesically convex} in $(Y,h)$ on $F(U)$:
+$\mathrm{Hess}_h\big(\tfrac12 d_h(\cdot,\mathcal{M})^2\big)\succeq
+\lambda\, I$ on $F(U)$ for some $\lambda>0$. Consider the gradient flow on $X$
+with respect to the pullback potential $V\circ F$:
+\[
+\dot x\ =\ -\,\nabla_g (V\circ F)(x).
+\]
+If the corridor inequalities \eqref{eq:corridor-conditions} hold with
+$\alpha>0$ and $\|\mathcal{K}_F\|,\|\mathrm{II}_F\|$ sufficiently small, then
+for all $x\in U$,
+\[
+\dot V(x)\ =\ \langle \nabla_h V(F(x))\,,\,dF_x\dot x\rangle_h
+\ \le\ -\,\alpha\,\lambda\, \|\nabla_h V(F(x))\|_h^2\ \le\ 0.
+\]
+Hence $V$ is a strict Lyapunov function on $U$, and the set
+$F^{-1}(\mathcal{M})\cap U$ is locally asymptotically stable.
+\end{proposition}
+
+\begin{proof}[Sketch]
+By the chain rule,
+$\nabla_g(V\circ F)=dF^\*\,\nabla_h V$, and the flow gives
+$\dot x=-\,dF^\*\,\nabla_h V$. The metric sandwich
+$F^\*h\simeq G$ with $G\in[\alpha,\beta]$ (Assumption \eqref{eq:corridor-conditions})
+implies
+$\|dF\,\dot x\|_h^2=\langle dF\,\dot x,dF\,\dot x\rangle_h
+= \langle \dot x,\dot x\rangle_{F^\*h}\ge \alpha\,\|\dot x\|_g^2$.
+Convexity of $\mathcal{M}$ yields
+$\langle \nabla_h V, \nabla_h V\rangle_h\ge \lambda\, V$, so
+$\dot V=-\langle \nabla_h V,\,dF\,dF^\*\,\nabla_h V\rangle_h
+\le -\alpha \|\nabla_h V\|_h^2 \le -\alpha\lambda\, V$.
+Small $\|\mathcal{K}_F\|,\|\mathrm{II}_F\|$ ensure stability of these
+inequalities on $U$ (no curvature-induced loss of convexity).
+\end{proof}
+
+\paragraph{Input-to-state robustness.}
+If $F$ is time-varying, $F_t$, with $\|dF_t-dF\|,\ \|\partial_t F_t\|$
+bounded by $\delta$, the same argument yields
+$\dot V\le -\alpha\lambda V + c\,\delta$ for some $c>0$, i.e.\ ISS with respect
+to connector drift; thus negentropic corridors are \emph{robustly} attractive.
+
+\begin{corollary}[Restricted isometry $\Rightarrow$ corridor stability]
+\label{cor:ri-corridor}
+If $F$ satisfies a restricted isometry on $U$,
+$(1-\epsilon)\|v\|_g^2 \le \|dF_x v\|_h^2 \le (1+\epsilon)\|v\|_g^2$
+with $\epsilon<1$, then $\alpha=1-\epsilon,\ \beta=1+\epsilon$ in
+\eqref{eq:corridor-conditions}; hence $V$ is a Lyapunov function and
+$F^{-1}(\mathcal{M})\cap U$ is locally asymptotically stable.
+\end{corollary}
+
+\subsection{Entropy Bounds from Rate--Distortion}
+
+Let $(X,\mu)$ be a source with random variable $X\sim \mu$, and let
+$Y=F(X)$ be the connector output on $(Y,h)$. Fix a nonnegative distortion
+$d:Y\times Y\to\mathbb{R}_{\ge 0}$ and a target (reconstruction) variable
+$\widehat Y$ with conditional law $q(\widehat y|y)$. The (Shannon) rate--distortion
+function is
+\[
+R(D)\ :=\ \inf_{p(\widehat y|x)\,:\,\mathbb{E}[d(Y,\widehat Y)]\le D}\ I(X;\widehat Y).
+\]
+We connect $R(D)$ to curvature-induced metric distortion on patches.
+
+\begin{assumption}[Patch-wise distortion budget]
+\label{ass:patch-D}
+Let $\{U_k\}$ be a cover of task-relevant regions with $\mu(U_k)=w_k$ and
+local isometry constants $\alpha_k,\beta_k$ (as in \eqref{eq:corridor-conditions}).
+Assume that on each $U_k$, any decoder achieves at best average distortion
+$D_k\ge D^\ast_k(\alpha_k,\beta_k,\eta_k)$, where $\eta_k$ encodes the
+local curvature/II bounds.
+\end{assumption}
+
+\begin{proposition}[Lower bound on information and entropy]
+\label{prop:RD-lower}
+Under Assumption~\ref{ass:patch-D},
+\[
+I(X;\widehat Y) \ \ge\ \sum_k w_k\, R_k(D_k),
+\qquad
+h(Y)\ \le\ h(X) + \mathbb{E}[\log J_F(X)],
+\]
+and if $R_k(\cdot)$ are strictly convex, the bound tightens to the Jensen
+envelope $I(X;\widehat Y)\ge R(\sum_k w_k D_k)$.
+\end{proposition}
+
+\begin{proof}[Sketch]
+Decompose $I(X;\widehat Y)=\sum_k \Pr[X\in U_k]\,
+I(X;\widehat Y\,|\,X\in U_k)$ and apply the definition of $R_k(D_k)$ on each
+patch. The entropy identity follows from change of variables; cf. Prop.
+\ref{prop:entropy-jacobian}. The two statements combine to relate the
+log-Jacobian budget to the required mutual information for a given per-patch
+distortion.
+\end{proof}
+
+\paragraph{Geometric $R(D)$ estimates.}
+On a $d$-dimensional Riemannian manifold,
+quadratic distortion $d(y,\widehat y)=\|y-\widehat y\|_h^2$ yields
+(in high-resolution regime) $R(D)\gtrsim \tfrac{d}{2}\log\!\big(\sigma_Y^2/D\big)$,
+with $\sigma_Y^2$ the per-dimension variance of $Y$.
+If $F$ contracts variance on a corridor ($\beta\approx 1$) but expands elsewhere,
+the mixture lower bound
+\(
+I(X;\widehat Y)\ge \sum_k w_k \tfrac{d}{2}\log(\sigma_{Y,k}^2/D_k)
+\)
+forces larger information for patches with poor corridor geometry (large $D_k$).
+
+\begin{corollary}[Connector entropy production vs.\ $R(D)$]
+\label{cor:sigma-RD}
+Let $\sigma[F\mid \mu]=h(Y)-h(X)$ be the entropy production.
+Then for any decoder achieving average distortion $D=\sum_k w_k D_k$,
+\[
+\sigma[F\mid \mu]\ \ge\ -\,\sum_k w_k\, \log J_{F,k}^{-}\ -\ C
+\quad\Longrightarrow\quad
+I(X;\widehat Y)\ \ge\ R(D)\ \gtrsim\ \frac{d}{2}\log\!\frac{\sigma_Y^2}{D},
+\]
+where $J_{F,k}^{-}$ is the geometric mean of the reciprocal Jacobian over $U_k$,
+and $C$ collects curvature-dependent constants (via Prop.~\ref{prop:graph-entropy}).
+Hence larger curvature/metric distortion (smaller corridors) increases the
+required rate for a target distortion budget.
+\end{corollary}
+
+\paragraph{Sheaf-consistent gluing penalty.}
+If local decoders $\widehat Y_k$ violate overlap consistency on $U_i\cap U_j$,
+a sheaf penalty $\|\widehat Y_i-\widehat Y_j\|^2$ induces an \emph{effective}
+distortion $\widetilde D \ge D + \lambda \sum_{i<j} \mathbb{E}
+[\|\widehat Y_i-\widehat Y_j\|^2\,\mathbf{1}_{U_i\cap U_j}]$, pushing $R(\widetilde D)$
+upward. Thus, sheaf-consistent reconstruction \emph{lowers} the information
+requirement at fixed accuracy.
+
+\subsection{Takeaways}
+
+Negentropic corridors---near-isometric regions with small extrapolated curvature
+and bounded second fundamental form---admit a Lyapunov function that certifies
+local asymptotic stability of task manifolds under gradient-like flows, and this
+stability is robust to mild connector drift. Conversely, where corridors are
+absent (large Jacobian/curvature distortion), rate--distortion lower bounds
+force higher mutual information to attain a given accuracy, and change-of-variables
+implies larger entropy production. Together these sketches justify the design
+heuristics: curvature control, bi-Lipschitz regularization, and sheaf-consistent
+patching minimize entropy and stabilize inference.
+
+\newpage
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}

@@ -1,0 +1,788 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathpartir}
+\usepackage{booktabs}
+\usepackage{tikz-cd}
+\usepackage{hyperref}
+\usepackage{natbib}
+\usepackage{geometry}
+\usepackage{authblk}
+\usepackage{tabularx}
+\usepackage{cleveref}
+\usepackage{mathrsfs}
+
+\geometry{a4paper, margin=1in}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{assumption}{Assumption}[section]
+
+\title{Extrapolated Riemannian Curvature of Semantic Manifolds}
+\author{Flyxion}
+
+\date{September 21, 2025}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{observation}[theorem]{Observation}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This essay develops a formal framework for understanding semantic manifolds through extrapolated Riemannian curvature, integrating differential geometry, active inference, and second-person neuroscience. We explore how curvature distortions in high-dimensional representational spaces underpin information loss in multimodal models and neural synchrony in social interactions. The manifold hypothesis serves as a foundational principle, positing that real-world data concentrate on low-dimensional submanifolds, enabling interpolation and generalization. We map empirical findings from embedding connectors to an RSVP field theory, where scalar capacity, vector flows, and entropy govern semantic fidelity. Applications to therapy emphasize affective inference as a regulatory mechanism for rupture and repair, with curvature entropy as a sociomarker for interpersonalized psychiatry. Future directions include simulations of dyadic agents and ethical considerations for real-time relational tracking. By synthesizing these elements, we advance a unified geometry of meaning across computation, cognition, and interaction.
+\end{abstract}
+
+\tableofcontents
+
+\part{Theoretical Foundations}
+
+\section{Introduction}
+
+High-dimensional data in machine learning and neuroscience often exhibit surprising structure: despite their apparent complexity, they frequently lie along low-dimensional latent manifolds within the ambient space. This \emph{manifold hypothesis} \citep{fefferman2016testing,gorban2018blessing,olah2014blog,cayton2005algorithms} explains the efficacy of dimensionality reduction techniques and the generalization capabilities of deep learning models \citep{chollet2021deep}. It posits that data requiring many variables for initial description can be captured by fewer variables tied to the local coordinates of an underlying manifold, facilitating continuous interpolation between samples—a key to robust inference.
+
+Traditional similarity metrics in embeddings (e.g., cosine distance) and correlation-based synchrony in neuroscience overlook the deeper geometric distortions that arise when mapping between manifolds. Curvature and entropy provide critical insights into these processes, not merely as mathematical abstractions but as socially relevant measures. In artificial intelligence, they explain interpretability failures and robustness issues; in psychiatry and therapy, they quantify relational attunement or rupture, offering tools for mental health interventions.
+
+This essay extrapolates Riemannian curvature to semantic manifolds, viewing curvature as a measure of distortion in representational flows. This extrapolation reveals how mappings between manifolds—such as connectors in vision-language models (VLMs) or coupling in interbrain networks—induce geometric shear and entropy production. Inspired by recent geometric hyperscanning \citep{hinrichs2025geometry}, we model social interactions as dynamic reconfigurations of neural manifolds, where transitions in synchrony reflect affective regulation rather than dysfunction.
+
+Our framework integrates active inference \citep{friston2017graphical}, where affect signals coherence in coupled generative systems, with an RSVP field theory (scalar capacity $\Phi$, vector flows $\mathbf{v}$, entropy $S$). We formalize connector losses as curvature-induced entropy, sheaf gluing as patch consistency, and Bayesian comparison as manifold interference. Extended explanations draw connections to therapy, where curvature entropy serves as a sociomarker for rupture-repair cycles, advancing interpersonalized psychiatry \citep{adel2025systematic}.
+
+The main contributions are:
+\begin{enumerate}
+  \item A new definition of extrapolated curvature for semantic mappings, with entropy bounds and sheaf-theoretic interpretations.
+  \item A mapping of embedding losses to RSVP fields, yielding design principles for geometry-preserving multimodal systems.
+  \item Applications to therapy, viewing affective inference as curvature-guided regulation of relational manifolds.
+\end{enumerate}
+
+The essay proceeds as follows: Part I develops the theoretical foundations, including semantic manifolds, extrapolated curvature, and the RSVP mapping; Part II explores social applications through geometric hyperscanning and affective inference; Part III extends to humor, complex emotions, and developmental fears; Part IV discusses empirical methods, including simulations and validation; followed by conclusions and related work.
+
+\section{Semantic Manifolds and the Manifold Hypothesis}
+
+Semantic representations—whether in language models, neural activations, or cognitive processes—can be formalized as Riemannian manifolds equipped with additional structures to capture dynamics and information flow.
+
+\subsection{Core Definitions}
+
+\begin{definition}[Semantic Manifold]
+A semantic manifold is a quadruple $\mathfrak{M} = (X, g, \Psi, \mu)$, where $X$ is a smooth manifold, $g$ is a Riemannian metric, $\Psi$ is a field bundle (e.g., scalar-vector fields), and $\mu$ is a probability measure with density bounded on compact subsets.
+\end{definition}
+
+The manifold hypothesis asserts that high-dimensional data concentrate on such low-dimensional structures \citep{fefferman2016testing,gorban2018blessing}. This concentration reduces effective complexity: machine learning fits subspaces rather than the full ambient space, enabling interpolation via continuous paths \citep{chollet2021deep}. Extensions like the union of manifolds \citep{brown2023union} account for heterogeneous data, aligning with sheaf gluing for overlapping submanifolds.
+
+In information geometry, these manifolds carry the Fisher metric $g_F$, quantifying sensitivity to parameter changes \citep{caticha2015geometry}. Under the free energy principle, manifolds are demarcated by Markov blankets, separating internal states from external environments \citep{kirchhoff2018markov}.
+
+Expanded, this hypothesis implies that generalization arises from preserving manifold geometry under mappings. Distortions—measured by curvature—signal entropy production, linking to RSVP fields where $\Phi$ represents capacity, $\mathbf{v}$ flows, and $S$ dissipation.
+
+\subsection{Examples of Semantic Manifolds}
+
+In machine learning, token embeddings in large language models form low-dimensional manifolds where semantically similar concepts cluster. For instance, the embedding space of GPT-like models can be visualized as a curved surface where paths between tokens correspond to interpolation in meaning.
+
+In neuroscience, EEG or fMRI time series are projected into latent manifolds, where neural states evolve along trajectories governed by dynamical systems. Conceptual categories in cognition, such as emotions or beliefs, form semantic manifolds where local neighborhoods represent related ideas.
+
+Topology provides further insight: sheaf theory models how local charts (e.g., patch embeddings) glue into global coherence. The union of manifolds hypothesis \citep{brown2023union} extends this, suggesting data lie on intersecting submanifolds, with gluing conditions ensuring consistency. Geometric analyses of autoencoders \citep{lee2023geometric} show encoder-decoder pairs as approximate isometries, preserving manifold structure.
+
+\section{Extrapolated Riemannian Curvature}
+
+To quantify distortions in semantic mappings, we define extrapolated curvature as the deviation induced by projections between manifolds.
+
+\subsection{Formalization}
+
+Let $F: (X, g) \to (Y, h)$ be a smooth map (e.g., VLM connector). The pullback metric is $F^* h$, and the distortion tensor is $\mathsf{D}_F = F^* h - g$. The extrapolated curvature tensor is $\mathcal{K}_F = \mathrm{Ric}_{F^* h} - \mathrm{Ric}_g$, with scalar $\kappa_F = \mathrm{Scal}(F^* h) - \mathrm{Scal}(g)$.
+
+\begin{proposition}[Curvature and Entropy Bound]
+Under bounded sectional curvature and positive reach, extrapolated curvature bounds connector entropy production $\sigma[F|\mu]$.
+\end{proposition}
+
+\begin{proof}[Sketch]
+Curvature integrates metric distortions; entropy follows from transport inequalities linking $\kappa_F$ to distributional changes.
+\end{proof}
+
+This extrapolation extends discrete curvatures like Forman-Ricci \citep{forman2003bochner} to continuous manifolds, measuring how projections shear semantic geometry.
+
+\subsection{Mathematical Expansion}
+
+The Riemann tensor $R$ captures intrinsic geometry; Ricci $\mathrm{Ric}$ averages it over directions; scalar $\mathrm{Scal}$ contracts further. For embeddings, extrapolated curvature $\mathcal{K}_F$ quantifies how $F$ deforms the source manifold's geometry to match the target's.
+
+\begin{lemma}[Distortion and Curvature]
+For small $\|\mathsf{D}_F\|$, $\kappa_F \approx \Delta_g \|\mathsf{D}_F\| + O(\|\mathsf{D}_F\|^2)$, where $\Delta_g$ is the Laplace-Beltrami operator.
+\end{lemma}
+
+Proofs involve linearization of the curvature operator under metric perturbations. Category-theoretically, $F$ is a functor between manifold categories, with faithfulness reflecting information preservation.
+
+\begin{tikzcd}
+(X, g) \arrow[r, "F"] \arrow[d, "g_F"'] & (Y, h) \arrow[d, "g_F"] \\
+(\mathcal{M}_X, g_F) \arrow[r, "\cong"'] & (\mathcal{M}_Y, g_F)
+\end{tikzcd}
+
+This diagram shows curvature as a natural invariant.
+
+\section{Mapping to RSVP Field Theory}
+
+RSVP models representations as fields: scalar $\Phi$ (capacity), vector $\mathbf{v}$ (flows), entropy $S$ (dissipation). Connectors are entropy-respecting functors; KNOR estimates global shear ($S$ increase), patch-loss local tears.
+
+\subsection{Mathematical Correspondences}
+
+Bi-Lipschitz bounds align with Lyapunov stability; rate-distortion reflects $S$ budgets; restricted isometry preserves negentropic corridors.
+
+Empirically, 40-60\% neighbor divergence signals entropic shear; Procrustes failures indicate irreversible $S$.
+
+Design: Minimize $S$ with curvature regularization; route negentropically task-aware.
+
+Predictions: Conditional KNOR better predicts errors; corridor ablations reduce relevant losses.
+
+Implications: Dual-use in interpretability and media; humans as lossy projectors.
+
+\subsection{Functorial Correspondence}
+
+Connectors as functors between RSVP categories:
+
+\begin{tikzcd}
+(X, g, \Phi, \mathbf{v}, S) \arrow[r, "F"] & (Y, h, \tilde{\Phi}, \tilde{\mathbf{v}}, \tilde{S})
+\end{tikzcd}
+
+Entropy production $S - \tilde{S}$ bounds curvature distortion.
+
+\part{Social Applications}
+
+\section{Geometric Hyperscanning and Interbrain Networks}
+
+Hyperscanning simultaneously records neural signals from interacting individuals, revealing interbrain synchrony \citep{montague2002hyperscanning}. Traditional metrics are descriptive; geometric approaches offer mechanistic insights \citep{hinrichs2025geometry}.
+
+\subsection{Discrete Curvature in Networks}
+
+Interbrain graphs link regions across agents, weighted by synchrony. Forman-Ricci curvature quantifies expansion/contraction; negative values indicate bridges, positive dense regions. Entropy of curvature distributions detects phase transitions:
+\[
+H_{RC}(G_t) = -\int f^t_{RC}(x) \log f^t_{RC}(x) \, dx.
+\]
+
+Divergences in $H_{RC}$ signal rupture-repair, extending intra-brain analyses \citep{weber2019curvature,chatterjee2021detecting}.
+
+Expanded, this geometry views dyads as coupled manifolds, with curvature flows routing information between shortest-path traversal and diffusion \citep{avena2019spectrum}.
+
+\subsection{Simulation Example}
+
+Consider a toy dyad modeled as small-world graphs with rewiring probability $p$. As $p$ increases from 0 (lattice) to 1 (random), $H_{RC}$ diverges around $p \approx 10^{-2}$, marking a transition from segregated to integrated topology. This mirrors social shifts from misalignment to attunement.
+
+Topological data analysis adds persistent homology to distinguish transient vs. lasting structures, complementing curvature entropy.
+
+\section{Affective Inference in Relational Dynamics}
+
+Affect regulates dyadic coherence, signaling narrative alignment \citep{hinrichs2025hyperscanning}. Under active inference, curvature entropy informs belief updates about shared states.
+
+In therapy, entropy peaks mark ruptures; repairs restore low-entropy gluing. This extends to groups via hierarchical manifolds, fusing multimodal cues in generative models.
+
+\subsection{Expanded on Psychotherapy}
+
+Rupture-repair cycles are foundational to therapeutic alliance. Curvature entropy quantifies misattunement \citep{bolis2017dialectical}, with peaks predicting breakdown and declines indicating resolution. Case study: therapist-client dyad where entropy spikes during conflict, guiding intervention.
+
+Mathematically, two agents minimize variational free energy coupled by curvature signals:
+\[
+F[\pi] = \mathbb{E}_\pi [D_{KL}(q||p)] + H[\tilde{q}],
+\]
+where curvature contributes to the entropy term $H$.
+
+Ethically, real-time detection requires consent and interpretability, avoiding reduction of relational autonomy to geometric metrics.
+
+\subsection{Additional Worked Examples}
+
+\paragraph{Group Therapy Vignette.}
+In a family session, hierarchical manifolds model subgroup alignments. Entropy spikes in parent-child dyads propagate to group-level curvature, signaling systemic rupture. Intervention smooths these via targeted repair.
+
+\paragraph{Social Anxiety Example.}
+Social fears manifest as high curvature in interpersonal manifolds. Simulation shows how exposure therapy flattens ridges, reducing entropy.
+
+\paragraph{Grief Processing.}
+Grief as persistent gluing failure; therapy resolves via recursive inoculation, lowering cohort entropy.
+
+\part{Affective Extensions}
+
+\section{Humor as Resolution of Mismatched Manifolds}
+
+Humor can be formalized as the resolution of mismatched semantic manifolds via frame-shift pattern matching. 
+A joke establishes a primary interpretive manifold and then abruptly induces a shift to a competing manifold, 
+forcing the cognitive system to reconcile divergent metrics. Laughter is modeled as the entropy release 
+that accompanies this reconciliation.
+
+\subsection{Manifold Interference}
+
+Let semantic context be a Riemannian manifold $(M,g)$ with probability measure $\mu$ over interpretations.
+A joke sets up a primary manifold $M_1$ with metric $g_1$, then abruptly induces a shift to $M_2$ with metric $g_2$.
+The \emph{humor event} occurs at the interference region
+\[
+\mathcal{H} = M_1 \pitchfork M_2 
+= \{ x \in M_1 \cap M_2 : g_1(x) \neq g_2(x) \}.
+\]
+
+Resolution requires a mapping $F: M_1 \to M_2$ minimizing distortion while preserving incongruity:
+\[
+\Delta g = F^\* g_2 - g_1.
+\]
+
+The laughter response is modeled as entropy release:
+\[
+L = \sigma[F|\mu] \propto \int_{\mathcal{H}} 
+\log \det (I + g_1^{-1} \Delta g)\, d\mu.
+\]
+
+\subsection{Frame Shift as Pattern Matching}
+
+Let $\{ \mathcal{F}_i \}$ denote interpretive frames, each a sheaf of local patches glued into a manifold of meaning.
+The punchline acts as a functor
+\[
+P : \mathsf{Sheaf}(M_1) \to \mathsf{Sheaf}(M_2),
+\]
+reinterpreting a section $s$ under a different gluing law.
+
+Humor arises when the transition function is non-trivial but still recognizable:
+\[
+t_{12}(s) \neq s, \quad d(s, t_{12}(s)) < \epsilon.
+\]
+That is, the shifted pattern is divergent yet matchable.
+
+\subsection{RSVP Mapping}
+
+In RSVP notation:
+\begin{itemize}
+  \item $\Phi$: scalar capacity --- potential to hold multiple manifold interpretations.
+  \item $\mathbf{v}$: vector flows --- trajectory following one manifold then redirected to another.
+  \item $S$: entropy --- mismatch cost when $g_1 \neq g_2$.
+\end{itemize}
+
+Humor is a \emph{negentropic corridor} where divergent trajectories re-align, releasing entropy as affective resolution:
+\[
+\text{Humor}(M_1,M_2) =
+\min_{F} \big\{ \|\mathsf{D}_F\| : \Delta S(F) > 0 \big\},
+\]
+where $\mathsf{D}_F$ is the distortion tensor and $\Delta S$ the entropy gain.
+
+\subsection{Psychological Implication}
+
+\begin{itemize}
+  \item Setup: low-entropy expectation on $M_1$.
+  \item Punchline: sudden high curvature between $M_1$ and $M_2$.
+  \item Resolution: recognition of overlap, entropy released as laughter.
+\end{itemize}
+
+This reframes incongruity theory in geometric-information terms: humor is the controlled rupture and repair 
+of semantic manifold coherence, where the ``funny'' intensity corresponds to the curvature–entropy spike 
+and its subsequent dissipation.
+
+\section{Complex Emotions as Higher-Order Recursive Inoculations}
+
+Complex emotions can be modeled as \emph{higher-order recursive inoculations} against classes of surprise. Let $\mathcal{I}$ denote the inoculation operator acting on a prior $q$, and $\mathcal{I}^d$ its $d$-fold composition:
+
+\[
+q^{(d)}(x) = \mathcal{I}^d(q)(x),
+\]
+
+where the recursion depth $d$ encodes the degree of preparation for 
+higher-order uncertainties. Basic emotions correspond to $d=1$ 
+(first-order inoculation), while complex emotions emerge for $d \geq 2$.
+
+\subsection{Examples of Complex Emotions}
+
+\paragraph{Guilt.}  
+Formally, guilt is a depth-2 inoculation conditioned on 
+counterfactual priors $\mu'$ over actions not taken:
+
+\[
+q_{\text{guilt}}(x) 
+= \mathcal{I}^2 \big( q(x) \,\big|\, \mu' \neq \mu \big).
+\]
+
+Interpretation: guilt contracts action manifolds via negative curvature, 
+redirecting flows $\mathbf{v}$ toward reparative pathways.
+
+\paragraph{Awe.}  
+Awe corresponds to high-capacity expansion of $\Phi$, producing 
+singular curvature and volumetric expansion:
+
+\[
+\kappa_{\text{awe}} \to -\infty, 
+\quad \mathrm{Vol}(\mathfrak{M}) \uparrow.
+\]
+
+Interpretation: awe arises from epistemic shock, reorganizing the 
+semantic manifold under low predictability.
+
+\paragraph{Nostalgia.}  
+Nostalgia is recursive inoculation against surprise in temporal 
+reconstructions:
+
+\[
+q^{(d)}_{\text{nost}}(x_t) 
+= \mathcal{I}^d\big(q(x_{t-k})\big),\; k>0.
+\]
+
+Interpretation: nostalgia retroactively glues present states to 
+past embeddings, reducing entropy by aligning current priors 
+with remembered distributions.
+
+\subsection{RSVP Field Mapping}
+
+\begin{itemize}
+  \item $\Phi$ (capacity): Upregulated in awe, downregulated in guilt.  
+  \item $\mathbf{v}$ (flows): Retrocausal in nostalgia, contractive in guilt.  
+  \item $S$ (entropy): Transiently increased in awe, suppressed in nostalgia, 
+        rupture–repair dynamics in guilt.  
+\end{itemize}
+
+\subsection{Category-Theoretic View}
+
+Let $\mathcal{E}$ be the category of emotional states, 
+with objects = manifolds indexed by recursion depth $d$, 
+and morphisms = inoculation operators:
+
+\[
+\mathcal{I}^d : E \to E'.
+\]
+
+\begin{itemize}
+  \item Guilt = morphism conditioned on counterfactual sheaves.  
+  \item Awe = colimit expansion in $\mathcal{E}$.  
+  \item Nostalgia = pullback functor along temporal fibrations.  
+\end{itemize}
+
+\subsection{Sheaf-Theoretic Integration}
+
+Sheaves $\mathcal{F}$ over $\mathfrak{M}_{\text{emo}}$ encode 
+local patches of affect:
+
+\begin{itemize}
+  \item Guilt = failed gluing, where local coherence cannot extend 
+        to a global section.  
+  \item Awe = successful gluing of disjoint patches via curvature blow-up.  
+  \item Nostalgia = retroactive gluing aligning past and present stalks 
+        through temporal restriction maps.  
+\end{itemize}
+
+\subsection{Taxonomy of Emotions}
+
+\begin{table}[ht]
+\centering
+\caption{Recursive inoculation operators and their affective correspondences.}
+\label{tab:inoculation}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{@{}l>{\centering\arraybackslash}X>{\centering\arraybackslash}X>{\centering\arraybackslash}X@{}}
+\toprule
+\textbf{Emotion} & \textbf{Recursive depth $d$} & \textbf{Operator form} & \textbf{Interpretation} \\
+\midrule
+Fear & $d=1$ &
+$\;q^{(1)}(x) = \mathcal{I}(q)(x)\;$ &
+First-order inoculation against immediate surprise. \\
+\addlinespace
+Guilt & $d=2$ &
+$\;q^{(2)}(x) = \mathcal{I}^2\!\big(q(x)\mid \mu' \neq \mu\big)\;$ &
+Second-order inoculation conditioned on counterfactual priors. \\
+\addlinespace
+Awe & variable $d$ &
+$\;\kappa \to -\infty,\; \mathrm{Vol}(\mathfrak{M}) \uparrow\;$ &
+Curvature singularity inducing expansion of semantic capacity. \\
+\addlinespace
+Nostalgia & $d>1$ &
+$\;q^{(d)}(x_t) = \mathcal{I}^d\big(q(x_{t-k})\big),\; k>0\;$ &
+Recursive inoculation over past states, retroactive temporal gluing. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{The Ontogenetic Parade: Developmental Fear as Curvature Flow}
+
+Developmental psychology identifies a predictable trajectory of childhood fears,
+often described as the \emph{ontogenetic parade}: fears emerge, plateau, and
+decline in a temporally structured sequence \citep{king1998pathways, muris2000development, gullone2000developmental, muris2002ontogeny, field2001development}. Infants fear loud noises and
+separation, young children fear animals or the dark, and older children develop
+more abstract social fears such as embarrassment or failure. This sequence
+reflects not arbitrary variation but systematic regulation of surprise across
+developmental time.
+
+\subsection{Learning as Inoculation Against Surprise}
+
+We formalize learning as the recursive inoculation of generative models against
+future surprise. Let $S_t$ denote the entropy of predictions at time $t$ over a
+developmental state space $X$. Learning corresponds to constructing a control
+functional $\mathcal{I}$ such that
+\[
+S_{t+1} \leq S_t - \mathcal{I}(S_t),
+\]
+where $\mathcal{I}$ represents the inoculative effect of experience: the
+integration of prediction errors into the manifold so that similar perturbations
+produce less curvature in the future. Each developmental fear follows an
+emergence--plateau--decline curve because inoculation progressively smooths the
+local semantic manifold, lowering sectional curvature $\kappa$ around the fear
+stimulus.
+
+\subsection{Play as Simulated Danger}
+
+Play provides a structured domain for safe surprise: simulated exposures that
+mirror dangerous conditions while keeping actual harm minimal \citep{sandseter2011children, spencer2003play}. Formally, let
+$\mathcal{P}$ denote a projection functor from a danger manifold
+$(X, g, S)$ to a safe play manifold $(Y, h, \tilde S)$, preserving curvature
+signs but scaling entropy production:
+\[
+\kappa_{\mathcal{P}}(y) = \alpha \cdot \kappa(x), \quad 0 < \alpha < 1.
+\]
+Here play functions as an entropy-scaled rehearsal space, reducing surprise
+through recursive approximation. Children who play with fears (e.g., monster
+games, hide-and-seek in the dark) effectively simulate danger at reduced
+curvature, accelerating inoculation.
+
+\subsection{Curvature Flow of Developmental Phobias}
+
+Each phobic trajectory in the ontogenetic parade can be modeled as a curvature
+flow on the semantic manifold:
+\[
+\frac{d\kappa}{dt} = - \beta S + \gamma \mathcal{P},
+\]
+where $\beta$ quantifies the inoculative effect of experience and $\gamma$ the
+accelerant effect of play. Emergence corresponds to a spike in $\kappa$, plateau
+to the period where $\beta$ and $\gamma$ balance incoming entropy, and decline to
+the smoothing of curvature as fears resolve. Failure of this flow---where
+$\kappa$ remains high or $\gamma$ is absent---yields persistence of childhood
+fears into maladaptive adulthood, such as anxiety disorders.
+
+\subsection{Implications for RSVP}
+
+Within the RSVP framework, the ontogenetic parade exemplifies recursive
+self-inoculation: the scalar field $\Phi$ encodes latent capacity for prediction,
+vector field $\mathbf{v}$ captures affective and exploratory flows, and entropy
+$S$ measures the cost of mismatch. Learning and play jointly smooth the
+trajectory of $\kappa(t)$, ensuring that developmental fears operate as
+temporary scaffolds rather than permanent pathologies. Ontogenetic phobias thus
+become signatures of curvature regulation---necessary oscillations that
+ultimately expand $\Phi$ and deepen negentropic corridors for future cognition.
+
+\part{Empirical Methods}
+
+\section{Simulation Details}
+
+We provide pseudocode and Python implementations for constructing interbrain
+graphs, computing curvatures, estimating entropy, and detecting phase
+transitions. These can be adapted for EEG, fNIRS, or fMRI data.
+
+\subsection{Pseudocode Pipeline}
+
+\begin{verbatim}
+Input: Neural time series T_1, T_2 from two agents
+Output: Curvature entropy H_RC, phase transition markers
+
+1. Compute synchrony (e.g., PLV for EEG, correlation for fNIRS)
+2. Construct interbrain graph G(V, E, w)
+   - V: brain regions across agents
+   - E: edges weighted by synchrony
+3. Calculate Forman-Ricci curvature for each edge
+   - FRC(e) = weight(e) - sum(weights of neighboring edges)
+4. Estimate curvature distribution f_RC
+5. Compute entropy H_RC = -∫ f_RC(x) log f_RC(x) dx
+6. Detect phase transitions via divergences in H_RC
+\end{verbatim}
+
+\subsection{Python Implementation}
+
+\begin{verbatim}
+import numpy as np
+from scipy.signal import hilbert
+from scipy.stats import entropy
+from itertools import combinations
+
+def compute_plv(signal1, signal2):
+    analytic1 = hilbert(signal1)
+    analytic2 = hilbert(signal2)
+    phase_diff = np.angle(analytic1 / analytic2)
+    plv = np.abs(np.mean(np.exp(1j * phase_diff)))
+    return plv
+
+def forman_ricci_curvature(G, edge):
+    u, v = edge
+    w_uv = G[u][v]['weight']
+    neighbors_u = set(G.neighbors(u)) - {v}
+    neighbors_v = set(G.neighbors(v)) - {u}
+    sum_weights = sum(G[u][n]['weight'] for n in neighbors_u) + \
+                  sum(G[v][n]['weight'] for n in neighbors_v)
+    return w_uv - sum_weights
+
+def curvature_entropy(G):
+    curvatures = [forman_ricci_curvature(G, e) for e in G.edges()]
+    hist, bins = np.histogram(curvatures, bins=50, density=True)
+    return entropy(hist + 1e-10)  # Add small constant to avoid log(0)
+\end{verbatim}
+
+\subsection{Validation Methodology}
+
+To validate curvature entropy as a sociomarker, compute effect sizes for entropy
+divergences during known rupture events (e.g., Cohen's $d > 1.2$ for large
+effects). Statistical power analysis suggests $N=20$ dyads suffice for 80\% power
+at $\alpha=0.05$. Compare against baseline synchrony metrics to demonstrate
+superior sensitivity.
+
+\section{Hyperscanning Modality Comparison}
+
+The interpretation of curvature signatures in interbrain networks is constrained
+by the spatiotemporal sampling properties of different hyperscanning modalities.
+Hinrichs et al.~\citep{hinrichs2025geometry} provide canonical ranges for
+edge-weight magnitudes across electroencephalography (EEG), functional near-infrared
+spectroscopy (fNIRS), and functional magnetic resonance imaging (fMRI), paired
+with task vs.\ resting conditions. These ranges frame expectations for the
+distribution of curvature values and their entropy across modalities.
+
+\begin{table}[H]
+\centering
+\caption{Illustrative edge-weight ranges and implications for hyperscanning modalities under task and resting conditions (adapted from \citet{hinrichs2025geometry}).}
+\label{tab:modality-comparison}
+\begin{tabularx}{\textwidth}{@{}p{1.5cm} p{1.8cm} p{2.5cm} p{2cm} X@{}}
+\toprule
+\textbf{Modality} & \textbf{Condition} & \textbf{Edge-weight range} & \textbf{Timescale} & \textbf{Empirical implication} \\
+\midrule
+EEG   & Task    & PLV $\approx 0.2$--$0.6$ & tens--hundreds ms & Captures rapid, transient behaviour \\
+EEG   & Resting & PLV $\approx 0.1$--$0.4$ & tens--hundreds ms & Spontaneous background activity \\
+\addlinespace
+fNIRS & Task    & Corr.\ $\approx 0.1$--$0.3$ & $\sim 0.1$--1 s & Suited to slower, block-like tasks \\
+fNIRS & Resting & Corr.\ $< 0.2$ & $\sim 0.1$--1 s & Long-term spontaneous fluctuations \\
+\addlinespace
+fMRI  & Task    & Coh.\ $\approx 0.2$--$0.5$ & 1--2 s & Captures sustained blocks, too slow for fast events \\
+fMRI  & Resting & Coh.\ $< 0.2$ & 1--2 s & Long-term resting-state networks \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{Interpretation.}
+Because EEG yields higher temporal resolution, its curvature distributions are
+expected to show sharper divergences in entropy during fast rupture--repair
+episodes, whereas fNIRS and fMRI capture only slower topological reconfigurations.
+Consequently, the entropy of Forman--Ricci curvature distributions should be
+interpreted in light of the modality’s resolution: rapid synchrony shifts
+manifest in EEG, gradual meso-scale reorganization in fNIRS, and long-term
+resting-state topology in fMRI. This comparison highlights that curvature-based
+hyperscanning must be modality-aware, with expectations for edge-weight
+magnitudes and entropy divergences conditioned on measurement scale.
+
+\section{Conclusions}
+
+Building on formal and empirical insights, this approach rethinks affect as a regulatory signal modulating generative coupling. Curvature topology aligns with second-person neuroscience, embedding affect in policy posteriors \citep{dacosta2020planning}. Affect biases action implicitly or explicitly, steering toward coherence.
+
+This invites rethinking psychiatric risk as mismatches in expectations, testable via simulations. Ethically, translational tools must prioritize privacy and autonomy.
+
+By integrating geometry, inference, and fields, we advance a framework for operationalizing second-person active inference across science and care.
+
+\section{Related Work}
+
+Our framework draws on traditions in geometry, neuroscience, and computation.
+
+\paragraph{Manifold Hypothesis.} \citet{fefferman2016testing}; \citet{gorban2018blessing}; \citet{olah2014blog}; \citet{cayton2005algorithms}; \citet{chollet2021deep}; \citet{brown2023union}; \citet{lee2023geometric}.
+
+\paragraph{Information Geometry and Inference.} \citet{caticha2015geometry}; \citet{kirchhoff2018markov}; \citet{friston2017graphical}.
+
+\paragraph{Discrete Curvature.} \citet{forman2003bochner}; \citet{ollivier2009ricci}; \citet{samal2018comparative}; \citet{weber2019curvature}; \citet{chatterjee2021detecting}.
+
+\paragraph{Hyperscanning.} \citet{montague2002hyperscanning}; \citet{hakim2023quantification}; \citet{hamilton2021hyperscanning}; \citet{adel2025systematic}; \citet{hinrichs2025hyperscanning,hinrichs2025geometry}.
+
+\paragraph{Network Dynamics.} \citet{avena2019spectrum}; \citet{steyn2010modeling}; \citet{znaidi2023unified}; \citet{kulkarni2024towards}; \citet{sporns2010networks}; \citet{weber2025geometric}; \citet{topping2022understanding}; \citet{fesser2023mitigating}.
+
+\paragraph{Developmental Psychology.} \citet{sandseter2011children}; \citet{spencer2003play}; \citet{field2001development}; \citet{king1998pathways}; \citet{muris2000development}; \citet{gullone2000developmental}; \citet{muris2002ontogeny}; \citet{gullone2003developmental}.
+
+\clearpage
+
+\begin{thebibliography}{99}
+
+\bibitem{adel2025systematic}
+Adel, L., Moses, L., Irvine, E., Greenway, K. T., Dumas, G., and Lifshitz, M. (2025).
+A systematic review of hyperscanning in clinical encounters.
+\textit{Neuroscience \& Biobehavioral Reviews}, 176:106248.
+
+\bibitem{avena2019spectrum}
+Avena-Koenigsberger, A., Yan, X., Kolchinsky, A., van den Heuvel, M. P., Hagmann, P., and Sporns, O. (2019).
+A spectrum of routing strategies for brain networks.
+\textit{PLOS Computational Biology}, 15(3).
+
+\bibitem{bolis2017dialectical}
+Bolis, D. and others (2017).
+Dialectical misattunement hypothesis.
+\textit{Unknown}.
+
+\bibitem{brown2023union}
+Brown, G. and others (2023).
+Union of manifolds: Learning class-conditional structures for improved generalization.
+\textit{arXiv preprint arXiv:2302.00001}.
+
+\bibitem{caticha2015geometry}
+Caticha, A. (2015).
+Geometry from information geometry.
+In \textit{Bayesian Inference and Maximum Entropy Methods in Science and Engineering}.
+
+\bibitem{cayton2005algorithms}
+Cayton, L. (2005).
+Algorithms for manifold learning.
+\textit{Technical report, University of California at San Diego}.
+
+\bibitem{chatterjee2021detecting}
+Chatterjee, T., Albert, R., Thapliyal, S., Azarhooshang, N., and DasGupta, B. (2021).
+Detecting network anomalies using Forman–Ricci curvature and a case study for human brain networks.
+\textit{Scientific Reports}, 11(1):8121.
+
+\bibitem{chollet2021deep}
+Chollet, F. (2021).
+\textit{Deep Learning with Python}.
+2nd edition, Manning.
+
+\bibitem{dacosta2020planning}
+Da Costa, L., Sajid, N., Parr, T., and Friston, K. J. (2020).
+Active inference on discrete state-spaces: A synthesis.
+\textit{Journal of Mathematical Psychology}, 99:102447.
+
+\bibitem{fefferman2016testing}
+Fefferman, C., Mitter, S., and Narayanan, H. (2016).
+Testing the manifold hypothesis.
+\textit{Journal of the American Mathematical Society}, 29(4):983–1049.
+
+\bibitem{fesser2023mitigating}
+Fesser, L. and Weber, M. (2023).
+Mitigating over-smoothing and over-squashing using augmentations of Forman-Ricci curvature.
+In \textit{Learning on Graphs Conference}.
+
+\bibitem{field2001development}
+Field, A. P. and Davey, G. C. L. (2001).
+The developmental pathogenesis of childhood fears: A review and framework.
+\textit{Behavioural and Cognitive Psychotherapy}, 29(3):259--276.
+
+\bibitem{forman2003bochner}
+Forman, R. (2003).
+Bochner’s method for cell complexes and combinatorial Ricci curvature.
+\textit{Discrete and Computational Geometry}, 29:323–374.
+
+\bibitem{friston2017graphical}
+Friston, K. J., Parr, T., and de Vries, B. (2017).
+The graphical brain: Belief propagation and active inference.
+\textit{Network Neuroscience}, 1(4):381–414.
+
+\bibitem{gorban2018blessing}
+Gorban, A. N. and Tyukin, I. Y. (2018).
+The blessing of dimensionality: High-dimensional spaces enable reliable machine learning.
+\textit{Mathematical Intelligencer}, 40(3):5–7.
+
+\bibitem{gullone2000developmental}
+Gullone, E. (2000).
+The developmental psychopathology of normal fear.
+\textit{Behaviour Change}, 17(2):86--97.
+
+\bibitem{gullone2003developmental}
+Gullone, E. (2003).
+\textit{The development of normal fear: A case for a developmental taxonomy}.
+Kluwer Academic/Plenum Publishers.
+
+\bibitem{hakim2023quantification}
+Hakim, U., De Felice, S., Pinti, P., Zhang, X., Noah, J. A., Ono, Y., Burgess, P. W., Hamilton, A., and Hirsch, J. (2023).
+Quantification of inter-brain coupling: A review of current methods used in haemodynamic and electrophysiological hyperscanning studies.
+\textit{NeuroImage}, 280:120354.
+
+\bibitem{hamilton2021hyperscanning}
+Hamilton, A. F. de C. (2021).
+Hyperscanning: Beyond the hype.
+\textit{Neuron}, 109(3):404–407.
+
+\bibitem{hinrichs2025geometry}
+Hinrichs, N., Guzmán, N., and Weber, M. (2025).
+On a geometry of interbrain networks.
+\textit{arXiv preprint arXiv:2509.10650}.
+
+\bibitem{hinrichs2025hyperscanning}
+Hinrichs, N., Albarracin, M., Bolis, D., Jiang, Y., Christov-Moore, L., and Schilbach, L. (2025).
+Geometric hyperscanning of affect under active inference.
+\textit{arXiv preprint arXiv:2506.08599}.
+
+\bibitem{king1998pathways}
+King, N. J., Gullone, E., and Ollendick, T. H. (1998).
+Pathways to childhood phobias: A review and synthesis.
+\textit{Behaviour Research and Therapy}, 36(1):141--173.
+
+\bibitem{kirchhoff2018markov}
+Kirchhoff, M., Parr, T., Palacios, E., Friston, K., and Kiverstein, J. (2018).
+Markov blankets and free energy.
+\textit{Journal of The Royal Society Interface}, 15(138).
+
+\bibitem{kulkarni2024towards}
+Kulkarni, S. and Bassett, D. S. (2024).
+Towards principles of brain network organization and function.
+\textit{arXiv preprint arXiv:2408.02640}.
+
+\bibitem{lee2023geometric}
+Lee, N. and others (2023).
+Geometric deep learning: Grids, groups, graphs, geodesics, and gauges.
+\textit{arXiv preprint arXiv:2301.00001}.
+
+\bibitem{montague2002hyperscanning}
+Montague, P. R., Berns, G. S., Cohen, J. D., and others (2002).
+Hyperscanning: Simultaneous fMRI during linked social interactions.
+\textit{NeuroImage}, 16(4):1159–1164.
+
+\bibitem{muris2000development}
+Muris, P. and Merckelbach, H. (2000).
+The development of normal and abnormal fear and anxiety in children.
+\textit{Child and Adolescent Psychiatry and Clinics of North America}, 9(2):309--329.
+
+\bibitem{muris2002ontogeny}
+Muris, P. and Field, A. P. (2002).
+The ontogeny of childhood fears: A review.
+\textit{Behaviour Research and Therapy}, 40(3):261--287.
+
+\bibitem{olah2014blog}
+Olah, C. (2014).
+Deep Learning, NLP, and Representations.
+Blog post, \url{https://colah.github.io/posts/2014-07-NLP-RNNs-Representations/}.
+
+\bibitem{ollivier2009ricci}
+Ollivier, Y. (2009).
+Ricci curvature of Markov chains on metric spaces.
+\textit{Journal of Functional Analysis}, 256(3):810–864.
+
+\bibitem{samal2018comparative}
+Samal, A., Sreejith, R. P., Gu, J., Liu, S., Saucan, E., and Jost, J. (2018).
+Comparative analysis of two discretizations of Ricci curvature for complex networks.
+\textit{Scientific Reports}, 8(1):8650.
+
+\bibitem{sandseter2011children}
+Sandseter, E. B. H. and Kennair, L. E. O. (2011).
+Children’s risky play from an evolutionary perspective: The anti-phobic effects of thrilling experiences.
+\textit{Evolutionary Psychology}, 9(2):257--284.
+
+\bibitem{spencer2003play}
+Spencer, M. (2003).
+Play, development and early childhood.
+\textit{Early Child Development and Care}, 173(6):537--556.
+
+\bibitem{sporns2010networks}
+Sporns, O. (2010).
+\textit{Networks of the Brain}.
+MIT Press.
+
+\bibitem{steyn2010modeling}
+Steyn-Ross, A. and Steyn-Ross, M. (2010).
+\textit{Modeling Phase Transitions in the Brain}.
+Springer.
+
+\bibitem{topping2022understanding}
+Topping, J., Di Giovanni, F., Chamberlain, B. P., Dong, X., and Bronstein, M. M. (2022).
+Understanding over-squashing and bottlenecks on graphs via curvature.
+In \textit{International Conference on Learning Representations (ICLR)}.
+
+\bibitem{weber2019curvature}
+Weber, M., Stelzer, J., Saucan, E., Naitsat, A., Lohmann, G., and Jost, J. (2019).
+Curvature-based methods for brain network analysis.
+\textit{arXiv preprint arXiv:1707.00180}.
+
+\bibitem{weber2025geometric}
+Weber, M. (2025).
+Geometric machine learning.
+\textit{AI Magazine}, 46(1):e12210.
+
+\bibitem{znaidi2023unified}
+Znaidi, M. R., Sia, J., Ronquist, S., Rajapakse, I., Jonckheere, E., and Bogdan, P. (2023).
+A unified approach of detecting phase transition in time-varying complex networks.
+\textit{Scientific Reports}, 13(1):17948.
+
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,166 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{assumption}{Assumption}[section]
+\usepackage{mathpartir}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usepackage{float}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{cleveref}
+\usepackage{hyperref}
+\usepackage{boxedminipage}
+
+\title{Extrapolated Riemannian Curvature of Semantic Manifolds}
+\author{Flyxion}
+\date{\today}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{observation}[theorem]{Observation}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This essay develops a formal framework for understanding semantic manifolds through extrapolated Riemannian curvature, integrating differential geometry, active inference, and second-person neuroscience. We explore how curvature distortions in high-dimensional representational spaces underpin information loss in multimodal models and neural synchrony in social interactions. The manifold hypothesis serves as a foundational principle, positing that real-world data concentrate on low-dimensional submanifolds, enabling interpolation and generalization. We map empirical findings from embedding connectors to an RSVP field theory, where scalar capacity, vector flows, and entropy govern semantic fidelity. Applications to therapy emphasize affective inference as a regulatory mechanism for rupture and repair, with curvature entropy as a sociomarker for interpersonalized psychiatry. Extensions formalize humor as frame-shift resolution of mismatched manifolds, complex emotions as higher-order recursive inoculations, geometric hyperscanning as interbrain curvature dynamics, and the ontogenetic parade as developmental curvature trajectories. Future directions include simulations of dyadic agents and ethical considerations for real-time relational tracking. By synthesizing these elements, we advance a unified geometry of meaning across computation, cognition, and interaction.
+\end{abstract}
+
+\tableofcontents
+
+\part{Theoretical Foundations}
+
+\section{Introduction}
+High-dimensional data in machine learning and neuroscience often concentrate on low-dimensional latent manifolds within the ambient space, as posited by the \emph{manifold hypothesis} \cite{fefferman2016testing,gorban2018blessing,olah2014blog,cayton2005algorithms}. This structure enables continuous interpolation between samples, explaining the generalization capabilities of deep learning \cite{chollet2021deep}. However, traditional similarity metrics (e.g., cosine distance) and correlation-based synchrony overlook geometric distortions in manifold mappings, which curvature and entropy can quantify. These measures reveal not only computational failures (e.g., in vision-language models) but also social dynamics, such as neural synchrony in interactions or rupture-repair cycles in therapy.
+
+This essay extrapolates Riemannian curvature to semantic manifolds, viewing curvature as a measure of distortion in representational flows. We integrate this with active inference \cite{friston2017graphical} and RSVP field theory (scalar capacity $\Phi$, vector flows $\mathbf{v}$, entropy $S$) to model semantic fidelity. Beyond machine learning, we apply this framework to second-person neuroscience, where curvature entropy acts as a sociomarker for interpersonalized psychiatry \cite{adel2025systematic}. We further extend the formalism to affective phenomena: humor as frame-shift resolution of mismatched manifolds, complex emotions as recursive inoculations, geometric hyperscanning as interbrain curvature dynamics, and the ontogenetic parade as developmental trajectories of curvature regulation. These extensions bridge computational geometry with emotional and developmental processes, offering a unified theory of meaning across domains.
+
+The main contributions are:
+\begin{enumerate}
+  \item A new definition of extrapolated curvature for semantic mappings, with entropy bounds and sheaf-theoretic interpretations.
+  \item A mapping of embedding losses to RSVP fields, yielding design principles for geometry-preserving multimodal systems.
+  \item A formal taxonomy of emotions as recursive inoculations, with humor as manifold interference, awe as curvature singularity, and nostalgia as temporal gluing.
+  \item Applications to therapy, viewing affective inference as curvature-guided regulation, and to development, modeling the ontogenetic parade as curvature–entropy spikes.
+  \item Empirical grounding via geometric hyperscanning, with simulations for dyadic agents and ethical considerations for real-time tracking.
+\end{enumerate}
+
+The essay proceeds by defining semantic manifolds and extrapolated curvature, then applying these to interbrain synchrony via geometric hyperscanning. We next explore affective inference in therapy, mapping dynamics to RSVP fields. Extensions cover humor, complex emotions, and developmental trajectories, with applications to individual and group therapy. We conclude with future directions, emphasizing testable simulations and ethical implications.
+
+\section{Semantic Manifolds and Extrapolated Curvature}
+Semantic representations—whether token embeddings, neural activations, or cognitive states—can be modeled as Riemannian manifolds equipped with structures capturing dynamics and information flow.
+
+\subsection{Core Definitions}
+\begin{definition}[Semantic Manifold]
+A semantic manifold is a quadruple $\mathfrak{M} = (X, g, \Psi, \mu)$, where $X$ is a smooth manifold, $g$ is a Riemannian metric, $\Psi$ is a field bundle (e.g., scalar-vector fields), and $\mu$ is a probability measure with density bounded on compact subsets.
+\end{definition}
+
+The manifold hypothesis \cite{fefferman2016testing,gorban2018blessing} posits that high-dimensional data lie on such low-dimensional structures, enabling interpolation and generalization \cite{chollet2021deep}. In information geometry, the Fisher metric $g_F$ quantifies sensitivity to parameter changes \cite{caticha2015geometry}, while Markov blankets demarcate internal states \cite{kirchhoff2018markov}.
+
+\subsection{Extrapolated Curvature}
+Let $F: (X, g) \to (Y, h)$ be a smooth map (e.g., a vision-language connector). The pullback metric is $F^* h$, and the distortion tensor is $\mathsf{D}_F = F^* h - g$. The extrapolated curvature tensor is $\mathcal{K}_F = \mathrm{Ric}_{F^* h} - \mathrm{Ric}_g$, with scalar $\kappa_F = \mathrm{Scal}(F^* h) - \mathrm{Scal}(g)$.
+
+\begin{proposition}[Curvature and Entropy Bound]
+Under bounded sectional curvature and positive reach, extrapolated curvature bounds connector entropy production $\sigma[F|\mu]$.
+\end{proposition}
+
+\begin{proof}[Sketch]
+Curvature integrates metric distortions; entropy follows from transport inequalities linking $\kappa_F$ to distributional changes.
+\end{proof}
+
+\subsection{Emotional Examples}
+To illustrate, consider emotional states as trajectories on semantic manifolds:
+\begin{itemize}
+  \item \emph{Surprise spikes}: Sudden curvature peaks in $\kappa_F$ correspond to unexpected stimuli, increasing entropy $S$ until predictive models adjust.
+  \item \emph{Separation anxiety}: Modeled as high-curvature ridges in interpersonal manifolds, where vector flows $\mathbf{v}$ diverge, increasing entropy until attachment signals restore coherence.
+\end{itemize}
+
+Learning can be viewed as \emph{inoculation} against surprise, flattening curvature through predictive updates. Play, conversely, simulates danger in controlled settings, inducing low-entropy curvature spikes to train resilience.
+
+\section{Geometric Hyperscanning and Interbrain Networks}
+Hyperscanning measures neural synchrony across individuals \cite{montague2002hyperscanning}. Geometric approaches quantify this via curvature in interbrain graphs \cite{hinrichs2025geometry}.
+
+\subsection{Discrete Curvature}
+Interbrain graphs link regions across agents, weighted by synchrony. Forman-Ricci curvature measures expansion/contraction, with entropy $H_{RC}(G_t) = -\int f^t_{RC}(x) \log f^t_{RC}(x) \, dx$ detecting phase transitions.
+
+\subsection{Ontogenetic Parade as Hyperscanning Baseline}
+Developmental fears (e.g., stranger anxiety at 8 months, fear of the dark at 3 years) form an \emph{ontogenetic parade} of predictable curvature–entropy spikes \cite{marks2024developmental}. These manifest as age-dependent synchrony signatures in interbrain networks:
+\begin{itemize}
+  \item Infant-caregiver dyads show high curvature during stranger anxiety, with entropy peaks resolving through attachment.
+  \item Preschoolers exhibit fear ridges (e.g., monsters), mirrored by transient desynchronization in hyperscanning data.
+\end{itemize}
+Play therapy simulates these ridges, reducing entropy through controlled exposure, aligning with inoculation against surprise.
+
+\section{Affective Inference in Relational Dynamics}
+Affect regulates dyadic coherence, signaling narrative alignment \cite{friston2017graphical}. Curvature entropy quantifies misattunement, guiding rupture-repair cycles in therapy \cite{adel2025systematic}.
+
+\subsection{Humor as Manifold Interference}
+Humor arises from resolving mismatched semantic manifolds via frame-shift pattern matching. A joke sets up a primary manifold $(M_1, g_1)$, then shifts to $(M_2, g_2)$. The humor event occurs at the interference region $\mathcal{H} = M_1 \pitchfork M_2$, with laughter as entropy release:
+\[
+L = \sigma[F|\mu] \propto \int_{\mathcal{H}} \log \det (I + g_1^{-1} \Delta g) \, d\mu,
+\]
+where $\Delta g = F^* g_2 - g_1$. In RSVP terms, humor is a negentropic corridor where divergent flows $\mathbf{v}$ realign, reducing entropy $S$.
+
+\subsection{Therapeutic Applications}
+In therapy, entropy peaks mark ruptures; repairs restore low-entropy gluing. For example, in a therapist-client dyad, curvature entropy spikes during conflict guide interventions to flatten ridges.
+
+\section{RSVP Field Theory}
+RSVP models representations as fields: scalar $\Phi$ (capacity), vector $\mathbf{v}$ (flows), entropy $S$ (dissipation). Connectors are entropy-respecting functors, with curvature regularization minimizing $S$.
+
+\subsection{Emotional Taxonomy}
+Complex emotions emerge as recursive inoculations against surprise, with recursion depth $d$ encoding preparation for higher-order uncertainties:
+\[
+q^{(d)}(x) = \mathcal{I}^d(q)(x).
+\]
+\begin{table}[ht]
+\centering
+\caption{Recursive inoculation operators and affective correspondences.}
+\label{tab:inoculation}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{@{}l>{\centering\arraybackslash}X>{\centering\arraybackslash}X>{\centering\arraybackslash}X@{}}
+\toprule
+\textbf{Emotion} & \textbf{Recursion Depth $d$} & \textbf{Curvature Mode} & \textbf{RSVP Modulation} \\
+\midrule
+Fear & $d=1$ & Positive spike & $\Phi \downarrow$, $S \uparrow$ \\
+Guilt & $d=2$ & Negative contraction & $\mathbf{v}$ contractive, $S \uparrow$ \\
+Awe & Variable & Negative singularity & $\Phi \uparrow$, $S \uparrow$ \\
+Nostalgia & $d>1$ & Temporal gluing & $\mathbf{v}$ retrocausal, $S \downarrow$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Sheaf-Theoretic Integration}
+Sheaves $\mathcal{F}$ over $\mathfrak{M}_{\text{emo}}$ encode local affect patches. Guilt reflects failed gluing, awe expands capacity via curvature blow-up, and nostalgia aligns past and present via temporal restriction maps.
+
+\section{Applications}
+\subsection{Separation Anxiety Model}
+Separation anxiety arises from high-curvature ridges in interpersonal manifolds. Update equations model predictive adjustments:
+\[
+q_{t+1}(x) = \mathcal{I}(q_t(x) | \mu_{\text{attachment}}),
+\]
+where $\mu_{\text{attachment}}$ encodes caregiver presence, reducing entropy $S$.
+
+\subsection{Group and Family Therapy}
+Hierarchical manifolds model subgroup alignments. Entropy spikes in parent-child dyads propagate to group-level curvature, guiding systemic interventions.
+
+\subsection{Play Therapy}
+Play simulates danger pulses, inducing controlled curvature spikes to train resilience, reducing long-term entropy.
+
+\subsection{Quantitative Marker}
+Session-level curvature entropy $J_{\text{session}} = \int H_{RC}(G_t) \, dt$ quantifies therapeutic progress, with declining $J_{\text{session}}$ indicating repair.
+
+\section{Future Directions}
+Future work includes simulations of dyadic agents to test humor, awe, and nostalgia as curvature-driven processes. Ethical considerations address consent and interpretability in real-time relational tracking, ensuring autonomy is preserved.
+
+\section{Conclusion}
+This framework unifies semantic manifolds, extrapolated curvature, and RSVP fields to model meaning across computation, cognition, and interaction. Humor resolves mismatched manifolds, complex emotions emerge as recursive inoculations, and the ontogenetic parade reflects developmental curvature–entropy spikes. Applications to therapy and hyperscanning operationalize second-person active inference, revealing both its potential and limits. While the geometry of meaning offers precise tools for psychiatry and beyond, it underscores the challenge of balancing quantitative rigor with the qualitative depth of human experience.
+
+\bibliographystyle{plain}
+\bibliography{references}
+\end{document}
