@@ -1,0 +1,318 @@
+Model interpolation for efficient reasoning - Claude
+Claude
+Nuevo chat
+Chats
+Proyectos
+Artefactos
+Recientes
+Unified research ecosystem architecture
+Improving mathematical rigor in theoretical physics
+Model interpolation for efficient reasoning
+Relativistic scalar-vector plenum theory
+Github repository naming advice
+The universe as a learning ocean
+Paradigms of intelligence framework
+Relativistic scalar-vector plenum theory
+The vanity press economy
+Nine directives in category theory
+Extending research methodology rigorously
+Theoretical work and cognitive boundaries
+Consciousness as neural gait
+Consciousness as gait: cortical cycles and embodied cognition
+Time's geometry of perception
+Xylomorphic Computation: Forest-Inspired AI Safety Architecture
+💬 Alright — here's how I'd cross...
+Unified Theory of Relativistic Scalar Vector Plenum
+Memory as Generative Computation
+Essay Extension Strategies
+Futarchy: Democratic Market Governance
+Interdisciplinary Portfolio Review
+Functorial Integration of AI Self-Awareness Models
+Suggestions for Improvement
+Essay Improvement Strategies
+Translation Strategies
+The Book of J
+Collagen Architecture and Cognitive Function
+Critique of RSVP Theoretical Framework
+Ortyx Protocol Technical Framework
+Todos los chats
+NG
+Nate Guimond
+Plan gratuito
+Model interpolation for efficient reasoning
+Compartir
+2510.10977v1.pdf
+1,381 líneas
+pdf
+NG
+I'll analyze this paper on model interpolation for efficient reasoning and help you understand its key contributions.
+Paper Overview
+This paper systematically studies
+model interpolation
+- a simple method of merging "Instruct" models (optimized for short, direct answers) with "Thinking" models (specialized in long chain-of-thought reasoning) to achieve efficient reasoning in Large Language Models.
+Key Findings
+1.
+Three-Stage Evolutionary Paradigm
+The authors discovered that as the interpolation coefficient λ increases from 0 to 1, the merged model follows three distinct stages:
+Stage #1 (λ ∈ [0, 0.4))
+: Dominated by Instruct model
+Responses get longer but without explicit reasoning
+Pass@k increases, but Mean@k improves slowly
+Almost no
+</think>
+tokens appear
+Stage #2 (λ ∈ [0.4, 0.6])
+: Critical transition phase
+Explicit thinking patterns rapidly emerge
+Mean@k increases dramatically while Pass@k remains stable
+"Sweet spot" for efficiency-effectiveness trade-off
+Stage #3 (λ ∈ (0.6, 1.0])
+: Convergence to Thinking model
+Much longer outputs with full reasoning
+Diminishing returns on performance
+Evidence of "over-thinking" phenomenon
+2.
+Superior Performance
+Model interpolation (MI) outperforms sophisticated baselines including:
+Task Arithmetic (TA)
+TIES-Merging
+Other model merging methods
+On challenging benchmarks (AIME'25, IFEval, GPQA-Diamond), strategically interpolated models achieve better accuracy with fewer tokens.
+3.
+Mechanistic Insights
+Through ablation studies, they found:
+Layer-wise
+: Reasoning capabilities are concentrated in the middle and later layers (last 2/3 of model)
+Module-wise
+:
+FFN layers control
+whether
+the model uses step-by-step reasoning
+Attention layers control the
+quality
+of reasoning
+Robustness
+: Interpolated models are stable across different decoding strategies
+Practical Implications
+Token Budget Control
+: By selecting appropriate λ, you can precisely control the trade-off between reasoning depth and computational cost
+Training-Free
+: No additional training required - just weighted averaging of parameters
+Scalable
+: The three-stage paradigm holds across different model sizes (4B and 30B parameters)
+Mathematical Formulation
+The interpolation is simply:
+Θ(Merge) = λΘ(Thinking) + (1-λ)Θ(Instruct)
+The authors show this is equivalent to Task Arithmetic with the base model canceled out.
+Limitations
+Primarily validated on Qwen3 models (need verification on other families)
+Limited to two-model interpolation (extending to 3+ models is future work)
+Bottom Line
+This paper demonstrates that the simplest merging approach - direct weight interpolation - can be highly effective when done strategically. The three-stage framework provides a principled guide for practitioners to create models with precisely targeted reasoning capabilities without additional training costs.
+Reintentar
+NG
+Give the reference and main points
+Reference
+Title:
+Revisiting Model Interpolation for Efficient Reasoning
+Authors:
+Taiqiang Wu, Runming Yang, Tao Liu, Jiahao Wang, Ngai Wong
+Affiliations:
+The University of Hong Kong
+Tsinghua University
+Publication:
+arXiv:2510.10977v1 [cs.AI], October 13, 2025
+Code:
+Available on Github (link mentioned but not provided in paper)
+Main Points
+1.
+Core Problem
+Long chain-of-thought (CoT) reasoning in LLMs causes high latency and "over-thinking"
+Need to balance reasoning capability with token efficiency
+2.
+Proposed Solution: Model Interpolation (MI)
+Merge Thinking model (long CoT) with Instruct model (short answers)
+Formula:
+Θ(Merge) = λΘ(Thinking) + (1-λ)Θ(Instruct)
+Training-free and agnostic to base model
+3.
+Three-Stage Evolutionary Paradigm
+(Key Discovery)
+Stage
+λ Range
+Behavior
+Performance
+#1
+[0, 0.4)
+Instruct-dominated, longer outputs without explicit reasoning
+Pass@k ↑, Mean@k ↑ slowly
+#2
+[0.4, 0.6]
+Rapid emergence of thinking pattern
+Mean@k ↑↑ (sweet spot)
+#3
+(0.6, 1.0]
+Full Thinking convergence, over-thinking
+Diminishing returns
+4.
+Experimental Results
+Models tested:
+Qwen3-4B and Qwen3-30B-A3B
+Benchmarks:
+AIME'25 (math), IFEval (instruction-following), GPQA-Diamond (science)
+Key finding:
+MI-0.8 consistently outperforms sophisticated baselines (Task Arithmetic, TIES-Merging)
+5.
+Performance Highlights
+AIME'25:
+Mean@64 of 80.5 (vs 69.6 for best baseline)
+IFEval:
+Uses ~50% fewer tokens than baselines with better accuracy
+Controllability:
+Smooth progression of thinking ratio (Think #R) from 0% to 100%
+6.
+Mechanistic Insights (Ablation Studies)
+Layer-wise:
+Last 2/3 of model layers are critical for reasoning
+First 1/3 alone cannot induce thinking behavior
+Module-wise:
+FFN layers:
+Control thinking pattern emergence (when to think)
+Attention layers:
+Control reasoning quality (how to think correctly)
+Decoding Strategy:
+Performance is robust across temperature and Top-p variations
+7.
+Practical Guidelines
+For efficiency-focused tasks: Use λ ≈ 0.4-0.6 (Stage #2)
+For maximum performance: Use λ ≈ 0.8
+Larger models may require higher λ for optimal performance
+8.
+Theoretical Contribution
+MI is equivalent to Task Arithmetic without requiring the base model
+Provides principled framework for navigating performance-cost trade-offs
+9.
+Limitations
+Primarily validated on Qwen3 family (needs testing on Llama, Mistral, etc.)
+Limited to two-model interpolation
+Stage boundaries vary by model size
+10.
+Main Contributions (Authors' Summary)
+Discovered and characterized the three-stage evolutionary paradigm
+Demonstrated MI surpasses sophisticated baselines empirically
+Provided deep mechanistic insights through fine-grained ablations
+Key Takeaway:
+Simple direct weight interpolation, when done strategically using the three-stage framework, can outperform complex merging methods for creating efficient reasoning models without any additional training.
+Reintentar
+NG
+The Github link was here
+https://github.com/wutaiqiang/MI
+Complete Reference
+Title:
+Revisiting Model Interpolation for Efficient Reasoning
+Authors:
+Taiqiang Wu, Runming Yang, Tao Liu, Jiahao Wang, Ngai Wong
+Affiliations:
+The University of Hong Kong
+Tsinghua University
+Contact:
+takiwu@connect.hku.hk
+,
+nwong@eee.hku.hk
+Publication:
+arXiv:2510.10977v1 [cs.AI], October 13, 2025
+Code:
+https://github.com/wutaiqiang/MI
+Main Points
+1.
+Core Problem
+Long chain-of-thought (CoT) reasoning in LLMs causes high latency and "over-thinking"
+Need to balance reasoning capability with token efficiency
+2.
+Proposed Solution: Model Interpolation (MI)
+Merge Thinking model (long CoT) with Instruct model (short answers)
+Formula:
+Θ(Merge) = λΘ(Thinking) + (1-λ)Θ(Instruct)
+Training-free and agnostic to base model
+3.
+Three-Stage Evolutionary Paradigm
+(Key Discovery)
+Stage
+λ Range
+Behavior
+Performance
+#1
+[0, 0.4)
+Instruct-dominated, longer outputs without explicit reasoning
+Pass@k ↑, Mean@k ↑ slowly
+#2
+[0.4, 0.6]
+Rapid emergence of thinking pattern
+Mean@k ↑↑ (sweet spot)
+#3
+(0.6, 1.0]
+Full Thinking convergence, over-thinking
+Diminishing returns
+4.
+Experimental Results
+Models tested:
+Qwen3-4B and Qwen3-30B-A3B
+Benchmarks:
+AIME'25 (math), IFEval (instruction-following), GPQA-Diamond (science)
+Key finding:
+MI-0.8 consistently outperforms sophisticated baselines (Task Arithmetic, TIES-Merging)
+5.
+Performance Highlights
+AIME'25:
+Mean@64 of 80.5 (vs 69.6 for best baseline)
+IFEval:
+Uses ~50% fewer tokens than baselines with better accuracy
+Controllability:
+Smooth progression of thinking ratio (Think #R) from 0% to 100%
+6.
+Mechanistic Insights (Ablation Studies)
+Layer-wise:
+Last 2/3 of model layers are critical for reasoning
+First 1/3 alone cannot induce thinking behavior
+Module-wise:
+FFN layers:
+Control thinking pattern emergence (when to think)
+Attention layers:
+Control reasoning quality (how to think correctly)
+Decoding Strategy:
+Performance is robust across temperature and Top-p variations
+7.
+Practical Guidelines
+For efficiency-focused tasks: Use λ ≈ 0.4-0.6 (Stage #2)
+For maximum performance: Use λ ≈ 0.8
+Larger models may require higher λ for optimal performance
+8.
+Theoretical Contribution
+MI is equivalent to Task Arithmetic without requiring the base model
+Provides principled framework for navigating performance-cost trade-offs
+9.
+Limitations
+Primarily validated on Qwen3 family (needs testing on Llama, Mistral, etc.)
+Limited to two-model interpolation
+Stage boundaries vary by model size
+10.
+Main Contributions (Authors' Summary)
+Discovered and characterized the three-stage evolutionary paradigm
+Demonstrated MI surpasses sophisticated baselines empirically
+Provided deep mechanistic insights through fine-grained ablations
+Key Takeaway:
+Simple direct weight interpolation, when done strategically using the three-stage framework, can outperform complex merging methods for creating efficient reasoning models without any additional training.
+Reintentar
+Claude puede cometer errores.
+Verifique las respuestas.
+Sonnet 4.5
+
+
+
+// This script is copied from Segment's official snippet:
+    https://segment.com/docs/connections/sources/catalog/libraries/website/javascript/quickstart/
+    // With the following changes: // 1. Removed the default analytics.load
+    method so that we can rewrite the cdnHostname // 2. Removed un-used methods
+    form analytics.methods
+Isolated Segment
+
