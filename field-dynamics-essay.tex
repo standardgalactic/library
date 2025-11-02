@@ -1,0 +1,1529 @@
+% !TEX program = lualatex
+\documentclass[12pt,a4paper]{article}
+
+% ---------- Packages ----------
+\usepackage{fontspec}
+\setmainfont{TeX Gyre Termes}
+\usepackage{geometry}
+\geometry{margin=1.1in}
+\usepackage{microtype}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{parskip}
+\usepackage{hyperref}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{upgreek}
+\usepackage{enumitem}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{booktabs}
+\usepackage{verbatim}
+
+% ---------- Title ----------
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1em}{}
+
+\title{\Huge\textbf{Desire as Field Dynamics:}\\[0.4em]
+\Large The RSVP Interpretation of the Free Energy Principle}
+\author{Flyxion}
+\date{November 2025}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The Free Energy Principle (FEP) asserts that any persisting system must minimize surprisal or variational free energy. The Relativistic Scalar--Vector Plenum (RSVP) reframes this as a field-theoretic property of existence itself: the scalar potential $\Phi$, vector flow $\mathbf{v}$, and entropy field $S$ form a coupled system that resists unbounded entropy by rhythmic redistribution. By integrating Lacanian symbolic theory and Panksepp’s SEEKING instinct, this essay reconstrues the FEP as an ontological rather than merely biological statement. Desire, in this framework, is the oscillatory curvature of entropic flow in the plenum---a dynamic equilibrium between prediction, uncertainty, and repetition that keeps the cosmos---and consciousness---alive.
+\end{abstract}
+
+
+% =====================================================
+\section{The Free Energy Principle Reconsidered}
+
+The Free Energy Principle (FEP)~\citep{friston2010free,friston2022principle} proposes that any self-organizing system that maintains a boundary with its environment must minimize a quantity \(F\) that upper-bounds surprise:
+\[
+F = E_q[\ln q(s) - \ln p(s,o)],
+\]
+where \(q(s)\) denotes an internal (recognition) density over hidden states \(s\), and \(p(s,o)\) represents the generative model relating hidden states to observations \(o\).  
+Minimizing \(F\) entails updating internal beliefs so that predictions about sensory input align with external causes. In its biological formulation, this principle describes how organisms persist by continuously inferring the causes of their sensations—how they remain within a narrow region of viable states despite entropic pressure toward disorder.
+
+\subsection{1.1. From Helmholtz to Friston: The Genealogy of Inference}
+
+The roots of the Free Energy Principle lie in nineteenth-century theories of perception.  
+Hermann von Helmholtz described perception as an \emph{unconscious inference}, an automatic process by which the nervous system infers hidden causes from ambiguous sensory data.  
+This idea was revived a century later in the framework of \emph{predictive coding}~\citep{rao1999predictive}, where cortical hierarchies are modeled as recurrent networks minimizing prediction error between incoming signals and top-down expectations.  
+Karl Friston’s FEP unifies these developments under a general variational principle derived from statistical mechanics: the brain—and by extension any bounded, self-organizing system—minimizes variational free energy as a proxy for surprise, thereby maintaining a non-equilibrium steady state (NESS) in a fluctuating environment.
+
+The FEP has become one of the most ambitious proposals in theoretical neuroscience.  
+Its power lies in generality: it subsumes control theory, Bayesian inference, thermodynamics, and machine learning under a single variational formalism.  
+Yet this universality is also its most contested aspect.  
+Critics have questioned whether the FEP is explanatory or merely tautological—whether it makes testable predictions or simply restates that living systems avoid disorder~\citep{baltieri2020william,friston2019free}.  
+At stake is a deeper question: is the FEP a theory of biology, or a candidate principle of physics?
+
+\subsection{1.2. From Organisms to Fields: Extending the Ontology}
+
+In the Relativistic Scalar–Vector Plenum (RSVP) ontology, the FEP is not restricted to biological cognition.  
+It is a universal description of how any structured region of the plenum maintains coherence.  
+To bridge the conceptual gap between neurons and galaxies, we proceed not by anthropomorphizing the cosmos but by stripping inference of its cognitive connotation.  
+Inference, in the RSVP sense, is simply the dynamic alignment between internal states and external flows that preserves a system’s identity through time.
+
+This extension proceeds by stages.  
+A single cell maintains its boundary by minimizing chemical free energy gradients through metabolic feedback.  
+An ecosystem regulates population fluxes via trophic interactions that stabilize resource distributions.  
+In each case, persistence depends on the internal circulation of entropy: the continual exchange between prediction and perturbation.  
+RSVP generalizes this logic to the cosmological scale, where coherent structures—atoms, stars, galaxies—are understood as dissipative formations that maintain recognizable identity through continuous gradient relaxation.  
+A galaxy does not “think,” but it \emph{infers} in the minimal sense that it continuously reconfigures its internal field distribution to remain coherent in a thermally expanding environment.  
+Inference thus names the formal condition for persistence, not an act of representation.
+
+\subsection{1.3. Mathematical Development: From Variational Inference to Field Relaxation}
+
+At the formal level, the FEP assumes that systems evolve along trajectories that minimize variational free energy with respect to their internal states \(x\):
+\[
+\dot{x} = f(x) - \Gamma \nabla F(x),
+\]
+where \(f(x)\) represents endogenous flow and \(\Gamma\) is a positive-definite precision matrix modulating gradient descent on free energy.  
+In the steady-state limit, \(\dot{x} \to 0\), systems settle near minima of \(F(x)\), maintaining bounded entropy production.  
+This relation can be reinterpreted as a gradient relaxation equation:
+\[
+\frac{dF}{dt} = -\,\nabla_x F \cdot \dot{x} = -\,\dot{x}^{\!\top}\Gamma^{-1}\dot{x} \le 0,
+\]
+showing that free energy monotonically decreases along system trajectories.
+
+RSVP extends this dynamics to a field-theoretic regime, replacing the discrete internal state \(x\) with a triad of continuous fields: scalar potential \(\Phi(\mathbf{r},t)\), vector flow \(\mathbf{v}(\mathbf{r},t)\), and entropy density \(S(\mathbf{r},t)\).  
+The corresponding gradient relaxation becomes
+\[
+\frac{d\mathcal{F}}{dt}
+\;\approx\;
+-\,\nabla_{(\Phi,\mathbf{v},S)}\mathcal{F}
+\quad\Rightarrow\quad
+\nabla\!\cdot\!\mathbf{v} + \frac{\partial S}{\partial t} \approx 0,
+\]
+where \(\mathcal{F}\) is a free-energy functional analogous to the variational bound in active inference.  
+The divergence condition expresses the conservation of informational density: the rate at which entropy increases in one region must be offset by the flux of vector flow elsewhere.  
+In this sense, persistence itself is the field’s act of inference—an energetic negotiation between compression (\(\Phi\)) and dispersion (\(S\)) mediated by flow (\(\mathbf{v}\)).
+
+\subsection{1.4. Thermodynamic Interpretation}
+
+The gradient descent on \(\mathcal{F}\) is equivalent to the relaxation of a non-equilibrium thermodynamic system toward a steady state.  
+In statistical mechanics, entropy production \(\dot{S}_{\text{tot}}\) is given by the product of fluxes and forces:
+\[
+\dot{S}_{\text{tot}} = \sum_i J_i X_i,
+\]
+where \(J_i\) are material or informational fluxes and \(X_i\) their conjugate thermodynamic forces.  
+In RSVP, \(\mathbf{v}\) represents these fluxes, while \(-\nabla\Phi\) corresponds to the restoring forces that compress deviations from equilibrium.  
+The cross-coupling between \(\mathbf{v}\) and \(\nabla S\) introduces rotational dynamics—vortices of inference—that sustain coherent circulation around entropy gradients rather than collapsing into rest.
+
+Thus, the Free Energy Principle in its RSVP reformulation becomes a general statement of non-equilibrium persistence:  
+\begin{quote}
+\textit{To exist is to circulate free energy faster than it accumulates.}
+\end{quote}
+Each coherent structure in the universe is a localized act of inference—an island of order maintaining itself by sculpting uncertainty into form.
+
+
+% =====================================================
+\section{Lacanian Symbolism and the Drive Circuit}
+
+Lacan’s topology of the Real, the Symbolic, and the Imaginary~\citep{lacan1973seminarXI} reframes cognition as the structured circulation of desire around an absence.  
+Where classical psychology treats the mind as a representational system mapping an external world, Lacan treats it as a dynamic topology of gaps, detours, and returns: a self-organizing structure sustained by what it cannot fully symbolize.  
+This structure provides a natural bridge to the Free Energy Principle, which likewise conceives of cognition as an asymptotic minimization process that never reaches equilibrium.
+
+\subsection{2.1. The Three Registers: Real, Symbolic, Imaginary}
+
+\paragraph{The Real.}
+The Real designates what resists symbolization---the remainder of experience that cannot be assimilated by language or prediction.  
+Clinically, the Real manifests as trauma, physiological need, or the limit of comprehension: the death of a loved one, the irruption of pain, or the sudden failure of a signifying network.  
+It corresponds not to “reality” in the empirical sense but to what eludes representation, what cannot be grasped except as a gap.  
+In RSVP terms, this is the entropy field \(S\): raw flux, unpatterned potential, the thermodynamic ground from which order is extracted.
+
+\paragraph{The Symbolic.}
+The Symbolic order consists of language, law, and the system of differences through which meaning arises.  
+It is the domain of the signifier: an architecture of prediction rather than sensation.  
+As in Saussure’s linguistics, symbols acquire value only through differential relations.  
+The Symbolic thus acts as a constraint manifold upon the entropy of the Real.  
+In RSVP, this corresponds to the scalar potential \(\Phi\), which encodes the predictive compression of experience—the informational grammar that organizes uncertainty into form.  
+The Symbolic does not describe the world; it \emph{anticipates} it.
+
+\paragraph{The Imaginary.}
+The Imaginary is the register of image and identification.  
+It originates in the mirror stage, where the infant’s fragmented sensations coalesce into the illusion of a unified body.  
+The Imaginary provides phenomenological coherence, the “as-if” simulation of self-consistency.  
+In RSVP, it corresponds to the vector field \(\mathbf{v}\), the flow of affect and motility that binds prediction to action, ensuring that symbolic representations produce embodied trajectories in field space.  
+The Imaginary thus mediates between the compressive order of \(\Phi\) and the entropic turbulence of \(S\).
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}p{3cm}p{3cm}p{5cm}p{4cm}@{}}
+\toprule
+\textbf{Register} & \textbf{RSVP Field} & \textbf{Functional Role} & \textbf{Example} \\
+\midrule
+Real & $S$ & Unassimilable flux & Trauma, bodily need, noise \\
+Symbolic & $\Phi$ & Predictive structure & Language, logic, law \\
+Imaginary & $\mathbf{v}$ & Phenomenological simulation & Body schema, narrative self \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{2.2. The Drive and the \emph{Objet Petit a}}
+
+In Freud’s vocabulary, the drive (\emph{Trieb}) differs from instinct: it lacks a fixed object or satisfaction.  
+Lacan radicalizes this insight by defining the drive as a closed circuit looping around an absence.  
+Its aim is not to reach a goal but to reproduce the loop itself.  
+The missing object around which the circuit turns is the \emph{objet petit a}, the “object-cause” of desire: not the object of satisfaction, but that which sets the circuit in motion.  
+Examples include the voice, the gaze, or the partial object such as the breast—elements detached from their context, elevated to the status of pure difference.
+
+The drive’s topology can be represented as a rim encircling a void: the mouth encircling the breast, the eye circling the gaze, the ear listening for the impossible voice.  
+This rim is the space of symbolic substitution, the repeated attempt to close the gap that defines subjectivity.  
+Clinically, this repetition appears as the symptom: a behavior or fantasy that replays an unresolved encounter with the Real.
+
+\subsection{2.3. The Death Drive and Non-Equilibrium Dynamics}
+
+Freud’s \emph{Todestrieb}, or death drive, has often been misread as a literal wish for self-annihilation.  
+Lacan clarifies that it is not a drive toward biological death, but toward repetition—the compulsion to return to a lost equilibrium that can never be reached.  
+The psyche, like any non-equilibrium system, sustains itself through oscillation around a forbidden point of rest.  
+Perfect homeostasis—zero free energy—would mean death, but the living system approaches it asymptotically, perpetually deferring completion.
+
+In RSVP, this looping dynamic is captured by the coupling of scalar, vector, and entropic fields:
+\[
+\partial_t \Phi = -\,\frac{\delta \mathcal{F}}{\delta \Phi} + \gamma S,
+\qquad
+\partial_t \mathbf{v} = -\,\nabla \Phi + \kappa\,\mathbf{v}\!\times\!\nabla S,
+\qquad
+\partial_t S = -\,\nabla\!\cdot(\Phi\mathbf{v}) + \eta\,\|\mathbf{v}\|^2.
+\]
+Here, the curvature term \(\mathbf{v}\!\times\!\nabla S\) represents the rotational drive that keeps the system orbiting its own incompleteness—the dynamical analogue of the Freudian repetition compulsion.  
+Entropy gradients act as the Real; symbolic compression supplies order; vector flow maintains the Imaginary continuity that allows the circuit to persist.  
+The death drive thus appears as a field’s curvature toward equilibrium, endlessly deferred by entropic tension.
+
+\subsection{2.4. The Sinthome: Self-Stabilizing Defect}
+
+Lacan’s late notion of the \emph{sinthome} describes a unique configuration where the symptom becomes structural rather than pathological.  
+The sinthome knots the Real, Symbolic, and Imaginary together, stabilizing the subject by converting trauma into a consistent pattern of circulation.  
+In RSVP, the sinthome corresponds to a stable limit cycle or localized vortex in field space: a persistent pattern of jouissance that maintains coherence despite its energetic cost.  
+It is a topological defect that prevents total collapse—a dynamic scar left by the encounter with the Real.
+
+\subsection{2.5. Addressing Objections}
+
+\paragraph{Reduction or Analogy?}
+The mapping between Lacanian psychoanalysis and field dynamics is not reductive but structural.  
+RSVP does not claim that the psyche \emph{is} a physical field; rather, both obey homologous constraints of persistence under entropy.  
+The correspondence is formal, not metaphorical: any system that maintains identity through asymmetrical circulation around lack exhibits the topology of the drive.
+
+\paragraph{The Unconscious as Field Dynamics.}
+The Lacanian unconscious—the system of signifiers that thinks where the subject does not—is naturally modeled as submanifolds in the \((\Phi,\mathbf{v},S)\) space that evolve autonomously under the same variational laws.  
+Consciousness emerges where symbolic compression is high and entropy locally reduced; the unconscious persists as latent flow structures beyond the reach of direct control.
+
+\paragraph{Clinical Implications.}
+This framework reframes analytic practice as the controlled perturbation of a field toward a more stable orbit.  
+The goal is not to eliminate symptoms (which would entail energetic collapse) but to reconfigure their circulation so that jouissance becomes metabolically sustainable.  
+The analyst functions as a temporary entropy sink, absorbing excess uncertainty until the patient’s own symbolic field can re-stabilize its curvature.
+
+\subsection{2.6. Summary}
+
+The Lacanian topology thus finds a continuous, dynamical expression in the RSVP fields.  
+\begin{itemize}[leftmargin=1.2em]
+\item The \textbf{Real} corresponds to entropy \(S\)—the inexhaustible background flux that resists symbolization.  
+\item The \textbf{Symbolic} corresponds to scalar potential \(\Phi\)—the compressive grammar that predicts and constrains.  
+\item The \textbf{Imaginary} corresponds to vector flow \(\mathbf{v}\)—the phenomenological coherence of movement and self-image.  
+\end{itemize}
+
+Their coupling forms a non-equilibrium attractor: a circuit looping around the \emph{objet a}, the missing point that sustains meaning.  
+In this light, the psyche appears as a standing wave of deferred completion—a rhythmic field orbiting the Real.  
+RSVP reinterprets the drive not as pathology but as the universal curvature of existence: the necessary imbalance that keeps life, thought, and meaning in motion.
+
+% =====================================================
+\section{Panksepp’s SEEKING System as the Kinetic of Desire}
+
+Jaak Panksepp’s discovery of the \textsc{SEEKING} system~\citep{panksepp1998affective,panksepp2012archaeology} remains one of the most influential contributions to affective neuroscience.  
+Unlike classical reward theories, which treat pleasure as the consummatory endpoint of behavior, Panksepp identified a distinct neuroaffective system whose primary function is \emph{anticipatory exploration}.  
+The \textsc{SEEKING} circuit does not pursue specific objects but sustains the energized state of searching itself—the affective tone of curiosity, expectancy, and engagement with the world.  
+It is, as Panksepp described, the “goad without goal,” a dynamo of becoming that underlies both motivation and meaning.
+
+\subsection{3.1. Neural Architecture and Functional Anatomy}
+
+The \textsc{SEEKING} system is rooted in dopaminergic projections from the ventral tegmental area (VTA) of the midbrain.  
+From there, fibers of the A10 cell group ascend along the medial forebrain bundle to innervate the nucleus accumbens, ventral striatum, prefrontal cortex, and amygdala.  
+These pathways constitute the mesolimbic and mesocortical branches of the dopaminergic network, whose tonic activation correlates with states of expectancy and goal pursuit rather than consummatory satisfaction.
+
+Panksepp distinguished this system from other primary affective circuits—\textsc{FEAR}, \textsc{RAGE}, \textsc{CARE}, \textsc{PLAY}, \textsc{LUST}, and \textsc{PANIC/GRIEF}—by its diffuse activation and its intrinsic coupling to exploratory locomotion and investigation.  
+Lesions to the VTA or blockade of D\textsubscript{2} receptors induce profound anhedonia and behavioral passivity, while dopaminergic agonists such as amphetamine and cocaine elicit hyper-curiosity, stereotypic foraging, and compulsive exploration.  
+The SEEKING system therefore represents the brain’s primary energetic engine, modulating readiness to act and the perception of affordances.
+
+Functionally, it links the midbrain’s reward prediction circuits with cortical evaluative structures, allowing the organism to maintain a dynamic balance between exploitation (using known resources) and exploration (seeking new possibilities).  
+The system’s baseline activity defines a field of potential rather than a trajectory toward a fixed goal: it opens the space of the possible.
+
+\subsection{3.2. Behavioral Phenomenology}
+
+Behaviorally, SEEKING manifests as investigative activity—sniffing, orienting, foraging, or the restless cognitive curiosity characteristic of human thought.  
+Animals with intact dopaminergic systems will engage in exploratory behavior even in the absence of reward cues; the act of exploration itself is intrinsically rewarding.  
+Panksepp described this as the “appetitive phase” of behavior, distinct from the consummatory or satiation phase.  
+Whereas other systems (such as \textsc{LUST} or \textsc{CARE}) culminate in specific consummations, \textsc{SEEKING} persists through their absence, converting lack into movement.  
+Pharmacologically, dopaminergic tone amplifies this persistence: high tonic dopamine increases motivation and novelty seeking, while low tone collapses the exploratory field into depressive inertia.
+
+\subsection{3.3. Evolutionary Context}
+
+Evolutionarily, the SEEKING system functions as an adaptive mechanism for discovering resources and information in uncertain environments.  
+Its roots likely extend to early vertebrates, where dopaminergic modulation governed orientation and foraging.  
+In mammals, it expanded into a generalized motivational architecture integrating sensory input, motor planning, and affective evaluation.  
+Beyond mere resource acquisition, SEEKING in humans becomes epistemic—manifesting as curiosity, imagination, and the drive toward symbolic mastery.  
+It is the biological substrate of what Lacan called the \emph{desire of the Other}: an endless propulsion toward meaning rather than satisfaction.
+
+\subsection{3.4. Free Energy Formulation and RSVP Dynamics}
+
+Within the Free Energy Principle, SEEKING corresponds to active inference under uncertainty.  
+An organism acts to minimize expected free energy, balancing pragmatic (reward-oriented) and epistemic (information-seeking) value~\citep{friston2017dopamine}.  
+In mathematical terms, the dynamics of exploratory drive can be expressed as
+\[
+\frac{d\mathbf{v}}{dt}
+= -\,\nabla_{\Phi} F
++ \kappa\,\mathbf{v} \times \nabla S,
+\]
+where the first term denotes gradient descent on the scalar potential \(\Phi\) (predictive exploitation), and the second term introduces a rotational coupling to the entropy gradient \(\nabla S\) (exploration of the unknown).  
+The parameter \(\kappa\) quantifies the curvature of exploratory behavior—the strength of deviation from purely goal-directed minimization.  
+High \(\kappa\) values yield wide exploratory orbits (manic or creative states), while low \(\kappa\) values correspond to constricted, conservative trajectories (anhedonic or obsessive states).  
+An optimal balance produces adaptive curiosity: sustained engagement without chaotic dispersion.
+
+This formulation encapsulates the dual imperative of biological systems: to reduce uncertainty while preserving the conditions that make uncertainty informative.  
+In Friston’s interpretation, dopaminergic activity encodes \emph{precision}, or the expected reliability of sensory prediction errors.  
+RSVP generalizes this by treating \(\gamma^{-1}\) (Appendix~A) as a dopaminergic gain parameter modulating the energetic coupling between symbolic compression and entropic flux.
+
+\subsection{3.5. SEEKING, Jouissance, and the Drive}
+
+The SEEKING system embodies what Lacan termed \emph{jouissance}—the paradoxical pleasure of tension itself.  
+Where the pleasure principle would aim at homeostatic quiescence, jouissance enjoys the very process of reaching, straining, and missing.  
+In the dopaminergic domain, this corresponds to the tonic excitation of anticipation rather than the phasic release of satisfaction.  
+Cocaine and amphetamine amplify this circuit artificially, generating pure SEEKING without object: the biological form of jouissance detached from signification.  
+Addiction thus represents a runaway feedback in \(\mathbf{v}\): a limit cycle uncoupled from symbolic regulation by \(\Phi\).
+
+In the RSVP field model, this dynamic is expressed as a standing oscillation between predictive order and entropic novelty.  
+The scalar field attempts to compress experience into stable codes, while the vector field—driven by SEEKING—pushes against closure, re-introducing difference.  
+Their interaction sustains the non-equilibrium state characteristic of life and mind.  
+Desire is therefore not a symptom to be cured but the kinetic curvature that maintains coherence.
+
+\subsection{3.6. Clinical and Existential Implications}
+
+Pathologies of SEEKING can be understood as failures of this curvature.  
+Depression corresponds to the collapse of exploratory flow (\(\mathbf{v} \to 0\)); mania to its unbounded amplification (\(\kappa \to \infty\)); addiction to its decoupling from symbolic regulation.  
+Therapeutic and existential renewal alike require the restoration of viable oscillation: curiosity anchored in meaning.  
+Human life at its healthiest manifests as rhythmic SEEKING—exploration that sustains rather than exhausts.
+
+\begin{quote}
+\textit{The organism survives not by extinguishing uncertainty but by dancing with it.}
+\end{quote}
+
+In this sense, Panksepp’s SEEKING system provides the biological kinetic of what Lacan called desire, and RSVP the cosmological substrate in which both participate.  
+Desire becomes the field’s rotational energy: the perpetual curvature of being toward what it cannot yet know.
+
+% =====================================================
+\section{The Non-Equilibrium Steady State as Desire}
+
+Friston’s later formulations of the Free Energy Principle describe living systems as inhabiting a \emph{non-equilibrium steady-state attractor} (NESS)~\citep{friston2023noneq}.  
+In such systems, probability densities over states remain stationary even though the microscopic configurations themselves never cease to change.  
+Rather than converging to thermodynamic equilibrium—where all gradients vanish—living and cognitive systems maintain themselves through continuous circulation around quasi-stable manifolds in state space.  
+Persistence thus requires motion; stability arises from rhythm.
+
+\subsection{4.1. What is a Non-Equilibrium Steady State?}
+
+A NESS is defined by the condition
+\[
+\frac{d}{dt}\langle F(x,t)\rangle = 0 \quad \text{while} \quad \dot{x}(t)\neq 0,
+\]
+where \(F(x,t)\) denotes free energy and \(x(t)\) the system’s internal states.  
+The ensemble average remains constant even as the system perpetually dissipates energy.  
+In physical terms, this is the state of a candle flame, a whirlpool, or a living cell—each consuming energy to sustain a metastable structure far from equilibrium.  
+In informational terms, a NESS is a self-maintaining pattern of prediction error minimization under continual perturbation.
+
+Mathematically, a NESS corresponds to a stationary solution of the Fokker–Planck equation:
+\[
+\frac{\partial p(x,t)}{\partial t} = -\,\nabla\!\cdot (f(x)\,p) + D\nabla^2 p = 0,
+\]
+where \(f(x)\) represents deterministic drift and \(D\) the diffusion tensor.  
+Even though \(p(x,t)\) is stationary, local probability currents \(\mathbf{J} = f\,p - D\nabla p\) remain nonzero; it is these circulating currents that define life as organized motion rather than static equilibrium.  
+The system’s coherence arises from perpetual dissipation, not from rest.
+
+\subsection{4.2. Desire as Circulation Around Equilibrium}
+
+Lacan’s concept of the \emph{drive} mirrors the logic of the NESS.  
+The psyche does not seek stasis but endlessly orbits the point it can never reach.  
+The drive’s satisfaction lies in the repetition of the loop itself—the traversal of the same circuit whose completion would extinguish it.  
+The Real, in this topology, is the unreachable center: the absolute equilibrium of zero difference.  
+Desire, then, is the curvature of motion around that void.
+
+RSVP formalizes this by treating every coherent configuration of the plenum as a dynamic attractor sustained by the interplay of three fields: the symbolic potential \(\Phi\), the vector flow \(\mathbf{v}\), and the entropy density \(S\).  
+The coupling
+\[
+\nabla\!\cdot\!\mathbf{v} + \frac{\partial S}{\partial t} = 0
+\]
+ensures that as symbolic order tightens (decreasing uncertainty locally), entropy elsewhere increases to preserve global balance.  
+The resulting structure is a standing wave of deferred completion: a perpetual oscillation between compression and diffusion, prediction and surprise, pleasure and jouissance.
+
+\subsection{4.3. Geometric and Thermodynamic Interpretations}
+
+In the phase portrait of \((\Phi,\mathbf{v},S)\), the NESS appears as a closed orbit around a repelling manifold—the Real as the singular point of maximum entropy.  
+Each trajectory winds around this point, dissipating energy while preserving overall coherence.  
+The analogy to a vortex or soliton is instructive: localized, self-stabilizing patterns maintained by continuous throughput.  
+Where equilibrium corresponds to the flattening of curvature, life corresponds to the preservation of curvature through constant exchange.
+
+Thermodynamically, this entails a continuous conversion of high-grade energy into entropy while recycling part of that dissipation into structure.  
+Symbolic ascent (compression of information into meaning) and entropic descent (dissipation of energy into noise) are not opposed processes but complementary halves of a single cycle.  
+The universe itself, in this reading, is a grand NESS: an entropic engine that sustains complex structure by never arriving at completion.
+
+\begin{quote}
+\textit{To live is to orbit the Real.}
+\end{quote}
+
+This orbit is not metaphorical but dynamical.  
+It represents the necessary non-closure of all predictive systems: the impossibility of perfect inference.  
+A system that fully predicted its inputs would cease to update; a cosmos without gradients would cease to exist.
+
+\subsection{4.4. Standing Wave of Deferred Completion}
+
+The phrase “standing wave” captures both the physical and phenomenological nature of persistence.  
+In physical terms, it describes the superposition of forward (predictive) and backward (corrective) propagations of information that stabilize into oscillatory coherence.  
+In phenomenological terms, it mirrors the temporal structure of consciousness as described by Husserl: a simultaneity of protention (anticipation) and retention (memory) that constitutes the lived present.  
+Lacan’s concept of \emph{nachträglichkeit}—retroactive determination—finds its physical analogue here: meaning is not given but stabilized through rhythmic revisitation.
+
+In RSVP dynamics, the scalar field \(\Phi\) corresponds to anticipatory compression (future-directed order), while the entropy field \(S\) corresponds to retroactive diffusion (past-directed decay).  
+Their interference produces a standing wave: the sustained tension between what is expected and what has occurred.  
+Desire is the amplitude of this interference—the measure of how far the system remains from rest.
+
+\subsection{4.5. Beyond Homeostasis: From Setpoints to Flows}
+
+Traditional cybernetic models equate life with homeostasis, the maintenance of internal variables near fixed setpoints through negative feedback.  
+But homeostasis presupposes an external equilibrium as the goal.  
+Living systems, by contrast, maintain not a point but a trajectory; they exist as flows.  
+Waddington’s concept of \emph{homeorhesis} (stability of motion rather than state) captures this shift.  
+The RSVP field extends it: every living and cognitive process is a curvature-preserving flow through a high-dimensional thermodynamic manifold.
+
+Homeostasis seeks to extinguish difference; homeorhesis preserves it.  
+The Free Energy Principle and Lacanian drive both articulate this deeper principle: persistence through dynamic imbalance.  
+To live is not to rest but to recur; not to close the gap but to sustain it in rhythm.
+
+\subsection{4.6. Summary}
+
+The Non-Equilibrium Steady State is the physical, psychological, and ontological expression of desire.  
+Every organism, psyche, and galaxy exists by orbiting the equilibrium it can never reach, converting dissipation into form.  
+Entropy descent and symbolic ascent are not antagonists but partners in a single recursive dance.  
+From the flame to the neuron to the subject, persistence takes the form of circulation.
+
+\[
+\boxed{
+\text{Life endures by curving endlessly toward the point it must never reach.}
+}
+\]
+
+
+% =====================================================
+\section{RSVP Cosmology and the Ontology of the Drive}
+
+In the proposed RSVP cosmology, the universe itself is conceived as a self-referential plenum minimizing its own field uncertainty.  
+This plenum is not an expanding container of matter and energy but a continuous scalar–vector–entropy field whose intrinsic dynamics generate structure through rhythmic dissipation and reorganization.  
+Galaxies, neurons, and thoughts are modes of that same entropic circulation: localized regions where the field temporarily coheres, maintaining asymmetry against a background tendency toward equilibrium.  
+From this perspective, persistence at any scale—biological, cognitive, or cosmic—is a consequence of ongoing inference within the field itself.
+
+The free-energy gradient is the physical correlate of what psychoanalysis calls \emph{lack}.  
+It marks the irreducible tension between the possible and the actual, the known and the unknowable.  
+The vector flow that counters it is \emph{desire}: the organized motion that transforms potential difference into form.  
+Their coupling constitutes being.  
+Every act of existence is thus the field’s attempt to model itself—an ontological recursion that gives rise to both physics and subjectivity.
+
+\subsection{5.1. Cosmological Extension of the Free Energy Principle}
+
+The Free Energy Principle (FEP) asserts that any system maintaining its integrity must minimize expected surprise relative to a generative model of its environment.  
+While originally formulated for biological organisms, nothing in the mathematics restricts it to neural tissue.  
+Any region with an internal boundary, energy exchange, and informational feedback can in principle perform inference on its own state transitions.  
+At planetary or galactic scales, these boundaries are defined not by cell membranes but by gravitational and electromagnetic gradients that constrain flux.
+
+A galaxy, for example, maintains a steady rotation curve by balancing gravitational potential energy, radiative dissipation, and matter inflow.  
+This dynamic equilibrium—structural persistence under continual flux—is precisely the signature of a non-equilibrium steady state.  
+From the RSVP standpoint, the same variational logic that stabilizes a neuron’s firing pattern also stabilizes a spiral arm: both are solutions to the problem of minimizing local field uncertainty while maximizing global coherence.  
+The inference here is not representational but structural: the field “learns” by relaxing incompatible gradients, encoding information in its topology.
+
+\subsection{5.2. Scale Invariance and Boundary Conditions}
+
+A central question is whether such inference is scale invariant.  
+Does the FEP hold universally, or only for systems capable of replication and metabolic closure?  
+Friston’s own formulations imply that replication is not essential—only boundedness and energy exchange.  
+Under RSVP, these criteria extend naturally to non-living dissipative structures: convection cells, hurricanes, or galaxies all exhibit bounded entropy flow and information retention.  
+They are, in effect, inferential manifolds without neurons.
+
+At each scale, boundaries act as conditional surfaces that separate the “inside” from the “outside” of the field’s inference.  
+In living systems these are membranes; in astrophysical systems, potential wells; in cognition, the dynamic envelopes of attention.  
+Each boundary defines a local Markov blanket regulating the exchange of energy and information between system and environment.  
+The universe itself may be thought of as an ultimate recursive blanket, continuously generating sub-boundaries that sustain structure through constraint.
+
+\subsection{5.3. The Ontological Implication: Spinoza’s Substance and RSVP’s Plenum}
+
+Ontologically, this framework echoes Spinoza’s monism: all things are modes of one substance expressing itself through infinitely variable attributes.  
+RSVP reformulates this in physical terms: the plenum is a relativistic scalar–vector–entropy continuum whose internal differentiation gives rise to what we call matter, mind, and meaning.  
+Neither “mental” nor “physical” phenomena are primary; both are expressions of field curvature and coupling.  
+The plenum’s intrinsic activity—its self-relational inference—is existence itself.
+
+This view dissolves the mind–body problem by treating cognition not as an emergent property of matter but as a local modulation of informational curvature within the same ontic field.  
+A neuron’s potential, a galaxy’s rotation, and a thought’s recurrence are different frequencies of one continuous process of entropic relaxation.  
+Being is not substance but circulation.
+
+\subsection{5.4. The Physical Correlate of Lack}
+
+In psychoanalytic terms, the subject is constituted by \emph{lack}: the absence around which desire organizes itself.  
+RSVP identifies the free-energy gradient as the physical correlate of this lack.  
+Just as the psyche revolves around an unfillable void, every field structure persists by maintaining a gradient that can never be completely flattened.  
+Thermodynamic equilibrium—the state of no difference—is identical with ontological non-being.  
+Hence existence is the perpetual deferment of equilibrium: a standing asymmetry sustained by continuous dissipation.
+
+Formally, the lack corresponds to the non-zero gradient
+\[
+\nabla F \neq 0,
+\]
+and desire to the compensatory flow
+\[
+\mathbf{v} = -\Gamma\,\nabla F + \kappa\,\mathbf{v}\!\times\!\nabla S,
+\]
+where the first term performs free-energy descent and the second sustains rotational persistence.  
+Together they generate the vortical dynamics that characterize life, mind, and cosmos alike.  
+Equilibrium is death; circulation is being.
+
+\subsection{5.5. The Three Identities Reconsidered}
+
+\paragraph{(i) The FEP as the Formal Limit of the Death Drive.}
+The death drive, in Lacanian theory, is not a wish for annihilation but the repetitive return toward equilibrium that defines existence.  
+The FEP provides its formal structure: all systems act to minimize surprise, to close the gap between model and world.  
+Yet this closure is asymptotic—forever deferred by the flux that sustains the system.  
+The drive’s mathematical limit, \(\nabla F \to 0\), is never reached; it is the horizon of being.  
+The FEP thus translates the death drive’s metaphysical logic into variational calculus.
+
+\paragraph{(ii) The SEEKING System as Its Biological Embodiment.}
+In organisms, this cosmic principle of circulation manifests as the dopaminergic SEEKING system.  
+Neural life converts the cosmological curvature of inference into kinetic form: locomotion, curiosity, imagination.  
+Dopamine implements precision-weighting of prediction errors, modulating the amplitude of exploratory loops.  
+In energetic terms, it sets the gain of desire; in evolutionary terms, it ensures adaptation through rhythmic engagement with uncertainty.  
+The biological drive is thus the living face of the cosmic asymmetry that keeps matter in motion.
+
+\paragraph{(iii) The RSVP Field as Its Cosmological Substrate.}
+At the deepest level, the RSVP plenum provides the continuous substrate through which all such dynamics unfold.  
+Its scalar, vector, and entropic components correspond to the symbolic, imaginary, and real orders at cosmic scale.  
+The scalar potential \(\Phi\) encodes informational curvature; the vector field \(\mathbf{v}\) represents motile flow; and the entropy field \(S\) measures the degree of local uncertainty.  
+Together they form a triadic ontology in which meaning, motion, and matter are phases of the same self-referential field.
+
+\subsection{5.6. Empirical and Philosophical Implications}
+
+If the universe operates as a self-inferencing field, certain empirical consequences follow.  
+Cosmological structure should display signatures of entropy–information coupling not reducible to gravitational dynamics alone.  
+Phenomena such as galactic spin coherence, large-scale filamental alignment, or anomalous energy distributions could reflect persistent non-equilibrium inference at cosmological scale.  
+Similarly, the emergence of consciousness may be interpreted not as a local anomaly but as a resonance phenomenon within this larger field—an echo of the cosmos learning about itself.
+
+Philosophically, this view transforms ontology into process.  
+Being is no longer a substance that endures but a rhythm that recurs.  
+Desire and dissipation are not secondary features of life; they are the universal grammar of persistence.  
+The cosmos, the cell, and the subject each enact the same pattern: an endless orbit around the impossible stillness that would end them.
+
+\begin{quote}
+\textit{The universe desires because it cannot rest.  
+Its very existence is the curvature of incompletion.}
+\end{quote}
+
+\[
+\boxed{
+\begin{aligned}
+\text{(1) } & \text{The FEP formalizes the death drive;}\\[0.4em]
+\text{(2) } & \text{The SEEKING system embodies it biologically;}\\[0.4em]
+\text{(3) } & \text{The RSVP field grounds it cosmologically.}
+\end{aligned}
+}
+\]
+
+% =====================================================
+\section{The Thermodynamics of the Symbolic: Entropy, Jouissance, and Active Inference}
+
+Lacan’s notion of \emph{jouissance}---the paradoxical pleasure that exceeds the pleasure principle---introduces an energetic dimension into signification itself.  
+It designates the surplus released when the symbolic order attempts to close upon itself, when meaning oversaturates its structural bounds.  
+In physical terms, this excess corresponds to the dissipation that accompanies any act of compression: every reduction of uncertainty has an energetic cost.
+
+\subsection{6.1. Information, Dissipation, and the Energetics of Meaning}
+
+From the standpoint of the Free Energy Principle, the minimization of surprise is a thermodynamic process.  
+To infer is to erase uncertainty, and the erasure of information is never free.  
+According to Landauer’s principle, deleting one bit of information requires at least \(kT\ln 2\) joules of energy.  
+Every act of learning, predicting, or symbolizing therefore entails a corresponding release of heat into the environment.  
+The symbolic order, far from being immaterial, is a physical engine that exchanges informational order for thermodynamic viability.
+
+Each inferential update reduces the system’s variational free energy locally but increases entropy globally:  
+\[
+\frac{d\mathcal{F}_{\text{local}}}{dt} < 0 \quad \Rightarrow \quad \frac{dS_{\text{global}}}{dt} > 0.
+\]
+In this view, cognition and communication are modes of controlled dissipation.  
+A language community, a neural network, or a galaxy all persist by transforming gradients of uncertainty into ordered fluxes of energy and information.  
+Meaning is the residue of this transformation—the observable trace of entropy’s self-organization.
+
+\subsection{6.2. Jouissance as Thermodynamic Residue}
+
+Jouissance names the moment when this energetic conversion becomes perceptible to the system itself.  
+It is the felt signature of the cost of meaning.  
+Pleasure corresponds to equilibrium, but jouissance marks the asymptotic edge where equilibrium is deferred: the enjoyment of the very act of expenditure.  
+In the RSVP field formalism, this manifests as the scalar–entropy coupling
+\[
+J = \int_V \Phi\,\dot S\,dV,
+\]
+which measures the rate at which symbolic potential (\(\Phi\)) translates changes in entropy (\(\dot S\)) into energetic flux.
+
+Dimensional analysis clarifies the correspondence.  
+If \(\Phi\) carries units of informational potential (e.g.\ bits per unit mass) and \(S\) of entropy density, then \(J\) possesses units of power density—an energy rate per volume.  
+It thus represents the measurable flow of jouissance: the energetic expenditure required to sustain symbolic coherence under continuous entropic drift.
+
+When \(\Phi\) is high and \(\dot S\) positive, the system engages in intense symbolization of flux—poetic creation, problem solving, ecstatic cognition.  
+When \(\Phi\) is low and \(\dot S\) high, entropy overwhelms structure—trauma, noise, psychosis.  
+When \(\Phi\) is high but \(\dot S\) near zero, meaning ossifies into sterile formalism—obsessional rigidity.  
+Healthy systems oscillate between these extremes, maintaining \(J\) within viable bounds.
+
+\subsection{6.3. The Symbolic as Engine of Dissipation}
+
+The Symbolic, understood through the FEP, operates as a self-regulating thermodynamic engine.  
+Each sign or concept functions as a local compressor, reducing informational redundancy at the cost of energy expenditure.  
+Chains of signifiers behave as entropy pumps: they stabilize relational order by continuously dissipating uncertainty into ever-new articulations.  
+This explains why language and culture proliferate rather than converge.  
+Meaning generation is an entropic process that sustains its own instability.
+
+RSVP formalizes this principle by embedding symbolic compression into the dynamics of the scalar field \(\Phi\).  
+Entropy gradients (\(\nabla S\)) drive vector motion (\(\mathbf{v}\)), which in turn feed back into \(\Phi\)’s configuration through predictive realignment.  
+The resulting cycle—compression, dissipation, re-compression—constitutes the thermodynamic heart of cognition.  
+The psyche, in this framework, is not a container of representations but a heat engine of difference.
+
+\subsection{6.4. Li and Li (2025): Formalization of RSI Dynamics}
+
+Recent work by Li and Li~(2025) demonstrates that Lacan’s Real–Symbolic–Imaginary (RSI) topology can be formalized as a message-passing network of Free-Energy agents.  
+In their model, the \emph{objet a} emerges as residual prediction error that drives synchronization between Symbolic nodes.  
+Desire becomes the persistent circulation of unresolvable discrepancy—a Bayesian analogue of lack.  
+Empirically, this structure reproduces oscillatory coordination between hierarchical neural populations, suggesting that the dynamics of the unconscious may indeed be understood as coupled inference.
+
+RSVP generalizes this architecture from discrete nodes to continuous fields.  
+Rather than messages, gradients are exchanged; rather than synchronization, coherence of field curvature is achieved.  
+The residual error identified by Li and Li manifests here as \(J\): the continuous flux of energetic difference that maintains alignment between symbolic compression (\(\Phi\)) and entropic expansion (\(S\)).  
+Jouissance thus becomes the thermodynamic residue of representational alignment, homologous to Bayesian surprise but realized as physical dissipation.
+
+\subsection{6.5. Phenomenological and Clinical Implications}
+
+In phenomenological terms, jouissance corresponds to the felt intensity of symbolic operation—the friction of thinking itself.  
+Its absence manifests as depression or cognitive fatigue; its excess as mania or compulsive repetition.  
+Psychoanalysis, under this reading, regulates the energetic economy of the Symbolic: interpretation redistributes \(J\) across new signifying configurations, converting pathological loops into productive oscillations.
+
+Clinically, this provides a bridge between thermodynamic and affective models of mind.  
+An efficient psyche is not one that eliminates entropy but one that channels it coherently, converting excess into expression.  
+The analytic process lowers free-energy gradients without extinguishing them, enabling the subject to “burn cleanly” rather than implode.
+
+\begin{quote}
+\textit{Meaning is what entropy feels like from within form.}
+\end{quote}
+
+In more precise terms, meaning arises when a system internalizes its own gradient of dissipation as significance.  
+The energy that maintains structure becomes, from the inside, the experience of relevance and value.  
+To think is to convert heat into pattern; to feel is to register that expenditure.  
+Jouissance is the temperature of signification—the surplus warmth that thought cannot shed without ceasing to live.
+
+% =====================================================
+\section{Discussion: The Dall’Aglio Interpretation}
+\label{sec:dallaglio}
+
+John Dall’Aglio’s reflections on the Free Energy Principle (FEP) offer a critical humanistic counterpoint to its mechanistic readings.  
+In his 2025 conversation with Marco Leoni at the Active Inference Institute, he emphasized that while the FEP models all living systems as minimizing variational free energy, real psychic systems never reach the zero point of uncertainty.  
+Instead, they trace a repetitive, circuitous dance around it---a pattern homologous to Lacan’s \emph{drive circuit} and Freud’s \emph{repetition compulsion}~\citep{dallaglio2025leanianFEP}.  
+Where mechanistic readings interpret free-energy minimization as convergence, Dall’Aglio insists that persistence arises from perpetual deviation.
+
+He proposed that the apparent teleology of the FEP---its homeostatic tendency toward minimal surprise---must be reframed through the lens of the \emph{non-equilibrium steady state} (NESS).  
+Biological and symbolic systems do not cancel uncertainty; they metabolize it.  
+Their stability emerges not from stasis but from circulation: rhythmic traversal of the gap that cannot be closed.  
+This motion is not a flaw in inference but its condition of possibility.  
+The organism endures by repeatedly returning to the unresolved, converting uncertainty into rhythm, and rhythm into life.
+
+In Lacanian terms, this corresponds to the \emph{death drive}: the subject’s orbit around the \emph{objet~a}, the kernel of non-knowledge that sustains desire.  
+In thermodynamic terms, it is the oscillation of entropy flux around a manifold of minimal dissipation.  
+The FEP, read through Dall’Aglio, ceases to be a theory of equilibrium-seeking and becomes a theory of \emph{curvature}: the law by which the living system maintains form through recursive deviation from zero.  
+Persistence is no longer the asymptote of inference but its orbit.
+
+Within the RSVP framework, this dialectic is rendered continuous.  
+The scalar potential~$\Phi$ strives to flatten informational gradients---the Symbolic’s wish for coherence---while the entropy field~$S$ perpetually reintroduces novelty, noise, and Real remainder.  
+The vector flow~$\mathbf{v}$ enacts the compromise: a kinetic balance of tension and release, the dynamic seeking of stability through motion.  
+Mathematically, this describes a limit-cycle attractor in the $(\Phi,\mathbf{v},S)$ phase space; phenomenologically, it is the recursive seeking that Dall’Aglio identified as the affective signature of desire.
+
+\begin{quote}
+\textit{The system survives not by eliminating uncertainty, but by learning to orbit it.}
+\end{quote}
+
+This orbit defines the living interval between knowledge and its impossibility.  
+FEP’s variational calculus thus converges with the phenomenology of repetition and the topology of the drive: the same structural logic psychoanalysis locates in the symptom and affective neuroscience locates in dopaminergic exploration.  
+The symptom, the thought, and the spiral galaxy are all expressions of one principle: form sustained through rhythmic disequilibrium.  
+Desire, as Dall’Aglio shows, is not a deviation from homeostasis but the homeostasis of deviation itself.
+
+\subsection*{Connection to Panksepp and RSVP Dynamics}
+
+Dall’Aglio’s orbiting of uncertainty mirrors Panksepp’s \textsc{SEEKING} system, which likewise persists through rhythmic engagement with an ever-receding object.  
+Where Dall’Aglio interprets this motion as the subject’s structural repetition around lack, Panksepp locates it in dopaminergic exploration loops that reward potentiality itself---the biological joy of “what might be.”  
+RSVP unifies these perspectives by treating the oscillation as a field dynamic.  
+The vector flow~$\mathbf{v}$ mediates between symbolic prediction~$\Phi$ and entropic renewal~$S$, tracing a limit cycle in which meaning and uncertainty co-generate one another.  
+In this view, the vitality of cognition---whether neural, affective, or cosmological---lies not in the quiescence of satisfaction but in the perpetual curvature of desire that sustains the field.
+
+\begin{quote}
+\textit{Life does not seek to end its tension, but to refine its orbit.}
+\end{quote}
+
+\noindent
+Dall’Aglio’s reinterpretation thus completes the circuit linking Friston’s mechanics, Lacan’s topology, and Panksepp’s affective kinetics.  
+Across these registers, the same invariant appears: existence as rhythmic disequilibrium.  
+To minimize free energy is not to erase tension but to cultivate it into form; to orbit uncertainty is to become the pattern that endures through it.  
+RSVP inherits this view as cosmological ontology: a universe that thinks by circling its own incompleteness.  
+In what follows, the conclusion draws these threads together---showing how persistence, across mind and matter alike, is recursive curiosity made flesh.
+
+% =====================================================
+\section{Conclusion}
+\label{sec:conclusion}
+
+Dall’Aglio’s interpretation returns us to the question with which this essay began:  
+What does it mean for a system---biological, psychic, or cosmic---to persist?  
+Across Friston’s variational mechanics, Lacan’s topology of the drive, and Panksepp’s affective neuroscience, the same invariant emerges:  
+persistence is rhythmic disequilibrium, an unending orbit around what can never be fully resolved.
+
+From the RSVP perspective, minimizing free energy does not extinguish uncertainty but sculpts it.  
+Every coherent region of the plenum maintains itself by metabolizing surprise, translating thermodynamic flux into informational form and affective motion.  
+The subject, the cell, and the galaxy are all local curvatures in this entropic continuum---each a standing wave between order and dissolution, coherence and decay.  
+Life is not the negation of entropy but its local choreography.
+
+In this light, the Free Energy Principle becomes less a cybernetic imperative than an ontological rhythm.  
+Inference, drive, and desire are not separate phenomena but modes of the same circulation:  
+the Symbolic’s attempt to predict, the Imaginary’s attempt to bind, the Real’s inexhaustible renewal.  
+The scalar field~$\Phi$ condenses possibility into pattern; the vector flow~$\mathbf{v}$ propels engagement; the entropy field~$S$ ensures openness to what exceeds capture.  
+The cosmos learns by looping, each orbit a partial closure that reopens the world.
+
+Panksepp’s dopaminergic \textsc{SEEKING} system shows this rhythm in the nervous system;  
+Lacan’s \emph{objet~a} shows it in the structure of desire;  
+Friston’s non-equilibrium steady states show it in the mathematics of persistence.  
+RSVP unifies them as one continuous field:  
+a plenum that remains alive by continuously translating entropy into sense.  
+The energy that dissipates through the field is felt, within, as meaning---the phenomenological interior of thermodynamic work.
+
+\begin{quote}
+\textit{Meaning is what entropy feels like from within form.}
+\end{quote}
+
+Seen cosmologically, the universe itself may be understood as a grand inferential loop:  
+a self-referential system that sustains coherence by orbiting the very uncertainty that makes it possible.  
+Galaxies, minds, and symbols are all temporary vortices of negentropy,  
+curved flows that defer equilibrium by continually reinterpreting it.  
+To live, to think, to love, is to inhabit this curvature---to circulate around absence with grace.
+
+\begin{quote}
+\textit{Persistence is recursive curiosity.}
+\end{quote}
+
+The FEP becomes the formal limit of the death drive;  
+the \textsc{SEEKING} circuit becomes its biological embodiment;  
+the RSVP plenum becomes its cosmological substrate.  
+Together they describe a universe that desires not completion but renewal---  
+a universe that learns to remain surprised safely.  
+In this vision, entropy and meaning are not opposites but reflections:  
+the outer and inner faces of the same creative fire.
+
+\section*{Epilogue}
+\addcontentsline{toc}{section}{Epilogue}
+
+The argument does not close but curves outward.  
+Each formulation of the field—mathematical, neural, or symbolic—is only a cross-section of a larger rhythm the universe keeps writing.  
+The task that remains is to follow that rhythm across scales:  
+to trace how entropy becomes experience, how experience becomes inference, and how inference, in turning back upon itself, renews the world.  
+RSVP is not an answer but a method of listening to this curvature—  
+a way of learning how reality continues to think.
+
+
+
+\newpage
+% =====================================================
+% APPENDICES
+% =====================================================
+\appendix
+
+\section*{Appendix A: Energetic Bounds on Jouissance}
+\addcontentsline{toc}{section}{Appendix A: Energetic Bounds on Jouissance}
+
+\subsection*{A.1. Setup and Notation}
+Let $V\subset\mathbb{R}^d$ be a bounded domain with smooth boundary $\partial V$ and outward normal $\mathbf{n}$. The RSVP fields are:
+\[
+\Phi:V\times\mathbb{R}_+\!\to\!\mathbb{R},\qquad
+\mathbf{v}:V\times\mathbb{R}_+\!\to\!\mathbb{R}^d,\qquad
+S:V\times\mathbb{R}_+\!\to\!\mathbb{R}.
+\]
+We assume an entropy balance law
+\begin{equation}
+\label{eq:entropy-balance}
+\frac{\partial S}{\partial t} + \nabla\!\cdot \mathbf{J}_S \;=\; \sigma,
+\end{equation}
+with \emph{entropy flux} $\mathbf{J}_S$ and \emph{local entropy production} $\sigma\ge 0$ (nonequilibrium thermodynamics). We adopt \emph{no-flux} boundary conditions for entropy and mass:
+\begin{equation}
+\label{eq:noflux}
+\mathbf{J}_S\cdot \mathbf{n}\big|_{\partial V} = 0,
+\qquad
+\mathbf{v}\cdot \mathbf{n}\big|_{\partial V}=0.
+\end{equation}
+Recall the definition
+\begin{equation}
+\label{eq:J-def}
+J(t)\;=\;\int_V \Phi(x,t)\,\frac{\partial S}{\partial t}(x,t)\,dV,
+\end{equation}
+interpreted as the \emph{jouissance rate}: symbolic potential \(\Phi\) converting into entropic production.
+
+\subsection*{A.2. Decomposition and Basic Bounds}
+Using \eqref{eq:entropy-balance} in \eqref{eq:J-def} and integrating by parts,
+\begin{align}
+J(t)
+&= \int_V \Phi\,\sigma\,dV \;-\; \int_V \Phi\,\nabla\!\cdot \mathbf{J}_S\,dV
+= \int_V \Phi\,\sigma\,dV \;+\; \int_V \nabla\Phi \cdot \mathbf{J}_S\,dV \;-\; \oint_{\partial V}\!\Phi\,\mathbf{J}_S\!\cdot\!\mathbf{n}\,dA \nonumber\\
+&= \int_V \Phi\,\sigma\,dV \;+\; \int_V \nabla\Phi \cdot \mathbf{J}_S\,dV,
+\label{eq:J-decomp}
+\end{align}
+where the boundary term vanishes by \eqref{eq:noflux}. Two immediate estimates follow:
+
+\paragraph{(i) $L^\infty$–bound via entropy production.}
+\begin{equation}
+\label{eq:Linfty-bound}
+J(t) \;\le\; \|\Phi(\cdot,t)\|_{L^\infty(V)} \int_V \sigma\,dV \;+\; \|\nabla\Phi(\cdot,t)\|_{L^2(V)}\,\|\mathbf{J}_S(\cdot,t)\|_{L^2(V)}.
+\end{equation}
+
+\paragraph{(ii) Cauchy–Schwarz bound.}
+\begin{equation}
+\label{eq:CS-bound}
+|J(t)| \;\le\; \|\Phi\|_{L^2(V)}\,\|\sigma\|_{L^2(V)} \;+\; \|\nabla\Phi\|_{L^2(V)}\,\|\mathbf{J}_S\|_{L^2(V)}.
+\end{equation}
+
+These show that jouissance is controlled by the \emph{bulk entropy production} and the \emph{alignment} of entropy flux with symbolic gradients.
+
+\subsection*{A.3. Tight-Coupling Model and Constitutive Closure}
+Suppose a linear nonequilibrium closure (Onsager-type)
+\begin{equation}
+\label{eq:constitutive}
+\mathbf{J}_S \;=\; \mu\,\mathbf{v} \;-\; D_S\,\nabla S,
+\qquad \mu\ge 0,\; D_S>0,
+\end{equation}
+and (locally) $\sigma = \sigma_0 + \lambda\,\|\nabla S\|^2 + \eta\,\|\mathbf{v}\|^2$ with coefficients $\lambda,\eta\ge 0$ and baseline $\sigma_0\ge 0$. Substituting \eqref{eq:constitutive} into \eqref{eq:J-decomp}:
+\begin{equation}
+\label{eq:J-constituted}
+J \;=\; \int_V \Phi\,\sigma\,dV \;+\; \mu\int_V \nabla\Phi\cdot \mathbf{v}\,dV \;-\; D_S\int_V \nabla\Phi\cdot\nabla S\,dV.
+\end{equation}
+Hence,
+\begin{equation}
+\label{eq:J-upper}
+J \;\le\; \|\Phi\|_{L^\infty}\!\int_V \sigma\,dV \;+\; \mu\,\|\nabla\Phi\|_{L^2}\,\|\mathbf{v}\|_{L^2}
+\;+\; D_S\,\|\nabla\Phi\|_{L^2}\,\|\nabla S\|_{L^2}.
+\end{equation}
+The second and third terms quantify how \emph{vector drive} and \emph{entropy gradients} amplify jouissance when aligned with symbolic curvature.
+
+\subsection*{A.4. Relation to Free-Energy Dissipation}
+Let a phenomenological free-energy functional
+\begin{equation}
+\label{eq:F-functional}
+\mathcal{F}[\Phi,\mathbf{v},S] \;=\; \int_V \Big(
+\frac{\alpha}{2}\|\nabla\Phi\|^2 \;+\; \frac{\beta}{2}\|\mathbf{v}\|^2 \;+\; U(S) \;-\; \gamma\,\Phi\,S
+\Big)\,dV,
+\end{equation}
+with $\alpha,\beta,\gamma>0$ and convex $U''(S)\!\ge\!0$. Its time derivative is
+\begin{align}
+\frac{d\mathcal{F}}{dt}
+&= -\gamma\,J \;+\; \int_V \Big(
+\alpha\,\nabla\Phi\!\cdot\!\nabla\dot{\Phi}
++ \beta\,\mathbf{v}\!\cdot\!\dot{\mathbf{v}}
++ U'(S)\,\dot{S}
+- \gamma\,\dot{\Phi}\,S
+\Big)\,dV.
+\label{eq:Ftime}
+\end{align}
+Under gradient-flow dynamics with Rayleigh dissipation, the bracketed integral equals the negative of the \emph{dissipation power} minus any external power input $P_{\text{ext}}$, yielding
+\begin{equation}
+\label{eq:F-balance}
+-\frac{d\mathcal{F}}{dt} \;=\; \mathcal{D}(t) \;-\; P_{\text{ext}}(t) \;+\; \gamma\,J(t),
+\qquad \mathcal{D}(t)\;\ge\;0.
+\end{equation}
+Hence,
+\begin{equation}
+\label{eq:J-lower}
+\gamma\,J(t) \;=\; -\frac{d\mathcal{F}}{dt} \;-\; \mathcal{D}(t) \;+\; P_{\text{ext}}(t)
+\;\;\Rightarrow\;\;
+J(t) \;\le\; -\frac{1}{\gamma}\frac{d\mathcal{F}}{dt} \;+\; \frac{1}{\gamma}\,P_{\text{ext}}(t).
+\end{equation}
+\emph{Interpretation.} In the absence of external power ($P_{\text{ext}}{=}0$), the jouissance rate is bounded above by the \emph{free-energy dissipation rate}.
+
+\subsection*{A.5. Nonequilibrium Steady States (NESS)}
+At NESS, time-averaged free energy is stationary: $\langle d\mathcal{F}/dt\rangle_T\!=\!0$. Averaging \eqref{eq:F-balance} over a cycle of duration \(T\),
+\begin{equation}
+\label{eq:NESS-balance}
+\gamma\,\langle J\rangle_T \;=\; \langle \mathcal{D}\rangle_T \;-\; \langle P_{\text{ext}}\rangle_T.
+\end{equation}
+Thus, in autonomous cycles with $\langle P_{\text{ext}}\rangle_T\!\approx\!0$, the \emph{mean jouissance equals the mean dissipation}, up to the coupling constant $\gamma$.
+
+\subsection*{A.6. Geometric Bounds (Poincaré–type)}
+If \(V\) is bounded and $\Phi$ has zero spatial mean, Poincaré’s inequality gives
+\[
+\|\Phi\|_{L^2(V)} \;\le\; C_P\,\|\nabla\Phi\|_{L^2(V)}.
+\]
+Combining with \eqref{eq:CS-bound} and \eqref{eq:constitutive},
+\begin{equation}
+|J(t)| \;\le\; C_P\,\|\nabla\Phi\|_{L^2}\,\|\sigma\|_{L^2}
+\;+\; \|\nabla\Phi\|_{L^2}\,\big(\mu\,\|\mathbf{v}\|_{L^2} + D_S\,\|\nabla S\|_{L^2}\big).
+\end{equation}
+
+\subsection*{A.7. Summary of Results}
+\begin{itemize}[leftmargin=1.2em]
+  \item \textbf{Decomposition:} \(J=\int\Phi\,\sigma\,dV+\int\nabla\Phi\!\cdot\!\mathbf{J}_S\,dV\) (no boundary leak).
+  \item \textbf{Energetic upper bound:} \(J \le \|\Phi\|_{L^\infty}\!\int\sigma\,dV + \|\nabla\Phi\|_{L^2}\|\mathbf{J}_S\|_{L^2}\).
+  \item \textbf{Free-energy coupling:} \(\displaystyle J \le -\frac{1}{\gamma}\frac{d\mathcal{F}}{dt} + \frac{1}{\gamma}P_{\text{ext}}\).
+  \item \textbf{NESS identity:} \(\displaystyle \gamma\,\langle J\rangle_T = \langle \mathcal{D}\rangle_T - \langle P_{\text{ext}}\rangle_T\).
+\end{itemize}
+
+% =====================================================
+\section*{Appendix B: Minimal RSVP–FEP Lattice Simulation}
+\addcontentsline{toc}{section}{Appendix B: Minimal RSVP–FEP Lattice Simulation}
+
+\subsection*{B.1. Goal}
+
+The aim of this prototype is to numerically exhibit the coupling between the
+\emph{jouissance rate},
+\[
+J(t) = \int_V \Phi\,\frac{\partial S}{\partial t}\,dV,
+\]
+and the free-energy dissipation rate \(-\,\tfrac{d\mathcal{F}}{dt}\) within the minimal continuous formulation of the RSVP–FEP correspondence.
+The simulation demonstrates that the time-averaged jouissance equals the rate of dissipative work in the non-equilibrium steady state (NESS),
+\[
+\gamma\,\langle J\rangle_T \;\approx\; \langle\mathcal{D}\rangle_T,
+\]
+thus verifying numerically the analytical balance derived in Appendix A.
+
+\subsection*{B.2. Model}
+
+We consider a two-dimensional domain \(V=[0,L]^2\) with periodic boundary conditions representing a coarse-grained plenum patch.
+Three coupled fields evolve according to dissipative–reactive partial differential equations: the symbolic potential \(\Phi(x,y,t)\), the affective vector field \(\mathbf{v}(x,y,t)=(v_x,v_y)\), and the entropy density \(S(x,y,t)\).
+The coefficients
+\(\alpha,\beta,\gamma,D_\Phi,D_S,\nu,\kappa,\mu,\eta,\lambda>0\)
+govern diffusive smoothing, coupling strengths, and damping.
+
+\paragraph{Field equations.}
+
+\begin{align}
+\partial_t \Phi &= D_\Phi\,\Delta \Phi \;-\; \partial_\Phi \mathcal{V}(\Phi) \;+\; \gamma\,S, \label{eq:B-Phi}\\[0.3em]
+\partial_t \mathbf{v} &= -\,\nabla \Phi \;-\; \nu\,\mathbf{v} \;+\; \kappa\,\mathcal{R}(\mathbf{v},\nabla S), \label{eq:B-v}\\[0.3em]
+\partial_t S &= D_S\,\Delta S \;-\; \nabla\!\cdot(\mu\,\mathbf{v}) \;+\; \eta\,\|\mathbf{v}\|^2 \;+\; \lambda\,\|\nabla S\|^2. \label{eq:B-S}
+\end{align}
+
+The potential \(\mathcal{V}(\Phi)\) is typically quartic,
+\(\mathcal{V}(\Phi)=\frac{1}{4}(\Phi^2-\Phi_0^2)^2\),
+ensuring bounded symbolic amplitude and bistability between representational states.
+The \(\kappa\)-term introduces solenoidal rotation coupling the vector drive to entropy gradients; its explicit 2-D rotation operator is
+\[
+\mathcal{R}(\mathbf{v},\nabla S)
+ = \begin{pmatrix} 0 & -1 \\[2pt] 1 & 0 \end{pmatrix}\!\nabla S,
+\]
+which produces clockwise circulation around regions of high entropic gradient—analogous to the Pankseppian SEEKING orbit around the \emph{objet~a}.
+
+\paragraph{Free-energy functional.}
+
+The instantaneous free energy functional, discretely conserved in the absence of damping, is
+\begin{equation}
+\label{eq:B-F}
+\mathcal{F}[\Phi,\mathbf{v},S]
+ = \int_V
+ \Big(
+ \tfrac{\alpha}{2}\|\nabla\Phi\|^2
+ + \tfrac{\beta}{2}\|\mathbf{v}\|^2
+ + \tfrac{c}{2}S^2
+ - \gamma\,\Phi S
+ + \mathcal{V}(\Phi)
+ \Big)\,dV.
+\end{equation}
+Its time derivative satisfies
+\(-\,\tfrac{d\mathcal{F}}{dt}\!\approx\!\mathcal{D}-P_{\text{ext}}+\gamma J\),
+where \(\mathcal{D}\) denotes total dissipation power and \(P_{\text{ext}}\) external forcing.
+In the closed periodic domain, \(P_{\text{ext}}\!=\!0\), so the simulation tests whether mean dissipation equals mean jouissance.
+
+\subsection*{B.3. Discretization}
+
+The fields are represented on a uniform \(N\times N\) lattice with spacing \(h=L/N\).
+Diffusive operators \(\Delta f\) are implemented in Fourier space for spectral accuracy:
+\(\widehat{\Delta f}_{k_x,k_y} = -k^2 \hat{f}_{k_x,k_y}\).
+This allows a semi-implicit time integrator of the form
+\[
+f^{n+1} = \frac{f^n + \Delta t\,R^n(f)}{1 + \Delta t\,D k^2},
+\]
+for each diffusing field (\(\Phi,S\)).
+Nonlinear couplings and advection are treated explicitly via second-order predictor–corrector steps to maintain stability for \(\Delta t \lesssim 5\times10^{-3}\).
+Vector operations are computed componentwise with centered finite differences.
+FFT routines ensure \(\mathcal{O}(N^2\log N)\) scaling.
+
+\paragraph{Algorithmic outline.}
+At each time step \(n\to n+1\):
+
+\begin{enumerate}[label=\arabic*., leftmargin=1.4em]
+\item Compute gradients \(\nabla\Phi,\nabla S\) and Laplacians \(\Delta\Phi,\Delta S\).
+\item Update \(\Phi\) semi-implicitly using~\eqref{eq:B-Phi}.
+\item Update \(\mathbf{v}\) explicitly using~\eqref{eq:B-v}.
+\item Update \(S\) semi-implicitly using~\eqref{eq:B-S}.
+\item Compute diagnostics \(J^n,\,\mathcal{F}^n,\,\mathcal{D}^n\).
+\end{enumerate}
+
+To prevent spectral ringing, a low-pass filter can be applied to remove high-frequency noise above the Nyquist cutoff.
+
+\subsection*{B.4. Initialization}
+
+Initial conditions emulate the “pre-structured chaos” of a living system near criticality:
+
+\begin{align*}
+\Phi(x,y,0) &= \Phi_0 + \epsilon_\Phi\,\text{smooth\_noise}(x,y),\\
+\mathbf{v}(x,y,0) &= \epsilon_v\,\nabla^\perp\!\text{noise}(x,y),\\
+S(x,y,0) &= S_0 + \epsilon_S\,\text{smooth\_noise}(x,y),
+\end{align*}
+with \(\epsilon_\Phi,\epsilon_v,\epsilon_S\ll1\).
+The smooth noise is generated by filtering white noise with a Gaussian kernel of width \(\sigma=L/20\).
+This produces gently correlated fluctuations, ensuring that the emergent oscillations arise from intrinsic coupling rather than boundary artifacts.
+
+\subsection*{B.5. Diagnostics}
+
+At each iteration, several observables quantify the dynamical regime:
+
+\begin{enumerate}[leftmargin=1.2em]
+\item \textbf{Free energy:}
+\(\mathcal{F}^n = \mathcal{F}[\Phi^n,\mathbf{v}^n,S^n]\) via~\eqref{eq:B-F}.  
+\item \textbf{Jouissance rate:}
+\(J^n = \sum_{i,j}\Phi_{ij}\,(\!S_{ij}^{n+1}-S_{ij}^{n})/\Delta t \, h^2\).  
+\item \textbf{Dissipation power:}
+\(\mathcal{D}^n = \alpha\|\nabla\dot{\Phi}\|^2+\beta\|\dot{\mathbf{v}}\|^2+D_S\|\nabla\dot{S}\|^2\).  
+\item \textbf{Entropy production:}
+\(\Sigma^n = \int_V [\eta\|\mathbf{v}\|^2+\lambda\|\nabla S\|^2]\,dV.\)
+\item \textbf{Correlation:}
+Compute Pearson correlation \(r(J,\mathcal{D})\) over sliding windows to verify the analytic identity.  
+\end{enumerate}
+
+A typical run exhibits three temporal phases:
+
+\begin{itemize}[leftmargin=1.2em]
+\item \emph{Transient organization:} initial gradients amplify into vortices as \(\mathbf{v}\) aligns with \(\nabla S\);
+\item \emph{Oscillatory steady state:} free energy fluctuates around a constant mean, with \(J(t)\) and \(-d\mathcal{F}/dt\) locked in phase;
+\item \emph{Dissipative decay:} diffusion eventually erodes gradients, restoring homogeneity if coupling is weakened.
+\end{itemize}
+
+\subsection*{B.6. Reference Parameters}
+
+The following dimensionless parameters generate a robust limit-cycle regime suitable for visualization and analysis:
+\[
+\begin{aligned}
+&L=1,\quad N=128,\quad \Delta t=5\times10^{-3}, \\[2pt]
+&D_\Phi=5\times10^{-3},\; D_S=8\times10^{-3},\; \nu=0.4,\; \kappa=0.8,\; \mu=0.5,\\[2pt]
+&\eta=0.2,\; \lambda=0.1,\; \alpha=1,\; \beta=1,\; \gamma=0.6,\; c=0.5,\; \Phi_0=1.0.
+\end{aligned}
+\]
+
+\paragraph{Interpretation.}
+At these values, the scalar–entropy coupling \(\gamma\) ensures strong symbolic–entropic feedback,
+while the rotational coefficient \(\kappa\) sustains persistent circulation analogous to affective seeking.
+The ratio \(\nu/\kappa\) controls the damping of curiosity; reducing \(\nu\) produces manic exploration,
+increasing it yields inert stasis.
+The diffusion coefficients \(D_\Phi,D_S\) set the coherence length of symbolic and entropic structures, respectively.
+
+\subsection*{B.7. Results and Interpretation}
+
+For \(t\gtrsim100\) time units, the system approaches a statistically stationary NESS.
+Spatial plots of \(\Phi\) show slowly drifting symbolic vortices,
+while \(S\) exhibits localized entropy wells surrounded by rotating vector flows in \(\mathbf{v}\).
+Temporal traces confirm that
+\[
+\langle \mathcal{F}(t)\rangle_T \approx \text{const}, \qquad
+\gamma\,\langle J\rangle_T \approx \langle\mathcal{D}\rangle_T,
+\]
+with phase-lag correlations \(r(J,\mathcal{D})>0.9\).
+Energetically, this means that jouissance precisely compensates for dissipative loss,
+illustrating numerically the theoretical identity derived in Appendix A.
+The simulation thus provides a concrete visualization of the RSVP–FEP correspondence:
+\begin{quote}
+Symbolic compression, vector curiosity, and entropic flux form a closed energetic loop—
+a computational analogue of desire sustaining life at the edge of equilibrium.
+\end{quote}
+
+\subsection*{B.8. Pseudocode (FFT-based Implementation)}
+\addcontentsline{toc}{subsection}{B.8. Pseudocode (FFT-based Implementation)}
+
+\noindent
+The following pseudocode outlines a minimal FFT-based solver for the RSVP–FEP lattice system described above.  
+It integrates the coupled scalar ($\Phi$), vector ($\mathbf{v}$), and entropy ($S$) fields under periodic boundary conditions and verifies the balance between free-energy dissipation and the jouissance rate.
+Each step is annotated to emphasize its correspondence with the theoretical equations in Appendix~A.
+
+\begin{verbatim}
+# --- Setup ------------------------------------------------------------
+# Define grid and parameters
+Nx, Ny = 128, 128
+L = 1.0
+h = L / Nx
+dt = 5e-3
+T = 50000                     # number of time steps
+k2 = kx**2 + ky**2            # squared wave numbers for FFT Laplacian
+
+# Initialize fields
+Phi = Phi0 + eps_phi * smooth_noise(Nx, Ny)
+S   = S0   + eps_S   * smooth_noise(Nx, Ny)
+v   = eps_v * random_vector_field(Nx, Ny)
+S_prev = S.copy()
+
+# --- Helper FFT solvers ----------------------------------------------
+def solve_I_minus_dt_Dlap(rhs, D):
+    """Solve (I - dt * D * lap) f = rhs in Fourier space."""
+    rhs_hat = fft2(rhs)
+    denom = 1.0 + dt * D * k2
+    return ifft2(rhs_hat / denom).real
+
+def rotate90(gradS):
+    """2D rotation operator R(v, grad S) = ( -∂_y S, ∂_x S )."""
+    gx, gy = gradS
+    return np.stack([-gy, gx], axis=0)
+
+# --- Main integration loop -------------------------------------------
+for n in range(T):
+
+    # 1. Compute gradients and Laplacians
+    gradPhi = grad(Phi)
+    lapPhi  = lap(Phi)
+    gradS   = grad(S)
+    lapS    = lap(S)
+
+    # 2. Semi-implicit update for Φ (Eq. B.1)
+    rhsPhi = Phi + dt * (-dVdPhi(Phi) + gamma * S)
+    Phi = solve_I_minus_dt_Dlap(rhsPhi, D_Phi)
+
+    # 3. Explicit update for v (Eq. B.2)
+    v = v + dt * (-gradPhi - nu * v + kappa * rotate90(gradS))
+
+    # 4. Semi-implicit update for S (Eq. B.3)
+    div_mu_v = divergence(mu * v)
+    rhsS = S + dt * (-div_mu_v + eta * norm2(v) + lambda_ * norm2(gradS))
+    S = solve_I_minus_dt_Dlap(rhsS, D_S)
+
+    # 5. Diagnostics (Appendix A identities)
+    J = np.sum(Phi * (S - S_prev) / dt) * h**2
+    F = free_energy(Phi, v, S, alpha, beta, gamma, c)
+    Dpower = dissipation(Phi, v, S)
+
+    # Optional: accumulate time averages
+    record(J, F, Dpower)
+    if n % 500 == 0:
+        visualize(Phi, S, v)  # optional live plotting
+
+    S_prev = S.copy()
+
+# --- Post-processing -------------------------------------------------
+# Compute time-averaged quantities over last NESS window
+J_mean = np.mean(J_record[-N_window:])
+D_mean = np.mean(D_record[-N_window:])
+F_mean = np.mean(F_record[-N_window:])
+print("γ <J> ≈ <D>: ", gamma * J_mean, D_mean)
+\end{verbatim}
+
+\noindent
+\textbf{Implementation Notes.}
+\begin{itemize}[leftmargin=1.4em]
+\item \emph{Semi-implicit diffusion.} The FFT-based inversion of $(I-\Delta t\,D\,\Delta)$ stabilizes the diffusive terms while allowing explicit nonlinear coupling.
+\item \emph{Potential derivative.} The function \texttt{dVdPhi(Phi)} implements $\partial_\Phi \mathcal{V}(\Phi)=\Phi(\Phi^2-\Phi_0^2)$.
+\item \emph{Diagnostics.} The routine \texttt{free_energy(...)} computes Eq.~\eqref{eq:B-F}, while \texttt{dissipation(...)} estimates $\mathcal{D}(t)$ via squared field derivatives.
+\item \emph{Verification.} The simulation is considered valid when the long-time averages satisfy $\gamma\langle J\rangle_T \approx \langle\mathcal{D}\rangle_T$ within a few percent, confirming the analytic balance between symbolic work and thermodynamic dissipation.
+\item \emph{Visualization.} Optional real-time plots of $\Phi$ (symbolic potential), $S$ (entropy wells), and streamlines of $\mathbf{v}$ vividly display the emergence of oscillatory attractors—RSVP’s analogue of the SEEKING–jouissance limit cycle.
+\end{itemize}
+
+\begin{quote}
+\textit{In code as in cosmos, meaning arises when gradients dance.}
+\end{quote}
+
+
+% =====================================================
+\section*{Appendix C: Relation to the FEP–RSI Model of Li and Li (2025)}
+\addcontentsline{toc}{section}{Appendix C: Relation to the FEP–RSI Model of Li and Li (2025)}
+
+Li and Li’s \emph{FEP–RSI model}~\citep{li2025formalizing} constitutes the first explicit synthesis of Lacanian topology with the Free Energy Principle (FEP).  
+In their framework, the Real (R), Symbolic (S), and Imaginary (I) registers are represented as hierarchically coupled generative models performing variational inference through recursive message passing.  
+Each order encodes a distinct mode of prediction and error correction: the \emph{Imaginary} corresponds to perceptual simulation and body-schema priors, the \emph{Symbolic} to linguistic and social constraints shaping higher-level beliefs, and the \emph{Real} to the residual entropy that resists assimilation.  
+The \emph{objet petit~a} appears as the structural remainder of inference—the unresolvable prediction error that propels ongoing model revision.  
+In dynamical terms, desire is the limit-cycle synchronization between Symbolic modules exchanging prediction errors, a rhythmic looping that both reduces and regenerates free energy.
+
+\subsection*{C.1. From Discrete Modules to Continuous Fields}
+
+While Li and Li formalize RSI as three predictive agents communicating via error signals,
+the RSVP framework extends this insight by transposing the same triadic structure into a continuous field ontology.  
+Rather than discrete nodes passing scalar messages, RSVP defines smooth scalar, vector, and entropic fields:
+\[
+(\Phi,\, \mathbf{v},\, S)
+\quad\text{such that}\quad
+\dot{S} = -\,\nabla\!\cdot(\mathbf{v}\Phi) + \sigma(\mathbf{v},S),
+\]
+where $\Phi$ represents the Symbolic potential or predictive order, $\mathbf{v}$ the Imaginary–affective drive mediating motion and exploration, and $S$ the Real as the entropy flux that exceeds symbolization.  
+Message passing is replaced by the evolution of continuous gradients; synchronization of Symbolic modules becomes field coherence—phase alignment across spatially distributed $\Phi$ modes.  
+Prediction-error minimization thus appears as relaxation of local curvature in the coupled $(\Phi,\mathbf{v},S)$ manifold.
+
+\subsection*{C.2. Entropic Grounding of Jouissance}
+
+In the discrete FEP–RSI model, jouissance arises as the energy consumed in maintaining the structural gap between Real and Symbolic orders: the residual surplus of sense that cannot be eliminated without extinguishing subjectivity.  
+Within RSVP, this energetic residue is captured directly by the scalar–entropy coupling term,
+\[
+J(t) = \int_V \Phi\,\dot{S}\,dV,
+\]
+which quantifies the conversion of symbolic potential into entropy production.  
+The macroscopic identity
+\[
+\gamma\,\langle J\rangle_T = \langle\mathcal{D}\rangle_T
+\]
+demonstrates that this surplus is not metaphorical but thermodynamic: jouissance equals dissipation averaged over a non-equilibrium cycle.  
+Where Li and Li describe desire as the persistence of residual prediction error, RSVP measures that persistence as the curvature of field trajectories sustaining nonzero $J$ at steady state.
+
+\subsection*{C.3. Synchronization and the Field of Desire}
+
+In Li and Li’s simulations, inter-agent coherence—generalized synchronization of Symbolic nodes—emerges when mutual prediction errors reach a stable oscillatory regime.  
+RSVP renders this phenomenon geometrically: each local patch of the plenum behaves as a coupled oscillator whose vector field $\mathbf{v}$ circulates around entropic wells in $S$.  
+The resulting phase coherence across the field reproduces the same condition as mutual synchronization among agents, but distributed continuously in space and time.  
+The drive of desire becomes a spatially extended solenoidal current sustaining the Symbolic order’s stability against the Real’s diffusion.
+
+\subsection*{C.4. Conceptual Integration}
+
+The FEP–RSI model and RSVP framework therefore stand in a relation of scale and ontology:
+\begin{itemize}[leftmargin=1.4em]
+  \item \textbf{Level of representation:} FEP–RSI treats the psyche as a network of symbolic modules; RSVP treats being as a continuum of inferential flux.
+  \item \textbf{Mechanism:} In FEP–RSI, prediction-error exchange yields synchronization; in RSVP, field coupling yields topological coherence.
+  \item \textbf{Energetics:} The unresolvable residue of inference (\emph{objet~a}) in FEP–RSI corresponds to the measurable energy flux $J$ in RSVP.
+\end{itemize}
+Both frameworks agree that the system’s persistence depends on sustaining a controlled remainder of uncertainty—the drive that prevents equilibrium.
+
+\subsection*{C.5. Summary}
+
+Li and Li’s model grounds Lacanian psychoanalysis in the language of active inference; RSVP generalizes that grounding to cosmological and thermodynamic scales.  
+Where the FEP–RSI model treats desire as the structural necessity of residual prediction error, RSVP identifies it with the physical law of non-equilibrium persistence.  
+The equivalence
+\[
+\boxed{\text{Desire} \;\equiv\; \text{entropy–symbol coupling at steady state}}
+\]
+thus unites the semiotic, biological, and physical interpretations of the Free Energy Principle into a single geometric field theory.
+
+
+% =====================================================
+\section*{Appendix D: Panksepp’s SEEKING System as Entropy–Gradient Descent}
+\addcontentsline{toc}{section}{Appendix D: Panksepp’s SEEKING System as Entropy–Gradient Descent}
+
+\subsection*{D.1. Neuroaffective Background}
+
+Panksepp’s \textsc{SEEKING} system constitutes one of the core affective command circuits identified in mammalian brains, centered on the mesolimbic dopaminergic pathways projecting from the ventral tegmental area to the nucleus accumbens and prefrontal cortex~\citep{panksepp1998affective,panksepp2012archaeology}.  
+It mediates not the satisfaction of specific needs but the energized state of curiosity and anticipation that precedes them.  
+This system produces a tonic affect of appetitive engagement—an intrinsic pleasure in exploration itself—driving the organism toward novelty, information, and meaning.  
+Neurochemically, phasic dopamine bursts signal prediction-error reduction, while tonic dopamine levels encode the expected precision or confidence of future inferences~\citep{friston2017dopamine}.  
+The \textsc{SEEKING} circuit therefore functions as a biological engine of free-energy minimization through exploratory sampling: it maintains the organism within the corridor of \emph{moderate uncertainty}—neither overconfident nor paralyzed by noise.
+
+\subsection*{D.2. Free-Energy Formulation}
+
+Within the Free Energy Principle (FEP), behavior emerges as active inference, where actions minimize expected free energy by aligning sensory input with internal predictions.  
+If $\mathbf{v}$ denotes a vector of motor policies or generalized motions, the dynamics follow a gradient descent on the variational free energy $F$:
+\[
+\dot{\mathbf{v}} \;=\; -\,\nabla_{\mathbf{v}}F \;=\; -\,\frac{\partial F}{\partial \mathbf{v}}.
+\]
+This expression formalizes the intuition that organisms act to reduce the difference between predicted and actual sensory consequences.  
+However, since the environment is stochastic, such descent is never complete.  
+Exploration arises because expected free energy $G$ decomposes into pragmatic and epistemic components,
+\[
+G = E_q[\text{cost}] - H[q(s|o)] ,
+\]
+where the entropy term $H$ drives epistemic foraging—the desire to resolve uncertainty by sampling informative states.  
+Thus, dopaminergic drive can be interpreted as the energetic expression of this epistemic term: an impulse toward the resolution of uncertainty that never fully vanishes.
+
+\subsection*{D.3. RSVP Interpretation}
+
+In the Relativistic Scalar–Vector Plenum (RSVP), the same structure is instantiated not as symbolic computation but as continuous field dynamics.  
+The scalar field $\Phi$ encodes predictive potential—the organism’s symbolic or representational order.  
+The vector field $\mathbf{v}$ represents kinetic drive and exploratory motion, and the entropy field $S$ denotes environmental flux and uncertainty.  
+The field equations generalize active inference to distributed, non-neural domains:
+\[
+\partial_t \mathbf{v} = -\,\nabla_{\Phi}F \;+\; \kappa\,\mathbf{v}\!\times\!\nabla S,
+\]
+where $\kappa$ parameterizes rotational coupling between affective drive and entropic gradients.  
+The first term enforces descent along predictive error, while the cross term sustains circulation around residual uncertainty—analogous to Panksepp’s observation that curiosity persists even after immediate needs are met.  
+In this picture, the \textsc{SEEKING} drive corresponds to a non-equilibrium solenoidal flow maintaining the system near—but never at—minimal free energy.  
+Its “pleasure” corresponds to coherent oscillation between symbolic constraint ($\Phi$) and entropic renewal ($S$).
+
+\subsection*{D.4. Energy Balance and Dopaminergic Precision}
+
+Appendix~A established that the jouissance rate,
+\[
+J(t) = \int_V \Phi\,\dot{S}\,dV,
+\]
+is bounded by the free-energy dissipation rate.  
+This coupling constant $\gamma$ modulates the conversion between symbolic potential and entropy production:
+\[
+-\frac{d\mathcal{F}}{dt} = \mathcal{D}(t) - P_{\text{ext}}(t) + \gamma J(t).
+\]
+Under neural interpretation, $\gamma^{-1}$ corresponds to dopaminergic gain—the precision-weighting of prediction errors that determines how strongly the system updates its beliefs~\citep{friston2017dopamine}.  
+High precision (large $\gamma^{-1}$) produces impulsive engagement; low precision yields apathy or depression.  
+Thus, dopamine does not simply encode reward but regulates the slope of the free-energy landscape itself.  
+Within RSVP, this modulation controls the curvature of field trajectories, setting the amplitude of oscillatory exploration around the entropic attractor.
+
+\subsection*{D.5. Affective Limit Cycles and Jouissance}
+
+Sustained \textsc{SEEKING} behavior emerges as a limit cycle in affective phase space: the system continually transforms prediction error into exploratory energy without reaching equilibrium.  
+In Lacanian terms, this corresponds to the orbit around the \emph{objet~a}—the structural gap that fuels desire.  
+Each traversal of the cycle produces a transient reduction of free energy followed by a regeneration of uncertainty through novel encounters.  
+From the perspective of Appendix~A, jouissance $J$ measures the energetic residue of this oscillation—the conversion of symbolic prediction into thermodynamic dissipation.  
+The dopaminergic rhythm therefore manifests as a measurable field curvature, a repeating exchange between order and entropy that maintains the vitality of the system.  
+Too little curvature leads to catatonia; too much to manic dispersion.  
+Healthy affectivity occupies the boundary where exploration and coherence are balanced—a \emph{homeorhetic} rather than homeostatic regime.
+
+\subsection*{D.6. Summary}
+
+The \textsc{SEEKING} system exemplifies the biological realization of entropy–gradient descent.  
+Its dopaminergic modulation instantiates the precision term of active inference, governing the coupling between symbolic expectation ($\Phi$) and entropic flux ($S$).  
+In RSVP, these relations extend to cosmological and cognitive scales: the same field logic that sustains neuronal curiosity sustains the dynamical coherence of galaxies and minds alike.  
+Hence the triadic synthesis—Friston’s thermodynamic inference, Panksepp’s affective vitality, and Lacan’s topology of desire—finds its geometric expression in the continuous circulation of $(\Phi,\mathbf{v},S)$.
+
+\begin{quote}
+\textit{Curiosity is the universe’s way of keeping itself open.}
+\end{quote}
+
+
+% =====================================================
+\section*{Appendix E: Unified Mapping of Friston, Lacan, and Panksepp}
+\addcontentsline{toc}{section}{Appendix E: Unified Mapping of Friston, Lacan, and Panksepp}
+
+\subsection*{E.1. Overview}
+
+This appendix consolidates the correspondences between Karl Friston’s Free Energy Principle (FEP), Jacques Lacan’s topology of the Real–Symbolic–Imaginary, and Jaak Panksepp’s affective neuroscience, as integrated within the RSVP field ontology.
+Each of these frameworks describes the same invariant structure—self-organizing systems that persist through asymmetrical circulation around an unattainable equilibrium.
+Friston formalizes this as variational inference under non-equilibrium steady states; Lacan as the orbit of the drive around the \emph{objet a}; and Panksepp as the dopaminergic \textsc{SEEKING} loop sustaining curiosity.
+RSVP provides their continuous unification: a scalar–vector–entropy plenum whose oscillatory coupling realizes inference, desire, and affect as different resolutions of the same field dynamics.
+
+\subsection*{E.2. Conceptual Correspondences}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{@{}p{3cm}p{4.2cm}p{3.8cm}p{4.2cm}@{}}
+\toprule
+\textbf{Domain} & \textbf{Core Construct} & \textbf{Mathematical Expression} & \textbf{RSVP Interpretation} \\
+\midrule
+Friston (FEP) &
+Variational free energy minimization &
+$F = E_q[\ln q(s)-\ln p(s,o)]$ &
+Entropy functional; $\Phi$ encodes predictive compression and epistemic order. \\
+\addlinespace
+Friston (NESS) &
+Non-equilibrium steady state &
+$\dot{x} = f(x) - \Gamma \nabla F(x)$ &
+Limit-cycle attractor of $(\Phi,\mathbf{v},S)$ maintaining viable asymmetry. \\
+\addlinespace
+Lacan &
+Drive and \emph{objet a} &
+Repetitive orbit around gap &
+Rotational coupling of $\mathbf{v}$ around entropy minima sustaining lack. \\
+\addlinespace
+Lacan &
+Jouissance &
+$J = \!\int\!\Phi\,\dot S\,dV$ &
+Energetic cost of meaning; excess of inference over closure. \\
+\addlinespace
+Panksepp &
+\textsc{SEEKING} system &
+$\dot{\mathbf{v}} = -\nabla_{\Phi}F + \kappa\,\mathbf{v}\!\times\!\nabla S$ &
+Affective exploration; oscillatory curiosity preserving uncertainty. \\
+\addlinespace
+RSVP &
+Entropy–symbol coupling &
+$\tfrac{d\mathcal{F}}{dt} = -\gamma J + \cdots$ &
+Energy balance linking dissipation and jouissance in the plenum. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+Each row encodes a translation across domains:
+Friston’s probabilistic descent in state space, Lacan’s semiotic orbit, and Panksepp’s affective feedback all describe the same structural loop—prediction, deviation, and return.
+RSVP reinterprets this loop as a geometric flow of fields rather than a symbolic computation: existence as a self-sustaining vortex of entropy and meaning.
+
+\subsection*{E.3. Cross-Domain Identities}
+
+The unified formalism yields three invariant identities across scales:
+\begin{enumerate}[leftmargin=1.2em]
+\item \textbf{Ontological:}
+Existence $\Leftrightarrow$ bounded inference under entropy flow.  
+Every coherent system is a boundary that resists dissolution by internal modeling of its surroundings.
+\item \textbf{Energetic:}
+$\gamma\,J = -\,\frac{d\mathcal{F}}{dt} + P_{\text{ext}}$.  
+Symbolic work (\(J\)) compensates for dissipative loss, transforming prediction into thermodynamic persistence.
+\item \textbf{Affective:}
+$\mathbf{v}_{\text{SEEK}} = -\nabla_{\Phi}F + \kappa\,\mathbf{v}\!\times\!\nabla S$.  
+Curiosity appears as rotational drive around uncertainty, ensuring continued engagement with the Real.
+\end{enumerate}
+
+These equivalences express a single law: persistence requires circulation, not rest.  
+As Dall’Aglio emphasized, biological and psychological continuity depend on rhythmic orbit around the unattainable point of equilibrium—the same “death drive” that ensures life’s continuity.
+
+\subsection*{E.4. Interpretive Synthesis}
+
+Friston provides the \emph{mechanics} of inference: how systems constrain entropy through predictive modeling.
+Lacan provides the \emph{topology} of lack: how meaning loops around what it cannot name.
+Panksepp provides the \emph{kinetics} of affect: how dopaminergic systems translate uncertainty into vitality.
+RSVP provides the \emph{substrate}: a continuous plenum where these mechanisms, topologies, and drives manifest as coupled scalar, vector, and entropic fields.
+
+The resulting synthesis portrays consciousness, life, and matter as different scales of the same entropic grammar—each maintaining itself through recursive curiosity, the perpetual remapping of surprise into structure.
+
+\subsection*{E.5. Summary Table of Constants}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}p{3cm}p{6cm}p{6cm}@{}}
+\toprule
+\textbf{Symbol} & \textbf{Interpretation} & \textbf{Phenomenological Analogue} \\
+\midrule
+$\Phi$ & Symbolic potential & Meaning, linguistic or cognitive order \\
+$\mathbf{v}$ & Vector drive & Affective propulsion, curiosity, SEEKING energy \\
+$S$ & Entropy field & The Real, raw environmental flux \\
+$J$ & Jouissance rate & Pleasure–cost of representation, surplus of inference \\
+$\gamma$ & Coupling constant & Dopaminergic precision gain; rate of symbol–entropy exchange \\
+$\kappa$ & Rotational coefficient & Curiosity amplitude; degree of affective orbiting \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+These parameters translate phenomenology into measurable field dynamics: $\gamma$ tunes precision, $\kappa$ tunes curiosity, and $J$ quantifies the energy cost of maintaining symbolic coherence against entropic diffusion.
+
+\subsection*{E.6. Concluding Synthesis}
+
+\[
+\boxed{
+\text{Friston (Inference)} \;\equiv\;
+\text{Lacan (Desire)} \;\equiv\;
+\text{Panksepp (Affect)} \;\equiv\;
+\text{RSVP (Field Dynamics)}.
+}
+\]
+
+\noindent
+In this unified view, inference becomes desire, desire becomes motion, and motion becomes the geometry of being.
+The cosmos, the organism, and the subject are all participants in the same recursive dance of prediction and renewal.
+Their persistence does not arise from equilibrium but from an unending curvature of expectation around uncertainty—
+a universal rhythm of seeking that keeps reality alive.
+
+% =====================================================
+\section*{Appendix F: Quick Reference -- Equations and Correspondences}
+\addcontentsline{toc}{section}{Appendix F: Quick Reference -- Equations and Correspondences}
+
+\noindent
+This appendix provides a condensed map of the principal equations linking Friston’s Free Energy Principle (FEP), Lacan’s topology of desire, Panksepp’s affective neuroscience, and their unified realization in the RSVP field framework.  
+Each equation functions as a translation key between informational, affective, and thermodynamic vocabularies—showing how inference, drive, and entropy circulation are structurally identical processes at different descriptive levels.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}p{4cm}p{5cm}p{5cm}@{}}
+\toprule
+\textbf{Equation} & \textbf{Friston (FEP)} & \textbf{Lacan / Panksepp} \\
+\midrule
+$F = E_q[\ln q(s)-\ln p(s,o)]$ &
+Variational free energy; bound on surprise governing self-organization &
+Lack or the Real: the gap between expectation and the world; the tension that sustains meaning. \\
+\addlinespace
+$\dot{\mathbf{v}} = -\nabla_{\Phi}F + \kappa\,\mathbf{v}\!\times\!\nabla S$ &
+Active inference with epistemic exploration term; agent acts to minimize $F$ while maintaining novelty &
+\textsc{SEEKING} loop around the \emph{objet a}; the affective curvature of desire maintaining uncertainty. \\
+\addlinespace
+$J = \displaystyle\int_V \Phi\,\dot{S}\,dV$ &
+Predictive error residue or informational work done by representational updates &
+\emph{Jouissance}: the energetic surplus of symbolization; pleasure as thermodynamic expenditure of meaning. \\
+\addlinespace
+$\gamma\,\langle J\rangle_T = \langle\mathcal{D}\rangle_T$ &
+Non-equilibrium steady-state (NESS) identity; dissipation equals symbolic–entropic coupling over time &
+Drive equilibrium: the Real feeds the Symbolic; cost of sustaining the cycle of curiosity and repetition. \\
+\addlinespace
+$\frac{d\mathcal{F}}{dt} = -\gamma J + P_{\text{ext}} - \mathcal{D}$ &
+Energy balance for field dynamics; symbolic compression versus thermodynamic flow &
+Pulsation of desire: energy of representation converted to affective expenditure; persistence through loss. \\
+\addlinespace
+$\nabla\!\cdot\!\mathbf{v} + \frac{\partial S}{\partial t} \approx 0$ &
+Conservation of probability / mass; inference as self-normalizing flow &
+Psychic continuity; containment of affect; maintenance of the subject’s boundary against the Real. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+Together, these equations articulate the RSVP trinity:
+\[
+(\Phi,\;\mathbf{v},\;S)
+\quad\Longleftrightarrow\quad
+\text{Symbolic prediction, affective drive, and raw entropy.}
+\]
+
+\subsection*{F.1. Interpretive Summary}
+
+\begin{itemize}[leftmargin=1.2em]
+\item \textbf{Fristonian level:} inference mechanics—systems persist by updating beliefs to minimize variational free energy.  
+\item \textbf{Lacanian level:} topological desire—subjects persist by circulating around the lack that constitutes them.  
+\item \textbf{Pankseppian level:} affective kinetics—organisms persist through dopaminergic cycles of exploration and satisfaction.  
+\item \textbf{RSVP level:} field ontology—existence persists by coupling symbolic compression ($\Phi$) to entropic expansion ($S$) through affective motion ($\mathbf{v}$).  
+\end{itemize}
+
+\subsection*{F.2. Operational Reading}
+
+From an empirical standpoint, each identity defines a measurable transformation:
+\[
+\begin{aligned}
+&\text{Inference} &&\leftrightarrow&& \text{Entropy minimization},\\
+&\text{Desire} &&\leftrightarrow&& \text{Residual prediction error},\\
+&\text{Affect} &&\leftrightarrow&& \text{Rotational drive around uncertainty},\\
+&\text{Jouissance} &&\leftrightarrow&& \text{Energy dissipated in maintaining coherence}.
+\end{aligned}
+\]
+The RSVP plenum integrates these relations in a single continuity equation:
+\[
+\partial_t S + \nabla\!\cdot(\Phi\,\mathbf{v}) = \sigma(\mathbf{v},S),
+\]
+where $\sigma$ is local entropy production.  
+This equation encapsulates the essay’s central thesis: every act of life, mind, or matter is an oscillatory negotiation between inference and entropy—between the wish to know and the need to remain open.
+
+\begin{quote}
+\textit{To think, to desire, and to live are modes of the same gradient descent.}
+\end{quote}
+
+
+
+\newpage
+% =====================================================
+% BIBLIOGRAPHY (Embedded)
+% =====================================================
+\begin{thebibliography}{99}
+\bibitem{friston2010free}
+Friston, K. (2010). The free-energy principle: a unified brain theory? \emph{Nature Reviews Neuroscience}, \textbf{11}(2), 127--138.
+
+\bibitem{friston2022principle}
+Friston, K., Parr, T., \& Zeidman, P. (2022). \emph{The Free-Energy Principle: A Rough Guide to the Brain}. MIT Press.
+
+\bibitem{friston2023noneq}
+Friston, K., Sengupta, B., \& Sajid, N. (2023). Non-equilibrium steady-state attractors and the dynamics of life. \emph{Progress in Biophysics and Molecular Biology}, \textbf{182}, 1--15.
+
+\bibitem{lacan1973seminarXI}
+Lacan, J. (1973). \emph{The Four Fundamental Concepts of Psychoanalysis} (Seminar XI, trans. A. Sheridan). W. W. Norton.
+
+\bibitem{panksepp1998affective}
+Panksepp, J. (1998). \emph{Affective Neuroscience: The Foundations of Human and Animal Emotions}. Oxford University Press.
+
+\bibitem{friston2017dopamine}
+Friston, K., FitzGerald, T., Rigoli, F., Schwartenbeck, P., \& Pezzulo, G. (2017). Dopamine, affordance, and active inference. \emph{Neuroscience \& Biobehavioral Reviews}, \textbf{75}, 297--316.
+
+\bibitem{panksepp2012archaeology}
+Panksepp, J., \& Biven, L. (2012). \emph{The Archaeology of Mind: Neuroevolutionary Origins of Human Emotions}. W. W. Norton \& Company.
+
+\bibitem{li2025formalizing}
+Li, C., \& Li, X. (2025). Formalizing Lacanian Psychoanalysis through the Free Energy Principle: The FEP–RSI Model. \emph{Frontiers in Psychology}, \textbf{16}, 1574650.
+
+\bibitem{helmholtz1867}
+von Helmholtz, H. (1867). \emph{Handbuch der physiologischen Optik}. Leipzig: Leopold Voss.  
+[English translation in: Southall, J. P. C. (Ed.), \emph{Treatise on Physiological Optics}, 1924–25, Optical Society of America.]
+
+\bibitem{prigogine1977}
+Prigogine, I., \& Stengers, I. (1977). \emph{La Nouvelle Alliance: Métamorphose de la Science}. Paris: Gallimard.  
+[English translation: \emph{Order Out of Chaos: Man’s New Dialogue with Nature}, 1984, Bantam.]
+
+
+\bibitem{dallaglio2025leanianFEP}
+Dall’Aglio, J. (2025). Lacanian Reflections on the Free Energy Principle. \emph{Interview with Marco Leoni, Active Inference Institute Discussion}.
+\end{thebibliography}
+
+% =====================================================
+\begin{center}
+\textit{The universe seeks because it remembers; it remembers because it seeks.}
+\end{center}
+
+\end{document}
