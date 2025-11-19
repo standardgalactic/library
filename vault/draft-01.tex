@@ -1,0 +1,629 @@
+\documentclass[11pt,oneside]{memoir}
+
+% ------------------------------------------------------------
+% Packages
+% ------------------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{bm}
+\usepackage{microtype}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{csquotes}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!60!black,
+  citecolor=blue!60!black,
+  urlcolor=blue!60!black,
+  pdftitle={CLIO: A Unified Architecture of Feeling, Cognition, and Coherence},
+  pdfauthor={Flyxion}
+}
+
+% ------------------------------------------------------------
+% Theorem environments
+% ------------------------------------------------------------
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% ------------------------------------------------------------
+% Convenience macros
+% ------------------------------------------------------------
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\grad}{\nabla}
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\mb}[1]{\mathbb{#1}}
+\newcommand{\mf}[1]{\mathfrak{#1}}
+
+\newcommand{\PhiRSVP}{\Phi}
+\newcommand{\vRSVP}{\mathbf{v}}
+\newcommand{\SRSVP}{S}
+\newcommand{\Aaff}{A}
+\newcommand{\Ffree}{F}
+\newcommand{\CLIO}{\textsc{CLIO}}
+
+% ------------------------------------------------------------
+% Title information
+% ------------------------------------------------------------
+\title{CLIO: A Unified Architecture of Feeling, Cognition, and Coherence\\[6pt]
+  \large Solmsian Affective Neuroscience, RSVP Field Theory, and Recursive Inference}
+\author{Flyxion}
+\date{2025}
+
+% ------------------------------------------------------------
+% Document
+% ------------------------------------------------------------
+\begin{document}
+
+\frontmatter
+
+\maketitle
+
+\tableofcontents*
+
+% ------------------------------------------------------------
+% Preface
+% ------------------------------------------------------------
+\chapter*{Preface}
+\addcontentsline{toc}{chapter}{Preface}
+
+This monograph develops a unified architecture for consciousness and cognition based on three converging lines of work:
+
+\begin{enumerate}[label=(\roman*)]
+  \item Mark Solms' affective neuroscience, in which consciousness is fundamentally a matter of felt deviations from homeostatic viability.
+  \item The Relativistic Scalar--Vector--Entropy Plenum (RSVP), a field-theoretic ontology on spacetime with scalar potential $\PhiRSVP$, vector flow $\vRSVP$, and entropy density $\SRSVP$ as primitive dynamical fields.
+  \item The \emph{Coherent Layered Inference Optimization} (\CLIO) framework, a recursive model of hierarchical inference and self-correction driven by affective gradients.
+\end{enumerate}
+
+The core claim is that living minds are best understood as \emph{recursive, affect-steered inference loops} that instantiate a discretized form of RSVP field dynamics. Solms identifies the \emph{what} of consciousness---affective homeostatic control---while RSVP specifies the \emph{where} and \emph{in what medium} such control is realized, and \CLIO\ specifies the \emph{how} of its algorithmic unfolding.
+
+The broader mission is to provide a rigorous theoretical basis for preventing what can be called \emph{intersubjectivity collapse}: the breakdown of shared meaning, shared world-models, and mutual interpretability among agents. A theory of individual coherence is a necessary precondition for a theory of collective coherence.
+
+\vspace{1em}
+\noindent
+This book is organized into seven parts:
+
+\begin{itemize}
+  \item Part~I develops the computational architecture of feeling at the level of an individual organism, treating affect as a control signal over a high-dimensional state manifold.
+  \item Part~II generalizes this architecture using RSVP field theory and derived geometry, embedding Solms' manifold into a relativistic, thermodynamic field ontology.
+  \item Part~III maps the layered \CLIO\ architecture onto known neuroanatomy, treating the brainstem, cortex, and subcortical loops as concrete realizations of the theoretical hierarchy.
+  \item Part~IV formalizes \CLIO\ as a computational scheme, with explicit update equations, information geometry, and worked examples.
+  \item Part~V applies the resulting framework to artificial systems, arguing that \CLIO-like architectures are required for coherent, interpretable AI.
+  \item Part~VI extends the analysis to social and institutional systems, treating societies as coupled \CLIO\ loops.
+  \item Part~VII synthesizes the conceptual, mathematical, and empirical strands, and outlines future directions.
+\end{itemize}
+
+The present text is unapologetically integrative. It treats insights from clinical neurology, dynamical systems theory, derived symplectic geometry, and machine learning as parts of a single problem: how to understand and maintain \emph{coherent mind} in a world increasingly prone to fragmentation.
+
+\mainmatter
+
+% ============================================================
+% PART I — THE COMPUTATIONAL ARCHITECTURE OF FEELING
+% ============================================================
+\part{The Computational Architecture of Feeling}
+
+% ------------------------------------------------------------
+\chapter{Ontological Commitments: What Minds Are Made Of}
+
+\section{The Organism as a Control Manifold}
+
+We model an organism as a point moving in a high-dimensional dynamical state manifold $\mc{Z}$. A point $z \in \mc{Z}$ encodes, at minimum,
+
+\begin{itemize}
+  \item interoceptive variables (e.g.\ hydration levels, energy reserves, temperature, osmotic pressure),
+  \item exteroceptive sensory channels (retinal, auditory, somatosensory, vestibular),
+  \item motor and policy variables (muscle activations, postures, latent intentions),
+  \item drive and motivational fields (hunger, attachment, curiosity, fear),
+  \item predictive generative parameters (internal model parameters governing expected sensory and bodily trajectories).
+\end{itemize}
+
+It is useful to distinguish between
+
+\begin{enumerate}[label=(\alph*)]
+  \item the \emph{physiological state space} $\mc{Z}_{\mathrm{phys}}$, describing the actual physical degrees of freedom of the organism, and
+  \item the \emph{inferential manifold} $\mc{Z}_{\mathrm{inf}}$, describing the organism's internal estimate of its own state and of its environment.
+\end{enumerate}
+
+The inferential manifold is not an additional substance; it is a coarse-grained, model-based representation realized by neural and bodily dynamics. However, for formal purposes, we treat it as a separate manifold, with a map
+\[
+  \pi : \mc{Z}_{\mathrm{phys}} \to \mc{Z}_{\mathrm{inf}}
+\]
+representing the organism's own estimation process.
+
+\section{Valence as a Gradient Field on State Space}
+
+Affective valence is modelled as a scalar field
+\[
+  A : \mc{Z}_{\mathrm{inf}} \to \R
+\]
+that assigns to each internal state $z$ a real number representing the organism's \emph{felt distance from viability}. Positive values correspond to states experienced as pleasant, safe, or satiated; negative values correspond to states experienced as painful, threatening, or deprived.
+
+Solms' central thesis can be expressed as:
+
+\begin{quote}
+  Conscious feeling is the organism's evaluative registration of its own deviation from homeostatic viability, encoded as a scalar function on its internal state manifold.
+\end{quote}
+
+The gradient $\grad A(z)$ encodes the direction in $\mc{Z}_{\mathrm{inf}}$ that would reduce or increase this deviation. Affect thus supplies both a \emph{magnitude} (how urgent) and a \emph{direction} (what way to move in state space) for corrective action.
+
+\section{Drives as Homeostatic Submanifolds}
+
+Drives---such as thirst, hunger, thermoregulation, and attachment---define \emph{homeostatic submanifolds} of $\mc{Z}_{\mathrm{phys}}$. For each drive $d$, there is a constraint function $C_d : \mc{Z}_{\mathrm{phys}} \to \R$ and a viable set
+\[
+  \mc{H}_d = \{ z \in \mc{Z}_{\mathrm{phys}} \mid C_d(z) = 0 \},
+\]
+representing a codimension-one surface (or higher codimension when multiple variables are involved) on which the drive is exactly satisfied. Departures from $\mc{H}_d$ induce steep changes in the affective field, making $\mc{H}_d$ an attractor basin in both physiological and inferential dynamics.
+
+The union
+\[
+  \mc{H} = \bigcap_d \mc{H}_d
+\]
+is the viability envelope of the organism: the set of states compatible with continued existence. The affective field $A$ can be constructed from the drive constraints as
+\[
+  U(z) = \sum_d w_d C_d(z)^2,
+  \qquad
+  A(z) = -\frac{\dd}{\dd t} U\bigl(z(t)\bigr),
+\]
+making $U$ a Lyapunov function and $A$ the signed rate of change of deviation from $\mc{H}$.
+
+% ------------------------------------------------------------
+\chapter{Functional Anatomy of the Felt State}
+
+\section{Three Core Subsystems}
+
+At the macroscale, the functional anatomy of feeling can be decomposed into three coupled subsystems:
+
+\begin{enumerate}[label=(\alph*)]
+  \item An \emph{energy regulation system}, centred on the brainstem and hypothalamus, responsible for arousal, basic metabolic control, and global state.
+  \item An \emph{affective valuation system}, including periaqueductal gray, basal forebrain, ventral striatum, and limbic structures, responsible for assigning valence and urgency to deviations.
+  \item A \emph{predictive representational system}, largely cortical and hippocampal, responsible for constructing multi-modal models of the world and of the organism's relation to it.
+\end{enumerate}
+
+Feeling is not localized purely to any one of these systems, but it originates in the energy regulation system and affective valuation system and is then propagated into predictive representations.
+
+\section{Where and How Feeling is Generated}
+
+Clinical and experimental evidence shows that damage to certain brainstem and diencephalic structures---particularly periaqueductal gray (PAG), upper brainstem reticular formation, parabrachial complex, and specific hypothalamic nuclei---abolishes consciousness even when the cortex remains structurally intact. Conversely, patients with near-complete cortical destruction can retain rich emotional and behavioural responsiveness, including joy, fear, anger, and social attachment.
+
+This suggests that feeling is generated at the level of subcortical homeostatic evaluation. These structures continuously answer questions of the form:
+
+\begin{quote}
+  ``How am I doing, relative to my survival needs, right now?''
+\end{quote}
+
+Cortical representations do not \emph{create} feeling; they \emph{receive} and \emph{refine} it. They provide a detailed, modality-specific context in which affective gradients are interpreted and acted upon.
+
+\section{Global Broadcast as Metabolic Priority}
+
+Consciousness can thus be understood as a \emph{broadcast of high-priority variables}. Not every deviation in every variable reaches phenomenal level. Instead, the organism elevates only those deviations that cross a relevance threshold, determined by their proximity to viability boundaries and by their interaction with current goals.
+
+The ``global workspace'' is, in this view, a workspace of \emph{metabolic priority} rather than of content per se. Affective gradients decide which errors matter enough to be globally propagated; predictive systems then provide candidate explanations and policies.
+
+% ------------------------------------------------------------
+\chapter{The Formal Structure of Affective Computation}
+
+\section{Error $\to$ Feeling $\to$ Action}
+
+The minimal computational pipeline for feeling is:
+
+\begin{enumerate}[label=(\arabic*)]
+  \item A deviation from a homeostatic target is detected.
+  \item This deviation is encoded as an affective signal (valence, arousal).
+  \item The affective signal biases the selection of corrective policies.
+\end{enumerate}
+
+Formally, for a drive variable $x_d$ with target $\hat{x}_d$, the error is
+\[
+  e_d = x_d - \hat{x}_d,
+\]
+the contribution to the homeostatic potential is $U_d = w_d e_d^2$, and the contribution to affect is
+\[
+  A_d = -\frac{\dd}{\dd t} U_d.
+\]
+
+The aggregate affect signal $A$ is some (possibly nonlinear) aggregation of the $A_d$. Behavioural policies $\pi$ are then selected to minimize expected future $U$ given $A$ and current predictions.
+
+\section{The Energetic Cost Model}
+
+Feeling can be interpreted as the organism's internal accounting of energetic costs, broadly understood: metabolic expenditure, uncertainty, and deviation from expected trajectories all contribute. Negative valence corresponds to trajectories that are energetically unsustainable or that increase uncertainty beyond tolerable bounds; positive valence corresponds to trajectories that restore or improve energetic and informational stability.
+
+\section{Affective Compression}
+
+Affective states compress an enormous amount of multi-dimensional physiological and contextual information into a low-dimensional space of valence (pleasant/unpleasant) and arousal (high/low). This compression is not arbitrary: it is tailored to the organism's control problem. The compressed signal needs to be sufficient for:
+
+\begin{itemize}
+  \item fast triage of situations,
+  \item prioritization of actions,
+  \item coordination of subsystems,
+  \item and learning from outcomes.
+\end{itemize}
+
+The success of this compression is evident in the speed and robustness of affectively guided decisions relative to purely deliberative ones.
+
+% ------------------------------------------------------------
+\chapter{Global Control Through Affect}
+
+\section{Affect as Coordination Layer}
+
+Affective signals coordinate:
+
+\begin{itemize}
+  \item autonomic regulation (heart rate, breathing, hormonal release),
+  \item attention (allocation of sensory and cognitive resources),
+  \item learning (synaptic plasticity and consolidation),
+  \item action selection (competition between policies),
+  \item memory tagging (salience and recall probability).
+\end{itemize}
+
+In \CLIO, this coordination is formalized by a gating function
+\[
+  \sigma(\beta A) = \frac{1}{1 + e^{-\beta A}},
+\]
+which scales effective learning rates and precision weights throughout the hierarchy.
+
+\section{Why Affect Must Have Phenomenology}
+
+Solms argues that the organism must \emph{feel} its own homeostatic state in order to regulate it. Without a phenomenally accessible signal, the system would have no locus at which its own failure or success becomes globally available for correction.
+
+From a control-theoretic perspective, phenomenology is the \emph{site} where control signals are aggregated and made globally influential. It is not epiphenomenal; it is the control interface of the organism viewed from the inside.
+
+\section{The Organism as Thermodynamic Controller}
+
+The bodily state is the ground truth of the system. Cortical models can hallucinate or misrepresent, but metabolic variables cannot be indefinitely misreported without consequence. The felt state is thus anchored in thermodynamic reality: deviations from viability eventually manifest as unignorable affective gradients, forcing a reconciliation between model and body.
+
+This completes the first part: a computational and functional analysis of feeling as the primary organizing principle of mind.
+
+% ============================================================
+% PART II — RSVP FIELD THEORY AS AFFECTIVE GEOMETRY
+% ============================================================
+\part{RSVP Field Theory as Affective Geometry}
+
+% ------------------------------------------------------------
+\chapter{The Solms Manifold as a Derived Field Object}
+
+\section{From State Manifold to Mapping Stack}
+
+To embed Solms' state manifold into a relativistic field ontology, we consider an underlying spacetime manifold $M$ and a target space $\mc{S}$ of field values, including scalar potential $\PhiRSVP$, vector flow $\vRSVP$, and entropy density $\SRSVP$.
+
+The space of possible field configurations can be formalized as a mapping stack
+\[
+  \mathrm{Map}(M, \mc{S}),
+\]
+equipped with additional structure (e.g.\ differential graded, shifted symplectic).
+
+An organism's internal state manifold $\mc{Z}$ then appears as a \emph{section} or substack of this mapping stack, corresponding to the restriction of the fields to the organism's worldtube $\Omega \subset M$ and to coarse-grained summaries thereof.
+
+\section{Feeling as a Functional on the Derived Geometric Object}
+
+The affective functional $A$ becomes a local functional on the mapping stack:
+\[
+  A[\PhiRSVP, \vRSVP, \SRSVP] = \int_\Omega \mathcal{A}\bigl(\PhiRSVP(x), \vRSVP(x), \SRSVP(x)\bigr)\, \dd^4 x,
+\]
+for some local density $\mathcal{A}$. The Solmsian picture, in which affect reflects homeostatic deviation, arises when $\mathcal{A}$ depends primarily on deviations of $\SRSVP$ and related quantities from a constrained set $\mc{H}$ of viable configurations.
+
+% ------------------------------------------------------------
+\chapter{Scalar, Vector, and Entropic Fields as Deep Substrate}
+
+\section{Scalar Affective Field and RSVP's $\PhiRSVP$}
+
+We identify the scalar field $\PhiRSVP$ in RSVP with a generalized scalar potential encoding value, viability, or local ``fall'' of space. The Solmsian affective field $A(z)$ can then be realized as the pullback of $\PhiRSVP$ along the organism's worldline:
+\[
+  A(t) \sim \PhiRSVP\bigl(\gamma(t)\bigr),
+\]
+where $\gamma(t)$ traces the organism's centre-of-mass worldline within $\Omega$.
+
+\section{Vector Flow and Intentional Action}
+
+The RSVP vector field $\vRSVP$ represents directed flux (e.g.\ baryonic flow, momentum density). From the organism's perspective, $\vRSVP$ encodes the space of possible actions and their dynamical consequences. Policy selection becomes the choice of a trajectory in $\Omega$ that aligns the evolution of $\PhiRSVP$ and $\SRSVP$ with the reduction of the homeostatic potential $U$.
+
+\section{Drives as Boundary Conditions}
+
+Drives appear as boundary conditions and constraints on the values of $(\PhiRSVP, \vRSVP, \SRSVP)$ on specific submanifolds (e.g.\ internal organs, interfaces with the environment). Their satisfaction or violation alters the local curvature of the field configuration space, shaping the organism's action tendencies.
+
+% ------------------------------------------------------------
+\chapter{Homeostasis as a Shifted Symplectic Problem}
+
+\section{Viable States as Lagrangian Substack}
+
+Equipped with an appropriate shifted symplectic structure on the mapping stack, one can regard the viable set $\mc{H}$ of organism states as a Lagrangian substack: a subspace on which the symplectic form restricts to zero. Deviations from $\mc{H}$ induce nonzero symplectic flux, corresponding to dynamical pressures that drive the system back toward viability.
+
+\section{Action Selection as Symplectic Transport}
+
+Policies correspond to Hamiltonian flows generated by functionals such as
+\[
+  H[\PhiRSVP, \vRSVP, \SRSVP] = U[\PhiRSVP, \SRSVP] + \alpha\, \mathcal{S}[\SRSVP],
+\]
+where $\mathcal{S}$ is an entropy functional. Action selection is then literal Hamiltonian transport in the derived geometric sense.
+
+% ------------------------------------------------------------
+\chapter{RSVP's Interpretation of Affective Consciousness}
+
+\section{Feeling as Localized Scalar Potential}
+
+From the RSVP viewpoint, affective phenomenology is encoded in the restriction of the scalar potential $\PhiRSVP$ and entropy density $\SRSVP$ to the organism's worldtube, weighted by its homeostatic constraints. What is \emph{felt} is the local configuration of these fields relative to viability surfaces.
+
+\section{Consciousness as Minimal-Action Section}
+
+Consciousness arises when there exists a section of the mapping stack---a choice of fields $(\PhiRSVP, \vRSVP, \SRSVP)$ over $M$---that minimizes an action functional subject to the organism's constraints. Solms' ``felt self'' as locus of active self-regulation coincides with the RSVP-theoretic minimal-action configuration restricted to $\Omega$.
+
+% ============================================================
+% PART III — CLIO IN THE BRAIN
+% ============================================================
+\part{CLIO in the Brain}
+
+% (What follows is a compressed LaTeX version of the Part III prose you provided.)
+
+% ------------------------------------------------------------
+\chapter{Level 0: Affective Steering}
+
+\section{The Brainstem as Affective Core}
+
+Classical cortex-centric theories of consciousness have been undermined by evidence from hydranencephaly, decorticate animals, and focal lesion studies. Consciousness persists in the near-absence of cortex but vanishes when specific brainstem and diencephalic regions---notably the periaqueductal gray, upper reticular formation, parabrachial complex, and hypothalamus---are destroyed.
+
+These structures instantiate Level~0 of \CLIO: the \emph{affective steering layer}. They compute global homeostatic deviation, integrate nociceptive and interoceptive information, and send modulatory signals (via neuromodulators such as dopamine, noradrenaline, and serotonin) that set the effective learning rate and precision weighting throughout the rest of the brain.
+
+\section{Affect as Homeostatic Error}
+
+In RSVP, the organism's worldtube carries fields $(\PhiRSVP, \vRSVP, \SRSVP)$. Internal regulation aims to minimize an effective potential
+\[
+  U[\PhiRSVP, \SRSVP] = \int_\Omega \Bigl( \sum_d w_d C_d(\PhiRSVP, \SRSVP)^2 \Bigr) \dd^4x,
+\]
+and the instantaneous affective signal can be modelled as
+\[
+  A(t) = -\frac{\dd}{\dd t} U\bigl(z(t)\bigr) - \alpha \, \dot{S}_\Omega(t),
+\]
+where $S_\Omega$ is the coarse-grained entropy in $\Omega$.
+
+\section{Affective Gating}
+
+\CLIO\ implements affective steering via a gating function
+\[
+  \sigma(\beta A(t)) = \frac{1}{1 + e^{-\beta A(t)}},
+\]
+multiplying effective learning rates $\eta_L^{\mathrm{eff}}$ at all levels $L$. Negative affect (large deviation) narrows cognition, increases precision, and prioritizes urgent correction; positive affect broadens exploration, decreases precision, and permits flexible updating.
+
+\begin{figure}[h]
+  \centering
+  % Placeholder for an affective gating diagram
+  \fbox{\parbox{0.8\textwidth}{\centering Placeholder: schematic of Level~0 affective gating in the brainstem.}}
+  \caption{Affective steering at Level~0: brainstem circuits compute homeostatic error and modulate precision and learning rate throughout the hierarchy.}
+\end{figure}
+
+% ------------------------------------------------------------
+\chapter{Level 1: Local Prediction Mechanisms}
+
+\section{Sensory and Reflexive Inference}
+
+Level~1 corresponds to fast, local prediction mechanisms in primary sensory cortices, superior colliculus, cerebellum, and early thalamic relays. These systems implement high-frequency, low-latency inference:
+\[
+  e_1 = x_{\mathrm{sens}} - \hat{x}_{\mathrm{sens}},
+\]
+with $x_{\mathrm{sens}}$ denoting sensory input and $\hat{x}_{\mathrm{sens}}$ the current prediction.
+
+Cortical columns can be viewed as micro-\CLIO\ units, each minimizing a local free-energy-like functional subject to top-down predictions and bottom-up errors.
+
+\section{Mismatch Detection and Attention}
+
+Large changes in $e_1$ trigger early mismatch responses (e.g.\ mismatch negativity) and recruit attention by modulating local precision. In \CLIO, this is expressed as
+\[
+  \Delta e_1(t) > \theta_1 \Rightarrow \Pi_1(t+1) = \Pi_1(t) + \delta\Pi,
+\]
+where $\Pi_1$ is a precision parameter.
+
+% ------------------------------------------------------------
+\chapter{Level 2: Structural Models and Maps}
+
+\section{Association Cortex and Hippocampal Geometry}
+
+Level~2 builds and maintains structured generative models of space, objects, and relational patterns, anchored in posterior parietal, temporal, and hippocampal--entorhinal networks.
+
+Latent structural state variables $z_2$ encode spatial maps, semantic graphs, and schemas. Updates take the form
+\[
+  z_2(t+1) = z_2(t) - \eta_2 \Pi_2(t) \frac{\partial F_2}{\partial z_2},
+\]
+with $F_2$ incorporating prediction errors from Level~1 and affective context from Level~0.
+
+\section{Basal Ganglia and Model Selection}
+
+The basal ganglia implement a selection mechanism over competing models and action policies, approximated by
+\[
+  \pi^\ast = \arg\min_{\pi_i} \Ffree(\pi_i),
+\]
+where $\Ffree$ is a free-energy-like criterion encoding both predictive accuracy and affective preference.
+
+% ------------------------------------------------------------
+\chapter{Level 3: Metacognition and Strategy}
+
+\section{Prefrontal Control and Meta-Beliefs}
+
+Level~3 corresponds to prefrontal and cingulate systems encoding meta-beliefs about the reliability of lower-level models and policies. The state $z_3$ summarizes strategy, confidence, and exploratory stance, with updates such as
+\[
+  z_3(t+1) = z_3(t) - \eta_3 \Pi_3(t) \frac{\partial F_3}{\partial z_3},
+\]
+where $F_3$ includes terms measuring inconsistency across levels and persistent uncertainty.
+
+\section{Attention as Precision Allocation}
+
+Attention is modelled as the allocation of precision across levels and modalities:
+\[
+  \Pi_L(t+1) = \Pi_L(t) + g_L\bigl(A(t), e_1(t), e_2(t), z_3(t)\bigr),
+\]
+with $g_L$ designed to increase precision where prediction errors are high and affect signals urgency.
+
+% ------------------------------------------------------------
+\chapter{Consciousness as Recursive Closure}
+
+\section{Recursive Coherence Criterion}
+
+Consciousness, in this framework, arises when the four levels of \CLIO\ form a recursively closed, coherently convergent dynamical system. Formally, let $z = (z_0, z_1, z_2, z_3)$ denote the joint state. A conscious episode corresponds to a trajectory for which:
+
+\begin{enumerate}[label=(\roman*)]
+  \item $A(t)$ is nonzero and within a viable range (neither total collapse nor saturation),
+  \item prediction errors $e_1$ are bounded and informative,
+  \item structural models $z_2$ are consistent with $z_1$ and $z_3$,
+  \item meta-beliefs $z_3$ stabilize and yield self-consistent strategies,
+  \item the coupled update map $z(t+1) = G(z(t))$ is contractive in a neighbourhood of the trajectory.
+\end{enumerate}
+
+\section{Global Constraint Satisfaction}
+
+The system approximates the solution of a global constraint satisfaction problem:
+\[
+  \min_{z} \Ffree_{\mathrm{total}}(z)
+\]
+subject to viability and coherence constraints. Consciousness is the phenomenological aspect of this global optimization procedure as it unfolds in time.
+
+\begin{figure}[h]
+  \centering
+  \fbox{\parbox{0.8\textwidth}{\centering Placeholder: diagram of the four-level \CLIO\ loop, with arrows indicating recursive interactions.}}
+  \caption{Consciousness as recursive closure: Level~0 (affect) steers Levels~1--3, which in turn modulate Level~0 through action and model revision.}
+\end{figure}
+
+% ============================================================
+% PART IV — CLIO AS COMPUTATION
+% ============================================================
+\part{CLIO as Computation}
+
+% ------------------------------------------------------------
+\chapter{The CLIO Update Equation}
+
+\section{Three-Term Structure}
+
+At each level $L \in \{0,1,2,3\}$, \CLIO\ maintains a latent state vector $z_L$ and a free-energy-like functional $F_L$. The generic update rule is
+\[
+  z_L(t+1) = z_L(t) - \eta_L^{\mathrm{eff}}(t)\,\frac{\partial F_L}{\partial z_L}(t),
+\]
+with effective learning rate
+\[
+  \eta_L^{\mathrm{eff}}(t) = \eta_L\,\sigma(\beta A(t))\,\Lambda_L(t),
+\]
+where $\Lambda_L(t)$ represents a layer-specific precision or confidence estimate.
+
+\section{Precision and Affect}
+
+The product $\sigma(\beta A(t))\,\Lambda_L(t)$ plays the role of an inverse Fisher metric, weighting directions in state space according to their estimated reliability and affective relevance. This makes the \CLIO\ update an approximation to the natural gradient:
+\[
+  \Delta z_L \approx -\eta_L\,g_L^{-1} \nabla F_L,
+\]
+with $g_L$ the Fisher information matrix.
+
+% ------------------------------------------------------------
+\chapter{Hierarchical Coherence and Failure Modes}
+
+\section{Vertical and Lateral Coherence}
+
+We define vertical coherence as approximate agreement between predictions at adjacent levels, and lateral coherence as agreement among parallel submodels within a level. Loss of coherence in either dimension produces characteristic patterns of fragmentation, including delusion-like decoupling of Level~3 from Level~1, panic-like saturation of Level~0, and dissociative flattening of precision.
+
+% ------------------------------------------------------------
+\chapter{Information Geometry of CLIO}
+
+\section{Natural Gradient Dynamics}
+
+Interpreting the state variables $z_L$ as parameters of probabilistic models, we can endow each level with a Riemannian metric given by the Fisher information. The \CLIO\ update rule then corresponds to gradient descent with respect to this metric, ensuring efficient and stable convergence.
+
+% ------------------------------------------------------------
+\chapter{Worked Examples and Simulations}
+
+\section{1D RSVP $\to$ CLIO Reduction}
+
+We illustrate the reduction of a simple RSVP field equation to a discrete-time \CLIO-like update in a one-dimensional system, and briefly sketch simulations of two-dimensional homeostasis, fear learning, and decision-making under uncertainty.
+
+\begin{figure}[h]
+  \centering
+  \fbox{\parbox{0.8\textwidth}{\centering Placeholder: phase portraits of \CLIO\ dynamics in a simple 2D homeostatic system.}}
+  \caption{Example dynamics of a two-variable homeostatic system under \CLIO\ updates, showing convergence to a viability basin.}
+\end{figure}
+
+% ============================================================
+% PART V — CLIO IN ARTIFICIAL INTELLIGENCE
+% ============================================================
+\part{CLIO in Artificial Intelligence}
+
+\chapter{Limitations of Current Generative Models}
+
+Here we argue that conventional large language models and related architectures lack explicit affective steering, internal precision accounting, and recursive closure, and that these absences underwrite characteristic failure modes such as hallucination and incoherence.
+
+\chapter{Designing CLIO-Based AI Architectures}
+
+We sketch how a \CLIO-like architecture can be implemented in artificial systems, including multi-level latent states, explicit uncertainty modelling, and controllable affect-like signals reflecting task goals and constraints.
+
+\chapter{Interpretability, Safety, and Coherence}
+
+We discuss how the explicit structure of \CLIO\ provides hooks for interpretability, corrigibility, and safety, by exposing internal state variables, error signals, and affective gates to inspection and control.
+
+% ============================================================
+% PART VI — CLIO IN SOCIETY
+% ============================================================
+\part{CLIO in Society}
+
+\chapter{Intersubjectivity as Coupled CLIO Loops}
+
+We extend the \CLIO\ framework to multi-agent systems, treating shared world-models as emergent from coupled recursive inference loops across individuals and institutions.
+
+\chapter{Intersubjectivity Collapse}
+
+We analyze intersubjectivity collapse as a breakdown of coupling between \CLIO\ loops: affective desynchronization, incompatible precision regimes, and divergent structural models.
+
+\chapter{Rebuilding Shared Reality}
+
+We explore design principles for media, platforms, and institutions that support coupled \CLIO\ dynamics instead of destabilizing them.
+
+% ============================================================
+% PART VII — SYNTHESIS AND FUTURE DIRECTIONS
+% ============================================================
+\part{Synthesis and Future Directions}
+
+\chapter{Unified Theory of Cognitive Coherence}
+
+We summarize the integration of Solmsian affective theory, RSVP field ontology, and \CLIO\ computation into a single framework for understanding consciousness and coherent mind.
+
+\chapter{Future Minds}
+
+We briefly discuss implications for future biological, artificial, and hybrid minds, and for the long-term stability of shared reality.
+
+% ============================================================
+% Back matter
+% ============================================================
+\backmatter
+
+\chapter*{Acknowledgements}
+\addcontentsline{toc}{chapter}{Acknowledgements}
+
+The author thanks collaborators, peers, and critics who have contributed ideas, objections, and encouragement throughout the development of this work.
+
+\begin{thebibliography}{99}
+\addcontentsline{toc}{chapter}{Bibliography}
+
+\bibitem{Solms2021}
+M.~Solms.
+\newblock \emph{The Hidden Spring: A Journey to the Source of Consciousness}.
+\newblock Profile Books, 2021.
+
+% Additional references to be added.
+
+\end{thebibliography}
+
+\end{document}
+
