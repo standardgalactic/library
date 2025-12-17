@@ -3,8 +3,18 @@
 % --------------------------------------------------
 % Packages
 % --------------------------------------------------
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
+
+\usepackage{fontspec}
+\usepackage{unicode-math}
+
+\setmainfont{Latin Modern Roman}
+
+\setmathfont{Latin Modern Math}
+
+% ================================
+% Page layout and spacing
+% ================================
+
 \usepackage{geometry}
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{setspace}
@@ -16,6 +26,16 @@
 % --------------------------------------------------
 \geometry{margin=1in}
 \setstretch{1.15}
+
+\usepackage[
+  backend=biber,
+  style=authoryear,
+  sorting=nyt,
+  maxcitenames=2,
+  maxbibnames=99
+]{biblatex}
+
+\addbibresource{intelligence-under-constraint.bib}
 
 % --------------------------------------------------
 % Theorem environments
@@ -61,7 +81,8 @@ There is a persistent expectation, in both technical and public discourse, that 
 
 This essay begins from the claim that this expectation is not neutral. It functions as a selection pressure that privileges shallow correctness, discourages cumulative reasoning, and systematically erodes the very properties that make intelligence general rather than brittle. Ideas that survive such environments do so not because they are structurally robust, but because they are easily paraphrased, weakly constrained, or trivially recontextualized.
 
-The central thesis advanced here is that intelligence is best understood not as a set of capabilities or representations, but as \emph{construction under constraint}. To be intelligent is to build structures over time, to reuse them lawfully, to compress them without destroying invariants, and to refuse extrapolation beyond jurisdiction. These properties are not optional. They are the conditions under which any adaptive system remains coherent when exposed to reuse, transfer, and scrutiny.
+The central thesis advanced here is that intelligence is best understood not as a set of capabilities or representations, but as \emph{construction under constraint}. To be intelligent is to build structures over time, to reuse them lawfully, to compress them without destroying invariants, and to refuse extrapolation beyond jurisdiction. These properties are not optional. They are the conditions under which any adaptive system remains coherent when exposed to reuse, transfer, and scrutiny. This perspective aligns with early cybernetic and complexity-theoretic accounts of adaptive systems as processes governed by constraint rather than by static description \parencite{ashby1956,weaver1948}.
+
 
 A secondary but unavoidable consequence follows. If intelligence itself depends on regulated interaction and semi-permeable boundaries, then the communication of intelligence---including the publication of powerful ideas---must obey the same structural logic. Unfiltered disclosure is not inherently virtuous; neither is concealment inherently responsible. What matters is whether the form of disclosure preserves the invariants that give the ideas meaning.
 
@@ -79,7 +100,8 @@ Most contemporary theories of intelligence, whether biological or artificial, ar
 
 This framing obscures a fundamental asymmetry. A state is always a summary. It collapses history, erases order, and forgets the contingencies by which it was produced. Two systems may occupy indistinguishable states while having arrived there through radically different processes, with radically different implications for reuse, generalization, and failure.
 
-State-based descriptions therefore lack explanatory power with respect to persistence. They can describe what a system \emph{is like} at a moment, but not what it \emph{can survive}. Intelligence, however, is not defined by momentary adequacy. It is defined by the ability to remain coherent across time, exposure, and reuse.
+State-based descriptions therefore lack explanatory power with respect to persistence. They can describe what a system \emph{is like} at a moment, but not what it \emph{can survive}. Intelligence, however, is not defined by momentary adequacy. It is defined by the ability to remain coherent across time, exposure, and reuse, a point emphasized early in cybernetic and complexity-theoretic treatments of adaptive systems \parencite{ashby1956,weaver1948}.
+
 
 \subsection{Construction History as Primary}
 
@@ -89,7 +111,7 @@ To address this limitation, we take \emph{events} rather than states as ontologi
 A \emph{construction history} is an ordered, irreversible sequence of events from which any state description is derivable only as a partial projection.
 \end{definition}
 
-On this view, memory is not storage but replayability. To remember is to be able to reconstruct how a structure came to be, not merely to access its current form. Learning is the reorganization of construction history into forms that are cheaper to reuse without loss of function.
+On this view, memory is not storage but replayability. To remember is to be able to reconstruct how a structure came to be, not merely to access its current form. Learning is the reorganization of construction history into forms that are cheaper to reuse without loss of function, consistent with accounts that treat learning as transformation of process rather than accumulation of representations \parencite{ashby1956}.
 
 This shift has immediate consequences. Intelligence can no longer be identified with static representations, nor can learning be reduced to parameter adjustment. What matters is the system's ability to transform its own history into reusable abstractions while preserving the conditions under which those abstractions remain valid.
 
@@ -99,7 +121,7 @@ Throughout what follows, any appeal to a \enquote{state} should be understood as
 
 \subsection{Irreversibility, Time, and Constraint Accumulation}
 
-Treating events as primary commits the theory to irreversibility. An event, once incorporated into construction history, cannot be undone without altering the identity of the system that incorporates it. This irreversibility is not an implementation detail but a structural feature: it is what gives time its direction and learning its cost.
+Treating events as primary commits the theory to irreversibility. An event, once incorporated into construction history, cannot be undone without altering the identity of the system that incorporates it. This irreversibility is not an implementation detail but a structural feature: it is what gives time its direction and learning its cost, echoing foundational analyses of irreversibility in complex adaptive systems \parencite{weaver1948}.
 
 In a state-based account, time is often treated as an index labeling successive configurations. In an event-based account, time is instead the accumulation of constraints. Each event narrows the space of future admissible constructions by fixing commitments, excluding alternatives, and conditioning subsequent possibilities. Learning therefore increases not only competence but responsibility: what has been built constrains what may coherently follow.
 
@@ -109,7 +131,7 @@ This perspective clarifies why intelligence cannot be adequately characterized b
 
 Compression plays a central role in most theories of intelligence, but it is often misunderstood as a purely representational operation. On the present account, compression is inseparable from history. To compress is not merely to shorten a description, but to replace a detailed construction history with a more economical one that can be replayed to the same effect under specified conditions.
 
-Such replacement is only meaningful relative to what is being preserved. A compressed history is not a lossless encoding of all prior detail; it is a commitment to ignore certain distinctions while maintaining others. These commitments are intelligible only when the original history remains, at least in principle, reconstructible.
+Such replacement is only meaningful relative to what is being preserved. A compressed history is not a lossless encoding of all prior detail; it is a commitment to ignore certain distinctions while maintaining others. These commitments are intelligible only when the original history remains, at least in principle, reconstructible, a requirement closely related to information-theoretic treatments of compression as invariance under transformation \parencite{jaynes2003,cover_thomas2006}.
 
 Compression without history degenerates into pattern matching. It may succeed locally, but it cannot support lawful reuse, because the reasons for the pattern’s validity have been erased. A genuinely intelligent system therefore compresses its history while retaining the ability to justify that compression relative to the constraints it preserves.
 
@@ -127,63 +149,7 @@ The remainder of this essay builds on the commitments established here. By treat
 
 Readers accustomed to state-based or representation-centric accounts may find this shift initially disorienting. That disorientation is itself diagnostic. Any framework that seeks to explain intelligence without accounting for the cost and irreversibility of construction has already abstracted away the very phenomenon it purports to explain.
 
-In the next section, abstraction will be reconsidered under these constraints. Rather than treating abstraction as representational simplification, it will be developed as the identification of invariants under lawful transformation—a move that preserves the primacy of history while enabling reuse.
-
-% --------------------------------------------------
-\section{Abstraction as Invariance, Not Representation}
-% --------------------------------------------------
-
-\subsection{The Limits of Representational Abstraction}
-
-Abstraction is often described as a movement away from detail toward generality, typically formalized as the construction of representations that stand in for classes of objects or situations. On such accounts, abstraction consists in identifying salient features, encoding them symbolically or parametrically, and discarding the rest. Intelligence is then equated with the manipulation of these representations.
-
-This picture presupposes what it attempts to explain. To identify which features are salient already requires a notion of relevance; to encode structure already assumes stability under variation. Representational abstraction therefore cannot be primitive. It depends on prior constraints that determine what counts as sameness, difference, and permissible substitution.
-
-Moreover, representational accounts obscure the role of transformation. A representation may summarize a situation, but it does not, by itself, specify how that summary behaves when the situation changes. As a result, representational abstractions tend to generalize either too weakly, by remaining tied to their original context, or too strongly, by being applied where their validity no longer holds.
-
-\subsection{Abstraction as Invariant Structure}
-
-On the event-based account developed in the previous section, abstraction must be redefined. Rather than treating abstractions as stored representations, we treat them as \emph{invariants}: structures that remain stable under a specified family of transformations.
-
-\begin{definition}
-An \emph{abstraction} is a structure preserved under a family of admissible transformations acting on construction histories.
-\end{definition}
-
-What matters, then, is not what an abstraction looks like, but what it survives. An abstraction is justified not by its compactness alone, but by the fact that it can be transported across contexts without violating the constraints that made it effective in the first place.
-
-This conception shifts the focus from encoding to lawfulness. To abstract is to identify which aspects of a construction may vary and which must remain fixed. These distinctions are not arbitrary; they are discovered through interaction, failure, and repair over time.
-
-\subsection{Summarization and Extension as a Single Operation}
-
-A common but misleading distinction is drawn between summarization, which is seen as compressive and reductive, and extension, which is seen as creative or generative. Under the present framework, this distinction collapses.
-
-Both summarization and extension consist in applying transformations to construction history and testing whether certain invariants are preserved. A summary replaces a detailed history with a shorter one that behaves equivalently under the transformations of interest. An extension applies an existing abstraction to a new context and checks whether the same invariants hold.
-
-In both cases, success is measured by the same criterion: preservation of enabling structure. Failure in either direction is also the same phenomenon. A summary that discards too much structure becomes unusable; an extension that ignores hidden constraints becomes brittle.
-
-This unification has an important consequence. Creativity is not the violation of constraint, but the discovery of transformations under which existing constraints remain intact. Novelty emerges from lawful recombination, not from unconstrained variation.
-
-\subsection{Why Invariants Cannot Be Extracted Without Discipline}
-
-Because abstractions are defined by what they preserve, they cannot be detached from the transformations that define them. Any attempt to extract an abstraction as a free-standing rule or slogan necessarily strips it of the very conditions that make it valid.
-
-This explains why abstractions that circulate easily tend to degrade. Detached from their construction histories and admissible transformations, they become overgeneralized heuristics. Their apparent power derives from vagueness, not robustness.
-
-By contrast, abstractions that remain effective under reuse tend to resist summarization. They require the reader or user to reconstruct the space of transformations in which they live. This resistance is not a flaw. It is the mechanism by which invariants protect themselves from misuse.
-
-\subsection{Abstraction and the Cost of Generality}
-
-Abstraction reduces construction cost by enabling reuse, but it introduces a new cost: the cost of maintaining invariants. Every abstraction carries with it a domain of validity, defined implicitly or explicitly by the transformations it survives.
-
-A system that abstracts aggressively without tracking these domains accumulates hidden debt. Its abstractions appear general until they are applied under conditions they were never tested to withstand. At that point, failure is sudden and difficult to diagnose, because the violated constraints were never made explicit.
-
-Intelligence, on this view, consists in managing this trade-off. It is the capacity to abstract while retaining enough structure to know when abstraction applies and when it must be refused.
-
-\subsection{Transition to Modularity}
-
-If abstractions are invariants under transformation, then their safe reuse requires that transformations themselves be controlled. This control cannot be centralized without reintroducing fragility. It must instead be distributed across partially independent units whose interactions are explicitly governed.
-
-In the next section, this requirement will be developed as a commitment to modularity, not as an engineering heuristic, but as an ontological condition for coherent abstraction and general intelligence.
+In the next section, abstraction will be reconsidered under these constraints. Rather than treating abstraction as representational simplification, it will be developed as the identification of invariants under lawful transformation—a move that preserves the primacy of history while enabling reuse \parencite{arnold1989,olver1993}.
 
 % --------------------------------------------------
 \section{Modularity as Ontology, Not Convenience}
@@ -193,9 +159,9 @@ In the next section, this requirement will be developed as a commitment to modul
 
 It is tempting to imagine intelligence as a single, unified faculty: a global workspace, a central optimizer, or a comprehensive world model in which all information is integrated and adjudicated. Such monolithic conceptions are attractive because they promise coherence by fiat. If all distinctions collapse into a single representational space, then conflict, inconsistency, and ambiguity appear tractable.
 
-This promise is illusory. A monolithic system has no principled way to regulate interaction between heterogeneous processes, because all interactions are already internal. As a result, every change propagates everywhere. Local failure becomes global corruption. The system gains expressive power at the cost of fragility.
+This promise is illusory. A monolithic system has no principled way to regulate interaction between heterogeneous processes, because all interactions are already internal. As a result, every change propagates everywhere. Local failure becomes global corruption. The system gains expressive power at the cost of fragility, a trade-off long recognized in cybernetic analyses of large adaptive systems \parencite{ashby1956}.
 
-More importantly, monolithic intelligence cannot generalize safely. Without internal boundaries, there is no mechanism to prevent abstractions learned in one regime from being applied illegitimately in another. What appears as flexibility in small domains becomes catastrophic overreach as scope expands.
+More importantly, monolithic intelligence cannot generalize safely. Without internal boundaries, there is no mechanism to prevent abstractions learned in one regime from being applied illegitimately in another. What appears as flexibility in small domains becomes catastrophic overreach as scope expands, a failure mode familiar from both biological and engineered systems \parencite{weaver1948}.
 
 \subsection{Modularity as a Structural Requirement}
 
@@ -207,13 +173,13 @@ A system is \emph{modular} if it can be decomposed into subsystems whose interna
 
 Each module constitutes a locally coherent domain with its own construction history, abstractions, and refusal conditions. Modules may interact, but only through transformations that preserve the invariants of both sides. No module is privileged by default; no global authority resolves conflicts by erasing distinctions.
 
-This separation is what allows abstraction to remain lawful under reuse. By forcing interactions to pass through interfaces, the system makes scope explicit and prevents accidental generalization.
+This separation is what allows abstraction to remain lawful under reuse. By forcing interactions to pass through interfaces, the system makes scope explicit and prevents accidental generalization, consistent with classical principles of separation and constraint in complex systems design \parencite{saltzer_schroeder1975}.
 
 \subsection{Interfaces, Jurisdiction, and Scope}
 
 An interface is not merely a channel for data exchange. It is a declaration of jurisdiction. It specifies what kinds of transformations are permitted, what kinds of commitments may be imported, and what kinds of effects may be exported.
 
-Jurisdictional boundaries are the modular analogue of physical membranes. They do not block interaction; they regulate it. By constraining how information and influence cross module boundaries, interfaces preserve local coherence while enabling coordination.
+Jurisdictional boundaries are the modular analogue of physical membranes. They do not block interaction; they regulate it. By constraining how information and influence cross module boundaries, interfaces preserve local coherence while enabling coordination, paralleling the role of semi-permeable boundaries in biological and cognitive systems \parencite{friston2010,friston2015}.
 
 This has a crucial consequence for learning. When a module fails, the failure can be localized. Its construction history can be revised without invalidating unrelated structures. The system learns without unlearning everything else.
 
@@ -221,7 +187,7 @@ This has a crucial consequence for learning. When a module fails, the failure ca
 
 Global workspace theories attempt to reconcile modularity with unity by positing a shared representational arena into which local processes broadcast their contents. While such architectures can support coordination, they reintroduce the very fragility modularity is meant to avoid.
 
-Once information enters a global workspace, it becomes available everywhere, regardless of whether the receiving processes share the assumptions under which it was produced. Scope is lost. Refusal becomes difficult, because the system lacks a principled way to prevent uptake.
+Once information enters a global workspace, it becomes available everywhere, regardless of whether the receiving processes share the assumptions under which it was produced. Scope is lost. Refusal becomes difficult, because the system lacks a principled way to prevent uptake, a limitation noted in critiques of globally shared control architectures \parencite{ashby1956}.
 
 In contrast, a genuinely modular system does not require a global workspace to achieve coherence. Coordination emerges from structured interaction among modules, not from universal exposure.
 
@@ -229,13 +195,14 @@ In contrast, a genuinely modular system does not require a global workspace to a
 
 Because modules maintain their own construction histories, they accumulate constraints independently. This independence is essential for long-term adaptation. Different modules may explore different abstractions, maintain different buffers of variation, and refuse different classes of transformation.
 
-The system as a whole benefits from this diversity. It can compose modules when their invariants align and keep them separate when they do not. General intelligence arises not from homogenization, but from the disciplined management of heterogeneity.
+The system as a whole benefits from this diversity. It can compose modules when their invariants align and keep them separate when they do not. General intelligence arises not from homogenization, but from the disciplined management of heterogeneity, a theme that recurs across studies of complex adaptive systems \parencite{weaver1948}.
 
 \subsection{Transition to Refusal}
 
 Modularity alone is insufficient unless the system can decline illegitimate interaction. Interfaces must not only specify what is allowed; they must also make refusal possible when constraints cannot be preserved.
 
 In the next section, refusal will be developed as a first-class cognitive operation. Rather than treating refusal as failure or ignorance, it will be shown to be a necessary condition for coherent modular interaction and, ultimately, for general intelligence.
+
 
 % --------------------------------------------------
 \section{Refusal as a First-Class Cognitive Operation}
@@ -577,14 +544,7 @@ Buffering therefore appears not as inefficiency, but as the formal precondition 
 
 \subsection{Implications for General Intelligence}
 
-Within this framework, general intelligence is not characterized by the existence of many transformations, but by the system’s capacity to regulate admissibility. A system is general to the extent that it can:
-
-\begin{itemize}
-\item identify which invariants matter in a given context,
-\item evaluate proposed transformations against those invariants,
-\item refuse interactions that violate coherence,
-\item and revise its invariants through construction without collapse.
-\end{itemize}
+Within this framework, general intelligence is not characterized by the existence of many transformations, but by the system’s capacity to regulate admissibility. A system is general to the extent that it can identify which invariants matter in a given context, evaluate proposed transformations against those invariants, refuse interactions that violate coherence, and revise its invariants through construction without collapse.
 
 This definition is deliberately conservative. It privileges coherence over coverage and refusal over indiscriminate action. Yet it is precisely this conservatism that allows competence to accumulate rather than dissolve.
 
@@ -595,23 +555,37 @@ The formal considerations developed here allow the recurring boundary phenomena 
 The lemma does not depend on biology, neuroscience, or computation in particular. It follows from the minimal requirements of invariance, interaction, and persistence.
 
 % --------------------------------------------------
-\section{The Semi-Permeable Boundary Lemma}
+\section{The Semi-Permeable Boundary Theorem}
 % --------------------------------------------------
 
-\subsection{Statement of the Lemma}
+\subsection{Definitions}
 
-The preceding sections have introduced the minimal formal machinery required to speak precisely about interaction, invariance, and refusal without committing to any particular substrate. Within that framework, the following result can now be stated.
+\begin{definition}
+An adaptive system is a dynamical system $(\mathcal{Q}, \varphi_t)$ with irreversible construction history such that, under persistent environmental perturbation, it maintains a nonempty set of admissible future trajectories preserving its defining invariants.
+\end{definition}
 
-\begin{lemma}[Semi-Permeable Boundary Lemma]
-Any system capable of sustained adaptation under selection pressure must instantiate boundaries that are:
-\begin{enumerate}
-\item selectively permeable, admitting some interactions while refusing others,
-\item dynamically regulated, with admissibility varying by context and history,
-\item buffering, maintaining redundant or latent internal structure,
-\item constraint-preserving, preventing transformations that would destroy coherence.
-\end{enumerate}
-Such boundaries are not implementation artifacts but structural necessities. In their absence, invariants collapse and adaptive capacity is lost.
-\end{lemma}
+\begin{definition}
+A boundary is a mapping $\mathcal{B} : \mathcal{Q} \to \mathcal{C}$ that regulates admissible interactions between internal and external degrees of freedom by restricting the existence of transformations across contexts.
+\end{definition}
+
+\begin{definition}
+A boundary is \emph{semi-permeable} if it admits a proper, nontrivial subset of interactions whose admissibility depends on context and history.
+\end{definition}
+
+\subsection{Theorem Statement}
+
+\begin{theorem}[Semi-Permeable Boundary Theorem]
+Any adaptive system must instantiate semi-permeable boundaries. Systems whose boundaries are either fully permeable or fully impermeable cannot preserve adaptive capacity over time.
+\end{theorem}
+
+\subsection{Proof}
+
+Assume first that boundaries are fully permeable. Then for any perturbation, all transformations are admissible. Since invariants are defined by preservation under admissible transformations, this implies that no nontrivial invariants exist. Consequently, the system cannot distinguish lawful from unlawful reuse, and adaptive capacity collapses.
+
+Assume instead that boundaries are fully impermeable. Then no interaction with the environment is admissible. The system cannot respond to perturbation, update construction history, or adjust internal structure. Adaptive capacity again collapses.
+
+The only remaining regime admits some interactions while refusing others, with admissibility varying by context and history. This is precisely semi-permeability. Therefore any adaptive system must instantiate semi-permeable boundaries.
+\qed
 
 This lemma does not assert that all adaptive systems look alike. It asserts that any system which remains coherent under reuse and exposure must satisfy these conditions in some material or formal realization.
 
@@ -633,16 +607,7 @@ Boundaries enforce this absence. They do not need to represent what is forbidden
 
 \subsection{Substrate Independence}
 
-The lemma is deliberately substrate-neutral. It applies equally to:
-\begin{itemize}
-\item biological systems maintaining metabolic gradients,
-\item neural systems coordinating through oscillatory synchrony,
-\item evolutionary systems buffering variation through redundancy,
-\item computational systems enforcing privilege separation,
-\item epistemic systems regulating disclosure and reuse.
-\end{itemize}
-
-In each case, the material realization differs, but the structural role is identical. Where boundaries fail, systems either stagnate or disintegrate.
+The lemma is deliberately substrate-neutral, applying equally to biological systems that maintain metabolic gradients, neural systems that coordinate through oscillatory synchrony, evolutionary systems that buffer variation through redundancy, computational systems that enforce privilege separation, and epistemic systems that regulate disclosure and reuse. In each case, the material realization differs, yet the structural role remains identical. Where boundaries fail, systems either stagnate or disintegrate.
 
 \subsection{Transition to Scope and Refusal}
 
@@ -679,12 +644,7 @@ Scope thus encodes both competence and its limits. To know what one can do is in
 The relationship between boundaries, scope, and refusal can now be stated explicitly.
 
 \begin{corollary}[Scope--Refusal Corollary]
-In any system capable of general intelligence, scope restriction and refusal are necessary boundary operators. A system that lacks mechanisms to:
-\begin{enumerate}
-\item determine the scope of its abstractions, and
-\item refuse actions, inferences, or disclosures outside that scope,
-\end{enumerate}
-cannot preserve its invariants under reuse and therefore cannot remain coherent as it generalizes.
+In any system capable of general intelligence, scope restriction and refusal are necessary boundary operators. A system that lacks mechanisms to determine the scope of its abstractions and to refuse actions, inferences, or disclosures outside that scope cannot preserve its invariants under reuse and therefore cannot remain coherent as it generalizes.
 \end{corollary}
 
 This corollary follows directly from the Semi-Permeable Boundary Lemma. If boundaries are required for adaptation, and if scope determines where boundaries apply internally, then refusal is the operation by which scope is enforced.
@@ -722,15 +682,7 @@ In the next section, this invariance is stated as a general theorem unifying mem
 The preceding analysis has shown that boundaries, scope, and refusal are necessary for coherent adaptation within individual systems. What remains is to show that these requirements are not domain-specific, but invariant across substrates. This can now be stated formally.
 
 \begin{theorem}[Boundary Invariance Theorem]
-Any system—biological, neural, computational, or epistemic—that remains adaptive under reuse, exposure, and selection pressure must implement boundary conditions satisfying all of the following:
-\begin{enumerate}
-\item selective permeability, admitting only admissible interactions,
-\item buffering, maintaining latent or redundant internal structure,
-\item dynamic regulation, with boundary conditions varying by context and history,
-\item refusal, enforced as the non-existence of illegitimate transformations,
-\item graded access, distinguishing inspection from modification.
-\end{enumerate}
-These conditions are invariant across substrate and scale. Systems that fail to satisfy them may exhibit short-term performance but cannot sustain general intelligence.
+Any system—biological, neural, computational, or epistemic—that remains adaptive under reuse, exposure, and selection pressure must implement boundary conditions satisfying all of the following: selective permeability, admitting only admissible interactions; buffering, maintaining latent or redundant internal structure; dynamic regulation, with boundary conditions varying by context and history; refusal, enforced as the non-existence of illegitimate transformations; and graded access, distinguishing inspection from modification. These conditions are invariant across substrate and scale. Systems that fail to satisfy them may exhibit short-term performance but cannot sustain general intelligence.
 \end{theorem}
 
 \subsection{Proof by Structural Correspondence}
@@ -839,15 +791,7 @@ The system may expose competence where coordination is beneficial and conceal st
 
 \subsection{What This Blueprint Excludes}
 
-This architectural characterization excludes, by necessity:
-\begin{itemize}
-\item monolithic objective functions,
-\item unrestricted optimization,
-\item context-free abstractions,
-\item and unconditional disclosure.
-\end{itemize}
-
-These exclusions are not normative judgments. They follow directly from the boundary conditions required for persistence under reuse and exposure.
+This architectural characterization excludes, by necessity, monolithic objective functions, unrestricted optimization, context-free abstractions, and unconditional disclosure. These exclusions are not normative judgments; rather, they follow directly from the boundary conditions required for persistence under reuse and exposure.
 
 \subsection{Transition to Publication and Ethics}
 
@@ -923,14 +867,7 @@ Let the configuration at time $t$ be given by
 \[
 q(t) = \big( \Phi(t), \mathbf{v}(t), S(t), \pi(t), \mathcal{B}(t) \big),
 \]
-where:
-\begin{itemize}
-\item $\Phi(t)$ denotes a scalar coherence or abstraction density,
-\item $\mathbf{v}(t)$ denotes a vector-valued policy flow or action tendency,
-\item $S(t)$ denotes internal entropy or latent slack,
-\item $\pi(t)$ denotes an internal policy distribution,
-\item $\mathcal{B}(t)$ denotes boundary or scope structure mediating interaction.
-\end{itemize}
+where $\Phi(t)$ denotes a scalar coherence or abstraction density, $\mathbf{v}(t)$ denotes a vector-valued policy flow or action tendency, $S(t)$ denotes internal entropy or latent slack, $\pi(t)$ denotes an internal policy distribution, and $\mathcal{B}(t)$ denotes boundary or scope structure mediating interaction.
 
 These variables are not representations of the environment. They are intensities describing internal structure and admissible change.
 
@@ -1034,16 +971,7 @@ This realizes refusal as a property of the action landscape rather than as an ex
 
 \subsection{Interpretation}
 
-Under this formulation, general intelligence is characterized by:
-\begin{itemize}
-\item stable low-action trajectories under reuse,
-\item invariant-preserving abstraction as compression,
-\item lawful transfer constrained by geometry,
-\item refusal encoded as inaccessible phase space,
-\item legibility regulated by boundary energetics.
-\end{itemize}
-
-No objective function is maximized. No global reward is assumed. Coherence is preserved by the structure of the dynamics itself.
+Under this formulation, general intelligence is characterized by stable low-action trajectories under reuse, invariant-preserving abstraction as compression, lawful transfer constrained by geometry, refusal encoded as inaccessible phase space, and legibility regulated by boundary energetics. No objective function is maximized, and no global reward is assumed. Coherence is preserved by the structure of the dynamics itself.
 
 % --------------------------------------------------
 \section{Field-Theoretic Extension of the Variational Model}
@@ -1088,15 +1016,7 @@ A representative Lagrangian density is given by
 + \Xi(\pi, S).
 \end{align*}
 
-Here:
-\begin{itemize}
-\item gradient penalties enforce smoothness and locality,
-\item $U$ penalizes deviation from invariant manifolds,
-\item $\Lambda$ enforces boundary integrity and limits information flux,
-\item $\Xi$ encodes constrained entropy descent.
-\end{itemize}
-
-Sharp discontinuities correspond to boundary failure and incur unbounded action.
+Gradient penalties enforce smoothness and locality, $U$ penalizes deviation from invariant manifolds, $\Lambda$ enforces boundary integrity and limits information flux, and $\Xi$ encodes constrained entropy descent. Sharp discontinuities correspond to boundary failure and incur unbounded action.
 
 \subsection{Euler--Lagrange Field Equations}
 
@@ -1111,7 +1031,6 @@ with analogous equations for $\mathbf{v}$ and the remaining fields.
 
 Information, policy influence, and abstraction propagate as waves or diffusions only where permitted by boundary structure. Illegitimate propagation is dynamically suppressed.
 
----
 
 % --------------------------------------------------
 \section{Invariants and Conserved Quantities}
@@ -1139,14 +1058,7 @@ Violation of the associated invariant corresponds to a breakdown of conservation
 
 \subsection{Interpretation of Conserved Quantities}
 
-The conserved quantities arising here are not physical momenta but structural measures, including:
-\begin{itemize}
-\item abstraction coherence flux,
-\item policy consistency current,
-\item boundary integrity charge.
-\end{itemize}
-
-Conservation expresses the fact that lawful transfer preserves structure. Attempts to reuse abstractions outside their symmetry class necessarily inject or dissipate conserved quantities and are therefore dynamically forbidden.
+The conserved quantities arising here are not physical momenta but structural measures, including abstraction coherence flux, policy consistency current, and boundary integrity charge. Conservation expresses the fact that lawful transfer preserves structure. Attempts to reuse abstractions outside their symmetry class necessarily inject or dissipate conserved quantities and are therefore dynamically forbidden.
 
 \subsection{Refusal as Symmetry Breaking}
 
@@ -1154,7 +1066,6 @@ Refusal corresponds to the absence of symmetry extension. When a proposed transf
 
 Thus refusal is not an exception to the dynamics; it is the absence of a symmetry under which motion could proceed.
 
----
 
 % --------------------------------------------------
 \section{CLIO Dynamics as a Slow--Fast Decomposition}
@@ -1204,14 +1115,39 @@ Refusal therefore appears as geometric obstruction: no slow-fast trajectory exis
 
 \subsection{Interpretation}
 
-CLIO emerges here not as an algorithm but as a dynamical regime:
-\begin{itemize}
-\item fast loops explore policy space locally,
-\item slow loops reshape abstraction and boundary geometry,
-\item only invariant-preserving couplings survive averaging.
-\end{itemize}
+CLIO emerges here not as an algorithm but as a dynamical regime in which fast loops explore policy space locally, slow loops reshape abstraction and boundary geometry, and only invariant-preserving couplings survive averaging. This realizes intelligence as constrained exploration over time rather than immediate optimization.
 
-This realizes intelligence as constrained exploration over time rather than immediate optimization.
+% --------------------------------------------------
+\subsection{Averaging and Emergent CLIO Dynamics}
+% --------------------------------------------------
+
+Let the system dynamics be written as
+\[
+\dot{x} = f(x,y), \qquad \dot{y} = \frac{1}{\epsilon} g(x,y),
+\]
+where $x$ denotes slow structural variables $(\Phi, \mathcal{B})$, $y$ denotes fast policy variables $(\pi, \mathbf{v})$, and $0<\epsilon\ll1$.
+
+\begin{assumption}
+For fixed $x$, the fast subsystem $\dot{y} = g(x,y)$ admits a unique invariant measure $\mu_x$ and is mixing with respect to $\mu_x$.
+\end{assumption}
+
+\begin{theorem}[CLIO Averaging Theorem]
+As $\epsilon \to 0$, trajectories of the full system converge uniformly on compact time intervals to solutions of the averaged system
+\[
+\dot{x} = \int f(x,y)\, d\mu_x(y).
+\]
+\end{theorem}
+
+\subsection{Interpretation}
+
+The averaged dynamics define an effective flow on the slow manifold. Fast policy exploration does not directly determine long-term behavior; only invariant-preserving effects survive averaging.
+
+CLIO therefore arises as a dynamical regime: rapid internal exploration coupled to slow structural consolidation. No explicit algorithmic separation is required. The separation is enforced by timescale geometry.
+
+\subsection{Failure Without Separation}
+
+If timescale separation fails, averaging breaks down. Fast dynamics leak directly into structural variables, inducing boundary collapse and invariant violation. Such systems exhibit brittle generalization and unstable transfer.
+
 
 % --------------------------------------------------
 \section{Stability of Invariant-Preserving Dynamics}
@@ -1228,12 +1164,7 @@ Stability here does not mean convergence to a fixed point. It means persistence 
 Let $\mathcal{M} \subset \mathcal{Q}$ denote the manifold of admissible configurations preserving the system’s invariants. The Hamiltonian dynamics induce a flow $\varphi_t$ on $\mathcal{Q}$.
 
 \begin{definition}
-An \emph{invariant-preserving attractor} is a compact set $\mathcal{A} \subset \mathcal{M}$ such that:
-\begin{enumerate}
-\item trajectories starting in a neighborhood of $\mathcal{A}$ remain in $\mathcal{M}$ for all future time,
-\item deviations transverse to $\mathcal{M}$ experience restoring forces induced by the invariant potential,
-\item motion within $\mathcal{A}$ preserves the conserved quantities associated with the system’s symmetries.
-\end{enumerate}
+An \emph{invariant-preserving attractor} is a compact set $\mathcal{A} \subset \mathcal{M}$ such that trajectories starting in a neighborhood of $\mathcal{A}$ remain in $\mathcal{M}$ for all future time, deviations transverse to $\mathcal{M}$ experience restoring forces induced by the invariant potential, and motion within $\mathcal{A}$ preserves the conserved quantities associated with the system’s symmetries.
 \end{definition}
 
 Such attractors correspond to stable regimes of intelligent behavior rather than static solutions.
@@ -1241,14 +1172,7 @@ Such attractors correspond to stable regimes of intelligent behavior rather than
 \subsection{Stability Theorem}
 
 \begin{theorem}[Invariant Stability Theorem]
-Assume the following conditions:
-\begin{enumerate}
-\item the invariant potential $V$ is coercive outside $\mathcal{M}$,
-\item boundary penalties $\Lambda$ diverge under boundary collapse,
-\item entropy descent $\Xi$ is bounded below,
-\item slow--fast separation holds between policy and structural variables.
-\end{enumerate}
-Then the induced Hamiltonian flow admits invariant-preserving attractors $\mathcal{A} \subset \mathcal{M}$ that are Lyapunov-stable under admissible perturbations.
+Assume the following conditions: the invariant potential $V$ is coercive outside $\mathcal{M}$; boundary penalties $\Lambda$ diverge under boundary collapse; entropy descent $\Xi$ is bounded below; and slow--fast separation holds between policy and structural variables. Then the induced Hamiltonian flow admits invariant-preserving attractors $\mathcal{A} \subset \mathcal{M}$ that are Lyapunov-stable under admissible perturbations.
 \end{theorem}
 
 \subsection{Sketch of Argument}
@@ -1259,13 +1183,354 @@ Bounded entropy descent ensures that learning does not induce runaway collapse o
 
 Together, these conditions guarantee persistence of coherent trajectories without requiring global optimization or centralized control.
 
+% --------------------------------------------------
+\subsection{Basins of Attraction and Convergence Rates}
+% --------------------------------------------------
+
+Let $\mathcal{A} \subset \mathcal{M}$ be an invariant-preserving attractor.
+
+\begin{definition}
+The basin of attraction $\mathcal{U}(\mathcal{A})$ is the set of initial conditions whose trajectories converge to $\mathcal{A}$ while remaining in $\mathcal{M}$.
+\end{definition}
+
+\begin{proposition}
+If the invariant potential $V$ is strongly coercive transverse to $\mathcal{M}$, then $\mathcal{U}(\mathcal{A})$ contains an open neighborhood of $\mathcal{A}$.
+\end{proposition}
+
+\subsection{Exponential Stability}
+
+\begin{theorem}
+If, in addition, $V$ is locally strictly convex in directions normal to $\mathcal{M}$, then trajectories converge exponentially to $\mathcal{A}$.
+\end{theorem}
+
+\subsection{Bifurcation Under Boundary Weakening}
+
+Let $\lambda$ parameterize boundary strength in $\Lambda$.
+
+\begin{proposition}
+As $\lambda \to 0$, invariant-preserving attractors generically lose stability through boundary-collapse bifurcations, resulting in unbounded information flux and loss of coherence.
+\end{proposition}
+
 \subsection{Interpretation}
 
-Stability is achieved not by suppressing change, but by constraining it. The system remains adaptive within $\mathcal{M}$ while being dynamically excluded from incoherent regimes.
+Stability is not incidental; it depends quantitatively on boundary strength and invariant enforcement. Robust intelligence occupies a bounded region of parameter space, outside of which collapse is generic. Stability is achieved not by suppressing change, but by constraining it: the system remains adaptive within $\mathcal{M}$ while being dynamically excluded from incoherent regimes. This explains how intelligence can remain flexible without dissolving itself under generalization pressure.
 
-This explains how intelligence can remain flexible without dissolving itself under generalization pressure.
+% --------------------------------------------------
+\section{The State-Projection No-Go Theorem}
+% --------------------------------------------------
 
----
+\subsection{Motivation}
+
+Many prevailing accounts of intelligence, learning, and generalization implicitly or explicitly assume that a system’s operative identity can be captured by its instantaneous state. On this view, learning updates a state, generalization operates over states, and admissibility of action or inference is decided by reference to the current state alone.
+
+The framework developed in this work rejects that assumption. Lawful transfer, refusal, and invariant preservation depend essentially on construction history. This section makes that dependence precise by establishing a no-go result: any purely state-based account necessarily discards information required to determine admissible reuse.
+
+\subsection{Formal Setup}
+
+Let $\mathcal{H}$ denote the space of construction histories, where each history is an ordered, irreversible sequence of events. Let $\mathcal{S}$ denote a space of states.
+
+A \emph{state projection} is a mapping
+\[
+P : \mathcal{H} \to \mathcal{S}
+\]
+that assigns to each history a state intended to summarize all relevant information for future behavior.
+
+Let $\mathcal{A}(h)$ denote the set of admissible transformations (actions, inferences, transfers) available after history $h \in \mathcal{H}$. Admissibility is defined relative to preserved invariants, as developed in previous sections.
+
+\subsection{Lawful Transfer Criterion}
+
+A transformation $\tau$ is \emph{lawful} after history $h$ if and only if applying $\tau$ preserves the invariants induced by $h$. Lawfulness is therefore a property of the pair $(h,\tau)$, not of $\tau$ alone.
+
+Two histories $h_1,h_2$ are \emph{lawfully equivalent} if
+\[
+\mathcal{A}(h_1) = \mathcal{A}(h_2).
+\]
+
+A state projection $P$ is said to be \emph{lawful} if
+\[
+P(h_1) = P(h_2) \;\Rightarrow\; \mathcal{A}(h_1) = \mathcal{A}(h_2).
+\]
+
+That is, identical states must imply identical admissible transformations.
+
+\subsection{Theorem Statement}
+
+\begin{theorem}[State-Projection No-Go Theorem]
+There exists no non-injective state projection
+\[
+P : \mathcal{H} \to \mathcal{S}
+\]
+that is lawful with respect to admissible transformations. In particular, any many-to-one projection necessarily collapses histories with distinct admissibility structures.
+\end{theorem}
+
+\subsection{Proof}
+
+Let $P$ be any non-injective projection. Then there exist distinct histories $h_1 \neq h_2$ such that
+\[
+P(h_1) = P(h_2).
+\]
+
+Because histories are sequences of irreversible events, $h_1$ and $h_2$ differ by at least one event $e$ whose occurrence or non-occurrence contributes to construction history.
+
+By the definition of invariants, there exists at least one transformation $\tau$ whose admissibility depends on whether $e$ occurred. Otherwise, $e$ would be invariant-irrelevant and could be removed from the construction history without consequence, contradicting irreversibility.
+
+Thus,
+\[
+\tau \in \mathcal{A}(h_1) \quad \text{and} \quad \tau \notin \mathcal{A}(h_2),
+\]
+or vice versa.
+
+But since $P(h_1)=P(h_2)$, any decision procedure based solely on state must assign the same admissibility judgment to $\tau$ in both cases. Therefore $P$ cannot preserve admissibility.
+
+Hence $P$ is not lawful. Since $P$ was arbitrary, no non-injective lawful state projection exists.
+\qed
+
+\subsection{Corollaries}
+
+\begin{corollary}
+Any system that decides admissibility solely on the basis of instantaneous state cannot correctly implement refusal.
+\end{corollary}
+
+\begin{corollary}
+Any post hoc safety or filtering mechanism applied after state projection cannot recover admissibility information lost in the projection.
+\end{corollary}
+
+\begin{corollary}
+Generalization error arising from state-only representations is structural, not contingent on data, training, or optimization quality.
+\end{corollary}
+
+\subsection{Implications for Architecture}
+
+The no-go theorem does not imply that states are useless. It implies that states are necessarily partial views: projections compiled from history under specific scope.
+
+Admissibility, refusal, and lawful transfer cannot be functions of state alone. They require access to construction history or to structures that are provably equivalent to it with respect to invariants.
+
+Architectures that treat state as ontologically primary must therefore externalize refusal, imposing it as a rule, filter, or objective. Architectures grounded in construction history enforce refusal structurally, through the non-existence of admissible transformations.
+
+\subsection{Relation to Prior Results}
+
+This theorem formalizes the claims made earlier regarding events over states, modularity, and refusal. It explains why boundary-regulated, history-sensitive systems admit stable generalization, while state-centric systems exhibit brittle transfer.
+
+The result is independent of substrate, learning rule, or representational format. It follows solely from the irreversibility of construction history and the definition of lawful transfer.
+
+% --------------------------------------------------
+\section{Computational Realizability Under Constraint}
+% --------------------------------------------------
+
+\subsection{Scope of the Question}
+
+The preceding sections have developed a theory of general intelligence as constrained dynamics on a manifold of admissible configurations. The formulation has employed idealized objects: infinite barriers, continuous fields, unbounded construction histories, and exact invariants.
+
+This section addresses a natural concern: whether such a theory is merely mathematical, or whether its essential claims survive under finite, approximate, and computationally realizable conditions.
+
+The aim is not to provide an implementation recipe. Rather, it is to show that the theory is robust under approximation, and that its core constraints do not rely on unphysical idealizations.
+
+\subsection{Finite Approximations of Infinite Barriers}
+
+Infinite action barriers were introduced to model refusal as the non-existence of admissible trajectories. In computational systems, infinite quantities cannot be represented. However, exact infinity is not required for structural effect.
+
+Let $V_\lambda(q)$ be a family of potentials indexed by $\lambda > 0$ such that
+\[
+V_\lambda(q) \to \infty \quad \text{as } q \to \partial \mathcal{M}
+\]
+and
+\[
+V_\lambda(q) \ge \lambda \quad \text{for } q \notin \mathcal{M}.
+\]
+
+\begin{proposition}
+For sufficiently large $\lambda$, the qualitative refusal behavior induced by $V_\lambda$ is equivalent to that of an infinite barrier: trajectories starting in $\mathcal{M}$ remain in $\mathcal{M}$ for all practical timescales.
+\end{proposition}
+
+Thus refusal need not be absolute to be effective. It need only dominate the relevant dynamics.
+
+\subsection{Approximate Invariants}
+
+Exact invariant preservation is similarly idealized. In finite systems, invariants may only be preserved up to tolerance.
+
+\begin{definition}
+An $\varepsilon$-invariant is a property whose deviation under admissible dynamics remains bounded by $\varepsilon$ over relevant timescales.
+\end{definition}
+
+\begin{proposition}
+If invariant violation incurs a restoring force whose magnitude dominates noise and discretization error, then $\varepsilon$-invariants suffice to preserve lawful transfer and refusal behavior.
+\end{proposition}
+
+This mirrors robustness results in physical systems, where approximate symmetries still yield approximately conserved quantities sufficient for stability.
+
+\subsection{Complexity of Admissibility Checking}
+
+A further concern is the computational cost of determining whether a proposed transformation is admissible.
+
+Let the \emph{admissibility decision problem} be defined as:
+\[
+\text{Given } (h,\tau), \text{ decide whether } \tau \in \mathcal{A}(h).
+\]
+
+In the general case, exact admissibility checking may be computationally expensive or undecidable, particularly when construction histories are large.
+
+However, the theory does not require exact global checking.
+
+\begin{proposition}
+Local admissibility approximations that conservatively underestimate $\mathcal{A}(h)$ preserve refusal and stability, at the cost of reduced but coherent capability.
+\end{proposition}
+
+False refusals reduce generality but do not induce collapse. False admissions, by contrast, violate invariants and are structurally catastrophic. The asymmetry aligns naturally with conservative approximation.
+
+\subsection{Discretization of Continuous Dynamics}
+
+The variational and field-theoretic formulations assume continuous time and space. In computational realizations, dynamics are discretized.
+
+Standard results from numerical analysis apply.
+
+\begin{proposition}
+If discretization schemes respect the coercivity of invariant potentials and boundary penalties, then discrete trajectories remain within an $\varepsilon$-neighborhood of admissible continuous trajectories.
+\end{proposition}
+
+Boundary collapse under discretization occurs only when the discretization fails to respect constraint geometry, not because constraints themselves are unrealizable.
+
+\subsection{Finite Memory and Bounded History}
+
+The theory emphasizes construction history, which may appear to require unbounded memory. In practice, systems have finite storage.
+
+This does not undermine the framework.
+
+Construction history need not be stored verbatim. It need only be represented up to equivalence with respect to admissibility.
+
+\begin{proposition}
+If two histories induce identical admissible transformation sets, then they are equivalent for the purposes of refusal and lawful transfer.
+\end{proposition}
+
+Compression of history into sufficient statistics is therefore compatible with the theory, provided the compression preserves admissibility structure.
+
+\subsection{What Cannot Be Approximated Away}
+
+\subsection{Non-Negotiable Features}
+
+The preceding results demonstrate that many idealizations are benign. However, certain features are non-negotiable: removal of boundary penalties cannot be compensated by approximation; elimination of construction history cannot be recovered by post hoc filters; and replacement of refusal with weighted preference destroys invariance. These failures are qualitative rather than quantitative. No amount of scaling or tuning can repair them.
+
+\subsection{Interpretation}
+
+Computational realizability does not require abandoning rigor. It requires understanding which aspects of the theory are structural and which are representational conveniences.
+
+Infinite barriers may be approximated. Exact symmetries may be softened. Continuous fields may be discretized.
+
+But boundaries, refusal, and history-sensitive admissibility cannot be removed without collapsing the regime the theory describes.
+
+The theory therefore characterizes not a fragile ideal, but a robust class of realizable systems whose defining properties survive approximation while resisting illegitimate simplification.
+
+% --------------------------------------------------
+\section{Failure Modes and Diagnostic Signatures}
+% --------------------------------------------------
+
+\subsection{Purpose of Failure Analysis}
+
+A theory that characterizes intelligence as a constrained dynamical regime must also characterize how that regime fails. Failure, in this context, does not mean poor performance on tasks. It means loss of coherence: the breakdown of invariant preservation, boundary regulation, or lawful transfer.
+
+This section classifies failure modes implied by the framework and derives diagnostic signatures that distinguish structural collapse from benign limitation.
+
+\subsection{Boundary Collapse}
+
+\begin{definition}
+Boundary collapse occurs when the penalty enforcing semi-permeability becomes insufficient to regulate interaction between internal and external degrees of freedom.
+\end{definition}
+
+In the variational formulation, this corresponds to the weakening or removal of the boundary term $\Lambda$. When $\Lambda$ loses dominance, information, influence, or policy flow propagates without constraint.
+
+\paragraph{Signature.}
+Boundary collapse manifests as rapid growth of coupling terms, loss of locality in field dynamics, and sensitivity of internal structure to arbitrarily small perturbations.
+
+\paragraph{Interpretation.}
+Boundary collapse manifests empirically as uncontrolled synchronization, runaway feedback, or overfitting to transient context. It is not a failure of learning, but a failure of insulation.
+
+\subsection{Invariant Drift}
+
+\begin{definition}
+Invariant drift occurs when quantities intended to be conserved under lawful transformation vary systematically over time.
+\end{definition}
+
+In the Hamiltonian picture, this corresponds to violation of the conditions required for Noether-type conservation.
+
+\paragraph{Signature.}
+Invariant drift is characterized by gradual degradation of previously stable abstractions, increasing inconsistency in admissibility judgments, and dependence of reuse validity on irrelevant contextual variation.
+
+\paragraph{Interpretation.}
+Invariant drift indicates that compression or learning is occurring faster than constraint enforcement. The system remains active but loses the ability to distinguish lawful from unlawful transfer.
+
+\subsection{Illegitimate Transfer}
+
+\begin{definition}
+Illegitimate transfer occurs when a construction is reused outside the scope in which its invariants are preserved.
+\end{definition}
+
+This failure mode is structurally prohibited in the ideal theory but appears under approximation or boundary weakening.
+
+\paragraph{Signature.}
+Illegitimate transfer presents as apparent generalization followed by abrupt breakdown, success in narrow contexts accompanied by catastrophic errors elsewhere, and retrospective inability to explain failure using preserved abstractions.
+
+\paragraph{Interpretation.}
+Illegitimate transfer is not overgeneralization in the usual sense. It is a violation of admissibility structure caused by missing refusal.
+
+\subsection{Refusal Suppression}
+
+\begin{definition}
+Refusal suppression occurs when refusal is replaced by graded preference, penalty weighting, or optimization pressure.
+\end{definition}
+
+This corresponds to flattening infinite or dominant barriers into finite costs.
+
+\paragraph{Signature.}
+Refusal suppression manifests in rare but catastrophic boundary crossings, increasing reliance on external correction or filtering, and the emergence of brittle safety mechanisms.
+
+\paragraph{Interpretation.}
+Refusal suppression transforms structural non-existence into probabilistic discouragement, thereby eliminating the asymmetry that protects coherence.
+
+\subsection{Timescale Entanglement}
+
+\begin{definition}
+Timescale entanglement occurs when fast policy dynamics directly perturb slow structural variables without averaging.
+\end{definition}
+
+\paragraph{Signature.}
+Timescale entanglement is characterized by oscillatory or chaotic structural evolution, dependence of long-term behavior on short-term fluctuations, and loss of stable attractors.
+
+\paragraph{Interpretation.}
+This failure mode corresponds to the breakdown of the CLIO regime, wherein the system remains responsive but loses memory and structure.
+
+\subsection{History Erasure}
+
+\begin{definition}
+History erasure occurs when construction history is discarded or replaced by state-only summaries that are not admissibility-equivalent.
+\end{definition}
+
+\paragraph{Signature.}
+History erasure leads to an inability to justify refusals or constraints, inconsistent behavior across identical states, and reliance on ad hoc patches to restore safety.
+
+\paragraph{Interpretation.}
+History erasure directly violates the State-Projection No-Go Theorem. It produces systems that appear competent until lawful transfer is required.
+
+\subsection{Diagnostic Hierarchy}
+
+The failure modes described above admit a partial ordering by severity:
+\[
+\text{Invariant Drift} \;\prec\;
+\text{Illegitimate Transfer} \;\prec\;
+\text{Boundary Collapse}.
+\]
+
+Early-stage failures may be corrected by strengthening constraints. Late-stage failures indicate loss of regime and require architectural revision.
+
+\subsection{Self-Diagnosis and Legibility}
+
+A crucial consequence of the framework is that failure should be detectable internally. Diagnostic quantities correspond to deviations in conserved currents, boundary flux, and invariant measures.
+
+Systems that cannot diagnose their own boundary collapse are already outside the regime of general intelligence described here.
+
+\subsection{Summary}
+
+Failure, in this framework, is not mysterious. Each mode corresponds to violation of a specific structural requirement. The diagnostic signatures follow directly from the dynamics.
+
+This completes the characterization of general intelligence as a constrained, stable, and diagnosable dynamical regime. Systems that persist do so because they cannot fail silently.
 
 % --------------------------------------------------
 \section{Comparison to Existing Formalisms}
@@ -1305,16 +1570,7 @@ This comparison is descriptive rather than critical. It identifies structural di
 
 \subsection{Summary of Distinctions}
 
-Across these comparisons, the distinguishing features of the present framework are:
-\begin{itemize}
-\item invariants as first-class objects,
-\item refusal as phase-space exclusion,
-\item boundaries as dynamical fields,
-\item generality as symmetry-preserving transfer,
-\item stability through constraint rather than optimization.
-\end{itemize}
-
-These features are not additional mechanisms. They are consequences of treating intelligence as a constrained dynamical system rather than as an objective-maximizing machine.
+Across these comparisons, the distinguishing features of the present framework are invariants as first-class objects, refusal as phase-space exclusion, boundaries as dynamical fields, generality as symmetry-preserving transfer, and stability through constraint rather than optimization. These features are not additional mechanisms; rather, they are consequences of treating intelligence as a constrained dynamical system rather than as an objective-maximizing machine.
 
 \subsection{Final Thoughts}
 
@@ -1366,5 +1622,396 @@ Taken together, these results support a conception of general intelligence as a 
 
 This view suggests that intelligence, in any substrate, persists only where boundaries are maintained, refusal is enforced by geometry, and learning proceeds through lawful compression rather than unconstrained optimization.
 
+% --------------------------------------------------
+% Appendices: Mathematical Formalisms
+% --------------------------------------------------
+\appendix
+
+% --------------------------------------------------
+\section{Configuration Manifolds, Constraints, and Refusal}
+% --------------------------------------------------
+
+\newcommand{\Q}{\mathcal{Q}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\I}{\mathcal{I}}
+\newcommand{\Aadm}{\mathcal{A}_{\mathrm{adm}}}
+\newcommand{\Ham}{\mathcal{H}}
+\newcommand{\Lag}{\mathcal{L}}
+\newcommand{\Act}{\mathcal{S}}
+\newcommand{\Bnd}{\mathcal{B}}
+
+\begin{definition}[Configuration manifold]
+Let $\Q$ be a smooth finite-dimensional manifold (or Fr\'echet manifold in the field case) with local coordinates
+\[
+q = (\Phi, \mathbf{v}, S, \pi, \Bnd).
+\]
+\end{definition}
+
+\begin{definition}[Invariant constraints and admissible manifold]
+Let $F:\Q \to \mathbb{R}^k$ be smooth and define the admissible manifold
+\[
+\M := F^{-1}(0).
+\]
+Assume $0$ is a regular value of $F$, so $\M$ is an embedded submanifold with tangent space
+\[
+T_q \M = \ker DF(q).
+\]
+\end{definition}
+
+\begin{definition}[Admissible variations]
+A variation $\delta q(t)$ along a curve $q(t)\in \M$ is admissible if
+\[
+DF(q(t))\,\delta q(t)=0 \quad \text{for all } t.
+\]
+\end{definition}
+
+\begin{definition}[Refusal set]
+Let $\Ham:\,T^*\Q \to \mathbb{R}\cup\{+\infty\}$. Define the refusal set
+\[
+\mathcal{R} := \{(q,p)\in T^*\Q:\ \Ham(q,p)=+\infty\}.
+\]
+A state is refused iff it lies in $\mathcal{R}$.
+\end{definition}
+
+\begin{lemma}[Normal coercivity implies manifold confinement]
+Assume there exists a neighborhood $U$ of $\M$ and constants $c_1,c_2>0$ such that
+\[
+V(q)\ \ge\ c_1\,\mathrm{dist}(q,\M)^2 - c_2 \quad \text{for all } q\in U,
+\]
+and that $\Ham$ satisfies $\Ham(q,p)\ge V(q)$ on $T^*U$.
+Then for any energy sublevel set
+\[
+\Sigma_E:=\{(q,p)\in T^*U:\ \Ham(q,p)\le E\},
+\]
+there exists $r(E)>0$ such that $\Sigma_E \subset \{(q,p): \mathrm{dist}(q,\M)\le r(E)\}$.
+\end{lemma}
+
+\begin{proof}
+For $(q,p)\in \Sigma_E$, one has $E\ge \Ham(q,p)\ge V(q)\ge c_1\mathrm{dist}(q,\M)^2-c_2$, hence
+$\mathrm{dist}(q,\M)^2\le (E+c_2)/c_1$. Take $r(E)=\sqrt{(E+c_2)/c_1}$.
+\end{proof}
+
+% --------------------------------------------------
+\section{Field-Theoretic Euler--Lagrange Equations}
+% --------------------------------------------------
+
+\newcommand{\Om}{\Omega}
+
+\begin{definition}[Field configuration space]
+Let $\Om\subset \mathbb{R}^n$ be a bounded domain with smooth boundary.
+Let the field variables be
+\[
+\Phi:\Om\times\mathbb{R}\to\mathbb{R},\quad
+\mathbf{v}:\Om\times\mathbb{R}\to\mathbb{R}^n,\quad
+S:\Om\times\mathbb{R}\to\mathbb{R},\quad
+\pi:\Om\times\mathbb{R}\to\Delta,\quad
+\Bnd:\Om\times\mathbb{R}\to \mathbb{R}^m,
+\]
+where $\Delta$ is a (finite-dimensional) simplex or a suitable function space.
+\end{definition}
+
+\begin{definition}[Action functional]
+Let $\Lag$ be a Lagrangian density depending smoothly on $(q,\partial_t q,\nabla q)$.
+Define
+\[
+\Act[q]=\int_{t_0}^{t_1}\int_{\Om} \Lag(q,\partial_t q,\nabla q)\,dx\,dt.
+\]
+\end{definition}
+
+\begin{theorem}[Euler--Lagrange field equations]
+Assume variations $\delta q$ vanish on $\partial \Om\times [t_0,t_1]$ and at times $t_0,t_1$.
+Then a stationary point of $\Act$ satisfies, componentwise for each field $q^\alpha$,
+\[
+\partial_t\!\left(\frac{\partial \Lag}{\partial(\partial_t q^\alpha)}\right)
++\sum_{i=1}^n \partial_{x_i}\!\left(\frac{\partial \Lag}{\partial(\partial_{x_i} q^\alpha)}\right)
+-\frac{\partial \Lag}{\partial q^\alpha} \;=\; 0.
+\]
+\end{theorem}
+
+\begin{proof}
+Compute the first variation:
+\[
+\delta \Act=\int\!\!\int \left(
+\frac{\partial \Lag}{\partial q^\alpha}\delta q^\alpha
++\frac{\partial \Lag}{\partial(\partial_t q^\alpha)}\partial_t(\delta q^\alpha)
++\frac{\partial \Lag}{\partial(\partial_{x_i} q^\alpha)}\partial_{x_i}(\delta q^\alpha)
+\right)\,dx\,dt,
+\]
+(sum over $\alpha$ and $i$). Integrate by parts in $t$ and $x_i$ and use boundary/endpoint vanishing to remove boundary terms:
+\[
+\delta \Act=\int\!\!\int \left(
+\frac{\partial \Lag}{\partial q^\alpha}
+-\partial_t\!\left(\frac{\partial \Lag}{\partial(\partial_t q^\alpha)}\right)
+-\partial_{x_i}\!\left(\frac{\partial \Lag}{\partial(\partial_{x_i} q^\alpha)}\right)
+\right)\delta q^\alpha\,dx\,dt.
+\]
+Since $\delta q^\alpha$ are arbitrary, the coefficient must vanish.
+\end{proof}
+
+% --------------------------------------------------
+\section{Hamiltonian Structure and Refusal Barriers}
+% --------------------------------------------------
+
+\begin{definition}[Legendre transform]
+Let $\Lag(q,\dot q)$ be $C^2$ and strictly convex in $\dot q$.
+Define momenta $p_i=\partial \Lag/\partial \dot q_i$ and Hamiltonian
+\[
+\Ham(q,p)=\sup_{\dot q}\left(\sum_i p_i\dot q_i-\Lag(q,\dot q)\right).
+\]
+\end{definition}
+
+\begin{theorem}[Hamilton's equations]
+If $\Ham$ is finite and $C^2$ on an open set $U\subset T^*\Q$, then the induced flow satisfies
+\[
+\dot q_i=\frac{\partial \Ham}{\partial p_i},\qquad
+\dot p_i=-\frac{\partial \Ham}{\partial q_i}.
+\]
+\end{theorem}
+
+\begin{proof}
+On $U$, strict convexity gives the smooth inverse $\dot q=\dot q(q,p)$.
+Then $\Ham(q,p)=p\cdot \dot q-\Lag(q,\dot q)$.
+Differentiate:
+\[
+d\Ham=\dot q\cdot dp + p\cdot d\dot q - \frac{\partial \Lag}{\partial q}\cdot dq
+-\frac{\partial \Lag}{\partial \dot q}\cdot d\dot q
+=\dot q\cdot dp - \frac{\partial \Lag}{\partial q}\cdot dq,
+\]
+since $p=\partial \Lag/\partial \dot q$ cancels the $d\dot q$ terms.
+Thus $\partial \Ham/\partial p=\dot q$ and $\partial \Ham/\partial q=-\partial \Lag/\partial q$.
+With Euler--Lagrange $d/dt(\partial \Lag/\partial \dot q)=\partial \Lag/\partial q$ we obtain $\dot p=-\partial \Ham/\partial q$.
+\end{proof}
+
+\begin{lemma}[Infinite barrier is forward-invariant]
+Let $\Ham$ be lower semicontinuous and define $\mathcal{R}=\{\Ham=+\infty\}$.
+If a trajectory $(q(t),p(t))$ satisfies $\Ham(q(t),p(t))<\infty$ for some $t=t_\ast$ and energy is conserved on $\{\Ham<\infty\}$, then $(q(t),p(t))\notin \mathcal{R}$ for all $t$ in its maximal interval of existence.
+\end{lemma}
+
+\begin{proof}
+Energy conservation gives $\Ham(q(t),p(t))=\Ham(q(t_\ast),p(t_\ast))<\infty$ whenever the solution remains in $\{\Ham<\infty\}$. If it entered $\mathcal{R}$ at some time, $\Ham$ would be $+\infty$, contradicting conservation.
+\end{proof}
+
+% --------------------------------------------------
+\section{Noether Currents for Field Symmetries}
+% --------------------------------------------------
+
+\begin{definition}[Infinitesimal symmetry]
+Let $q^\alpha$ be fields and $\Lag(q,\partial_\mu q)$ with $\mu=0,\dots,n$ ($x^0=t$).
+An infinitesimal symmetry is a variation
+\[
+\delta q^\alpha = \varepsilon\, X^\alpha(q,x)
+\]
+such that the induced Lagrangian variation is a total divergence:
+\[
+\delta \Lag = \varepsilon\,\partial_\mu K^\mu
+\]
+for some $K^\mu$.
+\end{definition}
+
+\begin{theorem}[Noether current]
+Assume $q$ satisfies the Euler--Lagrange equations.
+Then the current
+\[
+J^\mu \;=\; \frac{\partial \Lag}{\partial(\partial_\mu q^\alpha)}\,X^\alpha \;-\; K^\mu
+\]
+is conserved:
+\[
+\partial_\mu J^\mu = 0.
+\]
+\end{theorem}
+
+\begin{proof}
+Compute
+\[
+\delta \Lag
+= \frac{\partial \Lag}{\partial q^\alpha}\delta q^\alpha
++ \frac{\partial \Lag}{\partial(\partial_\mu q^\alpha)}\partial_\mu(\delta q^\alpha).
+\]
+Rewrite the second term:
+\[
+\frac{\partial \Lag}{\partial(\partial_\mu q^\alpha)}\partial_\mu(\delta q^\alpha)
+= \partial_\mu\!\left(\frac{\partial \Lag}{\partial(\partial_\mu q^\alpha)}\delta q^\alpha\right)
+- \partial_\mu\!\left(\frac{\partial \Lag}{\partial(\partial_\mu q^\alpha)}\right)\delta q^\alpha.
+\]
+Hence
+\[
+\delta \Lag
+= \left(\frac{\partial \Lag}{\partial q^\alpha}
+-\partial_\mu\!\left(\frac{\partial \Lag}{\partial(\partial_\mu q^\alpha)}\right)\right)\delta q^\alpha
++ \partial_\mu\!\left(\frac{\partial \Lag}{\partial(\partial_\mu q^\alpha)}\delta q^\alpha\right).
+\]
+On-shell the Euler--Lagrange bracket vanishes, so
+\[
+\delta \Lag = \partial_\mu\!\left(\frac{\partial \Lag}{\partial(\partial_\mu q^\alpha)}\delta q^\alpha\right).
+\]
+By symmetry, $\delta \Lag=\partial_\mu K^\mu$, therefore
+\[
+\partial_\mu\!\left(\frac{\partial \Lag}{\partial(\partial_\mu q^\alpha)}\delta q^\alpha - K^\mu\right)=0.
+\]
+Divide by $\varepsilon$ and substitute $\delta q^\alpha=\varepsilon X^\alpha$.
+\end{proof}
+
+% --------------------------------------------------
+\section{Slow--Fast Decomposition and CLIO Regimes}
+% --------------------------------------------------
+
+\newcommand{\eps}{\varepsilon}
+
+\begin{definition}[Slow--fast Hamiltonian system]
+Let $(x,y)\in \mathbb{R}^m\times \mathbb{R}^\ell$ with $0<\eps\ll 1$ and Hamiltonian
+\[
+\Ham_\eps(x,y,p_x,p_y)=\Ham_0(x,p_x)\;+\;\Ham_{\mathrm{fast}}(x,y,p_y)\;+\;\eps\,\Ham_1(x,y,p_x,p_y),
+\]
+with canonical symplectic form $\omega=dx\wedge dp_x + dy\wedge dp_y$.
+\end{definition}
+
+\begin{definition}[Critical manifold]
+Assume for each fixed $(x,p_x)$ the fast subsystem has an equilibrium set
+\[
+\mathcal{C}_0 := \{(x,y,p_x,p_y):\ \partial_{y}\Ham_{\mathrm{fast}}=0,\ \partial_{p_y}\Ham_{\mathrm{fast}}=0\}.
+\]
+\end{definition}
+
+\begin{theorem}[Persistence of normally hyperbolic slow manifolds (Fenichel-type)]
+Assume $\mathcal{C}_0$ is a compact normally hyperbolic invariant manifold for the $\eps=0$ fast flow and that $\Ham_\eps$ is $C^r$, $r\ge 2$.
+Then for sufficiently small $\eps>0$ there exists a locally invariant manifold $\mathcal{C}_\eps$ $C^{r-1}$-close to $\mathcal{C}_0$ and the reduced flow on $\mathcal{C}_\eps$ is $C^{r-1}$ conjugate to the slow drift induced by $\Ham_0+\eps\Ham_1$.
+\end{theorem}
+
+\begin{proof}
+Standard Fenichel theory for normally hyperbolic invariant manifolds applies to the fast-slow vector field generated by $\Ham_\eps$. Normal hyperbolicity provides exponential contraction/expansion transverse to $\mathcal{C}_0$, yielding persistence and smoothness of $\mathcal{C}_\eps$ for small $\eps$ and conjugacy of reduced dynamics.
+\end{proof}
+
+\begin{lemma}[Geometric refusal via infinite curvature]
+Let $\Ham$ be $C^2$ on an open set $U\subset T^*\Q$ and extend $\Ham$ by $+\infty$ outside $U$.
+If a direction $\xi$ at $(q,p)\in U$ approaches $\partial U$ such that $\Ham(q+\tau\xi_q,p+\tau\xi_p)\to+\infty$ as $\tau\uparrow\tau_\ast$, then no finite-energy trajectory can cross $\partial U$ along $\xi$.
+\end{lemma}
+
+\begin{proof}
+Along any finite-energy trajectory, $\Ham$ is conserved and finite. Approaching $\partial U$ along $\xi$ forces $\Ham\to+\infty$, contradicting conservation. Hence crossing is impossible.
+\end{proof}
+
+% --------------------------------------------------
+\section{Lyapunov Stability for Invariant-Preserving Attractors}
+% --------------------------------------------------
+
+\newcommand{\Aset}{\mathcal{A}}
+
+\begin{definition}[Lyapunov function]
+A continuous function $W:U\to \mathbb{R}_{\ge 0}$ on a neighborhood $U$ of a compact set $\Aset$ is a Lyapunov function if:
+\[
+W^{-1}(0)=\Aset,\qquad \dot W \le 0 \text{ along trajectories in } U.
+\]
+\end{definition}
+
+\begin{theorem}[Lyapunov stability from coercive invariant potentials]
+Let $\Ham=T+V+\Lambda-\Xi$ on $T^*\Q$, with $T\ge 0$, $\Xi$ bounded above, and suppose there exists a compact $\Aset\subset \M$ and constants $c,C>0$ such that in a neighborhood $U$ of $\Aset$:
+\[
+V(q)+\Lambda(q)\ \ge\ c\,\mathrm{dist}(q,\M)^2,
+\qquad
+V(q)+\Lambda(q)\ \to +\infty \text{ as } q\to \partial U.
+\]
+Then $\Aset$ is Lyapunov-stable for the Hamiltonian flow restricted to the energy sublevel set $\{\Ham\le E\}$ for any $E$ with $\Aset\subset\{\Ham\le E\}\subset U$.
+\end{theorem}
+
+\begin{proof}
+Fix such $E$ and define $W(q,p)=V(q)+\Lambda(q)$ on $\{\Ham\le E\}$.
+Energy conservation implies trajectories remain in $\{\Ham\le E\}\subset U$.
+By the lower bound, $W$ controls $\mathrm{dist}(q,\M)^2$.
+Since $\Aset\subset \M$, $W=0$ on $\Aset$ and $W>0$ off $\M$.
+Let $\epsilon>0$ be given. Choose $\delta>0$ such that $W<\delta \Rightarrow \mathrm{dist}(q,\M)<\epsilon$.
+If initial data satisfy $W(q(0),p(0))<\delta$, then by energy confinement and the barrier condition at $\partial U$, the trajectory cannot exit the set $\{W<\delta'\}$ for a sufficiently small $\delta'\ge \delta$ contained in $U$, hence $\mathrm{dist}(q(t),\M)<\epsilon$ for all $t$.
+\end{proof}
+
+% --------------------------------------------------
+\appendix
+\section{Worked Examples of Constrained Intelligence Dynamics}
+% --------------------------------------------------
+
+\subsection{Purpose and Scope}
+
+This appendix presents minimal mathematical examples illustrating the structural phenomena developed in the main text. The examples are not intended as implementations or blueprints. Their role is to demonstrate, in low-dimensional and analytically tractable settings, how invariants, refusal, boundaries, and stability arise naturally from constrained dynamics.
+
+All examples are deliberately simple. They are sufficient because the properties under study—refusal as non-existence, boundary-regulated interaction, slow--fast separation, and invariant-preserving stability—are structural rather than dimensional.
+
+\subsection{One-Dimensional Refusal Barrier}
+
+Consider a one-dimensional configuration variable $q \in \mathbb{R}$ evolving under a Hamiltonian
+\[
+\mathcal{H}(q,p) = \frac{1}{2}p^2 + V(q),
+\]
+where
+\[
+V(q) = \frac{1}{1-q^2}.
+\]
+
+The admissible manifold is
+\[
+\mathcal{M} = (-1,1).
+\]
+
+As $q \to \pm 1$, the potential diverges, and the Hamiltonian becomes unbounded. Consequently, no finite-energy trajectory reaches or crosses the boundary of $\mathcal{M}$.
+
+Refusal is realized here as geometric exclusion. Configurations outside $\mathcal{M}$ are not evaluated or rejected; they are dynamically inaccessible. The boundary enforces admissibility without invoking decision logic.
+
+This example illustrates the minimal mechanism by which refusal can be encoded as phase-space geometry.
+
+\subsection{Two-Dimensional Boundary Collapse}
+
+Let $(x,y) \in \mathbb{R}^2$, where $x$ denotes a slow structural variable and $y$ a fast policy variable. Consider the Hamiltonian
+\[
+\mathcal{H}_\lambda(x,y,p_x,p_y) =
+\frac{1}{2}p_x^2 + \frac{1}{2}p_y^2
++ U(x) + \lambda W(x,y),
+\]
+where $U(x)$ is coercive and $W(x,y)$ penalizes boundary violation.
+
+For $\lambda > 0$, the coupling term constrains $y$ relative to $x$, inducing an invariant-preserving attractor. As $\lambda \to 0$, the constraint weakens, and trajectories exhibit unbounded excursions in $y$, destabilizing $x$ through backreaction.
+
+This bifurcation corresponds to boundary collapse. It demonstrates that stability depends quantitatively on boundary strength, not merely on the existence of a boundary term.
+
+\subsection{Slow--Fast Averaging and CLIO Dynamics}
+
+Let the system evolve according to
+\[
+\dot{x} = f(x,y), \qquad
+\dot{y} = \frac{1}{\epsilon} g(x,y),
+\]
+with $0<\epsilon\ll1$.
+
+Assume that for fixed $x$, the fast subsystem admits a unique invariant measure $\mu_x$ and is mixing. The averaged dynamics are
+\[
+\dot{x} = \int f(x,y)\, d\mu_x(y).
+\]
+
+Fast policy exploration occurs in $y$ without directly altering $x$. Structural change in $x$ reflects only invariant-preserving averages of fast dynamics. This realizes CLIO as a dynamical regime rather than an algorithmic loop.
+
+When mixing fails or timescale separation collapses, averaging breaks down and fast dynamics directly perturb structure, producing unstable generalization.
+
+\subsection{Information Flux Across a Boundary}
+
+Model boundary permeability by a scalar parameter $\kappa \ge 0$ governing coupling strength between internal and external variables. Let information flux $I(\kappa)$ be a monotone increasing function of $\kappa$.
+
+For small $\kappa$, flux is insufficient to support adaptation. For large $\kappa$, internal gradients collapse. Optimal operation occurs at intermediate $\kappa$, where information transfer is sufficient but constrained.
+
+This reproduces, in abstract form, the same regime observed in biological membranes, neural synchronization, and policy buffering. Boundaries are neither maximally open nor maximally closed.
+
+\subsection{Redundancy and Latent Slack}
+
+Introduce an auxiliary variable $s$ representing latent slack or redundancy, with dynamics
+\[
+\dot{s} = -\alpha s + \eta,
+\]
+where $\eta$ is bounded noise.
+
+The presence of $s$ buffers perturbations to primary variables, absorbing fluctuations without immediate structural impact. Removing $s$ increases sensitivity and induces instability.
+
+This mirrors the role of noncoding genetic material and latent policy variation. Apparent inefficiency is a condition for robust selection and learning.
+
+\subsection{Summary of Structural Lessons}
+
+Across these examples, the same conclusions recur: refusal is realized as inaccessible regions of phase space; boundaries regulate transfer without concealment; stability depends on constraint strength and geometry; slow--fast separation enables learning without collapse; and redundancy functions as adaptive slack rather than waste. These properties do not depend on dimensionality, substrate, or implementation. They arise wherever intelligence persists under constraint.
+
+
+\printbibliography
 
 \end{document}
