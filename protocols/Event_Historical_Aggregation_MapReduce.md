@@ -1,0 +1,106 @@
+# Event-Historical Aggregation: Computation as Commitment
+
+## Introduction: The Unseen Story of a Simple Calculation
+
+In the world of distributed computing, the Map–Reduce paradigm is a cornerstone. We teach it as a powerful and elegant way to process vast datasets by breaking a problem into two simple phases: a *map* step that processes data in parallel, and a *reduce* step that aggregates the results. It is the engine behind countless large-scale calculations, from counting words in a global library of books to analyzing scientific data.
+
+Yet for all its power, the classical view of Map–Reduce is conceptually thin. It is fundamentally **value-centric**. It tells us the final answer—the total count, the average value, the resulting dataset—but it remains silent about the story of how that answer was constructed. It discards the crucial evidence of its own process: the provenance of the data it used, the rules it was required to follow, and the alternative paths it definitively ruled out.
+
+This leads us to a reframing question:
+
+> What if the primary output wasn’t the final value, but the durable, auditable record of the commitments that led to it?  
+> What if computation wasn’t for finding answers, but for *building worlds*?
+
+---
+
+## 1. Beyond Values to Commitments
+
+Event-historical aggregation proposes a shift in computational semantics. Computation is no longer understood as producing ephemeral values, but as constructing **durable commitments**. In this model, the identity of a computed object *is* the irreversible history of authorized events that produced it.
+
+The sequence of operations—the history—is not a debugging artifact or auxiliary log. It is the **primary semantic object**. The final “value” is merely a projection of this richer historical structure.
+
+> The question *“what value did we compute?”* is secondary to  
+> *“what commitments have we made?”*
+
+---
+
+## 2. The Language of Events
+
+Event-historical computation is built from a small set of irreducible semantic primitives.
+
+### Event History
+A finite, ordered sequence of irreversible events. Unlike mutable state, an event history can only be extended. Once an event occurs, it permanently constrains all future possibilities.
+
+### Authorization
+A rule determining whether a proposed event may extend a given history. Authorization enforces policies and invariants *before* an action occurs.
+
+### Commitment (Pop)
+An irreversible assertion that something now exists. A `pop` event spends optionality, converting future freedom into settled fact. All subsequent computation must respect this commitment.
+
+### Refusal
+The structural exclusion of a future action. Refusal is not an error or exception; it is an ontological deletion of a possible future. The forbidden action is rendered *inadmissible by definition*.
+
+### Collapse
+An authorized abstraction that forgets distinctions between histories while preserving essential invariants. Collapse manages complexity without erasing facts.
+
+---
+
+## 3. Map–Reduce Reimagined
+
+### Map Phase: Local Commitments
+
+Each mapper processes its data shard and produces a *committed summary* via a `pop` event. This summary is explicitly linked to its provenance—the shard it originated from—creating an auditable lineage.
+
+### Reduce Phase: Authorized Merges
+
+Reduction proceeds through a sequence of authorized merge events. A merge is permitted **only if** the provenance sets of the two summaries are disjoint.
+
+If provenance overlaps, the merge is **refused**. Duplication is not absorbed; it is forbidden.
+
+---
+
+## 4. Emergent Algebraic Properties
+
+| Property | Classical Assumption | Event-Historical Origin |
+|--------|----------------------|-------------------------|
+| Idempotence | Required axiom | Emerges from refusal of overlapping provenance |
+| Associativity | Required axiom | Holds up to authorized collapse |
+| Commutativity | Required axiom | Holds up to authorized collapse |
+
+Algebraic laws are no longer assumptions about values. They are consequences of admissible histories.
+
+---
+
+## 5. Why This Matters
+
+### Built-In Auditability
+Every aggregate carries a complete lineage. Provenance is intrinsic, not bolted on.
+
+### In-Band Policy Enforcement
+Critical invariants are enforced by authorization and refusal. Invalid actions are impossible, not merely erroneous.
+
+### Principled Forgetting
+Collapse provides formal, auditable abstraction rather than ad hoc log truncation.
+
+---
+
+## 6. Comparison with CRDTs
+
+| Concept | CRDTs | Event-Historical Aggregation |
+|------|------|------------------------------|
+| Primary Goal | Convergent values | Valid histories |
+| Role of History | Instrumental | Foundational |
+| Duplicate Handling | Algebraic absorption | Semantic refusal |
+| Correctness | Lattice laws | Event admissibility |
+
+CRDTs converge on values. Event-historical systems construct worlds.
+
+---
+
+## 7. Conclusion
+
+Event-historical aggregation is a different philosophy of computation. It replaces ephemeral state with durable commitment and treats irreversibility as a feature, not a bug.
+
+This stands in contrast to optionality-preserving systems such as autoregressive models, which simulate agency without ever committing to a past. Event-historical systems participate in history precisely because they make binding choices.
+
+> Worldhood is generated through irreversible choice.
