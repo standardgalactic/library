@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Complexity without Intelligence — Audio Essays</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #0a0a0a;
+      color: #e6e6e6;
+      font-family: monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      text-align: center;
+      padding: 20px;
+    }
+
+    canvas {
+      width: 340px;
+      height: 340px;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, #111 0%, #000 100%);
+      box-shadow: 0 0 25px #fff1;
+      transition: transform 0.05s;
+    }
+
+    canvas:active { transform: scale(0.98); }
+
+    h2 { margin-bottom: 6px; }
+
+    .subtitle {
+      opacity: 0.75;
+      font-size: 0.9em;
+      margin-bottom: 12px;
+      max-width: 720px;
+      line-height: 1.45;
+    }
+
+    .controls {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    button {
+      background: #111;
+      border: 1px solid #333;
+      color: #eee;
+      font-weight: bold;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      text-transform: uppercase;
+      font-size: 0.8em;
+    }
+
+    button:hover { background: #181818; }
+
+    .timer {
+      font-size: 1.1em;
+      letter-spacing: 1px;
+      min-width: 80px;
+      text-align: center;
+    }
+
+    .tracklist {
+      margin-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      align-items: center;
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .tracklist button {
+      width: 100%;
+      text-align: left;
+    }
+
+    .tracklist button.active {
+      background: #222;
+      border-color: #666;
+    }
+
+    .glitch-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        90deg,
+        rgba(255,255,255,0.05) 0 2px,
+        transparent 2px 4px
+      );
+      opacity: 0;
+      mix-blend-mode: screen;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h2>Complexity without Intelligence</h2>
+
+  <div class="subtitle">
+    Audio essays exploring why complexity does not require intelligence.
+    These talks separate agency from planning and representation, arguing
+    that complex behavior arises from the stable organization of affordances
+    and interactions rather than internal cognitive depth. True complexity
+    is shown to depend on structural constraints, ecological coupling, and
+    the ability to maintain a viable activity space during breakdowns—
+    regardless of whether an agent reasons, plans, or learns.
+  </div>
+
+  <canvas id="turntable"></canvas>
+
+  <div class="controls">
+    <button id="play">Play</button>
+    <button id="pause">Pause</button>
+    <div class="timer" id="timer">00:00</div>
+    <button id="loop">Loop: Off</button>
+  </div>
+
+  <div class="tracklist">
+    <button data-track="Complexity_Does_Not_Require_Intelligence.mp3">
+      Complexity Does Not Require Intelligence
+    </button>
+    <button data-track="Ser_complejo_no_requiere_ser_inteligente.mp3">
+      Ser complejo no requiere ser inteligente
+    </button>
+  </div>
+
+  <div class="glitch-overlay" id="glitch"></div>
+
+  <audio id="audio" crossorigin="anonymous"></audio>
+
+  <script>
+    const audio = document.getElementById('audio');
+    const playBtn = document.getElementById('play');
+    const pauseBtn = document.getElementById('pause');
+    const loopBtn = document.getElementById('loop');
+    const timer = document.getElementById('timer');
+    const canvas = document.getElementById('turntable');
+    const ctx = canvas.getContext('2d');
+    const glitch = document.getElementById('glitch');
+    const trackButtons = document.querySelectorAll('.tracklist button');
+
+    let rotation = 0;
+    let pulse = 120;
+
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = 340 * dpr;
+    canvas.height = 340 * dpr;
+    ctx.scale(dpr, dpr);
+
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    const ctxAudio = new AudioContext();
+    const analyser = ctxAudio.createAnalyser();
+    analyser.fftSize = 256;
+
+    const src = ctxAudio.createMediaElementSource(audio);
+    src.connect(analyser);
+    analyser.connect(ctxAudio.destination);
+
+    const freqData = new Uint8Array(analyser.frequencyBinCount);
+
+    function glitchEffect() {
+      analyser.getByteFrequencyData(freqData);
+      let bass = 0;
+      for (let i = 0; i < 32; i++) bass += freqData[i];
+      bass /= 32;
+
+      const brightness = Math.min(1, bass / 180);
+      pulse = 120 + brightness * 40;
+      glitch.style.opacity = brightness > 0.2 ? brightness : 0;
+
+      requestAnimationFrame(glitchEffect);
+    }
+
+    function drawTurntable() {
+      ctx.clearRect(0, 0, 340, 340);
+      ctx.save();
+      ctx.translate(170, 170);
+      ctx.rotate(rotation);
+
+      ctx.beginPath();
+      ctx.arc(0, 0, pulse, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(255,255,255,0.9)';
+      ctx.lineWidth = 4;
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(0, 0, 20, 0, Math.PI * 2);
+      ctx.fillStyle = '#fff';
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    function animate() {
+      rotation += audio.paused ? 0.002 : 0.02;
+      drawTurntable();
+      requestAnimationFrame(animate);
+    }
+
+    function formatTime(sec) {
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      return `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+    }
+
+    function updateTimer() {
+      if (audio.duration) {
+        const remaining = Math.max(0, audio.duration - audio.currentTime);
+        timer.textContent = formatTime(remaining);
+      }
+      requestAnimationFrame(updateTimer);
+    }
+
+    trackButtons.forEach(btn => {
+      btn.onclick = () => {
+        trackButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        audio.pause();
+        audio.src = btn.dataset.track;
+        audio.currentTime = 0;
+        ctxAudio.resume();
+        audio.play();
+        glitchEffect();
+      };
+    });
+
+    playBtn.onclick = () => {
+      ctxAudio.resume();
+      audio.play();
+      glitchEffect();
+    };
+
+    pauseBtn.onclick = () => audio.pause();
+
+    loopBtn.onclick = () => {
+      audio.loop = !audio.loop;
+      loopBtn.textContent = `Loop: ${audio.loop ? 'On' : 'Off'}`;
+    };
+
+    animate();
+    updateTimer();
+  </script>
+
+</body>
+</html>
+

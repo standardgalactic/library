@@ -1,0 +1,497 @@
+start	end	text
+0	7340	Welcome back to the deep dive. I want to start today with a mental image. It might sound a little
+7340	12220	bit cliche at first, but just just stay with me on this. Okay, I'm with you. I want you to picture
+12220	19160	the ultimate machine, the perfect clockwork universe. Right. Brass gears, intricate springs,
+19260	25620	the whole thing. Endless brass gears. You can see them turning, springs coiling up, pistons firing
+25620	31520	with, you know, perfect precision. It's engineered. It is completely deterministic. So if you know
+31520	36560	where one gear is, you know where everything else is going to be. Exactly. And that image,
+36740	44020	that clock has really been our dominant metaphor for, for how things work for what, 300 years? At
+44020	50460	least since Newton, really. But now I want you to take that machine in your mind and I want you to
+50460	56880	break it. Break it? How? Just melt it down. Watch the brass soften. The gears start to lose their
+56880	62460	teeth. Watch them dissolve into something organic. Okay. And suddenly you're not looking at a machine
+62460	68700	anymore. You're looking at a coral reef. Ah, okay. That's a massive shift in texture from cold metal
+68700	74960	to, to life. Right. It's messy. It feels almost chaotic. You've got thousands of different species
+74960	79640	interacting. They're eating. They're dying. They're growing on top of each other. It's a
+79640	85560	teeming biological ecosystem. I'm with you. The clock and the reef. So here's the question that
+85560	92900	really launches our whole investigation today. Which one of those two images, the perfect clock
+92900	101300	or the messy reef, is actually more complex? Well, that's a trap of a question, isn't it? It is a bit
+101300	107580	of a trap. Because historically, science and, you know, especially the field of artificial intelligence
+107580	113960	would have pointed straight at the clock without hesitation. Why? Because we built it. Because we
+113960	118780	can explain it. We love the clock because it's rational. It's reducible. We look at the reef and
+118780	125020	we just see, well, chaos. We wave our hands and call it nature or instinct. Exactly. And it's that
+125020	131180	bias, that deep-seated preference for the engineered over the organic that we are going to try and
+131180	137540	dismantle today. It's a big project. It is. We're opening up a file that I genuinely think is going
+137540	145300	to fundamentally change how you, the listener, look at intelligence and complexity. The paper is titled
+145300	152900	Complexity Without Intelligence. It's by a researcher named Flixian, and it was just published January 24,
+153200	160500	2026. And that title alone is, I mean, it's deliberately provocative. Complexity Without Intelligence.
+160500	166840	It feels like an oxymoron, right? A contradiction in terms. We are just so trained to think that
+166840	173820	smart equals complex. It's our default setting. If I show you a supercomputer that's, you know,
+174020	178840	beating a grandmaster at chess, you're going to say, wow, that is a complex system. Of course.
+179160	184540	But if I show you a common garden spider weaving this incredibly intricate, beautiful web,
+184980	189780	you're probably going to say, well, that's just instinct. That's just biology doing its thing.
+189780	195080	We dismiss it. We dismiss the spider. We assume that because the spider isn't consciously thinking
+195080	201020	about, I don't know, the tensile strength of its own silk or calculating the geometric angles in its
+201020	207020	head, that the activity itself must be simple. But Flixian is here to argue that we have this
+207020	213840	completely fundamentally backward. The mission of this paper, and really our mission for this deep dive,
+213840	219580	is to take a scalpel and surgically separate two ideas that have been glued together for decades.
+219580	226860	And those two ideas are? What an agent knows so, its intelligence, its ability to learn, and what an
+226860	233880	agent does, its complexity. And to really appreciate why that's such a heavy lift, you have to understand
+233880	238500	the sheer amount of historical baggage we're all carrying. What do you mean?
+238500	246140	Well, for the last 70 years or so, cognitive science, AI, philosophy of mind, they've all been
+246140	249400	completely obsessed with the internal.
+249660	250300	The brain.
+250420	253200	The brain, the CPU, the little ghost in the machine.
+253300	255640	We're always trying to peek inside the black box.
+255720	261220	Precisely. We measure an agent's complexity by looking for evidence internal deliberation.
+261220	267860	We look for planning. We look for reasoning. And most of all, we look for the ability to learn
+267860	268540	new tricks.
+269100	273460	And if a system can't learn, we basically write it off. We call it dumb or brittle.
+273980	280380	We do. But this paper argues that this view is just incredibly narrow. It's like looking at the
+280380	289760	world through a keyhole. It misses the staggering, mind-boggling complexity of systems that just work.
+289760	291820	Systems that don't have to think about it.
+292140	296580	Systems that function perfectly in the present moment, whether or not they have an inner life
+296580	299940	or are consciously deliberating about their actions.
+300100	305260	You mentioned before we started that we have this habit of ranking things, like some cosmic
+305260	306660	leaderboard of existence.
+306720	311180	Oh, we're obsessed with it. It's the great chain of being all over again. You've got humans at the
+311180	313000	very top naturally.
+313200	313740	Of course.
+313900	318780	Then maybe chimps, then dogs, maybe dolphins if we're feeling generous. And then way,
+318780	321160	way down to the bottom, you've got the insects and-
+321160	322500	And the poor Roombas.
+322600	323440	And the poor Roombas.
+323780	331940	But the point is, we rank them based on one single criterion. How close are they to us?
+332660	336300	How close do they come to mimicking human-style cognition?
+336620	339680	That's what Fliction calls the deliberation bias, right?
+339680	346440	We confuse the complexity of an action with the perceived effort of thinking really hard
+346440	347340	about that action.
+347840	354340	Okay. So the paper identifies this huge problem, this bias. What's the solution it offers? It
+354340	356280	proposes a new framework.
+356560	359040	It does. They call it an affordance-based account.
+359280	364560	Right. Now, affordance is a word that gets thrown around a lot, you know, in user experience,
+364560	370840	design, in psychology. But how is it being used here? It feels very specific.
+371260	377860	It's very specific, and it signals a fundamental pivot. We are pivoting away from trying to count
+377860	382500	how much RAM an agent has or how many neurons are in its frontal cortex.
+382700	384580	But we're not looking inside the box anymore.
+384700	387860	We're looking at the relationship between the agent and its environment.
+387980	390620	The relationship. Okay. That feels like the key.
+390620	396320	It is. The central claim here is that complexity isn't something you carry around inside your head
+396320	401580	like a wallet. Complexity is something that happens between you and the world. It emerges
+401580	402520	in the interaction.
+402940	408040	Okay. I want to dig into that relationship a lot more. But first, let's establish the first
+408040	412840	big pillar of the paper's argument, this concept of synchronic complexity.
+413160	416860	Yes. This is the absolute foundation for everything else.
+416860	423540	Synchronic? It sounds, I don't know, like a heavy metal band or maybe a fiercely technical
+423540	425260	term from linguistics.
+425460	430960	It actually does come from linguistics. From Saussure. He made this distinction. You have
+430960	435920	diachronic linguistics, which is the study of how language changes over time. You know,
+435980	437120	its history, its evolution.
+437260	439600	Right. Like how Latin became French and Spanish.
+439600	445720	Exactly. And then you have synchronic linguistics, which studies the language system as it exists
+445720	450060	at one specific point in time. A snapshot. Frozen.
+450920	457220	So when Fliction talks about synchronic complexity, they're asking us to take a snapshot and completely
+457220	458260	ignore the history.
+458500	459520	Completely and utterly.
+459760	459980	Yeah.
+460120	465220	Forget how the agent got to be the way it is. Forget if it evolved over millions of years
+465220	470740	of natural selection. Forget if it was programmed by a genius five minutes ago. Forget if it learned
+470740	473360	a skill through 10,000 hours of practice.
+473480	474880	You're saying none of that matters.
+475100	480160	For measuring synchronic complexity, no. We don't care. We are asking one simple question.
+481080	487540	What can this agent do with rich, structured competence right now?
+487540	494520	Okay. But that seems a little unfair to the learners, doesn't it? I mean, if I spent 10 years
+494520	498520	of my life learning to play the piano and you build a robot that can just play it instantly,
+498820	500980	don't I get some credit for all that effort?
+501140	507020	Oh, absolutely. You get enormous credit for intelligence. You get credit for having a powerful
+507020	513380	learning capacity. But the paper makes a very sharp distinction here. It argues you do not get
+513380	516380	extra credit for the complexity of the performance itself.
+516380	520620	So if the robot plays the concerto perfectly and I play it perfectly...
+520620	527020	The complexity of the activity, the organized, goal-directed behavior, is identical in that
+527020	527400	moment.
+527600	532300	Ah, okay. I see the line they're drawing. It's really about separating the journey from the
+532300	532860	destination.
+533200	539180	Precisely. And they don't just state this, they formalize it. And I think it's worth just touching
+539180	541860	on the logic, even if we skip the deep math.
+541980	542560	Go for it.
+542560	549560	They create two distinct variables. There's TCA, TT, T-day, which is the complexity of agent
+549560	551380	A at a specific time T.
+551380	556860	Right. C of A at time T. That T is doing a lot of work there, emphasizing the now.
+557120	561520	It is. And then there's a completely separate variable, the learners, which stands for the
+561520	565760	learning operator. That's the agent's ability to change its complexity over time.
+565760	568080	So it's ability to get better or worse.
+568080	576140	Exactly. And here's the paper's most radical claim. TAA, AT, and LRLers are independent variables.
+576360	578400	They're not necessarily correlated.
+578620	585080	Meaning, you can have an agent with incredibly high complexity, but basically zero ability
+585080	585660	to learn.
+585660	591800	Exactly. And conversely, you can have an agent with a massive capacity for learning, but very
+591800	593560	low complexity in the present moment.
+593780	596780	Give me an example of that second one. High learning, low complexity.
+597080	603600	A human baby. An infant is arguably the most powerful learning machine on the planet. Its LRL value
+603600	609560	is off the charts. It's just this incredible sponge for information and new skills.
+609560	616920	But it's TAA. TAA. Its ability to actually do stuff right here, right now. It's pretty low. I mean,
+616980	621400	it can barely hold its own head up. It can't navigate. It can't feed itself. Its present moment
+621400	622560	complexity is minimal.
+622960	625480	Okay. Versus the spider.
+625920	632300	Versus the spider. The spider might have a learning operator that's close to zero. It's not going to
+632300	638420	learn calculus. It probably won't even learn how to weave a fundamentally new style of web if you move
+638420	645460	it to a different continent. It's fixed. It's largely fixed. But it's CA. The geometric precision
+645460	652000	of the web. The material science of handling the silk. The vibration sensing it's performing right
+652000	660080	this second to monitor for prey. That is astronomically high. So for decades, we've been judging the spider
+660080	666740	for being stupid because its cellios is low, while completely ignoring that its city A-T-Feo is performing
+666740	671060	a feat of engineering that our most advanced robots still struggle to replicate.
+671300	676280	That's the internal bias again. We've been looking for the brain that learns and we've totally missed
+676280	677940	the body that performs so beautifully.
+678300	683680	This leads directly to the idea of fluency. And I have to admit, this is the part of the paper that
+683680	686440	really flicked my entire perspective upside down.
+686500	687420	I had the same reaction.
+687660	692320	Because usually if I do something without thinking, I consider that, well, mindless. Like,
+692320	696080	I'm on autopilot. And we usually use autopilot as a criticism.
+696640	698720	You're just phoning it in. You're not really present.
+699460	705440	Right. But Felines comes along and says that autopilot, or what they call fluency,
+706080	709780	is actually a sign of higher complexity, not lower.
+710040	715160	It's what I call the paradox of proficiency. The better you get at something, the less you think
+715160	715560	about it.
+715780	716840	Walk me through an example.
+716840	722420	Okay. Think about a student who's learning a second language for the first time. Let's say
+722420	726100	it's an American student in Paris trying to order a cup of coffee.
+726340	728520	A universally high-stress situation.
+729140	735360	Incredibly high-stress. Their brain is firing on all cylinders. They are consciously accessing
+735360	741640	vocabulary, wrestling with grammar. They're translating every single word in their head.
+741640	749060	Je voudrais un café. They are deliberating. They're using massive amounts of intelligence
+749060	750620	and working memory.
+750760	753100	They are thinking very, very hard.
+753360	758500	Now, look at the Parisian locals standing in line next to them. They lean over and order
+758500	763020	their coffee while simultaneously scrolling on their phone, maybe lighting a cigarette,
+763480	765220	and dodging a person walking by.
+765380	766780	They don't think about the French at all.
+766780	772440	Not for a second. They are fluent. Now, who is exhibiting more complexity in that moment?
+772820	778120	Well, my old intuition would say the student because their brain is working harder. But based
+778120	779740	on this paper, it's the local.
+779940	787040	It's the local by a landslide because the local can sustain multiple modes of activity at the same
+787040	793480	time. They can engage in a social transaction, process information from their phone, perform a
+793480	798860	motor task like lighting a cigarette, and navigate physical space all at once.
+798960	804040	Whereas the student is completely consumed by the single task, they're paralyzed by it.
+804040	807500	The student is brittle. The local is robust.
+808200	813260	Brittle versus robust. That feels like a really key distinction. The student is brittle because
+813260	819060	if the barista asks an unexpected follow-up question like, do you want sugar with that?
+819060	821060	Their whole system crashes.
+821520	826600	Exactly. They have to reboot the whole deliberation process. The local adapts instantly without even
+826600	832220	breaking their stride. The paper's point is that deliberation, that process of stopping and thinking
+832220	837000	is actually a cognitive bottleneck. It consumes precious resources.
+837200	839180	So fluency frees up those resources.
+839760	845640	It frees them up, which allows you to layer more activities on top. So in this framework,
+845640	848260	not thinking, is a superpower.
+848560	853700	It's the ultimate role of complexity, to push all the difficult stuff into the background so
+853700	857240	you can interact with the world on a higher, more integrated level.
+857280	857800	You've got it.
+858100	863920	I want to pause on that term modes of activity for a second. The paper defines them as stable,
+864540	872200	goal-explainable patterns of engagement. But isn't there a danger in defining complexity by
+872200	874580	stability? I mean, a rock is very stable.
+874580	876020	Ah, that's a fair challenge.
+876140	880980	A rock has a very stable pattern of engagement with the ground. It just sits there. It's a rock
+880980	881460	complex.
+881880	887900	It's a valid pushback. But the key is in the second part of the definition. Goal-explainable
+887900	894840	patterns of engagement. A rock isn't really engaging with the environment to solve a problem
+894840	900360	related to its own viability. It's just being subjected to the laws of physics, like gravity.
+900360	905980	It's passive. It's passive. The person ordering coffee is actively solving multiple viability
+905980	911840	problems simultaneously. Social interaction, caffeine acquisition, information gathering,
+912300	918240	nictine addiction, navigation. They are juggling multiple balls to maintain their state.
+918760	920340	The rock isn't juggling anything.
+920520	924600	Okay. So complexity is the number of balls you can keep in the air at once.
+924760	927340	Without having to consciously look at any of them.
+927340	932080	That's a fantastic way to put it. The more you can do without deliberation, the higher
+932080	933460	your synchronic complexity.
+933700	934180	Exactly.
+934700	939840	Which brings us right back to that crucial relationship with the world. We've established
+939840	945700	that we're looking at the now, and we're looking for fluent, layered activity. But where does
+945700	951320	this flow actually happen? It happens in what the paper calls the affordance landscape.
+951320	954860	The landscape of possibilities. It's the space you move through.
+954860	960660	Let's switch the visual in our heads again. The clock is gone. The reef is gone. Now I want you
+960660	967580	to picture a map. A massive, stylized subway map, like the London Underground map, with thousands
+967580	969580	of lines diverging and converging.
+969800	976320	That's a great image for it. That's the activity space. And each station, each potential stop
+976320	977300	is an affordance.
+977300	982220	Okay, so let's define affordance again, but really strictly in this relational sense, because
+982220	988160	I think people, myself included, can get tripped up thinking an affordance is just a feature.
+988540	991480	You know, my phone has the camera affordance.
+991480	995440	Right, and that's not quite it. It's not a feature of the object, and it's not a skill
+995440	1001660	of the user. It is the handshake between the two. The potential for a meaningful interaction.
+1002020	1003540	The classic example is a chair.
+1003540	1008380	Right. The classic example is a chair. Does a simple wooden chair have the affordance
+1008380	1009280	of sitability?
+1009840	1013060	Well, yes. Of course. That's what it's for.
+1013240	1020160	For you, a human, yes. Your body has the right size, the right joint structure. The chair has
+1020160	1025680	the right height, the right flat surface. The relationship works. The affordance of sitting
+1025680	1027600	exists in that coupling.
+1027940	1029020	But what if you're an elephant?
+1029020	1034680	Then the chair is absolutely not for sitting. For an elephant, it might afford being smashed
+1034680	1040220	or being a minor obstacle. But the sitting affordance does not exist for the elephant
+1040220	1042100	chair coupling. It's gone.
+1042460	1048260	The paper uses a slightly more terrifying example. The affordance of breathing.
+1048540	1051600	Right. Let's look at the formula they use, just conceptually.
+1052140	1057660	Four netters is the set of all affordances, all activities, available to you at time, $10.
+1057660	1059320	My menu of options.
+1059400	1065380	Your menu of options. Right now, sitting in this studio, the activity breathing is on
+1065380	1070360	your menu. It's in your set four netters. You have lungs. That's the agent's contribution.
+1070900	1076200	And the room has air. That's the environment's contribution. The relation holds.
+1076560	1080280	But if you take me and drop me in the middle of the Pacific Ocean...
+1080280	1084980	Your internal machinery hasn't changed one bit. You still have the same lungs. You're just
+1084980	1089100	as smart. You have the same memories, the same capabilities you had a moment before.
+1089300	1090700	But the environment has changed.
+1090800	1095000	The environment has changed dramatically. The air is gone. The relation is broken. And
+1095000	1099180	so the breathing affordance instantly vanishes from your set affordance.
+1099600	1103680	And my overall complexity drops to zero pretty quickly after that.
+1103860	1109920	Tragically so. But it proves the point with brutal clarity. Complexity isn't something you
+1109920	1112580	just carry around inside your skin. It's relational.
+1112580	1120240	So a supercomputer. A machine with more processing power than all of humanity combined. If you just
+1120240	1122140	float it in the vacuum of space.
+1122400	1129020	It has almost zero complexity. It has no inputs to process. No outputs to affect the world.
+1129320	1132500	It can't do anything. It's just a warm, inert box.
+1132500	1138240	This really dismantles those old brain-in-a-vat thought experiments, doesn't it? We used to think
+1138240	1143740	if we could just perfectly simulate a brain, it would be conscious and complex all by itself.
+1144080	1149540	And this framework, which is part of a broader movement called inactivism, says that's nonsense.
+1150020	1156980	You are not a brain riding a body like a driver in a car. You are the entire coupled system of brain,
+1157340	1159760	body, and world all acting together.
+1159760	1165160	So if you take a simple organism, let's go back to our spider, and you put it in a really rich,
+1165300	1170000	complex environment with lots of anchor points, wind currents, different kinds of prey.
+1170200	1175580	Its activity space, its set of affordances just explodes. The spider in the rich environment
+1175580	1177400	system becomes incredibly complex.
+1177680	1182800	So this is the relational view. Complexity is what you can do with what you have, where you are.
+1183040	1187760	It's not additive. You can't just keep adding more parts to the robot to make it more complex.
+1187760	1191400	Yeah. You have to design the robot to better couple with its world.
+1191620	1195200	Okay. And that coupling, that idea of the affordance landscape,
+1195600	1199680	leads us to a really counterintuitive point. I think this is in section three.
+1199880	1200980	Yes. Constraints.
+1201200	1207580	Right. If complexity is about having options, about having a big, diverse menu of affordances,
+1208280	1212820	then surely the goal is to have all the options. Infinite affordances.
+1212820	1217220	I want to be able to fly and breathe underwater and see through walls.
+1217420	1219240	I'd definitely take the flight option.
+1219400	1225000	Me too. But the paper argues that infinite options wouldn't just be unhelpful,
+1225200	1229780	they would actually destroy you. This is a section on constraints and the power of no.
+1230200	1231740	It's one of my favorite parts of the paper.
+1232020	1238540	So explain this to me. Why would no be powerful? Why is can't sometimes better than can?
+1238540	1244980	It all comes down to the problem of information processing. Think about the concept of absence,
+1245400	1251080	as the paper puts it. Some affordances are absent simply because they are physically impossible for
+1251080	1258840	you. Like me trying to fly by flapping my arms. Exactly. That is a hard constraint imposed on you
+1258840	1264600	by gravity and your own biology. Now you might see that as a limitation. A bummer.
+1264600	1272540	It is a bummer. But the paper argues it's an incredible gift because constraint is prior to
+1272540	1276660	choice. What does that mean prior to choice? It means that because that option is physically
+1276660	1282380	impossible, your brain and your body do not have to waste a single calorie, a single millisecond,
+1282540	1288460	even considering it. Yeah. The decision has been made for you by the universe. I see. So when I'm
+1288460	1294520	standing at the edge of a cliff, I don't have this complex internal debate. Hmm. Should I flap my wings?
+1294520	1299720	Today? Or should I take the stairs? The universe has already removed flap my wings from my menu.
+1299860	1304720	It's already crossed it off for you. Now imagine if you could do anything. Imagine if every single
+1304720	1311660	atom in this room was a valid handle for you to grab. Imagine if every direction was a valid path
+1311660	1316620	for locomotion, including straight up. I'd be paralyzed. I wouldn't even know where to start.
+1316680	1321620	It's overwhelming. We call that combinatorial explosion in computer science. If the number of
+1321620	1327840	possibilities is nearly infinite, the time it would take to calculate the best one also becomes
+1327840	1334500	infinite. You would just freeze, trapped by choice. So constraints act like, what, blinders on a horse?
+1334680	1338940	That's a perfect analogy. They cut off all the peripheral noise and distraction,
+1339340	1342640	so you can just move forward on the path that's actually available to you.
+1342640	1347820	The paper talks about a relevance function here. It uses the Greek letter row.
+1347980	1353760	Right. The relevance function one rowway is the great filter. In this mathematical model,
+1354320	1360760	all the irrelevant or impossible activities, like you trying to fly or trying to walk through that
+1360760	1367080	solid wall, they get a relevance score of zero. So they're filtered out before they even reach my
+1367080	1372320	decision-making process. They never even enter the dynamics. This is what the paper calls the
+1372320	1381120	economization of activity. By making 99.9% of all theoretical actions impossible, nature allows us
+1381120	1387000	to become really, really good at the tiny fraction that is possible. I love the analogy of the musician
+1387000	1392200	for this. I think it makes it really clear. Well, if you sit a musician down on a piano and say,
+1392200	1398540	play any note that exists in the universe, they might just produce noise. It's too open. But if
+1398540	1405360	you give them a key signature, say B-flat minor, you're imposing a constraint. You're limiting their
+1405360	1413180	options. You're saying, don't play these six notes, only play these other ones. Yes. But that very
+1413180	1419580	limitation is what creates the structure. Because they don't have to waste brainpower thinking about
+1419580	1426000	all the wrong notes, they can now creatively and fluently explore the rich relationships between
+1426000	1432340	all the right notes. The constraint enables the complexity. That is a perfect encapsulation of
+1432340	1438200	the argument. Structure is just a positive-sounding word for constraint. You can't build a complex
+1438200	1444440	skyscraper without rigid steel beams that limit where the floors and walls can go. Without those limits,
+1444740	1448880	you don't have a building, you just have a pile of bricks. So, okay, let's recap where we are.
+1448880	1452780	We have the now, which is synchronic. We have the relation, which is the affordance.
+1452960	1456660	And we have the limit, which is the constraint. The three pillars so far.
+1456940	1459700	But let's look at the structure of these activities themselves.
+1460460	1464320	Section four of the paper is called structure, composition, and automation.
+1464620	1469780	Right. Because your affordance landscape, your menu of options, isn't just a flat,
+1470020	1474740	unorganized list. It's not a grocery list. Eat, sleep, walk, talk.
+1474740	1481080	It has a hierarchy. Exactly. It has a hierarchy. The paper makes a distinction between basic
+1481080	1486660	affordances and composite affordances. Okay. What's the difference? Basic affordances are the
+1486660	1491900	sort of atomic units of action. They're the Lego bricks. Things like grasping an object with your
+1491900	1498080	hand, focusing your eyes on a point, lifting a single foot. And composite affordances are the
+1498080	1502820	complex structures you build out of those Lego bricks, like making a sandwich.
+1502820	1507780	Making a sandwich is a perfect example. Or driving a car. You can't just drive a car
+1507780	1513060	as a single action. You have to perform a whole sequence of basic affordances.
+1513460	1518460	Turn the wheel, press the pedal, look in the mirror, move the shifter. You chain them together
+1518460	1524260	in a stable pattern. But here's the crucial part, and it gets back to fluency. If I had to consciously
+1524260	1530480	think about every single one of those basic affordances while making a sandwich, I'd starve to
+1530480	1536960	death before I ever got to eat. Okay. Now I must grasp the knife. Now apply downward pressure.
+1537520	1542640	Now slice the bread. Now stop slicing. It would take forever.
+1542640	1548320	And this brings us to what might be the most important mechanism for complexity growth in
+1548320	1551200	the entire paper. Relegation of control.
+1551200	1555520	Relegation. It sounds like you're being demoted or sent away.
+1555520	1560160	In this context, it's a huge promotion for the system's overall efficiency.
+1560160	1566240	When a composite activity like driving or making a sandwich becomes stable and reliable through
+1566240	1569920	practice, the agent stops consciously managing the details.
+1569920	1574160	You stop thinking about turning the wheel and you start thinking about the goal, like going to the
+1574160	1579120	store. Precisely. The low-level details get compressed and automated. They get chunked together.
+1579120	1582640	The paper has a term for this, right? The projection operator.
+1582640	1586640	Yes. The projection operator, which they denote with a dollar.
+1587520	1594320	The math is a bit dense, but the concept is beautiful. Imagine taking a thousand tiny distinct
+1594320	1599440	gods that represent your basic actions and then drawing a big circle around them and giving that
+1599440	1603920	whole collection a single simple label. One thing.
+1603920	1609120	So turn wheel, press gas, check mirror becomes drive.
+1609120	1612400	It gets projected onto a simpler higher level description.
+1613280	1618800	You now treat that complex chain of actions as if it were a single basic unit. This is the
+1618800	1620320	automation we were talking about earlier.
+1620320	1625040	And this solves the manager problem, the homunculus fallacy. Tell me more about that.
+1625040	1631520	Well, there's this old sort of fallacy in AI and cognitive science that for a system to be
+1631520	1636880	coordinated, you need a central executive or a manager in the brain that's supervising everything,
+1636880	1641120	a little man in the head pulling all the levers. And this model says you don't need that little
+1641120	1647040	man. Right. If the system can automate its own subroutines, if the legs can just handle the walking
+1647040	1651760	so the brain doesn't have to, you don't need a manager for the legs. You relegate control.
+1651760	1659520	You relegate the control down to the limbs themselves or to the spinal cord or to the
+1659520	1665840	cerebellum, to these subconscious embodied habits. And this allows the agent to become incredibly
+1666480	1674400	mind bogglingly complex without needing a massive energy guzzling brain to micromanage every single
+1674400	1678800	twitch. So complexity isn't just about how many things you can do. It's about how many things
+1678800	1684320	you can do without thinking about them. It's about how many layers of trusted automation you were
+1684320	1690000	standing on top of at any given moment. You're standing on a pyramid of your own automated habits.
+1690000	1696000	But pyramids can crumble. And this is where the paper takes a darker, but I think even more fascinating
+1696720	1702640	turn. This is section five. Robustness, breakdown and flexibility. Right. This is the,
+1702640	1707280	so what happens when things go wrong section. And it starts by redefining robustness. We usually
+1707280	1713200	think of a robust system as being like a tank. It's hard, it's armored, it's unbreakable. If a tank
+1713200	1719600	hits a small wall, the wall breaks, the tank keeps going. But that's a very rigid, brittle definition of
+1719600	1725840	robustness. The paper argues for a different view, which they call viability. So what's a viability?
+1725840	1733600	Viability, or true robustness, isn't about never failing. It's not about executing action A perfectly
+1733600	1740640	every time. It's about having action B, C, and D available in your back pocket for the moment when
+1740640	1748960	action A inevitably fails. So it's the difference between a tank and maybe a tracer, a parkour athlete.
+1748960	1756080	That's a great comparison. The tank has one primary mode of engagement. Drive forward, crush obstacle.
+1756080	1762400	If the ground suddenly falls away into a deep chasm, the tank is finished. It has zero other options.
+1762400	1768560	It's stuck. It's stuck. The parkour athlete is all about flexibility. If the wall is too high to climb,
+1768560	1773920	they find a way to jump off another surface. If a ledge is slippery, they slide along it. If they fall,
+1773920	1779120	they know how to roll to dissipate the impact. They have a rich and diverse space of affordances.
+1779120	1784240	They have options. Exactly. The paper defines robustness as the ability to maintain a navigable
+1784240	1790480	space of activity. As long as the set of possible actions, which they call TAT, is greater than zero,
+1790480	1794960	as long as you have at least one move you can make, you are still in the game. You're viable.
+1794960	1801360	And this leads to the most interesting part, the idea of breakdown. Usually we think of a breakdown
+1801360	1807840	as the ultimate failure state. You know, the system crashed. But Fliction says a breakdown event is
+1807840	1814720	actually informative. It's a source of information. Think back to your driving analogy. You're fluently
+1814720	1820560	driving to work. You're thinking about your day, listening to the radio. You are on autopilot.
+1820560	1827600	The drive to work composite affordance is active. It is. Then suddenly your car hits a patch of black
+1827600	1833920	ice and begins to skid. Okay. The autopilot disengages instantly. All alarms go off. What
+1833920	1839600	happens to your awareness? Where does your attention go? It zooms right in. Suddenly I am intensely aware
+1839600	1845280	of the steering wheel in my hands. I can feel the vibration from the tires through the chassis. I'm
+1845280	1852160	consciously pumping the brakes. I'm no longer driving to work. I am correcting a dangerous skid. You've put it
+1852160	1857360	perfectly. The high level composite affordance of drive to work has collapsed. It's failed. And the
+1857360	1863920	basic affordances, steer, brake, look, have rushed back to the surface of my consciousness. The
+1863920	1870880	relegation of control has been undone. It's been undone. And the peeper's brilliant insight is that this
+1870880	1878160	moment of breakdown proves the underlying complexity of the system. How so? Because if you were a truly
+1878160	1884720	simple machine, like a toy car on a track, you would just crash. You wouldn't have any lower layers of
+1884720	1891920	control to fall back on. The very fact that you can decompose the fluent action, you can fluidly shift
+1891920	1898480	from driving to steering and braking, shows that all that complexity was there all along. It was just hidden
+1898480	1905120	by your own fluency. So a system that breaks down gracefully and then reorganizes itself to cope with the
+1905120	1911760	new situation is actually the height of complexity. It's the pinnacle. And this reorganization doesn't
+1911760	1918240	have to be some high level intelligent plan. It can be what the paper calls morphological interaction.
+1918240	1923040	You don't need a master plan to correct a skid. You just use your body. You turn into the skid.
+1923040	1927680	You feel the physics of the situation. You sort of bump into the world in a different way until
+1927680	1932640	stability returns. This feels like it connects directly to the philosophical part of the paper,
+1932640	1938400	the intentional stance discussed in section six. It does. Because when my car is skidding on ice,
+1938400	1945200	I'm not really planning in a cool, detached way. I'm just reacting. But an outside observer would
+1945200	1950080	absolutely say he is trying to regain control. They would assign a goal to my actions.
+1950080	1959440	And that brings us to the big philosophical pivot. Can we legitimately say a system has a goal
+1959440	1965600	or an intention, if it doesn't have a human-like brain, to consciously represent that goal?
+1965600	1968320	This is the ghost in the machine question all over again, isn't it?
+1968320	1974240	It is. And the paper handles it in a very pragmatic way by borrowing from the philosopher Daniel Dennett.
+1974240	1977200	He proposed something called the intentional stance.
+1977200	1978160	What's the stance?
+1978160	1986000	It's a practical tool, not a metaphysical claim. It simply asks the question, is it explanatorily fruitful
+1986000	1989280	to describe the system's behavior as if it has a goal?
+1989280	1992480	So does it help us understand and predict what's going to happen next?
+1992480	1998720	Exactly. Take a heat-seeking missile. Does it love heat? Does it desire to be near the jet engine?
+1998720	2000960	Does it hate the cold emptiness of the sky?
+2000960	2004000	No, of course not. It's just a bunch of sensors and circuitry.
+2004000	2010640	Right. But if your job is to predict where that missile is going to go, it is incredibly useful
+2010640	2014000	and efficient to say it wants to hit the hot target.
+2014000	2020240	Because if I tried to predict its path by calculating the voltage across every wire inside it,
+2020240	2026320	I'd be there for 100 years and the plane would already be gone. The goal is a predictive shortcut.
+2026320	2032960	It's an explanatory filter. It filters out all the messy, low-level details of the mechanism,
+2032960	2038400	allows us to focus on the coherent, organized structure of the behavior.
+2038400	2042160	And the paper argues that for the purpose of measuring complexity,
+2042160	2045520	we don't care if the agent really has a goal deep in its soul.
+2045520	2048960	We just care if its behavior is structured as if it has a goal.
+2048960	2049600	You got it.
+2049600	2054240	And this is the move that allows us to finally compare a biological cell
+2054240	2056800	and a sophisticated robot on the same terms.
+2056800	2062880	Yes. A white blood cell that is chasing a bacterium through your bloodstream,
+2062880	2067200	and a Roomba that is seeking its charging dock when its battery is low.
+2067200	2070720	Neither of them has a brain in the human sense. Neither is thinking,
+2070720	2072880	oh, I'm hungry for electricity.
+2072880	2079920	But both of them exhibit what the paper calls behavioral complexity, or CBATT.
+2079920	2086640	They behave in a stable, goal-directed way. They act as if they have intent.
+2086640	2091200	And by adopting this stance, we can use the same language, and even the same math,
+2091200	2096720	to describe the complexity of a living organism and an artificial one. We don't have to get bogged
+2096720	2102320	down asking, but does it have a soul? We just ask, does its behavior have a direction?
+2102320	2107920	It cleanly removes the metaphysics from the equation, which is absolutely essential if you
+2107920	2111360	want to build a rigorous objective science of complexity.
+2111360	2116560	This leads us to the final problem. And it's a very human problem. The problem of comparison.
+2116560	2117360	We love a winner.
+2117360	2120880	We love a winner. We need a leaderboard. We want to be able to rank things.
+2120880	2122480	We want to know who is number one.
+2122480	2127120	Exactly. I want to be able to say, humans are a hundred out of a hundred on the complexity scale.
+2127600	2131760	Chimps are an 80. Spiders are a 10. My Roomba is a 2.
+2132320	2138000	And the paper looks that desire and says, quite firmly, stop it. You can't do that. It's a
+2138000	2142880	meaningless exercise. Why not? Why can't we just measure everyone's affordance landscape and see
+2142880	2148080	who has the most? Because of a concept from mathematics called incomparability.
+2149200	2153520	The paper uses the symbol of two parallel lines to represent this.
+2153520	2160800	$8 key AT. Parallel A to an AT. That means the two agents are running on parallel tracks that never
+2160800	2166800	intersect in a way that allows for a simple greater than or less than judgment.
+2166800	2169440	It's the classic apples and oranges problem.
+2169440	2174800	It's the submarine versus the skyscraper problem. Which one is better or more complex?
+2174800	2179040	Well, it's a nonsensical question. The submarine is better at moving underwater,
+2179040	2182080	and the skyscraper is better at staying still and being tall.
+2182080	2189040	Exactly. Their activity spaces, their sets of affordances are almost completely disjoint.
+2189760	2194800	One has affordances related to buoyancy and pressure. The other has affordances related
+2194800	2201760	to structural load and wind shear. There's no universal neutral metric of complexity that you
+2201760	2205200	can apply fairly to both. So you can only compare them locally?
+2205200	2208880	You can only compare them locally. You can ask which is better at withstanding water pressure,
+2208880	2213600	and the submarine wins. You can ask which can house more people, and the skyscraper wins.
+2213600	2216880	But you can't ask which is globally more complex.
+2216880	2220640	The question is mathematically meaningless within this framework,
+2220640	2224640	and this leads to what the paper calls plurality and indeterminacy.
+2226000	2231680	We just have to accept that there is no single peak on the mountain of evolution or design.
+2231680	2233520	There are many, many different peaks.
+2233520	2240960	That is surprisingly humble. It's a framework that intentionally takes humans off the pedestal.
+2240960	2247600	We aren't the ultimate goal of evolution. We're just one possible type of complex system among many.
+2247600	2252800	We're just one specific and in many ways very weird configuration of affordances.
+2252800	2259360	A spider is another. A coral reef is another. A sophisticated AI running a global supply chain is
+2259360	2262800	another. They are all valid. They are all real forms of complexity.
+2262800	2267840	Okay, so let's try to bring this all home. Let's synthesize this. We started this journey with the
+2267840	2273120	image of the clock and the reef. We did. We moved from the clean, deterministic,
+2273120	2279600	mechanical view to the messy, relational, ecological view. We learned about synchronic complexity,
+2279600	2284560	the radical idea that what matters is what you can do now, not how you learn to do it.
+2284560	2290000	Then we learned about the affordance landscape, that complexity doesn't live inside your head.
+2290000	2293120	It lives in the relationship between you and your world.
+2293120	2301040	We saw how constraints, the power of no, are not limitations but are actually the secret ingredient
+2301040	2305840	that structures behavior and makes complexity possible in the first place.
+2305840	2312320	And we saw how relegation and automation are the engines that allow that complexity to scale up,
+2312320	2316560	to build pyramids of habit so you don't get overwhelmed by the details.
+2316560	2322720	And finally, we have to let go of our desire to rank everything on a single human-centric line.
+2322720	2325280	We have to accept that complexity is plural.
+2325280	2328800	Rich forms of agency need not be intelligent in order to be real.
+2329760	2332800	I think that's the final powerful argument of the paper.
+2332800	2337040	It really does change how I look at the world. I find myself looking for the brain
+2337040	2341920	behind things less and less. Instead, I'm looking for the flow. I'm looking for the fit.
+2341920	2342640	The coupling.
+2342640	2348080	The coupling. When I see a bird effortlessly navigating a dense forest at high speed,
+2348080	2353120	I'm no longer impressed by its abstract IQ. I'm just in awe of its perfect,
+2353120	2357280	fluent coupling with the air, the branches, its own momentum.
+2357280	2364880	It democratizes agency. It allows us to finally appreciate the genius of the mindless.
+2364880	2371760	So I want to leave you, our listener, with a thought to chew on today. A bit of homework,
+2371760	2372240	if you will.
+2372240	2374640	Always good to send them off with a puzzle.
+2374640	2379760	Think about your own day. We pride ourselves on our intelligence,
+2379760	2384800	our conscious planning, our deliberate learning, our inner managerial brain.
+2386000	2391360	But I want you to conduct an audit of your own complexity. How much of your day is actually spent
+2391360	2395600	in that mode of thinking? And how much is spent in a state of fluency?
+2395600	2401360	Exactly. Driving your car, typing on a keyboard, walking down a crowded street,
+2401360	2406320	cooking a familiar meal, navigating the subtle cues of a conversation with a friend.
+2406320	2410880	All the things you do without really doing them. Right. So here's the question. Are you actually
+2410880	2416960	at your most complex, your most capable, when you are thinking the least? Is your autopilot
+2416960	2420480	actually the most sophisticated, most impressive thing about you?
+2420480	2427600	That is a very humbling thought to end on. Thanks for taking the deep dive. See you next time.

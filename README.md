@@ -1,8 +1,14 @@
-![](template.png)
-
 # Library 
 
 Enacting cognitive landscapes
+
+# Complexity without Intelligence
+
+[Paper](https://standardgalactic.github.io/library/Complexity%20without%20Intelligence.pdf)
+
+[Audio Overviews](https://standardgalactic.github.io/library/complexity/)
+
+![](template.png)
 
 # On Noah's Ark
 

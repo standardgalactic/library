@@ -1,0 +1,1984 @@
+1
+00:00:00,000 --> 00:00:07,340
+Welcome back to the deep dive. I want to start today with a mental image. It might sound a little
+
+2
+00:00:07,340 --> 00:00:12,220
+bit cliche at first, but just just stay with me on this. Okay, I'm with you. I want you to picture
+
+3
+00:00:12,220 --> 00:00:19,160
+the ultimate machine, the perfect clockwork universe. Right. Brass gears, intricate springs,
+
+4
+00:00:19,260 --> 00:00:25,620
+the whole thing. Endless brass gears. You can see them turning, springs coiling up, pistons firing
+
+5
+00:00:25,620 --> 00:00:31,520
+with, you know, perfect precision. It's engineered. It is completely deterministic. So if you know
+
+6
+00:00:31,520 --> 00:00:36,560
+where one gear is, you know where everything else is going to be. Exactly. And that image,
+
+7
+00:00:36,740 --> 00:00:44,020
+that clock has really been our dominant metaphor for, for how things work for what, 300 years? At
+
+8
+00:00:44,020 --> 00:00:50,460
+least since Newton, really. But now I want you to take that machine in your mind and I want you to
+
+9
+00:00:50,460 --> 00:00:56,880
+break it. Break it? How? Just melt it down. Watch the brass soften. The gears start to lose their
+
+10
+00:00:56,880 --> 00:01:02,460
+teeth. Watch them dissolve into something organic. Okay. And suddenly you're not looking at a machine
+
+11
+00:01:02,460 --> 00:01:08,700
+anymore. You're looking at a coral reef. Ah, okay. That's a massive shift in texture from cold metal
+
+12
+00:01:08,700 --> 00:01:14,960
+to, to life. Right. It's messy. It feels almost chaotic. You've got thousands of different species
+
+13
+00:01:14,960 --> 00:01:19,640
+interacting. They're eating. They're dying. They're growing on top of each other. It's a
+
+14
+00:01:19,640 --> 00:01:25,560
+teeming biological ecosystem. I'm with you. The clock and the reef. So here's the question that
+
+15
+00:01:25,560 --> 00:01:32,900
+really launches our whole investigation today. Which one of those two images, the perfect clock
+
+16
+00:01:32,900 --> 00:01:41,300
+or the messy reef, is actually more complex? Well, that's a trap of a question, isn't it? It is a bit
+
+17
+00:01:41,300 --> 00:01:47,580
+of a trap. Because historically, science and, you know, especially the field of artificial intelligence
+
+18
+00:01:47,580 --> 00:01:53,960
+would have pointed straight at the clock without hesitation. Why? Because we built it. Because we
+
+19
+00:01:53,960 --> 00:01:58,780
+can explain it. We love the clock because it's rational. It's reducible. We look at the reef and
+
+20
+00:01:58,780 --> 00:02:05,020
+we just see, well, chaos. We wave our hands and call it nature or instinct. Exactly. And it's that
+
+21
+00:02:05,020 --> 00:02:11,180
+bias, that deep-seated preference for the engineered over the organic that we are going to try and
+
+22
+00:02:11,180 --> 00:02:17,540
+dismantle today. It's a big project. It is. We're opening up a file that I genuinely think is going
+
+23
+00:02:17,540 --> 00:02:25,300
+to fundamentally change how you, the listener, look at intelligence and complexity. The paper is titled
+
+24
+00:02:25,300 --> 00:02:32,900
+Complexity Without Intelligence. It's by a researcher named Flixian, and it was just published January 24,
+
+25
+00:02:33,200 --> 00:02:40,500
+2026. And that title alone is, I mean, it's deliberately provocative. Complexity Without Intelligence.
+
+26
+00:02:40,500 --> 00:02:46,840
+It feels like an oxymoron, right? A contradiction in terms. We are just so trained to think that
+
+27
+00:02:46,840 --> 00:02:53,820
+smart equals complex. It's our default setting. If I show you a supercomputer that's, you know,
+
+28
+00:02:54,020 --> 00:02:58,840
+beating a grandmaster at chess, you're going to say, wow, that is a complex system. Of course.
+
+29
+00:02:59,160 --> 00:03:04,540
+But if I show you a common garden spider weaving this incredibly intricate, beautiful web,
+
+30
+00:03:04,980 --> 00:03:09,780
+you're probably going to say, well, that's just instinct. That's just biology doing its thing.
+
+31
+00:03:09,780 --> 00:03:15,080
+We dismiss it. We dismiss the spider. We assume that because the spider isn't consciously thinking
+
+32
+00:03:15,080 --> 00:03:21,020
+about, I don't know, the tensile strength of its own silk or calculating the geometric angles in its
+
+33
+00:03:21,020 --> 00:03:27,020
+head, that the activity itself must be simple. But Flixian is here to argue that we have this
+
+34
+00:03:27,020 --> 00:03:33,840
+completely fundamentally backward. The mission of this paper, and really our mission for this deep dive,
+
+35
+00:03:33,840 --> 00:03:39,580
+is to take a scalpel and surgically separate two ideas that have been glued together for decades.
+
+36
+00:03:39,580 --> 00:03:46,860
+And those two ideas are? What an agent knows so, its intelligence, its ability to learn, and what an
+
+37
+00:03:46,860 --> 00:03:53,880
+agent does, its complexity. And to really appreciate why that's such a heavy lift, you have to understand
+
+38
+00:03:53,880 --> 00:03:58,500
+the sheer amount of historical baggage we're all carrying. What do you mean?
+
+39
+00:03:58,500 --> 00:04:06,140
+Well, for the last 70 years or so, cognitive science, AI, philosophy of mind, they've all been
+
+40
+00:04:06,140 --> 00:04:09,400
+completely obsessed with the internal.
+
+41
+00:04:09,660 --> 00:04:10,300
+The brain.
+
+42
+00:04:10,420 --> 00:04:13,200
+The brain, the CPU, the little ghost in the machine.
+
+43
+00:04:13,300 --> 00:04:15,640
+We're always trying to peek inside the black box.
+
+44
+00:04:15,720 --> 00:04:21,220
+Precisely. We measure an agent's complexity by looking for evidence internal deliberation.
+
+45
+00:04:21,220 --> 00:04:27,860
+We look for planning. We look for reasoning. And most of all, we look for the ability to learn
+
+46
+00:04:27,860 --> 00:04:28,540
+new tricks.
+
+47
+00:04:29,100 --> 00:04:33,460
+And if a system can't learn, we basically write it off. We call it dumb or brittle.
+
+48
+00:04:33,980 --> 00:04:40,380
+We do. But this paper argues that this view is just incredibly narrow. It's like looking at the
+
+49
+00:04:40,380 --> 00:04:49,760
+world through a keyhole. It misses the staggering, mind-boggling complexity of systems that just work.
+
+50
+00:04:49,760 --> 00:04:51,820
+Systems that don't have to think about it.
+
+51
+00:04:52,140 --> 00:04:56,580
+Systems that function perfectly in the present moment, whether or not they have an inner life
+
+52
+00:04:56,580 --> 00:04:59,940
+or are consciously deliberating about their actions.
+
+53
+00:05:00,100 --> 00:05:05,260
+You mentioned before we started that we have this habit of ranking things, like some cosmic
+
+54
+00:05:05,260 --> 00:05:06,660
+leaderboard of existence.
+
+55
+00:05:06,720 --> 00:05:11,180
+Oh, we're obsessed with it. It's the great chain of being all over again. You've got humans at the
+
+56
+00:05:11,180 --> 00:05:13,000
+very top naturally.
+
+57
+00:05:13,200 --> 00:05:13,740
+Of course.
+
+58
+00:05:13,900 --> 00:05:18,780
+Then maybe chimps, then dogs, maybe dolphins if we're feeling generous. And then way,
+
+59
+00:05:18,780 --> 00:05:21,160
+way down to the bottom, you've got the insects and-
+
+60
+00:05:21,160 --> 00:05:22,500
+And the poor Roombas.
+
+61
+00:05:22,600 --> 00:05:23,440
+And the poor Roombas.
+
+62
+00:05:23,780 --> 00:05:31,940
+But the point is, we rank them based on one single criterion. How close are they to us?
+
+63
+00:05:32,660 --> 00:05:36,300
+How close do they come to mimicking human-style cognition?
+
+64
+00:05:36,620 --> 00:05:39,680
+That's what Fliction calls the deliberation bias, right?
+
+65
+00:05:39,680 --> 00:05:46,440
+We confuse the complexity of an action with the perceived effort of thinking really hard
+
+66
+00:05:46,440 --> 00:05:47,340
+about that action.
+
+67
+00:05:47,840 --> 00:05:54,340
+Okay. So the paper identifies this huge problem, this bias. What's the solution it offers? It
+
+68
+00:05:54,340 --> 00:05:56,280
+proposes a new framework.
+
+69
+00:05:56,560 --> 00:05:59,040
+It does. They call it an affordance-based account.
+
+70
+00:05:59,280 --> 00:06:04,560
+Right. Now, affordance is a word that gets thrown around a lot, you know, in user experience,
+
+71
+00:06:04,560 --> 00:06:10,840
+design, in psychology. But how is it being used here? It feels very specific.
+
+72
+00:06:11,260 --> 00:06:17,860
+It's very specific, and it signals a fundamental pivot. We are pivoting away from trying to count
+
+73
+00:06:17,860 --> 00:06:22,500
+how much RAM an agent has or how many neurons are in its frontal cortex.
+
+74
+00:06:22,700 --> 00:06:24,580
+But we're not looking inside the box anymore.
+
+75
+00:06:24,700 --> 00:06:27,860
+We're looking at the relationship between the agent and its environment.
+
+76
+00:06:27,980 --> 00:06:30,620
+The relationship. Okay. That feels like the key.
+
+77
+00:06:30,620 --> 00:06:36,320
+It is. The central claim here is that complexity isn't something you carry around inside your head
+
+78
+00:06:36,320 --> 00:06:41,580
+like a wallet. Complexity is something that happens between you and the world. It emerges
+
+79
+00:06:41,580 --> 00:06:42,520
+in the interaction.
+
+80
+00:06:42,940 --> 00:06:48,040
+Okay. I want to dig into that relationship a lot more. But first, let's establish the first
+
+81
+00:06:48,040 --> 00:06:52,840
+big pillar of the paper's argument, this concept of synchronic complexity.
+
+82
+00:06:53,160 --> 00:06:56,860
+Yes. This is the absolute foundation for everything else.
+
+83
+00:06:56,860 --> 00:07:03,540
+Synchronic? It sounds, I don't know, like a heavy metal band or maybe a fiercely technical
+
+84
+00:07:03,540 --> 00:07:05,260
+term from linguistics.
+
+85
+00:07:05,460 --> 00:07:10,960
+It actually does come from linguistics. From Saussure. He made this distinction. You have
+
+86
+00:07:10,960 --> 00:07:15,920
+diachronic linguistics, which is the study of how language changes over time. You know,
+
+87
+00:07:15,980 --> 00:07:17,120
+its history, its evolution.
+
+88
+00:07:17,260 --> 00:07:19,600
+Right. Like how Latin became French and Spanish.
+
+89
+00:07:19,600 --> 00:07:25,720
+Exactly. And then you have synchronic linguistics, which studies the language system as it exists
+
+90
+00:07:25,720 --> 00:07:30,060
+at one specific point in time. A snapshot. Frozen.
+
+91
+00:07:30,920 --> 00:07:37,220
+So when Fliction talks about synchronic complexity, they're asking us to take a snapshot and completely
+
+92
+00:07:37,220 --> 00:07:38,260
+ignore the history.
+
+93
+00:07:38,500 --> 00:07:39,520
+Completely and utterly.
+
+94
+00:07:39,760 --> 00:07:39,980
+Yeah.
+
+95
+00:07:40,120 --> 00:07:45,220
+Forget how the agent got to be the way it is. Forget if it evolved over millions of years
+
+96
+00:07:45,220 --> 00:07:50,740
+of natural selection. Forget if it was programmed by a genius five minutes ago. Forget if it learned
+
+97
+00:07:50,740 --> 00:07:53,360
+a skill through 10,000 hours of practice.
+
+98
+00:07:53,480 --> 00:07:54,880
+You're saying none of that matters.
+
+99
+00:07:55,100 --> 00:08:00,160
+For measuring synchronic complexity, no. We don't care. We are asking one simple question.
+
+100
+00:08:01,080 --> 00:08:07,540
+What can this agent do with rich, structured competence right now?
+
+101
+00:08:07,540 --> 00:08:14,520
+Okay. But that seems a little unfair to the learners, doesn't it? I mean, if I spent 10 years
+
+102
+00:08:14,520 --> 00:08:18,520
+of my life learning to play the piano and you build a robot that can just play it instantly,
+
+103
+00:08:18,820 --> 00:08:20,980
+don't I get some credit for all that effort?
+
+104
+00:08:21,140 --> 00:08:27,020
+Oh, absolutely. You get enormous credit for intelligence. You get credit for having a powerful
+
+105
+00:08:27,020 --> 00:08:33,380
+learning capacity. But the paper makes a very sharp distinction here. It argues you do not get
+
+106
+00:08:33,380 --> 00:08:36,380
+extra credit for the complexity of the performance itself.
+
+107
+00:08:36,380 --> 00:08:40,620
+So if the robot plays the concerto perfectly and I play it perfectly...
+
+108
+00:08:40,620 --> 00:08:47,020
+The complexity of the activity, the organized, goal-directed behavior, is identical in that
+
+109
+00:08:47,020 --> 00:08:47,400
+moment.
+
+110
+00:08:47,600 --> 00:08:52,300
+Ah, okay. I see the line they're drawing. It's really about separating the journey from the
+
+111
+00:08:52,300 --> 00:08:52,860
+destination.
+
+112
+00:08:53,200 --> 00:08:59,180
+Precisely. And they don't just state this, they formalize it. And I think it's worth just touching
+
+113
+00:08:59,180 --> 00:09:01,860
+on the logic, even if we skip the deep math.
+
+114
+00:09:01,980 --> 00:09:02,560
+Go for it.
+
+115
+00:09:02,560 --> 00:09:09,560
+They create two distinct variables. There's TCA, TT, T-day, which is the complexity of agent
+
+116
+00:09:09,560 --> 00:09:11,380
+A at a specific time T.
+
+117
+00:09:11,380 --> 00:09:16,860
+Right. C of A at time T. That T is doing a lot of work there, emphasizing the now.
+
+118
+00:09:17,120 --> 00:09:21,520
+It is. And then there's a completely separate variable, the learners, which stands for the
+
+119
+00:09:21,520 --> 00:09:25,760
+learning operator. That's the agent's ability to change its complexity over time.
+
+120
+00:09:25,760 --> 00:09:28,080
+So it's ability to get better or worse.
+
+121
+00:09:28,080 --> 00:09:36,140
+Exactly. And here's the paper's most radical claim. TAA, AT, and LRLers are independent variables.
+
+122
+00:09:36,360 --> 00:09:38,400
+They're not necessarily correlated.
+
+123
+00:09:38,620 --> 00:09:45,080
+Meaning, you can have an agent with incredibly high complexity, but basically zero ability
+
+124
+00:09:45,080 --> 00:09:45,660
+to learn.
+
+125
+00:09:45,660 --> 00:09:51,800
+Exactly. And conversely, you can have an agent with a massive capacity for learning, but very
+
+126
+00:09:51,800 --> 00:09:53,560
+low complexity in the present moment.
+
+127
+00:09:53,780 --> 00:09:56,780
+Give me an example of that second one. High learning, low complexity.
+
+128
+00:09:57,080 --> 00:10:03,600
+A human baby. An infant is arguably the most powerful learning machine on the planet. Its LRL value
+
+129
+00:10:03,600 --> 00:10:09,560
+is off the charts. It's just this incredible sponge for information and new skills.
+
+130
+00:10:09,560 --> 00:10:16,920
+But it's TAA. TAA. Its ability to actually do stuff right here, right now. It's pretty low. I mean,
+
+131
+00:10:16,980 --> 00:10:21,400
+it can barely hold its own head up. It can't navigate. It can't feed itself. Its present moment
+
+132
+00:10:21,400 --> 00:10:22,560
+complexity is minimal.
+
+133
+00:10:22,960 --> 00:10:25,480
+Okay. Versus the spider.
+
+134
+00:10:25,920 --> 00:10:32,300
+Versus the spider. The spider might have a learning operator that's close to zero. It's not going to
+
+135
+00:10:32,300 --> 00:10:38,420
+learn calculus. It probably won't even learn how to weave a fundamentally new style of web if you move
+
+136
+00:10:38,420 --> 00:10:45,460
+it to a different continent. It's fixed. It's largely fixed. But it's CA. The geometric precision
+
+137
+00:10:45,460 --> 00:10:52,000
+of the web. The material science of handling the silk. The vibration sensing it's performing right
+
+138
+00:10:52,000 --> 00:11:00,080
+this second to monitor for prey. That is astronomically high. So for decades, we've been judging the spider
+
+139
+00:11:00,080 --> 00:11:06,740
+for being stupid because its cellios is low, while completely ignoring that its city A-T-Feo is performing
+
+140
+00:11:06,740 --> 00:11:11,060
+a feat of engineering that our most advanced robots still struggle to replicate.
+
+141
+00:11:11,300 --> 00:11:16,280
+That's the internal bias again. We've been looking for the brain that learns and we've totally missed
+
+142
+00:11:16,280 --> 00:11:17,940
+the body that performs so beautifully.
+
+143
+00:11:18,300 --> 00:11:23,680
+This leads directly to the idea of fluency. And I have to admit, this is the part of the paper that
+
+144
+00:11:23,680 --> 00:11:26,440
+really flicked my entire perspective upside down.
+
+145
+00:11:26,500 --> 00:11:27,420
+I had the same reaction.
+
+146
+00:11:27,660 --> 00:11:32,320
+Because usually if I do something without thinking, I consider that, well, mindless. Like,
+
+147
+00:11:32,320 --> 00:11:36,080
+I'm on autopilot. And we usually use autopilot as a criticism.
+
+148
+00:11:36,640 --> 00:11:38,720
+You're just phoning it in. You're not really present.
+
+149
+00:11:39,460 --> 00:11:45,440
+Right. But Felines comes along and says that autopilot, or what they call fluency,
+
+150
+00:11:46,080 --> 00:11:49,780
+is actually a sign of higher complexity, not lower.
+
+151
+00:11:50,040 --> 00:11:55,160
+It's what I call the paradox of proficiency. The better you get at something, the less you think
+
+152
+00:11:55,160 --> 00:11:55,560
+about it.
+
+153
+00:11:55,780 --> 00:11:56,840
+Walk me through an example.
+
+154
+00:11:56,840 --> 00:12:02,420
+Okay. Think about a student who's learning a second language for the first time. Let's say
+
+155
+00:12:02,420 --> 00:12:06,100
+it's an American student in Paris trying to order a cup of coffee.
+
+156
+00:12:06,340 --> 00:12:08,520
+A universally high-stress situation.
+
+157
+00:12:09,140 --> 00:12:15,360
+Incredibly high-stress. Their brain is firing on all cylinders. They are consciously accessing
+
+158
+00:12:15,360 --> 00:12:21,640
+vocabulary, wrestling with grammar. They're translating every single word in their head.
+
+159
+00:12:21,640 --> 00:12:29,060
+Je voudrais un café. They are deliberating. They're using massive amounts of intelligence
+
+160
+00:12:29,060 --> 00:12:30,620
+and working memory.
+
+161
+00:12:30,760 --> 00:12:33,100
+They are thinking very, very hard.
+
+162
+00:12:33,360 --> 00:12:38,500
+Now, look at the Parisian locals standing in line next to them. They lean over and order
+
+163
+00:12:38,500 --> 00:12:43,020
+their coffee while simultaneously scrolling on their phone, maybe lighting a cigarette,
+
+164
+00:12:43,480 --> 00:12:45,220
+and dodging a person walking by.
+
+165
+00:12:45,380 --> 00:12:46,780
+They don't think about the French at all.
+
+166
+00:12:46,780 --> 00:12:52,440
+Not for a second. They are fluent. Now, who is exhibiting more complexity in that moment?
+
+167
+00:12:52,820 --> 00:12:58,120
+Well, my old intuition would say the student because their brain is working harder. But based
+
+168
+00:12:58,120 --> 00:12:59,740
+on this paper, it's the local.
+
+169
+00:12:59,940 --> 00:13:07,040
+It's the local by a landslide because the local can sustain multiple modes of activity at the same
+
+170
+00:13:07,040 --> 00:13:13,480
+time. They can engage in a social transaction, process information from their phone, perform a
+
+171
+00:13:13,480 --> 00:13:18,860
+motor task like lighting a cigarette, and navigate physical space all at once.
+
+172
+00:13:18,960 --> 00:13:24,040
+Whereas the student is completely consumed by the single task, they're paralyzed by it.
+
+173
+00:13:24,040 --> 00:13:27,500
+The student is brittle. The local is robust.
+
+174
+00:13:28,200 --> 00:13:33,260
+Brittle versus robust. That feels like a really key distinction. The student is brittle because
+
+175
+00:13:33,260 --> 00:13:39,060
+if the barista asks an unexpected follow-up question like, do you want sugar with that?
+
+176
+00:13:39,060 --> 00:13:41,060
+Their whole system crashes.
+
+177
+00:13:41,520 --> 00:13:46,600
+Exactly. They have to reboot the whole deliberation process. The local adapts instantly without even
+
+178
+00:13:46,600 --> 00:13:52,220
+breaking their stride. The paper's point is that deliberation, that process of stopping and thinking
+
+179
+00:13:52,220 --> 00:13:57,000
+is actually a cognitive bottleneck. It consumes precious resources.
+
+180
+00:13:57,200 --> 00:13:59,180
+So fluency frees up those resources.
+
+181
+00:13:59,760 --> 00:14:05,640
+It frees them up, which allows you to layer more activities on top. So in this framework,
+
+182
+00:14:05,640 --> 00:14:08,260
+not thinking, is a superpower.
+
+183
+00:14:08,560 --> 00:14:13,700
+It's the ultimate role of complexity, to push all the difficult stuff into the background so
+
+184
+00:14:13,700 --> 00:14:17,240
+you can interact with the world on a higher, more integrated level.
+
+185
+00:14:17,280 --> 00:14:17,800
+You've got it.
+
+186
+00:14:18,100 --> 00:14:23,920
+I want to pause on that term modes of activity for a second. The paper defines them as stable,
+
+187
+00:14:24,540 --> 00:14:32,200
+goal-explainable patterns of engagement. But isn't there a danger in defining complexity by
+
+188
+00:14:32,200 --> 00:14:34,580
+stability? I mean, a rock is very stable.
+
+189
+00:14:34,580 --> 00:14:36,020
+Ah, that's a fair challenge.
+
+190
+00:14:36,140 --> 00:14:40,980
+A rock has a very stable pattern of engagement with the ground. It just sits there. It's a rock
+
+191
+00:14:40,980 --> 00:14:41,460
+complex.
+
+192
+00:14:41,880 --> 00:14:47,900
+It's a valid pushback. But the key is in the second part of the definition. Goal-explainable
+
+193
+00:14:47,900 --> 00:14:54,840
+patterns of engagement. A rock isn't really engaging with the environment to solve a problem
+
+194
+00:14:54,840 --> 00:15:00,360
+related to its own viability. It's just being subjected to the laws of physics, like gravity.
+
+195
+00:15:00,360 --> 00:15:05,980
+It's passive. It's passive. The person ordering coffee is actively solving multiple viability
+
+196
+00:15:05,980 --> 00:15:11,840
+problems simultaneously. Social interaction, caffeine acquisition, information gathering,
+
+197
+00:15:12,300 --> 00:15:18,240
+nictine addiction, navigation. They are juggling multiple balls to maintain their state.
+
+198
+00:15:18,760 --> 00:15:20,340
+The rock isn't juggling anything.
+
+199
+00:15:20,520 --> 00:15:24,600
+Okay. So complexity is the number of balls you can keep in the air at once.
+
+200
+00:15:24,760 --> 00:15:27,340
+Without having to consciously look at any of them.
+
+201
+00:15:27,340 --> 00:15:32,080
+That's a fantastic way to put it. The more you can do without deliberation, the higher
+
+202
+00:15:32,080 --> 00:15:33,460
+your synchronic complexity.
+
+203
+00:15:33,700 --> 00:15:34,180
+Exactly.
+
+204
+00:15:34,700 --> 00:15:39,840
+Which brings us right back to that crucial relationship with the world. We've established
+
+205
+00:15:39,840 --> 00:15:45,700
+that we're looking at the now, and we're looking for fluent, layered activity. But where does
+
+206
+00:15:45,700 --> 00:15:51,320
+this flow actually happen? It happens in what the paper calls the affordance landscape.
+
+207
+00:15:51,320 --> 00:15:54,860
+The landscape of possibilities. It's the space you move through.
+
+208
+00:15:54,860 --> 00:16:00,660
+Let's switch the visual in our heads again. The clock is gone. The reef is gone. Now I want you
+
+209
+00:16:00,660 --> 00:16:07,580
+to picture a map. A massive, stylized subway map, like the London Underground map, with thousands
+
+210
+00:16:07,580 --> 00:16:09,580
+of lines diverging and converging.
+
+211
+00:16:09,800 --> 00:16:16,320
+That's a great image for it. That's the activity space. And each station, each potential stop
+
+212
+00:16:16,320 --> 00:16:17,300
+is an affordance.
+
+213
+00:16:17,300 --> 00:16:22,220
+Okay, so let's define affordance again, but really strictly in this relational sense, because
+
+214
+00:16:22,220 --> 00:16:28,160
+I think people, myself included, can get tripped up thinking an affordance is just a feature.
+
+215
+00:16:28,540 --> 00:16:31,480
+You know, my phone has the camera affordance.
+
+216
+00:16:31,480 --> 00:16:35,440
+Right, and that's not quite it. It's not a feature of the object, and it's not a skill
+
+217
+00:16:35,440 --> 00:16:41,660
+of the user. It is the handshake between the two. The potential for a meaningful interaction.
+
+218
+00:16:42,020 --> 00:16:43,540
+The classic example is a chair.
+
+219
+00:16:43,540 --> 00:16:48,380
+Right. The classic example is a chair. Does a simple wooden chair have the affordance
+
+220
+00:16:48,380 --> 00:16:49,280
+of sitability?
+
+221
+00:16:49,840 --> 00:16:53,060
+Well, yes. Of course. That's what it's for.
+
+222
+00:16:53,240 --> 00:17:00,160
+For you, a human, yes. Your body has the right size, the right joint structure. The chair has
+
+223
+00:17:00,160 --> 00:17:05,680
+the right height, the right flat surface. The relationship works. The affordance of sitting
+
+224
+00:17:05,680 --> 00:17:07,600
+exists in that coupling.
+
+225
+00:17:07,940 --> 00:17:09,020
+But what if you're an elephant?
+
+226
+00:17:09,020 --> 00:17:14,680
+Then the chair is absolutely not for sitting. For an elephant, it might afford being smashed
+
+227
+00:17:14,680 --> 00:17:20,220
+or being a minor obstacle. But the sitting affordance does not exist for the elephant
+
+228
+00:17:20,220 --> 00:17:22,100
+chair coupling. It's gone.
+
+229
+00:17:22,460 --> 00:17:28,260
+The paper uses a slightly more terrifying example. The affordance of breathing.
+
+230
+00:17:28,540 --> 00:17:31,600
+Right. Let's look at the formula they use, just conceptually.
+
+231
+00:17:32,140 --> 00:17:37,660
+Four netters is the set of all affordances, all activities, available to you at time, $10.
+
+232
+00:17:37,660 --> 00:17:39,320
+My menu of options.
+
+233
+00:17:39,400 --> 00:17:45,380
+Your menu of options. Right now, sitting in this studio, the activity breathing is on
+
+234
+00:17:45,380 --> 00:17:50,360
+your menu. It's in your set four netters. You have lungs. That's the agent's contribution.
+
+235
+00:17:50,900 --> 00:17:56,200
+And the room has air. That's the environment's contribution. The relation holds.
+
+236
+00:17:56,560 --> 00:18:00,280
+But if you take me and drop me in the middle of the Pacific Ocean...
+
+237
+00:18:00,280 --> 00:18:04,980
+Your internal machinery hasn't changed one bit. You still have the same lungs. You're just
+
+238
+00:18:04,980 --> 00:18:09,100
+as smart. You have the same memories, the same capabilities you had a moment before.
+
+239
+00:18:09,300 --> 00:18:10,700
+But the environment has changed.
+
+240
+00:18:10,800 --> 00:18:15,000
+The environment has changed dramatically. The air is gone. The relation is broken. And
+
+241
+00:18:15,000 --> 00:18:19,180
+so the breathing affordance instantly vanishes from your set affordance.
+
+242
+00:18:19,600 --> 00:18:23,680
+And my overall complexity drops to zero pretty quickly after that.
+
+243
+00:18:23,860 --> 00:18:29,920
+Tragically so. But it proves the point with brutal clarity. Complexity isn't something you
+
+244
+00:18:29,920 --> 00:18:32,580
+just carry around inside your skin. It's relational.
+
+245
+00:18:32,580 --> 00:18:40,240
+So a supercomputer. A machine with more processing power than all of humanity combined. If you just
+
+246
+00:18:40,240 --> 00:18:42,140
+float it in the vacuum of space.
+
+247
+00:18:42,400 --> 00:18:49,020
+It has almost zero complexity. It has no inputs to process. No outputs to affect the world.
+
+248
+00:18:49,320 --> 00:18:52,500
+It can't do anything. It's just a warm, inert box.
+
+249
+00:18:52,500 --> 00:18:58,240
+This really dismantles those old brain-in-a-vat thought experiments, doesn't it? We used to think
+
+250
+00:18:58,240 --> 00:19:03,740
+if we could just perfectly simulate a brain, it would be conscious and complex all by itself.
+
+251
+00:19:04,080 --> 00:19:09,540
+And this framework, which is part of a broader movement called inactivism, says that's nonsense.
+
+252
+00:19:10,020 --> 00:19:16,980
+You are not a brain riding a body like a driver in a car. You are the entire coupled system of brain,
+
+253
+00:19:17,340 --> 00:19:19,760
+body, and world all acting together.
+
+254
+00:19:19,760 --> 00:19:25,160
+So if you take a simple organism, let's go back to our spider, and you put it in a really rich,
+
+255
+00:19:25,300 --> 00:19:30,000
+complex environment with lots of anchor points, wind currents, different kinds of prey.
+
+256
+00:19:30,200 --> 00:19:35,580
+Its activity space, its set of affordances just explodes. The spider in the rich environment
+
+257
+00:19:35,580 --> 00:19:37,400
+system becomes incredibly complex.
+
+258
+00:19:37,680 --> 00:19:42,800
+So this is the relational view. Complexity is what you can do with what you have, where you are.
+
+259
+00:19:43,040 --> 00:19:47,760
+It's not additive. You can't just keep adding more parts to the robot to make it more complex.
+
+260
+00:19:47,760 --> 00:19:51,400
+Yeah. You have to design the robot to better couple with its world.
+
+261
+00:19:51,620 --> 00:19:55,200
+Okay. And that coupling, that idea of the affordance landscape,
+
+262
+00:19:55,600 --> 00:19:59,680
+leads us to a really counterintuitive point. I think this is in section three.
+
+263
+00:19:59,880 --> 00:20:00,980
+Yes. Constraints.
+
+264
+00:20:01,200 --> 00:20:07,580
+Right. If complexity is about having options, about having a big, diverse menu of affordances,
+
+265
+00:20:08,280 --> 00:20:12,820
+then surely the goal is to have all the options. Infinite affordances.
+
+266
+00:20:12,820 --> 00:20:17,220
+I want to be able to fly and breathe underwater and see through walls.
+
+267
+00:20:17,420 --> 00:20:19,240
+I'd definitely take the flight option.
+
+268
+00:20:19,400 --> 00:20:25,000
+Me too. But the paper argues that infinite options wouldn't just be unhelpful,
+
+269
+00:20:25,200 --> 00:20:29,780
+they would actually destroy you. This is a section on constraints and the power of no.
+
+270
+00:20:30,200 --> 00:20:31,740
+It's one of my favorite parts of the paper.
+
+271
+00:20:32,020 --> 00:20:38,540
+So explain this to me. Why would no be powerful? Why is can't sometimes better than can?
+
+272
+00:20:38,540 --> 00:20:44,980
+It all comes down to the problem of information processing. Think about the concept of absence,
+
+273
+00:20:45,400 --> 00:20:51,080
+as the paper puts it. Some affordances are absent simply because they are physically impossible for
+
+274
+00:20:51,080 --> 00:20:58,840
+you. Like me trying to fly by flapping my arms. Exactly. That is a hard constraint imposed on you
+
+275
+00:20:58,840 --> 00:21:04,600
+by gravity and your own biology. Now you might see that as a limitation. A bummer.
+
+276
+00:21:04,600 --> 00:21:12,540
+It is a bummer. But the paper argues it's an incredible gift because constraint is prior to
+
+277
+00:21:12,540 --> 00:21:16,660
+choice. What does that mean prior to choice? It means that because that option is physically
+
+278
+00:21:16,660 --> 00:21:22,380
+impossible, your brain and your body do not have to waste a single calorie, a single millisecond,
+
+279
+00:21:22,540 --> 00:21:28,460
+even considering it. Yeah. The decision has been made for you by the universe. I see. So when I'm
+
+280
+00:21:28,460 --> 00:21:34,520
+standing at the edge of a cliff, I don't have this complex internal debate. Hmm. Should I flap my wings?
+
+281
+00:21:34,520 --> 00:21:39,720
+Today? Or should I take the stairs? The universe has already removed flap my wings from my menu.
+
+282
+00:21:39,860 --> 00:21:44,720
+It's already crossed it off for you. Now imagine if you could do anything. Imagine if every single
+
+283
+00:21:44,720 --> 00:21:51,660
+atom in this room was a valid handle for you to grab. Imagine if every direction was a valid path
+
+284
+00:21:51,660 --> 00:21:56,620
+for locomotion, including straight up. I'd be paralyzed. I wouldn't even know where to start.
+
+285
+00:21:56,680 --> 00:22:01,620
+It's overwhelming. We call that combinatorial explosion in computer science. If the number of
+
+286
+00:22:01,620 --> 00:22:07,840
+possibilities is nearly infinite, the time it would take to calculate the best one also becomes
+
+287
+00:22:07,840 --> 00:22:14,500
+infinite. You would just freeze, trapped by choice. So constraints act like, what, blinders on a horse?
+
+288
+00:22:14,680 --> 00:22:18,940
+That's a perfect analogy. They cut off all the peripheral noise and distraction,
+
+289
+00:22:19,340 --> 00:22:22,640
+so you can just move forward on the path that's actually available to you.
+
+290
+00:22:22,640 --> 00:22:27,820
+The paper talks about a relevance function here. It uses the Greek letter row.
+
+291
+00:22:27,980 --> 00:22:33,760
+Right. The relevance function one rowway is the great filter. In this mathematical model,
+
+292
+00:22:34,320 --> 00:22:40,760
+all the irrelevant or impossible activities, like you trying to fly or trying to walk through that
+
+293
+00:22:40,760 --> 00:22:47,080
+solid wall, they get a relevance score of zero. So they're filtered out before they even reach my
+
+294
+00:22:47,080 --> 00:22:52,320
+decision-making process. They never even enter the dynamics. This is what the paper calls the
+
+295
+00:22:52,320 --> 00:23:01,120
+economization of activity. By making 99.9% of all theoretical actions impossible, nature allows us
+
+296
+00:23:01,120 --> 00:23:07,000
+to become really, really good at the tiny fraction that is possible. I love the analogy of the musician
+
+297
+00:23:07,000 --> 00:23:12,200
+for this. I think it makes it really clear. Well, if you sit a musician down on a piano and say,
+
+298
+00:23:12,200 --> 00:23:18,540
+play any note that exists in the universe, they might just produce noise. It's too open. But if
+
+299
+00:23:18,540 --> 00:23:25,360
+you give them a key signature, say B-flat minor, you're imposing a constraint. You're limiting their
+
+300
+00:23:25,360 --> 00:23:33,180
+options. You're saying, don't play these six notes, only play these other ones. Yes. But that very
+
+301
+00:23:33,180 --> 00:23:39,580
+limitation is what creates the structure. Because they don't have to waste brainpower thinking about
+
+302
+00:23:39,580 --> 00:23:46,000
+all the wrong notes, they can now creatively and fluently explore the rich relationships between
+
+303
+00:23:46,000 --> 00:23:52,340
+all the right notes. The constraint enables the complexity. That is a perfect encapsulation of
+
+304
+00:23:52,340 --> 00:23:58,200
+the argument. Structure is just a positive-sounding word for constraint. You can't build a complex
+
+305
+00:23:58,200 --> 00:24:04,440
+skyscraper without rigid steel beams that limit where the floors and walls can go. Without those limits,
+
+306
+00:24:04,740 --> 00:24:08,880
+you don't have a building, you just have a pile of bricks. So, okay, let's recap where we are.
+
+307
+00:24:08,880 --> 00:24:12,780
+We have the now, which is synchronic. We have the relation, which is the affordance.
+
+308
+00:24:12,960 --> 00:24:16,660
+And we have the limit, which is the constraint. The three pillars so far.
+
+309
+00:24:16,940 --> 00:24:19,700
+But let's look at the structure of these activities themselves.
+
+310
+00:24:20,460 --> 00:24:24,320
+Section four of the paper is called structure, composition, and automation.
+
+311
+00:24:24,620 --> 00:24:29,780
+Right. Because your affordance landscape, your menu of options, isn't just a flat,
+
+312
+00:24:30,020 --> 00:24:34,740
+unorganized list. It's not a grocery list. Eat, sleep, walk, talk.
+
+313
+00:24:34,740 --> 00:24:41,080
+It has a hierarchy. Exactly. It has a hierarchy. The paper makes a distinction between basic
+
+314
+00:24:41,080 --> 00:24:46,660
+affordances and composite affordances. Okay. What's the difference? Basic affordances are the
+
+315
+00:24:46,660 --> 00:24:51,900
+sort of atomic units of action. They're the Lego bricks. Things like grasping an object with your
+
+316
+00:24:51,900 --> 00:24:58,080
+hand, focusing your eyes on a point, lifting a single foot. And composite affordances are the
+
+317
+00:24:58,080 --> 00:25:02,820
+complex structures you build out of those Lego bricks, like making a sandwich.
+
+318
+00:25:02,820 --> 00:25:07,780
+Making a sandwich is a perfect example. Or driving a car. You can't just drive a car
+
+319
+00:25:07,780 --> 00:25:13,060
+as a single action. You have to perform a whole sequence of basic affordances.
+
+320
+00:25:13,460 --> 00:25:18,460
+Turn the wheel, press the pedal, look in the mirror, move the shifter. You chain them together
+
+321
+00:25:18,460 --> 00:25:24,260
+in a stable pattern. But here's the crucial part, and it gets back to fluency. If I had to consciously
+
+322
+00:25:24,260 --> 00:25:30,480
+think about every single one of those basic affordances while making a sandwich, I'd starve to
+
+323
+00:25:30,480 --> 00:25:36,960
+death before I ever got to eat. Okay. Now I must grasp the knife. Now apply downward pressure.
+
+324
+00:25:37,520 --> 00:25:42,640
+Now slice the bread. Now stop slicing. It would take forever.
+
+325
+00:25:42,640 --> 00:25:48,320
+And this brings us to what might be the most important mechanism for complexity growth in
+
+326
+00:25:48,320 --> 00:25:51,200
+the entire paper. Relegation of control.
+
+327
+00:25:51,200 --> 00:25:55,520
+Relegation. It sounds like you're being demoted or sent away.
+
+328
+00:25:55,520 --> 00:26:00,160
+In this context, it's a huge promotion for the system's overall efficiency.
+
+329
+00:26:00,160 --> 00:26:06,240
+When a composite activity like driving or making a sandwich becomes stable and reliable through
+
+330
+00:26:06,240 --> 00:26:09,920
+practice, the agent stops consciously managing the details.
+
+331
+00:26:09,920 --> 00:26:14,160
+You stop thinking about turning the wheel and you start thinking about the goal, like going to the
+
+332
+00:26:14,160 --> 00:26:19,120
+store. Precisely. The low-level details get compressed and automated. They get chunked together.
+
+333
+00:26:19,120 --> 00:26:22,640
+The paper has a term for this, right? The projection operator.
+
+334
+00:26:22,640 --> 00:26:26,640
+Yes. The projection operator, which they denote with a dollar.
+
+335
+00:26:27,520 --> 00:26:34,320
+The math is a bit dense, but the concept is beautiful. Imagine taking a thousand tiny distinct
+
+336
+00:26:34,320 --> 00:26:39,440
+gods that represent your basic actions and then drawing a big circle around them and giving that
+
+337
+00:26:39,440 --> 00:26:43,920
+whole collection a single simple label. One thing.
+
+338
+00:26:43,920 --> 00:26:49,120
+So turn wheel, press gas, check mirror becomes drive.
+
+339
+00:26:49,120 --> 00:26:52,400
+It gets projected onto a simpler higher level description.
+
+340
+00:26:53,280 --> 00:26:58,800
+You now treat that complex chain of actions as if it were a single basic unit. This is the
+
+341
+00:26:58,800 --> 00:27:00,320
+automation we were talking about earlier.
+
+342
+00:27:00,320 --> 00:27:05,040
+And this solves the manager problem, the homunculus fallacy. Tell me more about that.
+
+343
+00:27:05,040 --> 00:27:11,520
+Well, there's this old sort of fallacy in AI and cognitive science that for a system to be
+
+344
+00:27:11,520 --> 00:27:16,880
+coordinated, you need a central executive or a manager in the brain that's supervising everything,
+
+345
+00:27:16,880 --> 00:27:21,120
+a little man in the head pulling all the levers. And this model says you don't need that little
+
+346
+00:27:21,120 --> 00:27:27,040
+man. Right. If the system can automate its own subroutines, if the legs can just handle the walking
+
+347
+00:27:27,040 --> 00:27:31,760
+so the brain doesn't have to, you don't need a manager for the legs. You relegate control.
+
+348
+00:27:31,760 --> 00:27:39,520
+You relegate the control down to the limbs themselves or to the spinal cord or to the
+
+349
+00:27:39,520 --> 00:27:45,840
+cerebellum, to these subconscious embodied habits. And this allows the agent to become incredibly
+
+350
+00:27:46,480 --> 00:27:54,400
+mind bogglingly complex without needing a massive energy guzzling brain to micromanage every single
+
+351
+00:27:54,400 --> 00:27:58,800
+twitch. So complexity isn't just about how many things you can do. It's about how many things
+
+352
+00:27:58,800 --> 00:28:04,320
+you can do without thinking about them. It's about how many layers of trusted automation you were
+
+353
+00:28:04,320 --> 00:28:10,000
+standing on top of at any given moment. You're standing on a pyramid of your own automated habits.
+
+354
+00:28:10,000 --> 00:28:16,000
+But pyramids can crumble. And this is where the paper takes a darker, but I think even more fascinating
+
+355
+00:28:16,720 --> 00:28:22,640
+turn. This is section five. Robustness, breakdown and flexibility. Right. This is the,
+
+356
+00:28:22,640 --> 00:28:27,280
+so what happens when things go wrong section. And it starts by redefining robustness. We usually
+
+357
+00:28:27,280 --> 00:28:33,200
+think of a robust system as being like a tank. It's hard, it's armored, it's unbreakable. If a tank
+
+358
+00:28:33,200 --> 00:28:39,600
+hits a small wall, the wall breaks, the tank keeps going. But that's a very rigid, brittle definition of
+
+359
+00:28:39,600 --> 00:28:45,840
+robustness. The paper argues for a different view, which they call viability. So what's a viability?
+
+360
+00:28:45,840 --> 00:28:53,600
+Viability, or true robustness, isn't about never failing. It's not about executing action A perfectly
+
+361
+00:28:53,600 --> 00:29:00,640
+every time. It's about having action B, C, and D available in your back pocket for the moment when
+
+362
+00:29:00,640 --> 00:29:08,960
+action A inevitably fails. So it's the difference between a tank and maybe a tracer, a parkour athlete.
+
+363
+00:29:08,960 --> 00:29:16,080
+That's a great comparison. The tank has one primary mode of engagement. Drive forward, crush obstacle.
+
+364
+00:29:16,080 --> 00:29:22,400
+If the ground suddenly falls away into a deep chasm, the tank is finished. It has zero other options.
+
+365
+00:29:22,400 --> 00:29:28,560
+It's stuck. It's stuck. The parkour athlete is all about flexibility. If the wall is too high to climb,
+
+366
+00:29:28,560 --> 00:29:33,920
+they find a way to jump off another surface. If a ledge is slippery, they slide along it. If they fall,
+
+367
+00:29:33,920 --> 00:29:39,120
+they know how to roll to dissipate the impact. They have a rich and diverse space of affordances.
+
+368
+00:29:39,120 --> 00:29:44,240
+They have options. Exactly. The paper defines robustness as the ability to maintain a navigable
+
+369
+00:29:44,240 --> 00:29:50,480
+space of activity. As long as the set of possible actions, which they call TAT, is greater than zero,
+
+370
+00:29:50,480 --> 00:29:54,960
+as long as you have at least one move you can make, you are still in the game. You're viable.
+
+371
+00:29:54,960 --> 00:30:01,360
+And this leads to the most interesting part, the idea of breakdown. Usually we think of a breakdown
+
+372
+00:30:01,360 --> 00:30:07,840
+as the ultimate failure state. You know, the system crashed. But Fliction says a breakdown event is
+
+373
+00:30:07,840 --> 00:30:14,720
+actually informative. It's a source of information. Think back to your driving analogy. You're fluently
+
+374
+00:30:14,720 --> 00:30:20,560
+driving to work. You're thinking about your day, listening to the radio. You are on autopilot.
+
+375
+00:30:20,560 --> 00:30:27,600
+The drive to work composite affordance is active. It is. Then suddenly your car hits a patch of black
+
+376
+00:30:27,600 --> 00:30:33,920
+ice and begins to skid. Okay. The autopilot disengages instantly. All alarms go off. What
+
+377
+00:30:33,920 --> 00:30:39,600
+happens to your awareness? Where does your attention go? It zooms right in. Suddenly I am intensely aware
+
+378
+00:30:39,600 --> 00:30:45,280
+of the steering wheel in my hands. I can feel the vibration from the tires through the chassis. I'm
+
+379
+00:30:45,280 --> 00:30:52,160
+consciously pumping the brakes. I'm no longer driving to work. I am correcting a dangerous skid. You've put it
+
+380
+00:30:52,160 --> 00:30:57,360
+perfectly. The high level composite affordance of drive to work has collapsed. It's failed. And the
+
+381
+00:30:57,360 --> 00:31:03,920
+basic affordances, steer, brake, look, have rushed back to the surface of my consciousness. The
+
+382
+00:31:03,920 --> 00:31:10,880
+relegation of control has been undone. It's been undone. And the peeper's brilliant insight is that this
+
+383
+00:31:10,880 --> 00:31:18,160
+moment of breakdown proves the underlying complexity of the system. How so? Because if you were a truly
+
+384
+00:31:18,160 --> 00:31:24,720
+simple machine, like a toy car on a track, you would just crash. You wouldn't have any lower layers of
+
+385
+00:31:24,720 --> 00:31:31,920
+control to fall back on. The very fact that you can decompose the fluent action, you can fluidly shift
+
+386
+00:31:31,920 --> 00:31:38,480
+from driving to steering and braking, shows that all that complexity was there all along. It was just hidden
+
+387
+00:31:38,480 --> 00:31:45,120
+by your own fluency. So a system that breaks down gracefully and then reorganizes itself to cope with the
+
+388
+00:31:45,120 --> 00:31:51,760
+new situation is actually the height of complexity. It's the pinnacle. And this reorganization doesn't
+
+389
+00:31:51,760 --> 00:31:58,240
+have to be some high level intelligent plan. It can be what the paper calls morphological interaction.
+
+390
+00:31:58,240 --> 00:32:03,040
+You don't need a master plan to correct a skid. You just use your body. You turn into the skid.
+
+391
+00:32:03,040 --> 00:32:07,680
+You feel the physics of the situation. You sort of bump into the world in a different way until
+
+392
+00:32:07,680 --> 00:32:12,640
+stability returns. This feels like it connects directly to the philosophical part of the paper,
+
+393
+00:32:12,640 --> 00:32:18,400
+the intentional stance discussed in section six. It does. Because when my car is skidding on ice,
+
+394
+00:32:18,400 --> 00:32:25,200
+I'm not really planning in a cool, detached way. I'm just reacting. But an outside observer would
+
+395
+00:32:25,200 --> 00:32:30,080
+absolutely say he is trying to regain control. They would assign a goal to my actions.
+
+396
+00:32:30,080 --> 00:32:39,440
+And that brings us to the big philosophical pivot. Can we legitimately say a system has a goal
+
+397
+00:32:39,440 --> 00:32:45,600
+or an intention, if it doesn't have a human-like brain, to consciously represent that goal?
+
+398
+00:32:45,600 --> 00:32:48,320
+This is the ghost in the machine question all over again, isn't it?
+
+399
+00:32:48,320 --> 00:32:54,240
+It is. And the paper handles it in a very pragmatic way by borrowing from the philosopher Daniel Dennett.
+
+400
+00:32:54,240 --> 00:32:57,200
+He proposed something called the intentional stance.
+
+401
+00:32:57,200 --> 00:32:58,160
+What's the stance?
+
+402
+00:32:58,160 --> 00:33:06,000
+It's a practical tool, not a metaphysical claim. It simply asks the question, is it explanatorily fruitful
+
+403
+00:33:06,000 --> 00:33:09,280
+to describe the system's behavior as if it has a goal?
+
+404
+00:33:09,280 --> 00:33:12,480
+So does it help us understand and predict what's going to happen next?
+
+405
+00:33:12,480 --> 00:33:18,720
+Exactly. Take a heat-seeking missile. Does it love heat? Does it desire to be near the jet engine?
+
+406
+00:33:18,720 --> 00:33:20,960
+Does it hate the cold emptiness of the sky?
+
+407
+00:33:20,960 --> 00:33:24,000
+No, of course not. It's just a bunch of sensors and circuitry.
+
+408
+00:33:24,000 --> 00:33:30,640
+Right. But if your job is to predict where that missile is going to go, it is incredibly useful
+
+409
+00:33:30,640 --> 00:33:34,000
+and efficient to say it wants to hit the hot target.
+
+410
+00:33:34,000 --> 00:33:40,240
+Because if I tried to predict its path by calculating the voltage across every wire inside it,
+
+411
+00:33:40,240 --> 00:33:46,320
+I'd be there for 100 years and the plane would already be gone. The goal is a predictive shortcut.
+
+412
+00:33:46,320 --> 00:33:52,960
+It's an explanatory filter. It filters out all the messy, low-level details of the mechanism,
+
+413
+00:33:52,960 --> 00:33:58,400
+allows us to focus on the coherent, organized structure of the behavior.
+
+414
+00:33:58,400 --> 00:34:02,160
+And the paper argues that for the purpose of measuring complexity,
+
+415
+00:34:02,160 --> 00:34:05,520
+we don't care if the agent really has a goal deep in its soul.
+
+416
+00:34:05,520 --> 00:34:08,960
+We just care if its behavior is structured as if it has a goal.
+
+417
+00:34:08,960 --> 00:34:09,600
+You got it.
+
+418
+00:34:09,600 --> 00:34:14,240
+And this is the move that allows us to finally compare a biological cell
+
+419
+00:34:14,240 --> 00:34:16,800
+and a sophisticated robot on the same terms.
+
+420
+00:34:16,800 --> 00:34:22,880
+Yes. A white blood cell that is chasing a bacterium through your bloodstream,
+
+421
+00:34:22,880 --> 00:34:27,200
+and a Roomba that is seeking its charging dock when its battery is low.
+
+422
+00:34:27,200 --> 00:34:30,720
+Neither of them has a brain in the human sense. Neither is thinking,
+
+423
+00:34:30,720 --> 00:34:32,880
+oh, I'm hungry for electricity.
+
+424
+00:34:32,880 --> 00:34:39,920
+But both of them exhibit what the paper calls behavioral complexity, or CBATT.
+
+425
+00:34:39,920 --> 00:34:46,640
+They behave in a stable, goal-directed way. They act as if they have intent.
+
+426
+00:34:46,640 --> 00:34:51,200
+And by adopting this stance, we can use the same language, and even the same math,
+
+427
+00:34:51,200 --> 00:34:56,720
+to describe the complexity of a living organism and an artificial one. We don't have to get bogged
+
+428
+00:34:56,720 --> 00:35:02,320
+down asking, but does it have a soul? We just ask, does its behavior have a direction?
+
+429
+00:35:02,320 --> 00:35:07,920
+It cleanly removes the metaphysics from the equation, which is absolutely essential if you
+
+430
+00:35:07,920 --> 00:35:11,360
+want to build a rigorous objective science of complexity.
+
+431
+00:35:11,360 --> 00:35:16,560
+This leads us to the final problem. And it's a very human problem. The problem of comparison.
+
+432
+00:35:16,560 --> 00:35:17,360
+We love a winner.
+
+433
+00:35:17,360 --> 00:35:20,880
+We love a winner. We need a leaderboard. We want to be able to rank things.
+
+434
+00:35:20,880 --> 00:35:22,480
+We want to know who is number one.
+
+435
+00:35:22,480 --> 00:35:27,120
+Exactly. I want to be able to say, humans are a hundred out of a hundred on the complexity scale.
+
+436
+00:35:27,600 --> 00:35:31,760
+Chimps are an 80. Spiders are a 10. My Roomba is a 2.
+
+437
+00:35:32,320 --> 00:35:38,000
+And the paper looks that desire and says, quite firmly, stop it. You can't do that. It's a
+
+438
+00:35:38,000 --> 00:35:42,880
+meaningless exercise. Why not? Why can't we just measure everyone's affordance landscape and see
+
+439
+00:35:42,880 --> 00:35:48,080
+who has the most? Because of a concept from mathematics called incomparability.
+
+440
+00:35:49,200 --> 00:35:53,520
+The paper uses the symbol of two parallel lines to represent this.
+
+441
+00:35:53,520 --> 00:36:00,800
+$8 key AT. Parallel A to an AT. That means the two agents are running on parallel tracks that never
+
+442
+00:36:00,800 --> 00:36:06,800
+intersect in a way that allows for a simple greater than or less than judgment.
+
+443
+00:36:06,800 --> 00:36:09,440
+It's the classic apples and oranges problem.
+
+444
+00:36:09,440 --> 00:36:14,800
+It's the submarine versus the skyscraper problem. Which one is better or more complex?
+
+445
+00:36:14,800 --> 00:36:19,040
+Well, it's a nonsensical question. The submarine is better at moving underwater,
+
+446
+00:36:19,040 --> 00:36:22,080
+and the skyscraper is better at staying still and being tall.
+
+447
+00:36:22,080 --> 00:36:29,040
+Exactly. Their activity spaces, their sets of affordances are almost completely disjoint.
+
+448
+00:36:29,760 --> 00:36:34,800
+One has affordances related to buoyancy and pressure. The other has affordances related
+
+449
+00:36:34,800 --> 00:36:41,760
+to structural load and wind shear. There's no universal neutral metric of complexity that you
+
+450
+00:36:41,760 --> 00:36:45,200
+can apply fairly to both. So you can only compare them locally?
+
+451
+00:36:45,200 --> 00:36:48,880
+You can only compare them locally. You can ask which is better at withstanding water pressure,
+
+452
+00:36:48,880 --> 00:36:53,600
+and the submarine wins. You can ask which can house more people, and the skyscraper wins.
+
+453
+00:36:53,600 --> 00:36:56,880
+But you can't ask which is globally more complex.
+
+454
+00:36:56,880 --> 00:37:00,640
+The question is mathematically meaningless within this framework,
+
+455
+00:37:00,640 --> 00:37:04,640
+and this leads to what the paper calls plurality and indeterminacy.
+
+456
+00:37:06,000 --> 00:37:11,680
+We just have to accept that there is no single peak on the mountain of evolution or design.
+
+457
+00:37:11,680 --> 00:37:13,520
+There are many, many different peaks.
+
+458
+00:37:13,520 --> 00:37:20,960
+That is surprisingly humble. It's a framework that intentionally takes humans off the pedestal.
+
+459
+00:37:20,960 --> 00:37:27,600
+We aren't the ultimate goal of evolution. We're just one possible type of complex system among many.
+
+460
+00:37:27,600 --> 00:37:32,800
+We're just one specific and in many ways very weird configuration of affordances.
+
+461
+00:37:32,800 --> 00:37:39,360
+A spider is another. A coral reef is another. A sophisticated AI running a global supply chain is
+
+462
+00:37:39,360 --> 00:37:42,800
+another. They are all valid. They are all real forms of complexity.
+
+463
+00:37:42,800 --> 00:37:47,840
+Okay, so let's try to bring this all home. Let's synthesize this. We started this journey with the
+
+464
+00:37:47,840 --> 00:37:53,120
+image of the clock and the reef. We did. We moved from the clean, deterministic,
+
+465
+00:37:53,120 --> 00:37:59,600
+mechanical view to the messy, relational, ecological view. We learned about synchronic complexity,
+
+466
+00:37:59,600 --> 00:38:04,560
+the radical idea that what matters is what you can do now, not how you learn to do it.
+
+467
+00:38:04,560 --> 00:38:10,000
+Then we learned about the affordance landscape, that complexity doesn't live inside your head.
+
+468
+00:38:10,000 --> 00:38:13,120
+It lives in the relationship between you and your world.
+
+469
+00:38:13,120 --> 00:38:21,040
+We saw how constraints, the power of no, are not limitations but are actually the secret ingredient
+
+470
+00:38:21,040 --> 00:38:25,840
+that structures behavior and makes complexity possible in the first place.
+
+471
+00:38:25,840 --> 00:38:32,320
+And we saw how relegation and automation are the engines that allow that complexity to scale up,
+
+472
+00:38:32,320 --> 00:38:36,560
+to build pyramids of habit so you don't get overwhelmed by the details.
+
+473
+00:38:36,560 --> 00:38:42,720
+And finally, we have to let go of our desire to rank everything on a single human-centric line.
+
+474
+00:38:42,720 --> 00:38:45,280
+We have to accept that complexity is plural.
+
+475
+00:38:45,280 --> 00:38:48,800
+Rich forms of agency need not be intelligent in order to be real.
+
+476
+00:38:49,760 --> 00:38:52,800
+I think that's the final powerful argument of the paper.
+
+477
+00:38:52,800 --> 00:38:57,040
+It really does change how I look at the world. I find myself looking for the brain
+
+478
+00:38:57,040 --> 00:39:01,920
+behind things less and less. Instead, I'm looking for the flow. I'm looking for the fit.
+
+479
+00:39:01,920 --> 00:39:02,640
+The coupling.
+
+480
+00:39:02,640 --> 00:39:08,080
+The coupling. When I see a bird effortlessly navigating a dense forest at high speed,
+
+481
+00:39:08,080 --> 00:39:13,120
+I'm no longer impressed by its abstract IQ. I'm just in awe of its perfect,
+
+482
+00:39:13,120 --> 00:39:17,280
+fluent coupling with the air, the branches, its own momentum.
+
+483
+00:39:17,280 --> 00:39:24,880
+It democratizes agency. It allows us to finally appreciate the genius of the mindless.
+
+484
+00:39:24,880 --> 00:39:31,760
+So I want to leave you, our listener, with a thought to chew on today. A bit of homework,
+
+485
+00:39:31,760 --> 00:39:32,240
+if you will.
+
+486
+00:39:32,240 --> 00:39:34,640
+Always good to send them off with a puzzle.
+
+487
+00:39:34,640 --> 00:39:39,760
+Think about your own day. We pride ourselves on our intelligence,
+
+488
+00:39:39,760 --> 00:39:44,800
+our conscious planning, our deliberate learning, our inner managerial brain.
+
+489
+00:39:46,000 --> 00:39:51,360
+But I want you to conduct an audit of your own complexity. How much of your day is actually spent
+
+490
+00:39:51,360 --> 00:39:55,600
+in that mode of thinking? And how much is spent in a state of fluency?
+
+491
+00:39:55,600 --> 00:40:01,360
+Exactly. Driving your car, typing on a keyboard, walking down a crowded street,
+
+492
+00:40:01,360 --> 00:40:06,320
+cooking a familiar meal, navigating the subtle cues of a conversation with a friend.
+
+493
+00:40:06,320 --> 00:40:10,880
+All the things you do without really doing them. Right. So here's the question. Are you actually
+
+494
+00:40:10,880 --> 00:40:16,960
+at your most complex, your most capable, when you are thinking the least? Is your autopilot
+
+495
+00:40:16,960 --> 00:40:20,480
+actually the most sophisticated, most impressive thing about you?
+
+496
+00:40:20,480 --> 00:40:27,600
+That is a very humbling thought to end on. Thanks for taking the deep dive. See you next time.
+
