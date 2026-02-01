@@ -2,6 +2,12 @@
 
 Enacting cognitive landscapes
 
+# Functional Reduction and the End of Justification
+
+[More Info](https://github.com/standardgalactic/library/tree/main/vault/README.md)
+
+[Audio Overview - When Humans Become Friction](https://standardgalactic.github.io/library/vault/)
+
 # Complexity without Intelligence
 
 [Paper](https://standardgalactic.github.io/library/Complexity%20without%20Intelligence.pdf)
