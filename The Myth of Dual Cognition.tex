@@ -1,0 +1,200 @@
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{geometry}
+\geometry{margin=1.25in}
+\usepackage{setspace}
+\setstretch{1.15}
+
+\usepackage{amsmath, amssymb}
+\usepackage{hyperref}
+
+\title{The Myth of Dual Cognition\\
+Automaticity, Attention, and the Misreading of System~1}
+\author{Flyxion}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Contemporary discussions of human and artificial cognition frequently rely on a simplified dual-process framework, distinguishing between ``System~1'' cognition—fast, automatic, and intuitive—and ``System~2'' cognition—slow, deliberative, and reflective. This paper argues that the ontological weight commonly assigned to this distinction is unwarranted. Drawing on what is here termed \emph{Aspect Relegation Theory}, I propose that System~1 cognition is best understood not as a distinct cognitive faculty, but as the residual form of System~2 processes that have become automated through repetition, stabilization, and attentional compression. On this view, automaticity is not primitive but derivative, and intuition is not a separate mode of reasoning but the successful concealment of previously explicit inferential structure.
+
+This reframing has direct consequences for current critiques of large language models that invoke the absence of ``System~2 reasoning'' as a decisive limitation. Such critiques, exemplified by recent arguments in the philosophy of artificial intelligence, implicitly treat System~1 and System~2 as categorically different computational regimes. By contrast, Aspect Relegation Theory replaces this dichotomy with a hierarchical, resolution-sensitive model of cognition in which the central problem is not the presence of two systems, but the adaptive control of representational granularity and attentional scope. The paper develops this model, addresses potential objections concerning innate automaticity and metacognitive control, and argues that the real explanatory challenge lies in understanding how cognitive systems—biological or artificial—dynamically regulate when relegated aspects must be re-promoted to conscious scrutiny. The result is a deflationary but clarifying account of intuition, one that dissolves the dual-process mystique while sharpening the genuine open problems in both cognitive science and artificial intelligence.
+\end{abstract}
+
+\newpage
+\section{Introduction}
+
+The distinction between fast, intuitive cognition and slow, deliberative reasoning has become one of the most influential organizing frameworks in contemporary psychology, behavioral economics, and, more recently, debates about artificial intelligence. Popularized under the labels ``System~1'' and ``System~2,'' this dual-process picture promises both explanatory clarity and intuitive appeal: it seems to capture the contrast between habitual action and conscious deliberation, between snap judgments and careful reasoning, between effortless fluency and cognitive strain. As a descriptive shorthand, the framework has proven remarkably portable, migrating from experimental psychology into domains as diverse as marketing, public policy, moral philosophy, and AI safety discourse.
+
+Yet the very success of this framework has encouraged a progressive reification of its terms. What began as a heuristic distinction between classes of cognitive phenomena has increasingly been treated as a claim about underlying cognitive architecture. System~1 and System~2 are no longer merely labels for different modes of performance; they are often implicitly construed as distinct computational engines, governed by different principles and responsible for different epistemic virtues and failures. This slide from descriptive taxonomy to ontological bifurcation is rarely argued for explicitly, but it does substantial work in contemporary debates—particularly in critiques of machine intelligence that hinge on the alleged absence of ``System~2 reasoning.''
+
+Aspect Relegation Theory is motivated by the suspicion that this ontological reading is a mistake. The central claim of the theory is not that the phenomena grouped under System~1 and System~2 are illusory, nor that the distinction lacks pragmatic utility. Rather, it is that the distinction has been misinterpreted. On the proposed account, System~1 cognition is not a separate kind of thinking, but a functional state of cognitive processes that were once deliberative and have since become automatized. What differentiates ``intuitive'' cognition from ``reflective'' cognition is not the presence of different faculties, but the degree to which intermediate structure remains accessible to attention.
+
+The guiding metaphor of this paper is relegation rather than division. Cognitive processes operate at varying levels of resolution, and attention selectively foregrounds some aspects of those processes while relegating others to the background. When a task is novel, uncertain, or error-prone, fine-grained distinctions are actively maintained within conscious awareness. As a task stabilizes through repetition and successful execution, many of these distinctions are progressively hidden from view. The resulting performance appears fast, effortless, and intuitive, not because reasoning has vanished, but because its internal scaffolding has been compressed and concealed.
+
+This perspective has two immediate consequences. First, it reframes debates about intuition and automaticity by treating them as achievements of cognitive organization rather than primitive endowments. Second, it undermines a common line of criticism directed at contemporary AI systems, according to which such systems may possess ``System~1 pattern matching'' but lack ``true System~2 reasoning.'' If System~1 is not an independent cognitive engine but the downstream product of prior deliberation, then the absence of System~2 cannot be diagnosed simply by observing fluent, rapid performance. The relevant question becomes not whether a system has two modes of cognition, but whether it can dynamically regulate the level of representational detail at which it operates.
+
+The aim of this paper is therefore twofold. Negatively, it seeks to dismantle the assumption that dual-process terminology corresponds to a deep architectural dualism. Positively, it proposes Aspect Relegation Theory as a more parsimonious framework for understanding automaticity, habit, and intuition—one that preserves the empirical phenomena while avoiding unnecessary metaphysical commitments. In developing this account, I will distinguish between learned and hardwired forms of automaticity, address objections concerning error detection and metacognitive control, and clarify what remains genuinely unresolved about adaptive shifts in cognitive resolution.
+
+The paper proceeds as follows. Section~2 reviews the conceptual origins of dual-process theories and identifies the point at which descriptive distinctions harden into architectural claims. Section~3 introduces Aspect Relegation Theory in detail, formalizing the notion of relegation and articulating its relationship to attention, learning, and cognitive economy. Section~4 considers several potential objections, including the existence of innate automatic processes and the role of affective and metacognitive cues in regulating attention. Section~5 examines the implications of this framework for contemporary debates about artificial intelligence and reasoning. The conclusion reflects on what the theory clarifies, what it leaves open, and why deflating the System~1/System~2 dichotomy sharpens rather than diminishes the real explanatory challenges ahead.
+
+\section{Dual-Process Theories and Their Ontological Drift}
+
+The distinction between automatic and controlled cognition long predates its popular formulation in terms of System~1 and System~2. Early psychological theorists, including William James, already recognized a contrast between habitual, associative processes and effortful, reflective reasoning. In its original context, this contrast functioned as a phenomenological observation rather than a claim about discrete cognitive subsystems. It captured differences in subjective experience, temporal dynamics, and attentional demand, without presupposing that these differences mapped cleanly onto separable mechanisms.
+
+As dual-process models were refined in the latter half of the twentieth century, particularly in experimental psychology, the emphasis remained largely functional. Automatic processes were characterized by their speed, low cognitive load, and relative independence from conscious control, while controlled processes were described as slow, resource-intensive, and attention-dependent. Importantly, these characterizations were operational rather than metaphysical. They specified how processes behaved under experimental manipulation, not what they fundamentally were.
+
+The ontological drift began as dual-process language migrated from laboratory contexts into broader explanatory roles. In behavioral economics and popular psychology, System~1 and System~2 increasingly became explanatory agents in their own right. Biases were attributed to the dominance of System~1; rational correction was assigned to System~2. Over time, this explanatory shorthand hardened into a tacit architectural assumption: the mind came to be pictured as containing two qualitatively distinct engines of cognition, each with its own strengths, weaknesses, and epistemic status.
+
+This reification has two closely related consequences. First, it invites a moralization of cognition. System~1 is cast as impulsive, biased, and unreliable, while System~2 is framed as rational, normative, and corrective. Second, it encourages categorical judgments about cognitive systems, including artificial ones. If reasoning is identified with System~2, and System~2 is treated as a distinct computational regime, then the absence of that regime becomes a decisive criterion for excluding a system from the category of ``true'' reasoners.
+
+Aspect Relegation Theory rejects this picture at its foundation. The theory does not deny that some cognitive performances are fast while others are slow, or that some require conscious effort while others do not. What it denies is that these differences require positing multiple kinds of reasoning. Instead, it treats them as surface manifestations of a single, flexible inferential capacity operating under different constraints of attention and resolution.
+
+From this perspective, the apparent opposition between automatic and controlled processes is better understood as a continuum. Cognitive activity can be more or less explicit, more or less fine-grained, more or less accessible to introspection. The same inferential structure that is consciously manipulated in one context may be executed implicitly in another, depending on familiarity, stability, and environmental demand. There is no principled boundary at which reasoning ends and something categorically different begins.
+
+This reframing exposes a tension in many contemporary critiques of artificial intelligence. When critics argue that systems such as large language models exhibit only System~1-like behavior, they implicitly rely on the ontological interpretation of the dual-process framework. Fluent performance is dismissed as mere pattern recognition precisely because it appears automatic. Yet on the present account, automaticity is not evidence of shallowness; it is evidence of successful compression. The relevant distinction is not between systems that ``reason'' and those that do not, but between systems that can flexibly adjust the level at which their internal structure is exposed and those that cannot.
+
+The remainder of this paper develops this claim in detail. Before turning to applications, however, it is necessary to articulate more precisely what is meant by aspect relegation, how it operates, and how it differs from both traditional dual-process models and purely behaviorist accounts of habit and skill acquisition.
+
+\section{Aspect Relegation Theory}
+
+Aspect Relegation Theory proposes that the phenomena commonly grouped under the heading of ``automatic'' or ``intuitive'' cognition arise through a systematic compression of previously explicit cognitive structure. The central claim is that cognitive processes do not transition from one kind of reasoning to another, but rather undergo a change in how much of their internal organization remains available to attention. What is relegated is not the process itself, but its articulated aspects: intermediate representations, conditional branches, evaluative criteria, and error checks that were once actively maintained within conscious awareness.
+
+The notion of relegation is deliberately neutral with respect to mechanism. It does not presuppose a particular neural architecture, nor does it depend on a specific computational formalism. Instead, it characterizes a functional transformation that can, in principle, be implemented in multiple substrates. A process is said to be relegated when it continues to operate reliably while its internal distinctions are no longer explicitly tracked. The subjective correlate of this transformation is the experience of effortlessness; the objective correlate is a reduction in attentional bandwidth devoted to the task.
+
+Learning, on this account, is inseparable from relegation. When an agent confronts a novel task, performance requires the explicit coordination of multiple constraints. Attention must be allocated to fine-grained distinctions, contingencies must be evaluated, and outcomes must be monitored closely. With repetition, successful strategies stabilize. Conditional structure becomes predictable, error rates decline, and many of the distinctions that once mattered cease to require active supervision. As this occurs, the cognitive system economizes by relegating these distinctions below the threshold of conscious access.
+
+Crucially, relegation is reversible. The defining feature of a relegated aspect is not that it is inaccessible in principle, but that it is inactive by default. When circumstances change—when expectations are violated, errors accumulate, or the environment becomes unpredictable—the system can re-promote relegated structure to active attention. What appears as a shift from System~1 to System~2 is, on this view, a shift in representational resolution rather than a switch between faculties.
+
+This account reframes intuition as the appearance of immediacy produced by successful relegation. Intuitive judgments feel direct not because they bypass reasoning, but because the reasoning that supports them has been compressed into a form that no longer demands explicit inspection. The sense that an answer ``just comes to mind'' reflects the absence of visible intermediate steps, not their nonexistence. Intuition, in this sense, is not a primitive epistemic source but a derivative one, dependent on prior structure that has been rendered implicit.
+
+Aspect Relegation Theory also clarifies the relationship between effort and cognition. Effort is not a marker of rationality per se, but a signal that representational detail is being actively maintained. Tasks feel effortful when many distinctions must be kept in play simultaneously. As relegation proceeds, effort diminishes—not because the task has become cognitively trivial, but because its complexity has been reorganized rather than eliminated.
+
+This framework accommodates a graded notion of automaticity. There is no sharp boundary at which a process becomes fully automatic. Instead, aspects of a task may be relegated at different rates and to different depths. An experienced driver, for example, may navigate routine traffic with minimal conscious oversight while still maintaining active attention to unusual conditions such as construction zones or adverse weather. Relegation operates locally, not globally, allowing cognitive systems to remain sensitive to context while minimizing unnecessary expenditure of attention.
+
+By treating automaticity as a structural transformation rather than a categorical mode, Aspect Relegation Theory avoids the explanatory pitfalls of dual-process ontologies. It preserves the empirical regularities that motivated the original distinction while replacing an architectural dichotomy with a hierarchical model of attentional access. The next section addresses a natural objection to this view: namely, that some automatic processes appear never to have been deliberative, either in individual development or in evolutionary history.
+
+\section{Innate Automaticity and the Limits of Relegation}
+
+A natural objection to Aspect Relegation Theory is that not all automatic processes plausibly originate in prior deliberation. Certain perceptual, affective, and motor responses appear to be automatic from the outset, both developmentally and phylogenetically. Low-level perceptual binding, reflexive threat responses, and basic affective valences seem to operate without ever having passed through a stage of explicit reasoning. If such processes exist, then the claim that System~1 is merely ``precompiled System~2'' risks overstating its scope.
+
+This objection identifies a genuine boundary condition, but it does not undermine the core thesis. Aspect Relegation Theory does not require that \emph{all} automatic processes be learned through explicit deliberation. Rather, it distinguishes between two sources of automaticity: hardwired automaticity and relegated automaticity. The former consists of processes whose structure is fixed by biological evolution and development; the latter consists of processes whose structure is acquired, refined, and stabilized through experience.
+
+The critical claim is that the phenomena most often invoked in discussions of reasoning, judgment, and decision-making overwhelmingly belong to the second category. Route selection, linguistic interpretation, social inference, probabilistic expectation, and strategic choice are not innate reflexes. They are learned competencies that demonstrably transition from effortful to effortless performance. It is these competencies—not retinal edge detection or startle responses—that dominate debates about rationality, bias, and artificial intelligence.
+
+Moreover, even hardwired automatic processes do not escape the relevance of relegation. While their internal structure may never have been deliberative, their \emph{integration} into higher-level cognition is subject to attentional modulation. Affective responses, for example, can be foregrounded, suppressed, reinterpreted, or overridden depending on context. The distinction between what is innately automatic and what is relegated does not map cleanly onto the distinction between what is cognitively relevant and what is not. What matters for the present argument is that the dual-process framework routinely attributes epistemic significance to automaticity itself, rather than to the conditions under which automatic processes are inspected, regulated, or revised.
+
+A second, related objection concerns the mechanism by which relegated aspects are re-promoted to conscious attention. Critics may concede that many intuitive judgments are the products of prior deliberation, while insisting that humans nevertheless possess a distinctive capacity for recognizing when intuition has become unreliable. If this capacity exists, then the difference between human cognition and contemporary artificial systems may simply reappear under a different name. System~2, one might argue, refers not to slow reasoning per se, but to the metacognitive control structures that determine when to abandon automatic processing.
+
+Aspect Relegation Theory does not deny this asymmetry. On the contrary, it isolates it as the genuine explanatory problem that dual-process rhetoric tends to obscure. The ability to widen attentional scope, increase representational resolution, and re-expose hidden structure is not guaranteed by relegation alone. It requires monitoring mechanisms capable of detecting instability, surprise, error, or contextual mismatch. These mechanisms may draw on affective signals, uncertainty estimates, novelty detection, or socially mediated cues. What they share is not slowness, but sensitivity to breakdown.
+
+Importantly, this reframing shifts the burden of explanation. Instead of asking whether a system has System~2, we must ask how it regulates transitions in cognitive resolution. The question is not whether reasoning occurs, but under what conditions its internal structure becomes explicit. Human cognition appears to possess a rich and multi-layered set of triggers for such transitions. Artificial systems, by contrast, typically rely on externally imposed criteria or narrowly specified objectives. This difference is real, but it is not well captured by the language of dual systems.
+
+By disentangling automaticity from epistemic status, Aspect Relegation Theory allows for a more precise comparison between biological and artificial cognition. It concedes that humans currently outperform machines in adaptive control over representational granularity, while rejecting the inference that this advantage derives from a fundamentally different kind of reasoning. The remaining gap is not metaphysical but functional: it concerns how systems detect the need for re-promotion and how richly they can respond once relegated aspects return to view.
+
+The next section explores the implications of this analysis for contemporary critiques of artificial intelligence, particularly those that rely on the System~1/System~2 distinction to argue for categorical limitations in current models.
+
+\section{Implications for Artificial Intelligence and the Critique of Reasoning}
+
+The application of dual-process terminology to artificial intelligence has become increasingly common, particularly in critiques of contemporary machine learning systems. Large language models are frequently described as exemplars of System~1 cognition: fast, fluent, associative, and reactive, yet allegedly incapable of the slow, reflective reasoning characteristic of System~2. This diagnosis is often presented as both descriptive and evaluative. Descriptively, it purports to explain observed patterns of error and brittleness; evaluatively, it is taken to establish a principled limit on what such systems can achieve.
+
+From the perspective of Aspect Relegation Theory, this line of argument rests on a category mistake. If System~1 is understood as relegated System~2—reasoning whose internal structure has been compressed and rendered implicit—then fluency and speed are not indicators of the absence of reasoning. They are indicators of successful stabilization. The fact that a system produces outputs without visible intermediate steps does not entail that those steps are absent; it entails that they are not exposed.
+
+This reframing does not deny that contemporary AI systems exhibit genuine limitations. Rather, it relocates those limitations. The central deficiency of current language models is not that they operate in a System~1 mode, but that they lack robust, endogenous mechanisms for regulating representational resolution. Their internal structure is largely fixed at inference time, and their capacity to revisit, reinterpret, or rearticulate that structure in response to contextual breakdown is limited. What appears as a lack of ``reflection'' is better understood as a lack of adaptive re-promotion.
+
+This distinction matters because it alters both diagnosis and prognosis. On the dual-process view, the path to more capable AI requires the addition of a qualitatively new faculty—something like System~2—to supplement existing pattern recognition. On the present view, improvement consists in enriching control over when and how internal structure becomes explicit. This includes the ability to detect when default compression is inappropriate, to increase internal resolution selectively, and to maintain multiple competing representations when uncertainty remains unresolved.
+
+Critiques that invoke System~2 often conflate two separable issues: the depth of internal structure and the visibility of that structure. Human reasoning is often slow not because slowness is essential to rationality, but because exposing and manipulating fine-grained distinctions requires time and attention. Artificial systems may execute complex transformations rapidly, yet lack the ability to pause, interrogate, or revise those transformations in light of broader goals or unexpected consequences. The deficit lies not in speed, but in self-directed scrutiny.
+
+Aspect Relegation Theory also clarifies why comparisons between human cognition and current AI systems can feel simultaneously compelling and unsatisfying. Humans routinely operate on relegated structure, yet seamlessly recover detail when circumstances demand it. Language models, by contrast, exhibit impressive fluency under stable prompts but degrade unpredictably when pushed outside familiar regimes. This is not because they lack reasoning altogether, but because they lack the layered attentional architecture that governs when reasoning should become explicit.
+
+Seen in this light, the insistence that artificial systems ``only have System~1'' obscures more than it reveals. It encourages the belief that a missing ingredient—call it reflection, deliberation, or System~2—must be added wholesale. What is actually missing is a capacity for dynamic self-modulation: the ability to treat one's own internal processes as objects of selective inspection and revision.
+
+The final section draws together these threads and reflects on the broader consequences of abandoning the System~1/System~2 dichotomy in favor of a resolution-based model of cognition. In doing so, it returns to the polemical motivation of the paper, while tempering its conclusions to reflect the genuine difficulty of the remaining open problems.
+
+\section{Conclusion: Deflation, Clarification, and the Remaining Problem}
+
+Aspect Relegation Theory was introduced here as a deflationary intervention. Its aim has not been to deny the empirical phenomena that motivated dual-process theories, nor to trivialize the distinction between automatic and effortful cognition. Rather, it has sought to remove an unnecessary ontological overlay that has accumulated around those phenomena and that now actively impedes clear analysis. By treating System~1 as a derivative state of reasoning rather than a separate faculty, the theory dissolves a false dichotomy while preserving what is genuinely explanatory in the original observations.
+
+The polemical target of this paper has been a particular style of critique—common in discussions of artificial intelligence—that treats the absence of System~2 as a decisive limitation. Such critiques trade on an equivocation between speed and shallowness, between automaticity and irrationality. Once intuition is understood as relegated structure rather than primitive guesswork, these inferences lose their force. Fluent performance no longer licenses the conclusion that reasoning is absent; it merely indicates that reasoning is no longer being displayed at full resolution.
+
+At the same time, the deflation is not a dismissal. Aspect Relegation Theory does not claim that the central problem of cognition has been solved, nor that human and artificial systems differ only in degree. On the contrary, it sharpens the location of the remaining difficulty. The hard problem is not how to add deliberation to systems that already reason, but how to design mechanisms that regulate when reasoning must become explicit. Adaptive control over representational granularity—knowing when to widen the aperture, when to re-expose hidden structure, and when to sustain unresolved alternatives—remains poorly understood even in the biological case.
+
+This reframing has two advantages. First, it removes the temptation to mystify intuition or moralize cognitive modes. Automaticity is no longer treated as epistemically suspect by default, nor is effort treated as a guarantor of rationality. Second, it aligns the analysis of human and artificial cognition within a single conceptual framework. Differences between systems can be articulated in terms of functional capacities rather than categorical exclusions, making empirical comparison both clearer and more productive.
+
+The cost of this clarity is rhetorical. Dual-process language offers an easy narrative: two systems, two kinds of thinking, one superior to the other. Aspect Relegation Theory replaces this with a less dramatic but more precise picture: a single inferential capacity operating under shifting constraints of attention, compression, and control. What disappears is the mystique. What remains is a genuine research program.
+
+If intuition is no longer permitted to masquerade as magic, then neither humans nor machines can be assessed by slogans. The question that replaces ``Does it have System~2?'' is both narrower and deeper: how does a cognitive system decide that its current resolution is no longer adequate, and what resources does it bring to bear once that decision is made? Until that question is answered, debates about reasoning—human or artificial—will continue to orbit a distinction that feels explanatory while quietly doing very little work.
+
+\newpage
+\begin{thebibliography}{99}
+
+\bibitem{bargh1992}
+J. A. Bargh.  
+The ecology of automaticity: Toward establishing the conditions needed to produce automatic processing effects.  
+\textit{American Journal of Psychology}, 105(2):181--199, 1992.
+
+\bibitem{Fant2005}
+K. M.~Fant.
+\newblock \emph{Logically Determined Design: Clockless System Design with NULL Convention Logic}.
+\newblock John Wiley \& Sons, Hoboken, NJ, 2005.
+
+\bibitem{Fant2007}
+K. M.~Fant.
+\newblock \emph{Computer Science Reconsidered: Asynchrony in Logic, Software, and Hardware}.
+\newblock John Wiley \& Sons, Hoboken, NJ, 2007.
+
+\bibitem{james1890}
+W. James.  
+\textit{The Principles of Psychology}.  
+Henry Holt and Company, New York, 1890.
+
+\bibitem{kahneman2011}
+D. Kahneman.  
+\textit{Thinking, Fast and Slow}.  
+Farrar, Straus and Giroux, New York, 2011.
+
+\bibitem{marcus2018}
+G. Marcus.  
+Deep learning: A critical appraisal.  
+\textit{arXiv preprint arXiv:1801.00631}, 2018.
+
+\bibitem{marcus2020}
+G. Marcus and E. Davis.  
+\textit{Rebooting AI: Building Artificial Intelligence We Can Trust}.  
+Pantheon Books, New York, 2020.
+
+\bibitem{posner1975}
+M. I. Posner and C. R. Snyder.  
+Attention and cognitive control.  
+In R. L. Solso (ed.), \textit{Information Processing and Cognition: The Loyola Symposium}, pp. 55--85.  
+Lawrence Erlbaum Associates, Hillsdale, NJ, 1975.
+
+\bibitem{stanovich2000}
+K. E. Stanovich and R. F. West.  
+Individual differences in reasoning: Implications for the rationality debate?  
+\textit{Behavioral and Brain Sciences}, 23(5):645--665, 2000.
+
+\bibitem{stanovich2018}
+K. E. Stanovich.  
+\textit{The Rationality Quotient: Toward a Test of Rational Thinking}.  
+MIT Press, Cambridge, MA, 2018.
+
+\bibitem{tversky1974}
+A. Tversky and D. Kahneman.  
+Judgment under uncertainty: Heuristics and biases.  
+\textit{Science}, 185(4157):1124--1131, 1974.
+
+\bibitem{wood2016}
+W. Wood and D. T. Neal.  
+Healthy through habit: Interventions for initiating and maintaining health behavior change.  
+\textit{Behavior Research and Therapy}, 47(8):699--711, 2016.
+
+\end{thebibliography}
+
+\end{document}
