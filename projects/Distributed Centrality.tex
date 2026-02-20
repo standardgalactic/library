@@ -1,0 +1,820 @@
+\documentclass[11pt,onecolumn]{article}
+
+% ------------------------------------------------
+% Engine detection (ensures LuaLaTeX)
+% ------------------------------------------------
+\usepackage{iftex}
+\ifLuaTeX\else
+  \errmessage{This document requires LuaLaTeX}
+\fi
+
+% ------------------------------------------------
+% Fonts and Math (LuaLaTeX)
+% ------------------------------------------------
+\usepackage{fontspec}
+\usepackage{unicode-math}
+
+\defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+
+\setmainfont{Libertinus Serif}
+\setsansfont{Libertinus Sans}
+\setmonofont{IBM Plex Mono}
+\setmathfont{Libertinus Math}
+
+% ------------------------------------------------
+% Typography
+% ------------------------------------------------
+\usepackage{microtype} % fully supported in LuaLaTeX
+\usepackage{setspace}
+\setstretch{1.08}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+
+\usepackage{titling}
+\setlength{\droptitle}{-12em}
+
+\usepackage{titlesec}
+
+\titleformat{\section}
+  {\normalfont\scshape\large}
+  {\thesection.}{0.6em}{}
+
+\titlespacing*{\section}
+  {0pt}
+  {1.0ex plus 0.2ex minus 0.2ex}
+  {1.0ex plus 0.2ex}
+
+\titleformat{\subsection}
+  {\normalfont\scshape\normalsize}
+  {\thesubsection.}{0.6em}{}
+
+% ------------------------------------------------
+% Math packages
+% ------------------------------------------------
+\usepackage{amsmath,amsthm,amssymb,amsfonts}
+
+% ------------------------------------------------
+% Theorem styling
+% ------------------------------------------------
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{axiom}[theorem]{Axiom}
+
+% ------------------------------------------------
+% Hyperref
+% ------------------------------------------------
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=black,
+  citecolor=black,
+  urlcolor=black
+}
+
+% ------------------------------------------------
+% Math macros
+% ------------------------------------------------
+\newcommand{\Manifold}{\mathcal{M}}
+\newcommand{\Chart}{\phi}
+\newcommand{\Entropy}{\mathcal{S}}
+\newcommand{\FreeEnergy}{\mathcal{F}}
+\newcommand{\Gradient}{\nabla \Phi}
+\newcommand{\Transition}{\Psi}
+\newcommand{\Budget}{\mathcal{B}}
+
+% ------------------------------------------------
+% Title
+% ------------------------------------------------
+\title{\textsc{Distributed Centrality}\\[0.4em]
+\large Symmetry Preservation in Nonequilibrium Semantic Substrates}
+
+\author{\textsc{Flyxion}}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This paper establishes a formal correspondence between nonequilibrium thermodynamics, differential geometry, and institutional structure in digital coordination systems. We model the digital substrate as a measurable dynamical system $(\Omega, \mathcal{F}, \mu_t)$ coupled to a differentiable manifold $\Manifold$ endowed with a time-dependent metric $g_t$ and curvature field $K_t$. Sustained gradients of attention, capital, and computational throughput deform the probability measure and induce attractor formation, rendering certain execution traces dynamically favored.
+
+Within this framework, contemporary platform extraction is interpreted as curvature concentration: a metric deformation that collapses distributed coordinate charts into a centralized atlas and induces failure of categorical descent. We formalize distributed centrality as a perspectival symmetry condition requiring that local coordinate domains retain nontrivial overlap and that global semantic objects remain reconstructible from compatible local sections.
+
+Reinterpreting the Boltzmann Brain paradox through nonequilibrium attractor theory, we argue that observer-centered coordinate systems are not statistical anomalies but structural necessities of gradient-driven dissipation. The preservation of such centers requires entropy internalization constraints and curvature dissipation mechanisms that prevent supercritical reinforcement. We introduce a curvature order parameter $\kappa(t)$ and identify a critical threshold $\kappa_c$ beyond which semantic atlas collapse occurs.
+
+The resulting framework recasts institutional design as an invariance problem. A viable semantic substrate is one in which admissible transformations preserve descent integrity, close entropy budgets locally, and maintain interpretive reconstructibility under dynamical flow. Stability is thus not equilibrium but symmetry preservation across time in a nonequilibrium manifold of observers.
+\end{abstract}
+
+\newpage
+\section{Introduction}
+
+Digital coordination systems are increasingly organized around centralized gradients of attention, capital, and computation. These gradients do not merely mediate interaction; they reshape the probability landscape in which semantic work unfolds. The resulting architectures display a recurrent structural feature: curvature concentration. Local contributions are aggregated into global objects whose metric influence grows superlinearly, while the distributed coordinate origins from which those contributions emerged become progressively constrained.
+
+This paper develops a formal framework for analyzing that phenomenon. Rather than treating platform dominance as an economic anomaly or purely sociological outcome, we interpret it as a geometric and thermodynamic deformation of an underlying semantic manifold. The central claim is that distributed interpretive centers can be modeled as local coordinate charts on a differentiable manifold $\Manifold$, and that coordination breakdown corresponds to curvature singularity and descent failure within this structure.
+
+The argument proceeds in three stages. First, we reinterpret nonequilibrium thermodynamics in measure-theoretic terms, formalizing the digital substrate as a time-indexed probability space $(\Omega, \mathcal{F}, \mu_t)$. Sustained gradients deform the baseline measure via exponential weighting, rendering certain execution traces dynamically favored. This establishes the thermodynamic foundation for attractor formation and curvature accumulation.
+
+Second, we introduce a geometric layer in which the manifold $\Manifold$ is equipped with a time-dependent metric $g_t$ and curvature field $K_t$. Agents are modeled as local coordinate origins whose semantic domains are transported under a flow $\Phi_t$. Distributed centrality is expressed as an invariance condition on the preservation of nontrivial overlapping coordinate charts and effective descent across the sheaf of semantic constructions.
+
+Third, we integrate a qualitative dimension through the formalization of the As-Relation, distinguishing between ground and role. Meaning arises not from trace persistence alone but from reconstructible mappings within local coordinate systems. The preservation of understanding is therefore expressed as a constraint on admissible transformations: global objects must remain derivable from accessible local provenance.
+
+Within this unified framework, extraction is defined as a coupled failure of entropy internalization, curvature dissipation, and descent integrity. Curvature phase transitions are characterized by a critical threshold $\kappa_c$, beyond which local chart overlap collapses and the manifold degenerates into a centralized atlas. Renormalization mechanisms are then introduced as structural operators that redistribute curvature and restore symmetry under nonequilibrium flow.
+
+The guiding principle throughout is symmetry preservation. A semantic substrate is well-formed when no single coordinate domain becomes the effective atlas for $\Manifold$, when entropy budgets close locally, and when interpretive mappings remain reconstructible over time. The so-called ``Boltzmann Brain'' is thus reinterpreted not as a statistical anomaly but as a structural center of coordinate construction. A viable substrate must allow such centers to persist without collapse into singular concentration.
+
+The remainder of the paper formalizes these claims through measure deformation, curvature dynamics, sheaf cohesion, entropy accounting, and renormalization analysis. The objective is not metaphor but invariance: to specify the structural conditions under which distributed centrality can be maintained within nonequilibrium semantic systems.
+
+\section{The Physical Substrate: Gradients and Attractors}
+
+The analysis of stability begins with the distinction between \textit{fluctuation} and \textit{structure}. In classical statistical mechanics, following Boltzmann, the entropy $\Entropy$ of a system is a measure of the probability of its macrostate. In an isolated system near equilibrium, complex configurations—such as a cognitive apparatus or a coordinated market—are vanishingly rare fluctuations.
+
+However, in systems maintained far from equilibrium by a sustained free-energy gradient $\Gradient$, the probability landscape of the phase space is reshaped. We define a digital substrate as a nonequilibrium environment where human attention and metabolic effort function as the primary energy throughput.
+
+\begin{lemma}[Gradient-Induced Attractors]
+Let $P(x)$ be the probability of a configuration $x$ in a stochastic field. In the presence of a persistent gradient $\Gradient$, the local phase space admits attractors such that:
+\begin{equation}
+P(x | \Gradient) \gg P(x | \text{equilibrium})
+\end{equation}
+Specifically, configurations that facilitate the dissipation of the gradient become dynamically favored.
+\end{lemma}
+
+Under this lemma, a "Boltzmann Brain"—an observer-centered modeling system—is not an isolated anomaly but a structural necessity of gradient-driven dissipation. In a digital economy, the individual specialist or niche agent is an \textit{autocatalytic cycle} that stabilizes itself by solving local scarcity problems.
+
+The "manufacturing" of stability, therefore, is defined as the engineering of a substrate that ensures these local low-entropy potentials are maintained, rather than being collapsed into a single, global curvature singularity. When a platform captures a gradient, it effectively suppresses the formation of alternative attractors, leading to "semantic heat death" or monopolistic stasis.
+
+\section{Measure-Theoretic Foundations of the Semantic Substrate}
+
+To render the preceding thermodynamic claims precise, we formalize the digital substrate as a measurable dynamical system. Let
+\[
+(\Omega, \mathcal{F}, \mu_t)
+\]
+be a probability space indexed by time $t \geq 0$. Here $\Omega$ denotes the space of admissible execution traces, where each $x \in \Omega$ is a finite or countably infinite sequence
+\[
+x = (m_1, m_2, \dots)
+\]
+of composable morphisms generated by agents in $\mathcal{A}$. The $\sigma$-algebra $\mathcal{F}$ is generated by cylinder sets corresponding to trace fragments, thereby encoding measurable events as partial histories of execution. The family $\{\mu_t\}_{t \ge 0}$ is a time-dependent measure induced by substrate dynamics, representing the probabilistic weighting of execution traces under nonequilibrium flow.
+
+An execution trace is interpreted as the temporal unfolding of semantic work. Properties of the substrate are therefore expressed as structural properties of the evolving measure $\mu_t$, rather than as attributes of individual traces. Dynamical invariance conditions will be stated as constraints on admissible deformations of $\mu_t$ under the induced flow.
+
+\begin{definition}[Gradient Potential]
+Let $\Phi : \Omega \times \mathbb{R}_{\ge 0} \to \mathbb{R}$ be a measurable function representing the effective gradient potential induced by sustained free-energy throughput (attention, capital, metabolic effort). 
+\end{definition}
+
+We model nonequilibrium deformation of the baseline equilibrium measure $\mu_0$ via a Radon–Nikodym derivative:
+
+\[
+\frac{d\mu_t}{d\mu_0}(x)
+=
+Z_t^{-1} e^{\beta \Phi(x,t)},
+\]
+
+where $\beta$ encodes gradient intensity and $Z_t$ is a normalization constant.
+
+\begin{lemma}[Measure Deformation Under Sustained Gradients]
+If $\Phi(x,t)$ is bounded below and persists over nonzero temporal measure, then configurations $x$ that increase gradient dissipation satisfy
+\[
+\mu_t(x) \ge C_t \, \mu_0(x)
+\]
+for some $C_t > 1$ dependent on $\beta$ and the persistence of $\Phi$.
+\end{lemma}
+
+\begin{proof}[Sketch]
+Immediate from the exponential weighting of the Radon–Nikodym derivative.
+\end{proof}
+
+Under this formalization, “manufacturing stability” is equivalent to constraining the admissible evolution of $\mu_t$ such that the deformation of probability mass preserves distributed local coordinate domains (to be defined in subsequent sections).
+
+Extraction can now be interpreted as a pathological deformation of $\mu_t$ that concentrates measure mass onto a narrow subset of $\Omega$, reducing exploratory variance and suppressing local attractor formation.
+
+This measure-theoretic grounding ensures that subsequent geometric and institutional claims are expressed as invariance conditions on $(\Omega, \mathcal{F}, \mu_t)$ rather than metaphorical analogies.
+
+\section{Dynamical Structure: Flows on a Fixed Manifold}
+
+Having defined the substrate measure $(\Omega, \mathcal{F}, \mu_t)$, we now clarify the dynamical status of the manifold $\Manifold$ introduced in Section 2.
+
+Throughout this work, we treat $\Manifold$ as a fixed differentiable manifold equipped with a time-dependent metric $g_t$ and measure $\mu_t$. The semantic economy evolves not by changing the underlying topological space, but by deforming its metric and probability structure.
+
+\begin{definition}[Substrate Flow]
+Let $\Phi_t : \Manifold \to \Manifold$ be a one-parameter family of diffeomorphisms representing admissible semantic transformations over time. The triple $(\Manifold, g_t, \mu_t)$ together with $\Phi_t$ defines a semantic flow.
+\end{definition}
+
+The evolution of the system is therefore characterized by the coupled deformation of its metric structure, probability measure, and induced curvature field under the action of the flow $\Phi_t$. Specifically, the metric tensor $g_t$ evolves over time, inducing corresponding changes in sectional curvature $K_t$, while the measure $\mu_t$ deforms according to the pushforward $\Phi_{t*}\mu_t$. Simultaneously, local coordinate charts $(U_i, \Chart_i)$ are transported along $\Phi_t$, and stability requires that their domains remain nontrivial under this transport.
+
+These components are not independent: deformation of $g_t$ modifies curvature and geodesic structure; deformation of $\mu_t$ reshapes probabilistic weighting over execution traces; and the compatibility of transported charts constrains admissible flows. The system’s evolution is thus a coupled dynamical process in which geometry, probability, and perspectival structure co-evolve under bounded invariance conditions.
+
+\subsection*{Curvature Dynamics}
+
+Let $K_j(t)$ denote the sectional curvature localized at node $j \in \Manifold$. We model curvature evolution as:
+
+\[
+\frac{dK_j}{dt}
+=
+-\lambda K_j
++
+\Gamma_j(t),
+\]
+
+where $\lambda > 0$ is a curvature dissipation constant and $\Gamma_j(t)$ represents novel texture contributions (innovation, genuine coordination).
+
+Stability requires that curvature accumulation be transient in the absence of sustained novelty input.
+
+\begin{definition}[Chart Compatibility Under Flow]
+Let $(U_i, \Chart_i)$ be a local coordinate chart. The flow $\Phi_t$ is chart-compatible if for every $i \in \mathcal{A}$ and every $t \ge 0$, the image $\Phi_t(U_i)$ remains an open set of positive measure under $\mu_t$.
+\end{definition}
+
+Thus, temporal evolution is admissible if and only if it preserves the nontriviality of local coordinate domains.
+
+\subsection*{Time and Structural Invariance}
+
+By separating the fixed differentiable manifold $\Manifold$ from its time-dependent metric $g_t$ and evolving measure $\mu_t$, we distinguish topological structure from dynamical deformation. The manifold itself remains invariant, while curvature, distance relations, and probability mass evolve under the flow $\Phi_t$. Stability is therefore not a property of static configuration but of admissible trajectories within a fixed structural domain.
+
+Under this formulation, curvature concentration is interpreted as a dynamical instability arising from metric reinforcement rather than a topological inevitability. Singular behavior emerges only when deformation of $g_t$ and $\mu_t$ violates the invariance conditions imposed on local coordinate domains and descent integrity. Manufacturing stability thus becomes the enforcement of constraints on the evolution of these fields along trajectories $\Phi_t$.
+
+This clarification eliminates ambiguity between geometric ontology and institutional process. The underlying manifold persists as a structural constant; it is the metric tensor, curvature distribution, and induced measure that change over time. Stability is preserved when these evolutions remain compatible with distributed coordinate charts and bounded curvature under continuous flow.
+
+\section{Perspectival Symmetry: The Manifold of Observers}
+
+To describe a digital economy that preserves agentic integrity, we model the information space as a Riemannian manifold $\Manifold$ without a global origin. In this framework, "truth" or "value" is not a centralized coordinate, but a property emerging from the consistency of overlapping local perspectives.
+
+\begin{definition}[Distributed Coordinate Charts]
+For every observer $i \in \mathcal{A}$ (where $\mathcal{A}$ is the set of active agents), there exists a local coordinate chart $(U_i, \Chart_i)$, where $U_i \subset \Manifold$ is the agent's semantic horizon and $\Chart_i: U_i \to \mathbb{R}^n$ is the mapping that renders the manifold locally intelligible.
+\end{definition}
+
+This definition formalizes the "Boltzmann Brains Everywhere" principle: every agent is structurally at the center of their own observable universe. The "Manufacturing of Stability" is the preservation of the diffeomorphism between these charts.
+
+\begin{axiom}[Perspectival Invariance]
+A transformation $T: \Manifold \to \Manifold$ is admissible if and only if it preserves the existence of local charts for all $i \in \mathcal{A}$. Specifically, no transformation may induce a curvature $K$ such that the radius of any chart $U_i$ collapses to zero.
+\end{axiom}
+\subsection{Curvature as Coordination Capture}
+
+Under extractive concentration, the metric tensor $g_t$ on $\Manifold$ undergoes anisotropic deformation. A dominant node does not merely occupy a coordinate position; it alters the metric structure so that geodesics, interpreted as user trajectories or execution paths, become increasingly concentrated toward that node. In the limit, this produces a scalar well in which distance relations are reweighted to privilege a single attractor.
+
+As sectional curvature $K_j(t)$ increases without bound at a node $j$, the transition maps
+\[
+\Chart_j \circ \Chart_i^{-1}
+\]
+between overlapping local charts become ill-conditioned. The Jacobians of these maps exhibit increasing distortion, reflecting the fact that local coordinate systems can no longer be smoothly related without passing through the central singularity.
+
+This geometric degeneration has two coupled effects. First, the determination of local charts $(U_i, \Chart_i)$ ceases to arise from the metabolic and cognitive work of the agent and instead becomes increasingly constrained by the predictive and routing mechanisms of the dominant node. Second, the gluing of local sections that previously satisfied descent conditions is replaced by a global object whose derivational structure is not reconstructible from compatible local data. Interoperability is thus supplanted by enforced central mediation.
+
+An entropy-bounded substrate counteracts this process by imposing constraints on admissible metric deformation. Such constraints act as a flatness condition on the evolving geometry, ensuring that curvature accumulation remains transient and that the transport of local charts under $\Phi_t$ preserves their effective domains. Coordination is not eliminated; rather, it is regulated so that the stitching of local centers does not collapse into a single global atlas. In this regime, distributed coordinate origins remain operative even as the system undergoes nonequilibrium evolution.
+
+\section{The As-Relation: Meaning as Coordinate Mapping}
+
+The manifold $\Manifold$ and the trace space $(\Omega, \mathcal{F}, \mu_t)$ describe the structural substrate of interaction. However, traces alone do not generate value. Value emerges when an observer instantiates an \textit{As-Relation}, assigning semantic role to physical ground.
+
+We distinguish analytically between the ground and the role. The ground $\gamma \in \Manifold$ denotes the physical or informational artifact as it appears within the underlying manifold of traces. The role $\rho \in \mathcal{R}_i$ denotes the semantic function assigned to that ground by agent $i$, where $\mathcal{R}_i$ represents the agent’s role-space or domain of interpretive commitments. The ground belongs to the geometric substrate; the role belongs to the coordinate mapping instantiated by the observer.
+
+\begin{definition}[As-Relation]
+For agent $i \in \mathcal{A}$, the As-Relation is a mapping
+\[
+\mathcal{A}_i : \Manifold \to \mathcal{R}_i,
+\qquad
+\mathcal{A}_i(\gamma) = \rho.
+\]
+\end{definition}
+
+Meaning is not an intrinsic property of $\gamma$ but an invariant of the mapping $\mathcal{A}_i$ under admissible coordinate transformations of $\Chart_i$.
+
+\subsection*{Coordinate Origin and Semantic Integrity}
+
+The local chart $\Chart_i$ determines the agent’s semantic horizon. If a transformation captures the ground $\gamma$ but severs the mapping $\mathcal{A}_i$, the system preserves trace but destroys meaning.
+
+Thus, perspectival invariance must preserve not only the existence of local coordinate domains, but the functional integrity of their As-Relations.
+
+\begin{axiom}[Semantic Preservation]
+A transformation $\Transition$ is admissible only if, for every agent $i$, the induced mapping on traces permits reconstruction of $\mathcal{A}_i$.
+\end{axiom}
+
+This strengthens the stability framework: preserving distributed centrality requires preserving the possibility of role assignment, not merely trace persistence.
+
+\section{Morphodynamics of Ideal Objects: Novelty and Exhaustion}
+
+Cultural and semantic systems evolve not merely through accumulation of traces but through the unfolding of structured logical spaces, which we model as \textit{Ideal Objects}. An Ideal Object is a generative rule-set constraining admissible constructions within a semantic domain.
+
+\begin{definition}[Ideal Object]
+An Ideal Object $\mathcal{I}$ is a subset of $\Omega$ closed under a specified transformation group $\mathcal{G}$:
+\[
+x \in \mathcal{I},\quad g \in \mathcal{G}
+\;\Rightarrow\;
+g \cdot x \in \mathcal{I}.
+\]
+\end{definition}
+
+Ideal Objects define attractor basins in semantic phase space.
+
+\subsection*{Creative Transformations}
+
+Within an Ideal Object, transformation occurs in three structurally distinct regimes. In the exploratory regime, evolution proceeds within the existing metric structure $g_t$, tracing geodesics permitted by the current semantic constraints. In the combinatorial regime, new compatible gluings are formed between previously distinct local sections, extending connectivity without altering the underlying metric. In the transformational regime, the metric itself undergoes deformation $g_t \to g_t'$, thereby expanding the admissible semantic domain and redefining the geometry within which subsequent traces evolve. Transformational creativity corresponds to metric expansion of $\Manifold$ under fixed topology.
+
+\subsection*{Genre Exhaustion and Redundancy}
+
+Let $\sigma_i, \sigma_j \in \mathcal{I}$ denote local sections within an Ideal Object. Define mutual information:
+
+\[
+I(\sigma_i; \sigma_j)
+=
+H(\sigma_i) + H(\sigma_j) - H(\sigma_i, \sigma_j).
+\]
+
+\begin{lemma}[Genre Exhaustion]
+In a mature attractor basin, the mutual information between local sections approaches maximal overlap:
+\[
+\lim_{t \to \infty} I(\sigma_i; \sigma_j) \to H(\sigma_i),
+\]
+implying increasing redundancy despite sustained activity.
+\end{lemma}
+
+As redundancy increases, event density may rise while structural novelty declines. The system becomes metabolically active yet geometrically stagnant.
+
+Without curvature dissipation or metric transformation, such systems approach semantic heat death.
+
+\section{Sheaf Cohesion and Descent Integrity}
+
+The manifold model of distributed coordinate charts admits a natural categorical refinement. To formalize the gluing of local semantic domains, we introduce a presheaf structure over $\Manifold$.
+
+\begin{definition}[Semantic Presheaf]
+Let $\mathcal{S}$ be a presheaf over $\Manifold$ such that for every open set $U \subset \Manifold$,
+\[
+\mathcal{S}(U)
+\]
+denotes the set of admissible semantic constructions whose execution traces are supported in $U$. For inclusions $V \subset U$, restriction maps
+\[
+\rho_{U,V} : \mathcal{S}(U) \to \mathcal{S}(V)
+\]
+are defined by trace restriction.
+\end{definition}
+
+This presheaf encodes the principle that semantic constructions are locally generated and globally assembled.
+
+\subsection*{Effective Descent}
+
+A global semantic object $G \in \mathcal{S}(\Manifold)$ is legitimate if and only if it satisfies effective descent.
+
+\begin{definition}[Effective Descent]
+Let $\{U_i\}_{i \in I}$ be an open cover of $\Manifold$. A family of local sections $s_i \in \mathcal{S}(U_i)$ satisfies descent if:
+
+\[
+\rho_{U_i, U_i \cap U_j}(s_i)
+=
+\rho_{U_j, U_i \cap U_j}(s_j)
+\quad \forall i,j.
+\]
+
+A global object $G$ is effective if:
+\[
+G \cong \varprojlim_i s_i.
+\]
+\end{definition}
+
+Effective descent ensures that global coordination is reconstructible from compatible local data.
+
+\subsection*{Extraction as Descent Failure}
+
+We define extraction categorically.
+
+\begin{definition}[Illegitimate Global Object]
+A global object $G \in \mathcal{S}(\Manifold)$ is extractive if it does not arise as the limit of compatible local sections. That is, $G$ exists as a global operator but cannot be reconstructed from local descent data.
+\end{definition}
+
+Under platform concentration, a dominant node induces a global object $\mathcal{G}$ whose derivational structure is opaque to local charts. The result is a violation of descent integrity.
+
+\subsection*{Descent and Perspectival Invariance}
+
+Perspectival symmetry now acquires a categorical form: local coordinate charts must glue compatibly, and no global construction may override the descent condition.
+
+Stability therefore requires that $\mathcal{S}$ behave as a sheaf, not merely a presheaf. That is, compatible local data must uniquely determine global structure, and no global structure may exist without local generative support.
+
+In this formalization, “Boltzmann Brains Everywhere” is not a metaphor but a sheaf condition: every global semantic object must be anchored in distributed local sections.
+
+\section{Provenance as a Clearing for Understanding}
+
+Even when a global object $\mathcal{G} \in \mathcal{S}(\Manifold)$ satisfies descent formally, understanding requires access to its derivational structure.
+
+Let $\mathcal{H}(\mathcal{G})$ denote the derivational history of $\mathcal{G}$, represented as a subgraph of execution traces in $\Omega$.
+
+\begin{axiom}[Understanding Constraint]
+For any global object $\mathcal{G}$ and agent $i$, understanding holds if and only if:
+\[
+\text{Understand}_i(\mathcal{G})
+\;\Longleftrightarrow\;
+\Chart_i(\mathcal{H}(\mathcal{G}))
+\text{ is well-defined}.
+\]
+\end{axiom}
+
+The provenance graph therefore functions as a \textit{clearing}—a structured domain in which the As-Relation can be reconstructed.
+
+\subsection*{Opacity as Descent Violation}
+
+If a system produces a global object $\mathcal{G}$ without accessible $\mathcal{H}(\mathcal{G})$, then the Understanding Constraint fails even if structural descent holds abstractly.
+
+Opacity thus constitutes a qualitative instability: the manifold persists, but agents lose the capacity to instantiate semantic mappings.
+\subsection*{Stability and the Possibility of Understanding}
+
+The preceding sections imply that manufacturing stability is not exhausted by geometric flatness or thermodynamic balance. A stable semantic substrate must preserve the nontriviality of distributed coordinate domains, maintain descent integrity across overlapping local sections, enforce entropy internalization at the level of admissible transformations, and bound curvature accumulation so that no local chart collapses into a global atlas. These structural conditions are jointly necessary but not sufficient. They must also guarantee the reconstructibility of As-Relations through accessible provenance.
+
+Stability therefore entails the preservation of the conditions under which understanding remains possible. Let $\mathcal{G} \in \mathcal{S}(\Manifold)$ be a global object with derivational history $\mathcal{H}(\mathcal{G})$. For any agent $i$, understanding requires that the local chart $\Chart_i$ be capable of rendering $\mathcal{H}(\mathcal{G})$ intelligible. If the derivational structure becomes inaccessible, compressed beyond reconstruction, or detached from the semantic mappings that generated it, then perspectival invariance is violated even if the manifold remains geometrically intact.
+
+Accordingly, stability cannot be reduced to curvature boundedness or entropy internalization alone. These conditions constrain the geometry and thermodynamics of the substrate, but they do not by themselves guarantee interpretive continuity. Stability must therefore be understood as a temporally extended invariance of interpretability under admissible flows $\Phi_t$.
+
+Formally, a semantic substrate is stable if, for every $t \ge 0$ and for every admissible evolution $\Phi_t$, agents retain the structural capacity to instantiate As-Relations over the objects that organize their coordination. That is, the derivational structures governing global objects remain reconstructible within local coordinate charts, and semantic mappings remain well-defined over time.
+
+Under this strengthened condition, distributed centers of interpretation persist as operative coordinate origins. The system does not merely avoid geometric singularity or thermodynamic imbalance; it preserves the possibility of understanding across time. When this condition fails, outputs may continue to be generated, yet the substrate collapses into a regime of reactive optimization in which meaning is no longer reconstructible from provenance. Stability, in its full sense, therefore consists in the sustained compatibility of geometry, entropy, and interpretability.
+
+\section{Gradient Harvesting and the Externalization of Entropy}
+
+In this section, we map the structural behavior of the platform firm to the thermodynamic operators defined in Section 1. We argue that extraction is a process of decoupling \textit{Curvature} (value/credit) from \textit{Metabolic Throughput} (cost/risk).
+
+\begin{definition}[The Extractive Operator]
+Let $\Gradient$ be a semantic gradient representing unsolved coordination problems. We define an extractive operator $\mathcal{E}$ as a transformation that collapses the distributed local sections of a sheaf into a singular global object $\mathcal{G}$, while preserving the metabolic burden on the local agents. Formally:
+\begin{equation}
+\mathcal{E}: { (U_i, \Chart_i) } \to \mathcal{G} \text{ such that } \Entropy(\text{Firm}) \to 0, \Entropy(\text{Agent}) \to \infty
+\end{equation}
+\end{definition}
+
+This operator represents the "Middleman" strategy identified in the literature (e.g., Wu [2010]). By controlling the coordinate origin of the interface, the platform captures the informational benefits of the gradient (revenue and data) while forcing the "random fluctuations" of market risk and metabolic cost onto the precarious worker.
+
+\subsection{The Asymmetry of Trace and Agency}
+
+The dominance of a centralized platform rests upon a structural asymmetry between trace and agency. A trace is the stabilized digital artifact recorded in $\Omega$, whereas agency denotes the ongoing thermodynamic and cognitive work required to generate, maintain, and interpret that artifact. While traces persist as measurable elements within $(\Omega, \mathcal{F}, \mu_t)$, agency is a temporally extended process that consumes energy, incurs risk, and produces entropy.
+
+Platform extraction exploits this asymmetry by decoupling trace from agency. The specialized output of an agent is reified as a reusable component within the global substrate, effectively transformed into a modular function abstracted from its originating coordinate chart. In this process, the trace is internalized into the platform’s metric structure, while the thermodynamic burden required to produce and sustain that trace remains localized to the agent.
+
+This decoupling permits informational compression and curvature accumulation at the center without corresponding internalization of entropy costs. Agency continues to dissipate energy in the production of novelty and coordination, yet the resulting curvature is captured as a persistent feature of the platform’s geometry. The asymmetry between persistent trace and ongoing metabolic work thereby becomes a principal mechanism through which coordination capture is achieved.
+
+\subsection{Autocatalytic Capture vs. Niche Specialization}
+While healthy specialization represents an autocatalytic network that distributes load, the platform firm represents an \textit{autocatalytic monopoly}. It uses its predictive leverage—the KL-divergence $\Delta_t$ between its model and the user's self-knowledge—to prune the phase space of available niches.
+
+\begin{lemma}[Niche Suppression]
+Under an extractive operator $\mathcal{E}$, the probability $P(\text{exit})$ for any local agent is suppressed by the increasing metric distance required to transition to an alternative coordinate chart. The platform does not compete on novelty; it defends its curvature by raising the thermodynamic cost of departure.
+\end{lemma}
+
+The result is a "feudal" coordination layer where innovation is replaced by rent-seeking. Stability in such a system is illusory, as it relies on the continuous siphoning of government-backed risk and the exhaustion of the metabolic base.
+
+\section{Curvature Phase Transitions and Critical Thresholds}
+
+The previous sections established that curvature concentration corresponds to metric distortion and descent failure. We now formalize the dynamical threshold at which distributed centrality collapses.
+
+\begin{definition}[Curvature Order Parameter]
+Let
+\[
+\kappa(t) = \sup_{j \in \Manifold} K_j(t)
+\]
+denote the maximal local curvature at time $t$.
+\end{definition}
+
+The order parameter $\kappa(t)$ captures the maximal curvature concentration within the semantic manifold and thus serves as an indicator of structural distortion.
+
+\begin{definition}[Critical Curvature Threshold]
+There exists a critical value $\kappa_c > 0$ such that the structural regime of the manifold depends on the relation between $\kappa(t)$ and $\kappa_c$. If $\kappa(t) < \kappa_c$, then for all agents $i \in \mathcal{A}$, the transported coordinate domains $(U_i, \Chart_i)$ retain overlapping regions of positive measure under $\mu_t$, and descent integrity is preserved. If $\kappa(t) \ge \kappa_c$, then there exists at least one pair of charts $(U_i, \Chart_i)$ and $(U_j, \Chart_j)$ for which the measure of their overlap collapses, inducing singular behavior in the transition maps and thereby violating descent integrity.
+\end{definition}
+
+\subsection*{Bifurcation Behavior}
+
+Assume curvature evolves according to:
+
+\[
+\frac{dK_j}{dt}
+=
+-\lambda K_j
++
+\Gamma_j(t)
++
+\Xi_j(K),
+\]
+
+where $\Xi_j(K)$ represents nonlinear reinforcement (e.g., network effects).
+
+A phase transition occurs when reinforcement dominates dissipation:
+
+\[
+\frac{\partial \Xi_j}{\partial K_j} \bigg|_{K_j = \kappa_c}
+=
+\lambda.
+\]
+
+At this bifurcation point, curvature concentration becomes self-sustaining.
+
+\subsection*{Semantic Atlas Collapse}
+
+When $\kappa(t) \ge \kappa_c$, the manifold enters a regime of structural instability. In this regime, the evolving measure $\mu_t$ becomes increasingly concentrated on a diminishing subset of $\Omega$, reflecting the collapse of exploratory variance. Simultaneously, the effective transition cost between local coordinate charts grows superlinearly under the distorted metric $g_t$, rendering movement across domains progressively prohibitive. As curvature concentration intensifies, descent integrity fails: global objects cease to be reconstructible from compatible local sections, and transition maps between charts become singular.
+
+This regime constitutes semantic atlas collapse. A single coordinate domain functions as an effective global atlas, and the distributed structure of the manifold degenerates into a centralized geometry. Such a configuration corresponds to monopolistic closure or semantic singularity within the nonequilibrium substrate.
+
+\subsection*{Pre-Singular Regimes}
+
+When $\kappa(t)$ approaches but does not exceed the critical threshold $\kappa_c$, the manifold enters a metastable regime. In this regime, small perturbations to the metric $g_t$ or measure $\mu_t$ produce disproportionately large distortions in transported coordinate charts, reflecting increased sensitivity to fluctuation. Exploratory variance, as measured by dispersion of $\mu_t$ over $\Omega$, decreases as probability mass concentrates along reinforced geodesics. Simultaneously, path-dependence intensifies, since minor asymmetries in curvature accumulation are amplified under nonlinear reinforcement.
+
+Although descent integrity remains formally intact in this regime, its robustness degrades. The persistence of overlapping domains becomes increasingly fragile, and the system’s resilience to exogenous shocks diminishes. These structural features constitute early indicators of atlas collapse, signaling proximity to a curvature-driven phase transition.
+
+\subsection*{Phase Transition Interpretation}
+
+The stability of a semantic substrate is therefore not binary but conditional. It depends on maintaining $\kappa(t) < \kappa_c$ under sustained gradient throughput.
+
+Manufacturing stability is equivalent to enforcing curvature dissipation mechanisms strong enough to prevent nonlinear reinforcement from crossing the critical threshold.
+
+This converts curvature concentration from metaphor into bifurcation theory.
+
+\section{Entropy Internalization and Budget Operators}
+
+The curvature phase transition analysis established that instability emerges when reinforcement outpaces dissipation. We now formalize the thermodynamic analogue of this condition in terms of entropy accounting.
+
+Let $\Transition : \Omega \to \Omega$ be an admissible transformation of execution traces. Each such transformation induces both informational reconfiguration within the executing structure and redistribution of thermodynamic burden across the substrate.
+
+\begin{definition}[Entropy Budget]
+For a transformation $\Transition$, define the entropy budget as
+\[
+\Budget(\Transition)
+=
+\Delta \Entropy_{\mathrm{internal}}
+-
+\Delta \Entropy_{\mathrm{externalized}},
+\]
+where $\Delta \Entropy_{\mathrm{internal}}$ denotes the entropy absorbed, internalized, or accounted for within the executing structure—whether firm, agent, or protocol—and $\Delta \Entropy_{\mathrm{externalized}}$ denotes the entropy displaced onto other agents or onto the broader substrate.
+\end{definition}
+
+\subsection*{Entropy Internalization Principle}
+
+\begin{axiom}[Entropy Internalization]
+A transformation $\Transition$ is structurally admissible if and only if:
+\[
+\Budget(\Transition) \ge 0.
+\]
+\end{axiom}
+
+This condition ensures that no actor may reduce its internal entropy by displacing metabolic or informational cost onto distributed local charts.
+
+\subsection*{Extraction as Budget Violation}
+
+\begin{definition}[Extractive Transformation]
+A transformation $\Transition$ is extractive if:
+\[
+\Budget(\Transition) < 0.
+\]
+\end{definition}
+
+In this regime, informational compression (predictive leverage, revenue centralization, curvature accumulation) occurs simultaneously with thermodynamic externalization (risk, precarity, exploratory variance suppression).
+
+\subsection*{Relation to Measure Deformation}
+
+Let $\mu_t$ evolve under a transformation $\Transition$. Then:
+
+\[
+\mu_{t+1}(x)
+=
+\Transition_* \mu_t(x),
+\]
+
+where $\Transition_*$ denotes the pushforward measure.
+
+If $\Budget(\Transition) < 0$, the pushforward induces measure concentration:
+
+\[
+\text{Var}_{\mu_{t+1}}(\Omega) < \text{Var}_{\mu_t}(\Omega),
+\]
+
+indicating reduced exploratory diversity and increased curvature reinforcement.
+
+\subsection*{Stability and Budget Closure}
+
+Combining entropy internalization with curvature dissipation yields a necessary condition for long-term stability:
+
+\[
+\Budget(\Transition) \ge 0
+\quad \text{and} \quad
+\kappa(t) < \kappa_c.
+\]
+
+Entropy internalization prevents gradient capture from becoming self-reinforcing. Without it, curvature phase transitions become inevitable under sustained throughput.
+
+Thus, algebraic antitrust can be interpreted as a budget constraint embedded at the level of admissible morphisms rather than imposed externally through litigation.
+
+Manufacturing stability is therefore equivalent to enforcing entropy budget closure across all transformations of the semantic substrate.
+
+\section{Renormalization and Symmetry Reconstitution}
+
+The preceding analysis treated instability as the crossing of a critical curvature threshold. We now address the complementary question: how may a substrate recover from curvature concentration once it has emerged?
+
+Stability is not merely the absence of singularity; it is the sustained enforcement of distributed centrality under dynamical evolution. This requires an explicit curvature renormalization mechanism.
+
+\subsection*{Curvature Renormalization Operator}
+
+\begin{definition}[Renormalization Operator]
+Let $K : \Manifold \times \mathbb{R}_{\ge 0} \to \mathbb{R}_{\ge 0}$ denote the curvature field. A renormalization operator
+\[
+\mathcal{R}_\epsilon : K \mapsto \widetilde{K}
+\]
+is a smoothing transformation satisfying:
+
+\[
+\widetilde{K}_j
+=
+\min(K_j, K_{\max})
+\quad \text{for some } K_{\max} < \kappa_c.
+\]
+\end{definition}
+
+More generally, curvature diffusion may be modeled continuously:
+
+\[
+\frac{\partial K}{\partial t}
+=
+D \Delta K
+-
+\lambda K,
+\]
+
+where $D > 0$ is a diffusion constant and $\lambda > 0$ the dissipation constant.
+
+This evolution equation enforces redistribution of curvature mass while preserving the manifold structure.
+
+\subsection*{Symmetry Reconstitution}
+
+Let $\kappa(t) = \sup_j K_j(t)$. If $\kappa(t) \ge \kappa_c$, the system has entered a singular regime. Renormalization requires:
+
+\[
+\exists \, T > 0 \text{ such that } \kappa(t+T) < \kappa_c.
+\]
+
+Symmetry reconstitution is therefore the restoration of the descent condition and chart compatibility after phase transition.
+
+\begin{definition}[Reconstitutive Stability]
+A semantic substrate is reconstitutively stable if for every time $t$ such that $\kappa(t) \ge \kappa_c$, there exists a finite interval $\Delta t$ during which admissible transformations restore:
+\[
+\kappa(t+\Delta t) < \kappa_c
+\quad \text{and} \quad
+\text{Descent Integrity}.
+\]
+\end{definition}
+
+\subsection*{Renormalization as Ongoing Process}
+
+Renormalization does not eliminate gradients; it regulates their distribution across the manifold. Sustained gradient throughput remains necessary for attractor formation and for the emergence of novel structure. What renormalization suppresses is the indefinite accumulation of curvature at any single node beyond the admissible threshold.
+
+Under renormalization dynamics, no transported coordinate chart may converge to a permanent global atlas, since curvature diffusion and dissipation bound metric distortion over time. In the absence of sustained novel contribution, accumulated curvature decays, ensuring that dominance remains transient rather than structurally entrenched. Simultaneously, deformation of the measure $\mu_t$ is periodically flattened through diffusion, restoring exploratory variance across $\Omega$ and preventing persistent concentration of probability mass.
+
+Renormalization thus functions as a structural regulator of nonequilibrium evolution, maintaining distributed centrality while permitting continued gradient-driven innovation.
+
+\subsection*{Manufacturing Stability as Symmetry Enforcement}
+
+The cosmological interpretation now closes: distributed centrality is not a passive property but a maintained invariance under dynamical flow.
+
+Let $\Phi_t$ denote the semantic flow. The substrate is stable if and only if:
+
+\[
+\forall t \ge 0,
+\quad
+\text{Perspectival Invariance}
+\quad \text{is preserved under } \Phi_t
+\]
+
+either directly through bounded curvature or indirectly through renormalization.
+
+Stability is therefore not equilibrium but symmetry preservation under nonequilibrium evolution.
+
+The "Boltzmann Brains Everywhere" principle can now be stated formally: every local coordinate chart remains an admissible center of semantic construction across time, protected against collapse by entropy internalization and curvature renormalization.
+
+Manufacturing stability is the deliberate construction of a substrate whose dynamical laws enforce this invariance.
+
+\subsection*{Invariance Under Renormalized Flow}
+
+Renormalization ensures that curvature accumulation remains bounded under nonequilibrium evolution. However, bounded curvature alone does not guarantee preservation of distributed coordinate structure. A substrate may dissipate curvature locally while still permitting gradual erosion of chart compatibility or descent integrity.
+
+We therefore distinguish between curvature control and structural invariance. Let $\Phi_t$ denote the semantic flow and let $\mathcal{R}$ denote the renormalization operator acting on the curvature field and measure deformation. The combined evolution of the substrate may be written schematically as
+\[
+(\Manifold, g_t, \mu_t)
+\;\xrightarrow{\;\Phi_t\;}
+(\Manifold, g_{t+\Delta t}, \mu_{t+\Delta t})
+\;\xrightarrow{\;\mathcal{R}\;}
+(\Manifold, \widetilde{g}_{t+\Delta t}, \widetilde{\mu}_{t+\Delta t}).
+\]
+
+Renormalization bounds metric distortion and diffuses probability concentration, ensuring that no node maintains supercritical curvature indefinitely. In the absence of sustained novel contribution, curvature decays and measure mass redistributes across $\Omega$, restoring exploratory variance. Dominance therefore becomes dynamically transient rather than structurally entrenched.
+
+Yet distributed centrality requires more than bounded curvature. It requires that transported coordinate charts $(U_i, \Chart_i)$ remain nontrivial under repeated application of $\Phi_t$ and $\mathcal{R}$, and that global semantic constructions continue to satisfy effective descent.
+
+Renormalization thus functions as a regulator of nonequilibrium evolution, but invariance of perspectival structure remains the primary structural constraint. Only when renormalization operates in conjunction with entropy internalization and descent preservation does the manifold resist collapse into a centralized atlas.
+
+\section{The Stability Theorem: Manufacturing Invariance}
+
+The previous sections established that extraction is a form of curvature concentration that collapses distributed coordinate charts. We now define the conditions under which a nonequilibrium semantic system remains stable over indefinite scales.
+
+\begin{definition}[Substrate Stability]
+A digital substrate is stable if and only if it satisfies \textbf{Algebraic Antitrust}: for any execution trace $\tau$, the resulting configuration must remain a manifold of distinct local charts. No single chart $\Chart_i$ may become the global atlas for $\Manifold$.
+\end{definition}
+
+\begin{theorem}[Structural Invariance Theorem]
+Let $\Budget$ be an entropy-bounding operator and let $\lambda > 0$ denote a curvature dissipation constant governing the decay of sectional curvature $K$. A nonequilibrium semantic substrate preserves distributed centrality under dynamical flow if the following conditions hold jointly.
+
+First, every morphism in the category $\text{Sphere}$ is provenance-preserving, in the sense that derivational histories are conserved under composition and remain reconstructible within the corresponding local charts.
+
+Second, for every admissible transformation $\Transition : \Omega \to \Omega$, the entropy budget satisfies
+\[
+\Budget(\Transition) \ge \mathrm{MetabolicCost}(\Transition),
+\]
+ensuring that informational compression does not occur without internalization of the thermodynamic burden required to generate it.
+
+Third, local curvature $K_j(t)$ at each node $j \in \Manifold$ obeys the dissipation law
+\[
+\frac{dK_j}{dt} \le -\lambda K_j
+\]
+in the absence of sustained novel contribution, so that curvature accumulation remains transient unless supported by genuine metric expansion.
+
+Under these conditions, metric deformation, measure concentration, and chart transport remain compatible with descent integrity and interpretive reconstructibility over time.
+\end{theorem}
+
+\begin{proof}[Sketch]
+If (1) holds, credit (curvature) is tethered to the original coordinate origin, preventing "credit-renormalization" upward. If (2) holds, the "extractive endofunctor" is ill-typed; a firm cannot siphon value without accounting for the entropy cost, preventing the "Scalar Well" from forming. If (3) holds, the system enforces a "Structural Scarcity" on influence, preventing the formation of permanent singularities.
+\end{proof}
+
+\subsection{Conclusion: Boltzmann Brains as a Coordination Principle}
+
+The ``Boltzmann Brains Everywhere'' principle can now be stated without metaphor. A semantic universe does not admit a privileged global center; rather, it consists of a structured family of local coordinate domains whose compatibility is governed by shared invariants. Distributed centrality is not an ideological claim but a geometric and measure-theoretic condition on admissible flows.
+
+Stability is manufactured when the substrate itself enforces this symmetry at the level of its dynamical laws. By embedding descent integrity, entropy internalization, curvature dissipation, and provenance reconstructibility into the admissibility conditions of transformations, the coordination contract is relocated from external adjudication to internal invariance. The manifold is preserved not by appeal to policy alone but by structural constraints on measure deformation and metric evolution.
+
+Under these conditions, local coordinate charts remain operative as genuine origins of semantic construction. Agents retain authorship over the mappings that generate meaning from ground, curvature accumulation remains transient in the absence of novel contribution, and no single node may become the effective atlas of the entire manifold. 
+
+Stability is therefore not equilibrium, nor mere efficiency. It is the sustained preservation of distributed centrality under nonequilibrium evolution. To manufacture stability is to design a substrate whose governing equations resist concentration and maintain the structural possibility of understanding across time.
+
+\newpage
+\begin{thebibliography}{99}
+
+\bibitem{Boltzmann1877}
+L. Boltzmann,
+\textit{\"Uber die Beziehung zwischen dem zweiten Hauptsatze der mechanischen W\"armetheorie und der Wahrscheinlichkeitsrechnung respektive den S\"atzen \"uber das W\"armegleichgewicht},
+Wiener Berichte, 1877.
+
+\bibitem{Prigogine1977}
+I. Prigogine,
+\textit{Time, Structure, and Fluctuations},
+Science 201, 777–785, 1977.
+
+\bibitem{Jaynes1957}
+E. T. Jaynes,
+\textit{Information Theory and Statistical Mechanics},
+Physical Review 106, 620–630, 1957.
+
+\bibitem{Shannon1948}
+C. E. Shannon,
+\textit{A Mathematical Theory of Communication},
+Bell System Technical Journal 27, 379–423, 623–656, 1948.
+
+\bibitem{KashiwaraSchapira1990}
+M. Kashiwara and P. Schapira,
+\textit{Sheaves on Manifolds},
+Springer, 1990.
+
+\bibitem{FosterRzhetskyEvans2015}
+J. G. Foster, A. Rzhetsky, and J. A. Evans,
+\textit{Tradition and Innovation in Scientists’ Research Strategies},
+American Sociological Review 80(5), 875–908, 2015.
+
+\bibitem{ShiFosterEvans2015}
+F. Shi, J. G. Foster, and J. A. Evans,
+\textit{Weaving the Fabric of Science: Dynamic Network Models of Science's Unfolding Structure},
+Social Networks 43, 73–85, 2015.
+
+\bibitem{VilhenaEtAl2014}
+D. A. Vilhena, J. G. Foster, M. Rosvall, J. D. West, J. Evans, and C. T. Bergstrom,
+\textit{Finding Cultural Holes: How Structure and Culture Diverge in Networks of Scholarly Communication},
+Sociological Science 1, 221–238, 2014.
+
+\bibitem{Foster2018}
+J. G. Foster,
+\textit{Culture and Computation: Steps to a Probably Approximately Correct Theory of Culture},
+Poetics 68, 144–154, 2018.
+
+\bibitem{FosterShiEvans2021}
+J. G. Foster, F. Shi, and J. Evans,
+\textit{Surprise! Measuring Novelty as Expectation Violation},
+OSF Preprint, 2021.
+
+\bibitem{Wu2010}
+T. Wu,
+\textit{The Master Switch: The Rise and Fall of Information Empires},
+Knopf, 2010.
+
+\bibitem{Arthur2009}
+W. B. Arthur,
+\textit{The Nature of Technology: What It Is and How It Evolves},
+Free Press, 2009.
+
+\bibitem{Haken1983}
+H. Haken,
+\textit{Synergetics: An Introduction},
+Springer, 1983.
+
+\bibitem{Friston2010}
+K. Friston,
+\textit{The Free-Energy Principle: A Unified Brain Theory?},
+Nature Reviews Neuroscience 11, 127–138, 2010.
+
+\end{thebibliography}
+
+\end{document}

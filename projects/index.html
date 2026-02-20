@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Digital Gravity and Computational Geometry — Audio Essays</title>
+
+  <meta name="description" content="Audio essays exploring computational geometry, digital gravity, algorithmic structure, and the topology of information systems." />
+
+  <style>
+    :root { --vh: 1vh; }
+
+    body {
+      margin: 0;
+      min-height: calc(var(--vh) * 100);
+      background: #0a0a0a;
+      color: #e6e6e6;
+      font-family: monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow-y: auto;
+      text-align: center;
+      padding: 20px;
+    }
+
+    canvas {
+      width: 340px;
+      height: 340px;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, #111 0%, #000 100%);
+      box-shadow: 0 0 25px #fff1;
+      transition: transform 0.05s;
+      flex-shrink: 0;
+    }
+
+    canvas:active { transform: scale(0.98); }
+
+    h2 { margin-bottom: 6px; }
+
+    .subtitle {
+      opacity: 0.75;
+      font-size: 0.9em;
+      margin-bottom: 14px;
+      max-width: 760px;
+      line-height: 1.45;
+    }
+
+    .controls {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    button, select {
+      background: #111;
+      border: 1px solid #333;
+      color: #eee;
+      font-weight: bold;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      text-transform: uppercase;
+      font-size: 0.8em;
+      font-family: monospace;
+    }
+
+    button:hover, select:hover { background: #181818; }
+
+    .timer {
+      font-size: 1.1em;
+      letter-spacing: 1px;
+      min-width: 80px;
+      text-align: center;
+    }
+
+    .glitch-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        90deg,
+        rgba(255,255,255,0.05) 0 2px,
+        transparent 2px 4px
+      );
+      opacity: 0;
+      mix-blend-mode: screen;
+    }
+
+    .notes {
+      margin-top: 14px;
+      width: min(900px, 100%);
+      text-align: left;
+      border: 1px solid #222;
+      border-radius: 10px;
+      background: #0f0f0f;
+      box-shadow: 0 0 25px #fff1;
+      overflow: hidden;
+    }
+
+    .notesHeader {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      border-bottom: 1px solid #222;
+      background: #0c0c0c;
+    }
+
+    .notesHeader .left {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .notesHeader .label {
+      opacity: 0.8;
+      font-size: 0.85em;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .notesBody {
+      display: none;
+      padding: 12px;
+      line-height: 1.45;
+      font-size: 0.92em;
+      opacity: 0.95;
+    }
+
+    .notes.open .notesBody { display: block; }
+
+    .notesGrid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .notesList {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      border-right: 1px solid #222;
+      padding-right: 12px;
+    }
+
+    .trackBtn {
+      text-transform: none;
+      font-weight: 700;
+      text-align: left;
+      width: 100%;
+      padding: 10px 10px;
+      border-radius: 8px;
+      border: 1px solid #222;
+      background: #111;
+      cursor: pointer;
+    }
+
+    .trackBtn:hover { background: #181818; }
+    .trackBtn[aria-current="true"] { border-color: #666; background: #151515; }
+
+    .notesTitle {
+      font-weight: 800;
+      margin: 0 0 6px 0;
+      font-size: 1.05em;
+    }
+
+    .notesMeta {
+      opacity: 0.75;
+      font-size: 0.85em;
+      margin: 0 0 10px 0;
+    }
+
+    .notesText {
+      margin: 0;
+      white-space: pre-wrap;
+    }
+
+    @media (max-width: 860px) {
+      .notesGrid { grid-template-columns: 1fr; }
+      .notesList { border-right: 0; padding-right: 0; border-bottom: 1px solid #222; padding-bottom: 12px; }
+    }
+
+    @media (max-height: 700px) {
+      canvas { width: 260px; height: 260px; }
+    }
+  </style>
+</head>
+
+<body data-track="Escaping_the_Digital_Gravity_Well.mp3">
+
+  <h2>Digital Gravity and Computational Geometry</h2>
+
+  <div class="subtitle">
+    A series of audio essays examining the geometric structure of information systems,
+    the gravitational dynamics of digital platforms, and the architectural forces shaping
+    algorithmic behavior. These talks explore how topology, curvature, and constraint
+    influence cognition, computation, and networked knowledge environments.
+  </div>
+
+  <canvas id="turntable"></canvas>
+
+  <div class="controls">
+    <select id="track" aria-label="Select track">
+      <option value="Escaping_the_Digital_Gravity_Well.mp3">Escaping the Digital Gravity Well</option>
+      <option value="Blame_The_Geometry_Not_The_Algorithm.mp3">Blame The Geometry Not The Algorithm</option>
+      <option value="Why_Hallucination_Is_a_Geometry_Problem.mp3">Why Hallucination Is a Geometry Problem</option>
+      <option value="Internet_colapsa_bajo_su_propia_gravedad.mp3">Internet colapsa bajo su propia gravedad</option>
+      <option value="Algebra_Contra_Monopolia_Spatii_Curvi.mp3">Algebra Contra Monopolia Spatii Curvi</option>
+    </select>
+
+    <button id="play">Play</button>
+    <button id="pause">Pause</button>
+    <div class="timer" id="timer">00:00</div>
+    <button id="loop">Loop: Off</button>
+  </div>
+
+  <!-- Notes panel: view descriptions without changing the playing track -->
+  <div class="notes" id="notes">
+    <div class="notesHeader">
+      <div class="left">
+        <div class="label">Track notes</div>
+        <button id="toggleNotes" type="button">Show</button>
+        <button id="showCurrentNotes" type="button">Current</button>
+      </div>
+      <div class="left">
+        <button id="loadFromNotes" type="button">Load selected</button>
+      </div>
+    </div>
+
+    <div class="notesBody">
+      <div class="notesGrid">
+        <div class="notesList" id="notesList" aria-label="Track notes list"></div>
+
+        <div class="notesDetail">
+          <p class="notesTitle" id="notesTitle">—</p>
+          <p class="notesMeta" id="notesMeta">—</p>
+          <p class="notesText" id="notesText">Select a track on the left to read its description. This does not change playback. Use “Load selected” to switch the player to the selected track.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="glitch-overlay" id="glitch"></div>
+
+  <audio id="audio" src="Escaping_the_Digital_Gravity_Well.mp3" crossorigin="anonymous"></audio>
+
+  <script>
+    function setVH() {
+      document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+    }
+    window.addEventListener('resize', setVH);
+    setVH();
+
+    const audio = document.getElementById('audio');
+    const playBtn = document.getElementById('play');
+    const pauseBtn = document.getElementById('pause');
+    const loopBtn = document.getElementById('loop');
+    const timer = document.getElementById('timer');
+    const canvas = document.getElementById('turntable');
+    const ctx = canvas.getContext('2d');
+    const glitch = document.getElementById('glitch');
+    const trackSel = document.getElementById('track');
+
+    const notes = document.getElementById('notes');
+    const toggleNotesBtn = document.getElementById('toggleNotes');
+    const showCurrentNotesBtn = document.getElementById('showCurrentNotes');
+    const loadFromNotesBtn = document.getElementById('loadFromNotes');
+    const notesListEl = document.getElementById('notesList');
+    const notesTitleEl = document.getElementById('notesTitle');
+    const notesMetaEl = document.getElementById('notesMeta');
+    const notesTextEl = document.getElementById('notesText');
+
+    const TRACKS = [
+      {
+        file: "Escaping_the_Digital_Gravity_Well.mp3",
+        title: "Escaping the Digital Gravity Well",
+        meta: "Distributed centrality; curvature and monopoly thresholds.",
+        desc:
+`A geometric account of platform dominance as curvature in an information manifold, driven by gradients of attention, capital, and computation. The central distinction is between trace (captured artifacts) and agency (thermodynamic work), and the failure mode is a semantic heat-death in which traces proliferate while meaning collapses. The proposed remedy is algebraic antitrust: provenance preservation, budget closure (no externalized entropy), and curvature dissipation so dominance must remain transient rather than accumulating into an unbreakable singularity.`
+      },
+      {
+        file: "Blame_The_Geometry_Not_The_Algorithm.mp3",
+        title: "Blame The Geometry Not The Algorithm",
+        meta: "Manifold curvature; predictive asymmetry; architectural remedies.",
+        desc:
+`An argument that many pathologies attributed to “algorithms” are consequences of the global geometry of the space in which navigation occurs. Curvature induces geodesic convergence toward trending basins; predictive asymmetry turns users into objects of a stronger model than their own self-model; and manifold collapse names the regime where exit and self-governance become structurally difficult. The proposed architectural response is a constrained substrate with explicit entropy accounting, provenance, and stability incentives, designed to make extractive equilibria algebraically hard rather than merely discouraged.`
+      },
+      {
+        file: "Why_Hallucination_Is_a_Geometry_Problem.mp3",
+        title: "Why Hallucination Is a Geometry Problem",
+        meta: "Manifold constraint thesis; normal drift; sheaf-coherence.",
+        desc:
+`A geometric thesis: coherence (truth, meaning, sanity) occupies a thin manifold embedded in a vast ambient space dominated by noise. Hallucination is not an anomaly but the generic outcome of stepping in normal directions off the manifold. The essay extends this to institutions via proxy overfitting and proposes manifold-aligned generative dynamics: strict tangent-constrained motion, no-noise allocation into normal directions, and coordination via sheaf-theoretic “gluing” conditions so that global claims remain reconstructible from local perspectives.`
+      },
+      {
+        file: "Internet_colapsa_bajo_su_propia_gravedad.mp3",
+        title: "Internet colapsa bajo su propia gravedad",
+        meta: "Semantic atlas collapse; digital black holes; CAP thresholds.",
+        desc:
+`A Spanish-language framing of platform concentration as gravitational mass in a thermodynamic digital ecology. Dominant platforms act as digital black holes that flatten the semantic atlas into a single coordinate system, breaking descent from local charts to coherent global structure. Users supply metabolic work while platforms capture refined traces, producing semantic redundancy rather than innovation. The remedy is protocol-level enforcement: entropy budgets, renormalization operators that diffuse concentration, and explicit critical limits beyond which monopoly curvature becomes unstable and must be dissipated.`
+      },
+     {
+  file: "Algebra_Contra_Monopolia_Spatii_Curvi.mp3",
+  title: "Algebra Contra Monopolia Spatii Curvi",
+  meta: "Latin; distributed centrality; semantic caps; antitrust algebra.",
+  desc:
+`A Latin-language meditation on “distributed centrality” that treats the network as an active substrate shaped by collective attention and computation. It distinguishes fundamentum (the physical datum) from munus (the locally assigned significance), arguing that meaning is not contained in data but arises through situated interpretation. The failure mode is monopolia semantica: central nodes accrete value and comprehension collapses, approaching a semantic heat death. The proposed intervention is a Capa Ce (semantic cap) and an antitrust algebra that enforces distributional constraints directly, reducing reliance on after-the-fact legal remedies.`
+}
+    ];
+
+    const trackByFile = Object.fromEntries(TRACKS.map(t => [t.file, t]));
+
+    let rotation = 0;
+    let pulse = 120;
+
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = 340 * dpr;
+    canvas.height = 340 * dpr;
+    ctx.scale(dpr, dpr);
+
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    const ctxAudio = new AudioContext();
+    const analyser = ctxAudio.createAnalyser();
+    analyser.fftSize = 256;
+
+    const srcNode = ctxAudio.createMediaElementSource(audio);
+    srcNode.connect(analyser);
+    analyser.connect(ctxAudio.destination);
+
+    const freqData = new Uint8Array(analyser.frequencyBinCount);
+
+    let glitchRAF = null;
+    function glitchEffect() {
+      analyser.getByteFrequencyData(freqData);
+      let bass = 0;
+      for (let i = 0; i < 32; i++) bass += freqData[i];
+      bass /= 32;
+
+      const brightness = Math.min(1, bass / 180);
+      pulse = 120 + brightness * 40;
+      glitch.style.opacity = brightness > 0.2 ? brightness : 0;
+
+      glitchRAF = requestAnimationFrame(glitchEffect);
+    }
+    function startGlitch() {
+      if (glitchRAF === null) glitchEffect();
+    }
+    function stopGlitch() {
+      if (glitchRAF !== null) {
+        cancelAnimationFrame(glitchRAF);
+        glitchRAF = null;
+      }
+      glitch.style.opacity = 0;
+    }
+
+    function drawTurntable() {
+      ctx.clearRect(0, 0, 340, 340);
+      ctx.save();
+      ctx.translate(170, 170);
+      ctx.rotate(rotation);
+
+      ctx.beginPath();
+      ctx.arc(0, 0, pulse, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(255,255,255,0.9)';
+      ctx.lineWidth = 4;
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(0, 0, 20, 0, Math.PI * 2);
+      ctx.fillStyle = '#fff';
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    function animate() {
+      rotation += audio.paused ? 0.002 : 0.02;
+      drawTurntable();
+      requestAnimationFrame(animate);
+    }
+
+    function formatTime(sec) {
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      return `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+    }
+
+    function updateTimer() {
+      if (audio.duration) {
+        const remaining = Math.max(0, audio.duration - audio.currentTime);
+        timer.textContent = formatTime(remaining);
+      } else {
+        timer.textContent = "00:00";
+      }
+      requestAnimationFrame(updateTimer);
+    }
+
+    function setTrack(filename, autoplay = false) {
+      const wasPlaying = !audio.paused;
+
+      audio.src = filename;
+      audio.currentTime = 0;
+
+      if (trackSel.value !== filename) trackSel.value = filename;
+
+      audio.load();
+      if (autoplay || wasPlaying) {
+        ctxAudio.resume();
+        audio.play().catch(() => {});
+        startGlitch();
+      }
+    }
+
+function initTrackFromMarkupOrURL() {
+  const aliases = {
+    gravity: "Escaping_the_Digital_Gravity_Well.mp3",
+    geometry: "Blame_The_Geometry_Not_The_Algorithm.mp3",
+    hallucination: "Why_Hallucination_Is_a_Geometry_Problem.mp3",
+    espanol: "Internet_colapsa_bajo_su_propia_gravedad.mp3",
+    latin: "Algebra_Contra_Monopolia_Spatii_Curvi.mp3"
+  };
+
+  const bodyTrack = document.body.getAttribute('data-track');
+  const urlRaw = new URLSearchParams(window.location.search).get('track');
+  const urlTrack = urlRaw && aliases[urlRaw] ? aliases[urlRaw] : urlRaw;
+
+  const initial = urlTrack || bodyTrack || audio.getAttribute('src');
+
+  const allowed = new Set([...trackSel.options].map(o => o.value));
+  if (allowed.has(initial)) setTrack(initial, false);
+}
+
+    playBtn.onclick = () => {
+      ctxAudio.resume();
+      audio.play();
+      startGlitch();
+    };
+
+    pauseBtn.onclick = () => {
+      audio.pause();
+      stopGlitch();
+    };
+
+    loopBtn.onclick = () => {
+      audio.loop = !audio.loop;
+      loopBtn.textContent = `Loop: ${audio.loop ? 'On' : 'Off'}`;
+    };
+
+    audio.addEventListener('ended', () => {
+      if (!audio.loop) stopGlitch();
+    });
+
+    trackSel.addEventListener('change', () => setTrack(trackSel.value, true));
+
+    // Notes UI logic (separate selection state)
+    let selectedNotesFile = TRACKS[0].file;
+
+    function renderNotesList() {
+      notesListEl.innerHTML = "";
+      for (const t of TRACKS) {
+        const b = document.createElement('button');
+        b.className = "trackBtn";
+        b.type = "button";
+        b.textContent = t.title;
+        b.setAttribute('data-file', t.file);
+        b.setAttribute('aria-current', String(t.file === selectedNotesFile));
+        b.addEventListener('click', () => {
+          selectedNotesFile = t.file;
+          updateNotesDetail();
+          updateNotesListCurrent();
+        });
+        notesListEl.appendChild(b);
+      }
+    }
+
+    function updateNotesListCurrent() {
+      const buttons = notesListEl.querySelectorAll('button.trackBtn');
+      for (const b of buttons) {
+        b.setAttribute('aria-current', String(b.getAttribute('data-file') === selectedNotesFile));
+      }
+    }
+
+    function updateNotesDetail() {
+      const t = trackByFile[selectedNotesFile];
+      if (!t) return;
+      notesTitleEl.textContent = t.title;
+      notesMetaEl.textContent = `${t.file} — ${t.meta}`;
+      notesTextEl.textContent = t.desc;
+    }
+
+    function openNotes(open) {
+      notes.classList.toggle('open', open);
+      toggleNotesBtn.textContent = open ? "Hide" : "Show";
+    }
+
+    toggleNotesBtn.addEventListener('click', () => openNotes(!notes.classList.contains('open')));
+
+    showCurrentNotesBtn.addEventListener('click', () => {
+      selectedNotesFile = trackSel.value;
+      updateNotesDetail();
+      updateNotesListCurrent();
+      openNotes(true);
+    });
+
+    loadFromNotesBtn.addEventListener('click', () => {
+      setTrack(selectedNotesFile, true);
+    });
+
+    window.addEventListener('load', () => {
+      initTrackFromMarkupOrURL();
+
+      // Initialize notes selection to current track, but keep it independent.
+      selectedNotesFile = trackSel.value;
+      renderNotesList();
+      updateNotesDetail();
+      updateNotesListCurrent();
+
+      ctxAudio.resume().catch(() => {});
+      startGlitch();
+    });
+
+    animate();
+    updateTimer();
+  </script>
+
+</body>
+</html>
