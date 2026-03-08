@@ -41,5 +41,3 @@ Aspect Relegation Theory is not revolutionary. It is worse for the pundit class:
 [The Myth of Dual Cognition](https://standardgalactic.github.io/library/The%20Myth%20of%20Dual%20Cognition.pdf)
 
 [Abstraction as Reduction](https://standardgalactic.github.io/alphabet/Abstraction%20as%20Reduction.pdf)
-
-
