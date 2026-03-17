@@ -1,0 +1,2068 @@
+\documentclass[12pt,a4paper,oneside]{book}
+
+%%%%% PACKAGES %%%%%
+
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{geometry}
+\usepackage{microtype}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usetikzlibrary{
+  arrows.meta,
+  positioning,
+  calc,
+  fit,
+  backgrounds,
+  decorations.pathmorphing,
+  decorations.markings,
+  patterns,
+  shapes.geometric
+}
+\usepackage{setspace}
+\usepackage{imakeidx}
+
+\geometry{margin=1.2in}
+\setstretch{1.15}
+
+\makeindex
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=black,
+  citecolor=black,
+  urlcolor=black
+}
+
+%%%%% NUMBERING %%%%%
+
+\numberwithin{equation}{chapter}
+
+%%%%% THEOREM ENVIRONMENTS %%%%%
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+%%%%% TITLE %%%%%
+
+\title{Constraint Geometry and Semantic Dynamics:\\[6pt]
+A Unified Field Theory of Hierarchical Inference,\\
+Cognitive Transformation, and Alignment}
+
+\author{Flyxion}
+
+\date{\today}
+
+%%%%% DOCUMENT %%%%%
+
+\begin{document}
+
+\frontmatter
+
+\maketitle
+
+\chapter*{Preface}
+
+The central claim of this monograph is that structure can be
+reconstructed from minimal observation, provided that those
+observations participate in a coherent constraint network. Across
+disciplines as diverse as phylogenetics, machine learning,
+neuroscience, and social epistemology, the same principle reappears
+in different guises: sparse local measurements accumulate until a
+global structure becomes identifiable. What varies across domains is
+not the logic of reconstruction but the ontology of the structures
+being recovered.
+
+In classical hierarchical clustering the latent structure is a tree.
+In information geometry it is a manifold equipped with curvature. In
+neuroscience it appears as coordinated transformations across cortical
+fields. In artificial intelligence it manifests as the translation of
+representational structure into action. Each of these domains can be
+interpreted as a particular instantiation of a more general
+mathematical architecture in which constraints act as operators
+reducing entropy over a space of hypotheses.
+
+This monograph develops that architecture systematically across
+fourteen chapters. The argument begins with foundational modeling
+assumptions and the state-space formalism that supports all subsequent
+constructions. It then develops hierarchical reconstruction from
+triplet constraints and its algorithmic implementation. Ultrametric
+geometry reveals the metric structure of discrete hierarchies, and a
+dedicated chapter on limits of hierarchical structures makes rigorous
+the passage from discrete trees to continuous geometric fields via
+Gromov--Hausdorff convergence and metric measure space theory.
+
+The geometry of constraint spaces gives the polyhedral structure of
+the ultrametric cone explicit form. Information geometry provides the
+language of entropy descent and variational inference. The
+Relativistic Scalar--Vector Plenum (RSVP) model then introduces the
+continuous field-theoretic substrate, whose well-posedness and
+dynamical regimes are analyzed before local transformation
+operators---the amplitwists---are introduced as the fundamental
+mechanisms through which representations are updated.
+
+The algebraic structure of amplitwist cascades is then analyzed
+through the lens of Lie theory: cascades form flows on the Lie group
+$\mathbb{R}_{>0} \times SO(n)$ and accumulate torsion through
+Baker--Campbell--Hausdorff correction terms. The sheaf-theoretic
+formulation of constraint propagation follows, revealing that
+hierarchical reconstruction and RSVP field inference are both
+instances of the search for global sections of a constraint sheaf.
+Spectral geometry of constraint operators connects the framework to
+graph Laplacians and diffusion processes on hypothesis spaces.
+Stochastic extensions of the RSVP dynamics complete the probabilistic
+picture via Fokker--Planck equations and free energy minimization.
+
+Worked examples and an empirical observability chapter connect the
+abstract formalism to measurable phenomena. The categorical alignment
+chapter formalizes the representation--action gap as functorial
+non-preservation of structural invariants, with a measure-theoretic
+proof that aligned functors form a set of measure zero. The final
+synthesis chapter states and proves the Unified Constraint
+Reconstruction theorem, which encompasses all preceding results as
+special cases.
+
+Throughout the text the emphasis remains on unification. Hierarchical
+reconstruction, field dynamics, cortical computation, semantic
+evolution, Lie algebra structure, sheaf cohomology, spectral theory,
+stochastic analysis, and alignment theory are treated not as
+independent problems but as manifestations of the same underlying
+mathematical structure: the emergence of order through
+constraint-driven entropy reduction.
+
+\tableofcontents
+
+\mainmatter
+
+%%% CHAPTER 1 %%%
+
+\chapter{Foundational Assumptions and Modeling Scope}
+\label{ch:foundations}
+
+\section{Motivation}
+
+The purpose of this monograph is to develop a unified mathematical
+framework in which complex structures emerge from the accumulation and
+propagation of local constraints. The central claim is that
+hierarchical inference, geometric reconstruction, field dynamics,
+semantic transformation, and alignment theory can all be understood
+as instances of a common structural principle: global organization
+arises as the intersection of constraint manifolds acting on an
+appropriate state space.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  >=Latex, scale=1,
+  every node/.style={font=\small},
+  statebox/.style={draw, rounded corners, minimum width=2.8cm,
+    minimum height=1cm, align=center},
+  constraint/.style={draw, circle, minimum size=9mm, align=center},
+  arrow/.style={->, thick}
+]
+\node[statebox] (X) at (0,0) {$\mathcal{X}$\\State space};
+\node[constraint] (C1) at (4,1.5) {$C_1$};
+\node[constraint] (C2) at (4,0) {$C_2$};
+\node[constraint] (C3) at (4,-1.5) {$C_3$};
+\node[statebox, minimum width=3.3cm] (I) at (8,0)
+  {$\bigcap_i C_i$\\Admissible region};
+\draw[arrow] (X) -- (C1);
+\draw[arrow] (X) -- (C2);
+\draw[arrow] (X) -- (C3);
+\draw[arrow] (C1) -- (I);
+\draw[arrow] (C2) -- (I);
+\draw[arrow] (C3) -- (I);
+\node at (2,2.3) {observations};
+\node at (8,-1.8) {$H(p)$ decreases as constraints accumulate};
+\end{tikzpicture}
+\caption{Foundational architecture. A state space $\mathcal{X}$ is
+progressively restricted by local constraints $C_i$, producing an
+admissible region $\bigcap_i C_i$. Inference is interpreted as
+entropy reduction over this constrained state space.}
+\label{fig:foundational-constraint-architecture}
+\end{figure}
+
+\section{State Spaces and Structural Hypotheses}
+
+Let $\mathcal{X}$ denote the space of possible configurations of a
+system. The elements of $\mathcal{X}$ represent candidate structures
+consistent with the modeling assumptions.
+
+\begin{definition}[State Space]
+A \emph{state space} is a set $\mathcal{X}$ whose elements represent
+possible configurations of a system under consideration.
+\end{definition}
+
+\section{Observations as Constraints}
+
+\begin{definition}[Constraint]
+A \emph{constraint} is a subset $C \subseteq \mathcal{X}$ representing
+the set of states consistent with a given observation.
+\end{definition}
+
+If a collection of observations $\{o_1, \dots, o_n\}$ is available,
+the admissible state space becomes $\mathcal{X}_n = \bigcap_{i=1}^n
+C_i$.
+
+\section{Completeness of Constraint Systems}
+
+\begin{definition}[Complete Constraint System]
+\label{def:complete-constraint}
+A set of constraints $\{C_i\}$ on $\mathcal{X}$ is \emph{complete}
+if $\bigcap_i C_i$ contains exactly one element.
+\end{definition}
+
+\section{Entropy and Uncertainty}
+
+The uncertainty about the system's configuration is measured by
+Shannon entropy $H(p) = -\sum_x p(x)\log p(x)$. Each observation
+reduces entropy. Inference is therefore a process of entropy reduction
+driven by the accumulation of constraints.
+
+\section{Domains of Application and Scope}
+
+The framework applies to phylogenetics, machine learning, neuroscience,
+linguistics, and artificial intelligence. The text focuses on three
+components in each domain: the structure of the state space, the
+propagation of constraints, and the dynamical mechanisms through which
+structures evolve.
+
+\section{Roadmap}
+
+The monograph develops the theory progressively through fourteen
+chapters, moving from discrete combinatorial reconstruction through
+ultrametric geometry, metric measure spaces, information geometry,
+field theory, Lie algebra structure, sheaf theory, spectral theory,
+stochastic analysis, categorical alignment, and unified synthesis.
+
+%%% CHAPTER 2 %%%
+
+\chapter[Latent Hierarchy and Constraint Reconstruction]{The Problem of Latent Hierarchy and Constraint Reconstruction}
+\label{ch:hierarchy}
+
+\section{Introduction}
+
+Many scientific and cognitive domains confront the same fundamental
+problem: a system possesses an underlying organization that is not
+directly observable, while the available data consist only of partial
+relations among the system's components.
+
+\begin{definition}[Latent Hierarchy Reconstruction Problem]
+Let $X$ be a finite set and let $T^\ast$ be an unknown rooted tree
+whose leaves correspond to elements of $X$. Given relational
+constraints $\mathcal{R}$ generated by $T^\ast$, the reconstruction
+problem is to recover $\widehat{T}$ consistent with $\mathcal{R}$.
+\end{definition}
+
+\section{Trees and Hierarchical Structure}
+
+\begin{definition}[Rooted Hierarchical Tree]
+A rooted hierarchical tree on $X$ is a tree $T$ in which each leaf
+corresponds uniquely to an element of $X$, each internal node
+represents the union of its descendant leaves, and the root
+corresponds to the entire set $X$.
+\end{definition}
+
+\begin{definition}[Laminar Family]
+A family $\mathcal{F} \subseteq 2^X$ is \emph{laminar} if for every
+pair $A,B \in \mathcal{F}$ one of the following holds:
+$A \subseteq B$, $B \subseteq A$, or $A \cap B = \varnothing$.
+\end{definition}
+
+\section{Triplet Relations}
+
+\begin{definition}[Rooted Triplet]
+The rooted triplet $(ab|c)$ denotes the relation in which $a$ and $b$
+share a more recent common ancestor with each other than either does
+with $c$.
+\end{definition}
+
+\begin{definition}[Consistent Triplet System]
+A triplet system $\mathcal{R}$ on $X$ is \emph{consistent} if there
+exists a rooted tree $T$ such that $\mathcal{R} \subseteq
+\mathcal{R}(T)$. Consistency is decidable in polynomial time via the
+BUILD algorithm \cite{aho1981inferring}.
+\end{definition}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  >=Latex, every node/.style={font=\small},
+  leaf/.style={circle, fill, inner sep=1.4pt}
+]
+\coordinate (r) at (0,2.8);
+\coordinate (u) at (-1.2,1.6);
+\coordinate (v) at (1.2,1.6);
+\coordinate (a) at (-2,0.4);
+\coordinate (b) at (-0.6,0.4);
+\coordinate (c) at (1.2,0.4);
+\draw[thick] (r)--(u); \draw[thick] (r)--(v);
+\draw[thick] (u)--(a); \draw[thick] (u)--(b);
+\draw[thick] (v)--(c);
+\node[leaf,label=below:$a$] at (a) {};
+\node[leaf,label=below:$b$] at (b) {};
+\node[leaf,label=below:$c$] at (c) {};
+\node at (0,3.2) {$T^\ast$};
+\node at (0,-0.4) {triplet witness: $(ab\mid c)$};
+\draw[dashed] (-2.3,0.1) rectangle (-0.3,1.9);
+\node at (-1.3,2.15) {$a,b$ closer};
+\end{tikzpicture}
+\caption{A rooted triplet $(ab\mid c)$ as the minimal witness of
+branching structure. The pair $(a,b)$ shares a more recent common
+ancestor, encoding a local constraint on the global tree topology.}
+\label{fig:triplet-witness}
+\end{figure}
+
+\section{Reconstruction from Triplets}
+
+\begin{theorem}[Triplet Reconstruction Theorem]
+\label{thm:triplet-reconstruction}
+Let $T$ be a rooted binary tree on $X$ with $|X| \geq 3$. If
+$\mathcal{R}$ contains all triplets induced by $T$, then $T$ is the
+unique tree whose topology is consistent with $\mathcal{R}$.
+\end{theorem}
+
+\begin{proof}
+Each internal edge $e$ of $T$ induces a bipartition $X = L_e \sqcup
+R_e$. Since $T$ is binary with $|X| \geq 3$, both sides contain at
+least two leaves. For any $a,b \in L_e$ and $c \in R_e$, the triplet
+$(ab|c)$ appears in $\mathcal{R}$. The bipartition is recovered from
+$\mathcal{R}$ as the unique partition such that, for some $c$, the
+triplet $(ab|c)$ holds for all $a,b$ on one side. Since the edge set
+uniquely determines tree topology, $\mathcal{R}(T)$ uniquely
+identifies $T$.
+\end{proof}
+
+\section{Constraint Operators and Entropy Reduction}
+
+Each triplet observation $(ab|c)$ induces a constraint operator
+\[
+C_{(ab|c)} : 2^{\mathcal{H}} \rightarrow 2^{\mathcal{H}}, \qquad
+C_{(ab|c)}(\mathcal{H}') =
+\{ T \in \mathcal{H}' \mid T \text{ is consistent with } (ab|c) \}.
+\]
+
+\begin{proposition}
+\label{prop:entropy-decrease}
+Every triplet observation not already entailed by $\mathcal{H}_\mathcal{R}$
+produces a strict reduction in the entropy of the hypothesis
+distribution.
+\end{proposition}
+
+\begin{corollary}
+If $\mathcal{R} = \mathcal{R}(T^\ast)$ is complete, the entropy
+descent terminates at a delta distribution concentrated on $T^\ast$
+in at most $|\mathcal{R}(T^\ast)|$ steps.
+\end{corollary}
+
+%%% CHAPTER 3 %%%
+
+\chapter[Algorithmic Reconstruction]{Algorithmic Reconstruction and Computational Complexity}
+\label{ch:algorithms}
+
+\section{Introduction}
+
+The Triplet Reconstruction Theorem provides a theoretical guarantee
+of identifiability. This chapter examines how reconstruction is
+carried out efficiently in practice.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  >=Latex, every node/.style={font=\small},
+  box/.style={draw, rounded corners, minimum width=2.6cm,
+    minimum height=0.95cm, align=center},
+  arrow/.style={->, thick}
+]
+\node[box] (R) at (0,0) {$\mathcal{R}$\\triplet system};
+\node[box] (G) at (3.8,0) {$G_{\mathcal{R}}$\\constraint graph};
+\node[box] (CC) at (7.6,0) {connected\\components};
+\node[box] (T1) at (11.4,1.3) {subtree $X_1$};
+\node[box] (T2) at (11.4,0) {subtree $X_2$};
+\node[box] (T3) at (11.4,-1.3) {subtree $X_3$};
+\draw[arrow] (R)--(G); \draw[arrow] (G)--(CC);
+\draw[arrow] (CC)--(T1); \draw[arrow] (CC)--(T2);
+\draw[arrow] (CC)--(T3);
+\node at (7,-2.2) {BUILD recursively reconstructs subtree structure};
+\end{tikzpicture}
+\caption{Schematic structure of the BUILD algorithm. A triplet system
+$\mathcal{R}$ induces a constraint graph $G_{\mathcal{R}}$ whose
+connected components determine recursive decomposition into subtrees.}
+\label{fig:build-algorithm-schematic}
+\end{figure}
+
+\section{The BUILD Algorithm}
+
+The BUILD algorithm \cite{aho1981inferring} constructs an undirected
+graph $G_\mathcal{R}$ whose vertices are elements of $X$ with an edge
+between $a$ and $b$ whenever some triplet $(ab|c) \in \mathcal{R}$.
+Connected components correspond to clusters sharing a common ancestor.
+The algorithm is applied recursively to each component with time
+complexity $O(n^2)$ in the dense case.
+
+\section{Incomplete and Probabilistic Systems}
+
+When triplets are missing, one minimizes the violation count
+$V(T) = |\{r \in \mathcal{R} \mid r \notin \mathcal{R}(T)\}|$,
+which is NP-hard in general. The probabilistic approach treats
+triplets as evidence: $p(T|\mathcal{R}) \propto p(T)\prod_r p(r|T)$,
+corresponding to movement on the statistical manifold of tree
+distributions toward lower entropy.
+
+\section{Incremental Inference and Entropy Descent}
+
+In incremental settings each arriving triplet reduces the hypothesis
+space through a constraint operator application. When the triplet
+system is complete, entropy reaches zero and the unique topology is
+recovered, instantiating the abstract entropy descent of
+\cref{ch:hierarchy} as a concrete algorithm.
+
+%%% CHAPTER 4 %%%
+
+\chapter[Ultrametric Geometry]{Ultrametric Geometry and the Metric Structure of Hierarchies}
+\label{ch:ultrametric}
+
+\section{Hierarchies as Metric Objects}
+
+Every hierarchical tree induces a natural ultrametric on its leaves.
+The space $\mathcal{U}(X)$ of all ultrametrics on a finite set $X$
+with $|X| = n$ is a polyhedral cone in $\mathbb{R}^{\binom{n}{2}}$.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[every node/.style={font=\small}]
+\draw[thick] (0,0) circle (2.2);
+\draw[thick] (-0.8,0.1) circle (0.85);
+\fill (-1.2,0.2) circle (1.6pt);
+\fill (-0.5,-0.1) circle (1.6pt);
+\fill (1.1,0.9) circle (1.6pt);
+\node[below left] at (-1.2,0.2) {$x$};
+\node[below] at (-0.5,-0.1) {$y$};
+\node[right] at (1.1,0.9) {$z$};
+\node at (-0.85,1.15) {$B_r(x)=B_r(y)$};
+\node at (0,-2.7) {$d(x,y) < d(x,z)=d(y,z)$};
+\end{tikzpicture}
+\caption{Ultrametric ball geometry. The pair $(x,y)$ lies in a
+smaller common ball excluding $z$, equivalent to the rooted triplet
+relation $(xy\mid z)$.}
+\label{fig:ultrametric-balls}
+\end{figure}
+
+\section{Ultrametric Spaces}
+
+\begin{definition}[Ultrametric]
+A metric $d$ is an \emph{ultrametric} if
+\[
+d(x,z) \le \max\{d(x,y), d(y,z)\}
+\]
+for all $x,y,z \in X$.
+\end{definition}
+
+\begin{proposition}
+In any ultrametric space, at least two of the three pairwise
+distances among any three points are equal and no smaller than the
+third.
+\end{proposition}
+
+\section{Trees Induce Ultrametrics and Vice Versa}
+
+For a rooted tree $T$ with nonneg\-ative edge lengths, define $d_T(x,y)$
+as the height of the lowest common ancestor. Then $d_T$ is an
+ultrametric. The converse is also true.
+
+\begin{theorem}[Tree--Ultrametric Equivalence]
+\label{thm:tree-ultrametric}
+For any finite ultrametric $(X,d)$ there exists a rooted tree $T$
+with $d = d_T$.
+\end{theorem}
+
+\begin{proof}
+For each $r \geq 0$, the relation $x \sim_r y \Leftrightarrow d(x,y)
+\leq r$ is an equivalence relation by the ultrametric inequality.
+Equivalence classes nest as $r$ increases, producing a laminar family.
+Each class becomes an internal node of $T$ at height $\inf\{r : x
+\sim_r y\} = d(x,y)$, giving $d_T = d$.
+\end{proof}
+
+\section{Geometric Interpretation of Branching}
+
+The triplet $(xy|z)$ corresponds to $d(x,y) < d(x,z) = d(y,z)$:
+exactly the condition that $x$ and $y$ lie in a smaller ball
+excluding $z$.
+
+\section{Gromov--Hausdorff Convergence}
+
+The Gromov--Hausdorff distance $d_{GH}(X,Y)$ is the infimum of
+Hausdorff distances between isometric embeddings of $X$ and $Y$ into
+a common ambient space. Ultrametric spaces form a closed subset of
+the Gromov--Hausdorff metric space, so sequences of finite trees can
+converge to continuous metric spaces in a rigorous sense.
+
+%%% CHAPTER 5 %%%
+
+\chapter[Limits of Hierarchies and Metric Measure Spaces]{Limits of Hierarchical Structures and Metric Measure Spaces}
+\label{ch:metric-measure}
+
+\section{Introduction}
+
+Many applications require discrete hierarchical structures to be
+understood as approximations to continuous geometric objects. This
+chapter formalizes the transition using the theory of metric measure
+spaces and Gromov--Hausdorff convergence, connecting the discrete
+reconstruction theory to the continuous field models that follow.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.1]
+\draw (-4,0)--(-3,1)--(-2,0); \draw (-3,1)--(-3,2);
+\node at (-3,-0.5) {$T_1$};
+\draw (-1,0)--(0,1)--(1,0); \draw (0,1)--(0,2);
+\draw (0,1)--(0.5,1.6); \draw (0,1)--(-0.5,1.6);
+\node at (0,-0.5) {$T_2$};
+\draw (2,0)--(3,1)--(4,0); \draw (3,1)--(3,2);
+\draw (3,1)--(3.5,1.5); \draw (3,1)--(2.5,1.5);
+\draw (3,1)--(3,1.7); \draw (3.5,1.5)--(3.7,2);
+\node at (3,-0.5) {$T_n$};
+\draw[->,thick] (4.6,0.7)--(5.8,0.7);
+\draw[thick] (6.3,0) .. controls (7.1,1.5) and (8.1,1.5) .. (8.9,0);
+\draw[thick] (7.6,1.5) .. controls (7.8,2.1) .. (7.6,2.7);
+\node at (7.5,-0.5) {$T_\infty$};
+\node at (2,3.1) {Gromov--Hausdorff convergence};
+\end{tikzpicture}
+\caption{A sequence of discrete hierarchical trees converging under
+Gromov--Hausdorff limits to a continuum tree $T_\infty$.}
+\label{fig:gh-convergence}
+\end{figure}
+
+\section{Metric Measure Spaces}
+
+\begin{definition}[Metric Measure Space]
+A \emph{metric measure space} is a triple $(X,d,\mu)$ consisting of
+a compact metric space $(X,d)$ together with a Borel probability
+measure $\mu$ on $X$.
+\end{definition}
+
+The measure $\mu$ represents the distribution of mass or probability
+across the space, encoding relative weights of leaves or clusters.
+
+\section{Gromov--Hausdorff Distance}
+
+\begin{definition}[Hausdorff Distance]
+For subsets $A,B$ of a metric space $(Z,d)$,
+\[
+d_H(A,B) = \max\Bigl(
+\sup_{a \in A}\inf_{b \in B}d(a,b),\;
+\sup_{b \in B}\inf_{a \in A}d(a,b)
+\Bigr).
+\]
+\end{definition}
+
+\begin{definition}[Gromov--Hausdorff Distance]
+For compact metric spaces $(X,d_X)$ and $(Y,d_Y)$,
+$d_{GH}(X,Y)$ is the infimum of Hausdorff distances between isometric
+embeddings of $X$ and $Y$ into a common metric space.
+\end{definition}
+
+This makes the collection of compact metric spaces into a metric space
+in its own right.
+
+\section{Ultrametric Spaces are Closed under GH Convergence}
+
+\begin{proposition}
+The set of compact ultrametric spaces is closed under
+Gromov--Hausdorff convergence.
+\end{proposition}
+
+\begin{proof}
+Let $(X_n,d_n)$ converge to $(X,d)$ in $d_{GH}$. For $x,y,z \in X$
+choose sequences $x_n,y_n,z_n$ converging to them. Since
+$d_n(x_n,z_n) \leq \max\{d_n(x_n,y_n), d_n(y_n,z_n)\}$, taking
+the limit gives $d(x,z) \leq \max\{d(x,y),d(y,z)\}$.
+\end{proof}
+
+The family of hierarchical metric spaces is therefore stable under
+geometric limits.
+
+\section{Scaling Limits of Trees}
+
+\begin{definition}[Scaling Limit]
+A metric space $(X,d)$ is a \emph{scaling limit} of $(X_n,d_n)$ if
+$d_{GH}((X_n,d_n),(X,d)) \to 0$ after appropriate normalization.
+\end{definition}
+
+Scaling limits of large hierarchical trees often produce continuum
+trees or fractal metric structures that appear in stochastic branching
+process theory.
+
+\section{Continuum Trees}
+
+\begin{definition}[Continuum Tree]
+A \emph{continuum tree} is a compact metric space $(T,d)$ in which
+every pair of points is connected by a unique geodesic and the space
+contains no cycles.
+\end{definition}
+
+Continuum trees arise as scaling limits of large random trees and
+provide the continuous analogue of hierarchical structures.
+
+\section{Entropy Measures on Metric Spaces}
+
+The metric entropy at scale $\epsilon$ is
+$H_\epsilon(X) = \log N_\epsilon(X)$,
+where $N_\epsilon(X)$ is the minimum number of balls of radius
+$\epsilon$ needed to cover $X$. The growth rate of $H_\epsilon(X)$
+as $\epsilon \to 0$ reflects geometric complexity. For hierarchical
+systems this reflects the diversity of structures present at
+different scales, connecting the discrete entropy of
+\cref{ch:information} to the geometry of metric measure spaces.
+
+\section{From Trees to Field Configurations}
+
+The Gromov--Hausdorff limit makes precise how discrete tree
+reconstruction problems connect to continuous field inference. Triplet
+consistency conditions become differential constraints on field
+configurations in the limit, justifying the transition from
+combinatorial constraint geometry to the RSVP field model.
+
+%%% CHAPTER 6 %%%
+
+\chapter{Geometry of Constraint Spaces}
+\label{ch:constraint-geometry}
+
+\section{Introduction}
+
+The space of candidate hierarchical structures possesses a natural
+polyhedral geometry. This chapter makes that geometry explicit and
+reinterprets the reconstruction process as geometric descent within
+the ultrametric cone.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[>=Latex, every node/.style={font=\small}]
+\draw[thick] (0,0)--(4,0)--(2,3.4)--cycle;
+\draw[thick] (2,0.9)--(3,1.7);
+\draw[thick] (2,0.9)--(1,1.7);
+\node at (2,-0.4) {$\mathcal{U}(X)$};
+\node at (0.9,1.9) {$F_{T_1}$};
+\node at (3.1,1.9) {$F_{T_2}$};
+\node at (2,0.45) {$F_{T^\ast}$};
+\fill (2.8,2.2) circle (1.6pt);
+\fill (2.45,1.7) circle (1.6pt);
+\fill (2.2,1.25) circle (1.6pt);
+\draw[->,thick] (2.8,2.2)--(2.45,1.7);
+\draw[->,thick] (2.45,1.7)--(2.2,1.25);
+\draw[->,thick] (2.2,1.25)--(2.0,0.92);
+\node[right] at (2.8,2.2) {$\mu_0$};
+\node[below right] at (2.2,1.25) {$\mu_t$};
+\end{tikzpicture}
+\caption{Geometric reconstruction within the ultrametric cone.
+Triplet constraints progressively restrict the admissible region,
+driving the hypothesis distribution toward the face corresponding
+to the true topology $T^\ast$.}
+\label{fig:ultrametric-cone-descent}
+\end{figure}
+
+\section{The Ultrametric Cone}
+
+\begin{proposition}
+The set $\mathcal{U}(X)$ of all ultrametrics on $X$ is a convex
+polyhedral cone in $\mathbb{R}^{\binom{n}{2}}$.
+\end{proposition}
+
+\section{Faces of the Cone and Tree Topologies}
+
+\begin{proposition}
+For each rooted tree topology $T$, the set of ultrametrics consistent
+with $T$ forms a face of $\mathcal{U}(X)$.
+\end{proposition}
+
+Thus the combinatorial space of tree topologies appears geometrically
+as the face lattice of the ultrametric cone.
+
+\section{Constraint Intersections as Geometric Restrictions}
+
+Each triplet $(ab|c)$ imposes the inequality
+$d(a,b) < \min\{d(a,c), d(b,c)\}$, restricting the admissible region
+to a subcone. The full constraint system $\mathcal{R}$ restricts to
+the intersection of these subcones, which reduces to the face
+corresponding to the true topology when $\mathcal{R}$ is complete.
+
+\section{Entropy and Geometric Descent}
+
+A probability measure $\mu$ on $\mathcal{U}(X)$ has entropy decreasing
+as constraints restrict its support to smaller regions of the cone.
+Inference is geometric descent in the polyhedral cone.
+
+\section{Connection to Continuous Field Models}
+
+This polyhedral geometry generalizes: in continuous field models the
+constraint manifolds replace the cone faces, and differential
+constraints replace the linear inequalities. The RSVP field framework
+introduced in \cref{ch:rsvp} is the continuous analogue of this
+structure.
+
+%%% CHAPTER 7 %%%
+
+\chapter[Entropy, Information Geometry, and Constraints]{Entropy, Information Geometry, and Constraint Propagation}
+\label{ch:information}
+
+\section{Shannon Entropy and Constraint Operators}
+
+\begin{definition}[Shannon Entropy]
+The entropy of a distribution $p$ over $\mathcal{H}$ is
+$H(p) = -\sum_{h \in \mathcal{H}} p(h)\log p(h)$.
+\end{definition}
+
+\begin{definition}[Constraint Operator]
+The constraint operator associated with observation $o$ is
+\[
+C_o : 2^{\mathcal{H}} \rightarrow 2^{\mathcal{H}}, \qquad
+C_o(\mathcal{H}') = \{ h \in \mathcal{H}' \mid h \text{ consistent
+with } o \}.
+\]
+\end{definition}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[>=Latex, every node/.style={font=\small}]
+\draw[thick] (0,0) .. controls (2,1.8) and (5,1.8) .. (7,0);
+\draw[thick] (0,0) .. controls (2,-1.8) and (5,-1.8) .. (7,0);
+\draw[dashed] (1.1,0.55) .. controls (2.5,1.0) and (4.5,0.65) ..
+  (6.0,0.1);
+\draw[->,thick] (1.1,0.55)--(2.2,0.8);
+\draw[->,thick] (2.8,0.84)--(3.8,0.72);
+\draw[->,thick] (4.4,0.58)--(5.5,0.22);
+\fill (1.1,0.55) circle (1.5pt);
+\fill (6.0,0.1) circle (1.5pt);
+\node[left] at (1.1,0.55) {$p_0$};
+\node[right] at (6.0,0.1) {$\delta_{h^\ast}$};
+\node at (3.5,-1.2) {statistical manifold of distributions};
+\node at (3.6,1.35) {entropy descent};
+\end{tikzpicture}
+\caption{Inference as a trajectory on the statistical manifold.
+Constraint accumulation drives the posterior from a diffuse
+distribution $p_0$ toward concentration on the true structure.}
+\label{fig:information-geometric-descent}
+\end{figure}
+
+\section{Bayesian Updating and Information Geometry}
+
+Given prior $p(h)$ and observation $o$,
+$p(h|o) = p(o|h)p(h)/\sum_{h'} p(o|h')p(h')$.
+The Fisher information metric $g_{ij}(\theta) =
+\mathbb{E}[\partial_i\log p \cdot \partial_j \log p]$ gives the
+Riemannian structure on the statistical manifold; the KL divergence
+$D_{KL}(p\|q) = \sum_h p(h)\log p(h)/q(h)$ approximates $g$
+locally. Bayesian updating is geodesic flow under $g$ in the
+exponential family.
+
+\section{Variational Interpretation}
+
+Inference minimizes a free energy functional
+$F(p) = \mathbb{E}_p[E(h)] - \tau H(p)$,
+where $E(h)$ counts constraint violations. In the tree reconstruction
+setting $E(h)$ counts triplets in $\mathcal{R}$ that $h$ fails to
+satisfy.
+
+\section{Continuous Constraint Sets}
+
+In continuous settings, observations impose constraint sets
+$\mathcal{C}_i = \{(\Phi,\mathbf{v},S) \in \mathcal{X} \mid
+\mathcal{O}_i(\Phi,\mathbf{v},S) \in [a_i,b_i]\}$, and inference
+corresponds to projection onto $\bigcap_i \mathcal{C}_i$.
+
+%%% CHAPTER 8 %%%
+
+\chapter{The Relativistic Scalar--Vector Plenum}
+\label{ch:rsvp}
+
+\section{Field Variables and State Space}
+
+\begin{definition}[RSVP Field State]
+An RSVP field configuration is a triple $(\Phi, \mathbf{v}, S)$
+where $\Phi : M \rightarrow \mathbb{R}$ is a scalar field,
+$\mathbf{v} : M \rightarrow TM$ is a vector field, and
+$S : M \rightarrow \mathbb{R}_{\ge 0}$ is an entropy density.
+\end{definition}
+
+\begin{definition}[RSVP State Space]
+Fix $k \geq 2$. The RSVP state space is
+$\mathcal{X} = H^k(M) \times H^k(M; TM) \times H^k(M)$.
+\end{definition}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[>=Latex, every node/.style={font=\small},
+  scale=1.0]
+\draw[rounded corners, thick] (-4,-2.6) rectangle (4,2.6);
+\draw[thin] (-3.2,-0.6) ellipse (1.3 and 0.7);
+\draw[thin] (-3.2,-0.6) ellipse (0.8 and 0.4);
+\draw[thin] (2.3,1.0) ellipse (1.2 and 0.6);
+\draw[thin] (2.3,1.0) ellipse (0.7 and 0.35);
+\node at (-3.2,-1.5) {$\Phi$ peak};
+\node at (2.3,1.9) {$\Phi$ peak};
+\draw[->,thick] (-2,-1)--(-1.2,-0.4);
+\draw[->,thick] (-1,-1.3)--(0,-0.6);
+\draw[->,thick] (0.2,-0.5)--(1.1,0.1);
+\draw[->,thick] (1.3,-1.1)--(2.2,-0.5);
+\draw[->,thick] (-0.6,1.0)--(0.2,1.6);
+\draw[->,thick] (0.5,0.8)--(1.3,1.5);
+\node at (3.5,-1.9) {$\mathbf{v}$};
+\draw[dashed, thick] (-0.5,0.2) circle (1.4);
+\node at (-0.5,1.8) {$S$ minimum};
+\node at (0,-3.1) {RSVP field configuration on manifold $M$};
+\end{tikzpicture}
+\caption{Scalar salience field $\Phi$, conceptual flow $\mathbf{v}$,
+and entropy density $S$ interacting across a representation manifold.
+Peaks of $\Phi$ attract flow trajectories while entropy minima
+stabilize emergent structures.}
+\label{fig:rsvp-geometry}
+\end{figure}
+
+\section{Coupled Field Dynamics}
+
+\begin{align}
+\frac{\partial \Phi}{\partial t}
+&= D_\Phi \nabla^2 \Phi
+- \alpha_1 \nabla \cdot (\Phi \mathbf{v})
+- \beta_1 S \Phi + \eta_\Phi, \label{eq:phi} \\
+\frac{\partial \mathbf{v}}{\partial t}
+&= D_v \nabla^2 \mathbf{v}
++ \alpha_2 \nabla \Phi
+- \beta_2 S \mathbf{v} + \eta_v, \label{eq:v} \\
+\frac{\partial S}{\partial t}
+&= D_S \nabla^2 S
++ \gamma_1 |\nabla \cdot \mathbf{v}|
+- \gamma_2 S + \eta_S. \label{eq:S}
+\end{align}
+
+\begin{remark}
+The advection term $-\alpha_1 \nabla \cdot (\Phi \mathbf{v})$ models
+conservative transport and is well-typed. The term $-\gamma_2 S$
+ensures entropy dissipates toward zero in the absence of flow
+divergence. The full dynamics are a dissipative perturbation of
+gradient flow on the energy functional $\mathcal{E}$ below.
+\end{remark}
+
+\section{Energy Functional}
+
+\begin{definition}[RSVP Energy]
+$\mathcal{E}(\Phi,\mathbf{v},S) =
+\int_M \bigl(\tfrac{1}{2}|\nabla\Phi|^2
++ \tfrac{1}{2}|\mathbf{v}|^2 + \lambda S\bigr)\,dV$.
+\end{definition}
+
+\begin{proposition}
+\label{prop:energy-convex}
+$\mathcal{E}$ is strictly convex in $\Phi$ and $\mathbf{v}$
+separately and affine in $S$. When coupling terms vanish it has a
+unique minimizer for each boundary condition. Emergent structures
+arise in the coupled regime where convexity is broken.
+\end{proposition}
+
+%%% CHAPTER 9 %%%
+
+\chapter[Well-Posedness of the RSVP Equations]{Well-Posedness and Dynamical Regimes of the RSVP Field Equations}
+\label{ch:wellposedness}
+
+\section{Local Existence}
+
+\begin{theorem}[Local Existence]
+\label{thm:local-existence}
+Let $(\Phi_0,\mathbf{v}_0,S_0) \in \mathcal{X}$ with $k \geq 2$ and
+suppose the stochastic forcing terms are bounded in $H^k$. Then there
+exists $T > 0$ and a unique solution $(\Phi(t),\mathbf{v}(t),S(t))$
+of \eqref{eq:phi}--\eqref{eq:S} on $[0,T]$.
+\end{theorem}
+
+\begin{proof}
+The diffusion terms generate analytic semigroups on $H^k(M)$. The
+nonlinear coupling terms are locally Lipschitz in $\mathcal{X}$ by the
+Sobolev multiplication theorem for $k > \dim M/2$. The Picard
+iteration method applied to the integral formulation yields a unique
+local solution by the Banach fixed-point theorem.
+\end{proof}
+
+\section{Energy Dissipation and Dynamical Regimes}
+
+\begin{proposition}
+If stochastic forcing vanishes, $d\mathcal{E}/dt \leq 0$ for
+sufficiently small coupling parameters.
+\end{proposition}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[>=Latex, every node/.style={font=\small}]
+\draw[->,thick] (0,0)--(6.2,0) node[right] {coupling strength};
+\draw[->,thick] (0,0)--(0,4.4) node[above] {diffusion / damping};
+\draw[thick] (0.8,3.5)--(5.3,0.8);
+\draw[thick] (1.2,3.9)--(5.7,1.2);
+\node at (1.6,3.0) {diffusive regime};
+\node at (4.8,3.0) {critical / transient};
+\node at (4.6,1.0) {structured regime};
+\fill (4.6,1.0) circle (1.5pt);
+\draw[->,thick] (3.2,2.0)--(4.4,1.15);
+\end{tikzpicture}
+\caption{Qualitative dynamical regimes of the RSVP equations. Strong
+diffusion suppresses structure; strong coupling supports pattern
+formation and attractor dynamics.}
+\label{fig:rsvp-regimes}
+\end{figure}
+
+Three qualitatively distinct regimes arise. When diffusion dominates,
+fields relax to uniform configurations. When coupling is sufficiently
+strong, localized patterns emerge through self-organization. An
+intermediate critical regime produces transient patterns. The entropy
+field mediates transitions between these regimes through
+\eqref{eq:S}.
+
+%%% CHAPTER 10 %%%
+
+\chapter[Amplitwist Operators]{Amplitwist Operators and Local Geometric Transformations}
+\label{ch:amplitwist}
+
+\section{Amplitwists in Complex Analysis}
+
+For a holomorphic function $f : \mathbb{C} \rightarrow \mathbb{C}$,
+the derivative $f'(z_0) = \rho e^{i\theta}$ acts locally as
+$v \mapsto \rho R(\theta) v$: rotation by $\theta$ followed by
+scaling by $\rho$ \cite{needham1997}.
+
+\begin{definition}[Amplitwist Operator]
+An amplitwist operator on $\mathbb{R}^2$ is
+$A = s R(\theta)$ with $s \in \mathbb{R}_{>0}$ and $R(\theta)$ the
+rotation matrix. For $n=2$, the group of amplitwists is
+$\mathbb{R}_{>0} \times SO(2) \cong \mathbb{R}_{>0} \times U(1)$,
+the multiplicative group of nonzero complex numbers.
+\end{definition}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.1, >=Latex, every node/.style={font=\small}]
+\draw[->] (-3,0)--(3,0);
+\draw[->] (0,-3)--(0,3);
+\draw[thick] (0,0) circle (1);
+\draw[thick,rotate=40] (0,0) ellipse (1.6 and 0.7);
+\draw[->,thick] (0,0)--(1,0);
+\draw[->,thick] (0,0)--({1.6*cos(40)},{1.6*sin(40)});
+\node at (1.2,-0.3) {$v$};
+\node at (1.2,1.1) {$A_x v$};
+\node at (0,-3.4) {$A_x = \alpha_x R_x$};
+\end{tikzpicture}
+\caption{Local geometric action of an amplitwist operator.
+Infinitesimal neighborhoods undergo rotation and scaling in the
+tangent space, generalizing the complex-analytic derivative to
+representation manifolds.}
+\label{fig:amplitwist-differential}
+\end{figure}
+
+\section{Generalized Amplitwists and Realization Conditions}
+
+\begin{definition}[Generalized Amplitwist]
+A generalized amplitwist at $x \in M$ is
+$A_x = \alpha_x R_x : T_x M \rightarrow T_x M$ with $\alpha_x > 0$
+and $R_x \in SO(n)$.
+\end{definition}
+
+\begin{definition}[Amplitwist Realization]
+\label{def:realization}
+A system $\mathcal{S}$ with map $F : \Sigma \rightarrow \Sigma$
+\emph{realizes} $A_x$ with tolerance $\varepsilon$ if there exists
+a measurable encoding map $\psi : \Sigma \rightarrow T_x M$ with
+$\sup_{u \in \mathcal{U}_x} \|\psi(F(u)) - A_x\psi(u)\| \leq
+\varepsilon$.
+\end{definition}
+
+\section{Local Field Transformations and Entropy Regulation}
+
+Application of $A_x = \alpha_x R_x$ at $x$ produces perturbations
+$\delta\Phi_x = (\alpha_x-1)\Phi(x)\chi_x$ and
+$\delta\mathbf{v}_x = (R_x-I)\mathbf{v}(x)\chi_x$.
+
+\begin{definition}[Entropy-Modulated Amplitwist]
+$A^{(\beta)}_x = \alpha_x e^{-\beta S(x)} R_x$.
+\end{definition}
+
+\begin{proposition}
+\label{prop:entropy-modulation}
+$\|A^{(\beta)}_x\| = \alpha_x e^{-\beta S(x)} \leq \alpha_x$ with
+equality iff $S(x)=0$, and $\lim_{\beta\to\infty}\|A^{(\beta)}_x\|
+= 0$ for any $S(x)>0$.
+\end{proposition}
+
+\section{Cortical Columns as Transformation Units}
+
+Cortical columns \cite{mountcastle1957} realize amplitwist operators
+in the sense of \cref{def:realization} when population recordings
+admit an encoding map $\psi$ with bounded approximation error.
+Predicted signatures: rotation-like trajectories in neural population
+codes \cite{dicarlo2015}, and entropy--amplitude anti-correlation
+\cite{richman2000,higgins2017}.
+
+%%% CHAPTER 11 %%%
+
+\chapter[Lie Algebra Structure of Cascades]{Lie Algebra Structure of Amplitwist Cascades}
+\label{ch:amplitwist-lie}
+
+\section{Introduction}
+
+The amplitwist transformations of \cref{ch:amplitwist} form a Lie
+group, and recursive cascade composition is governed by the algebraic
+structure of its Lie algebra. This chapter develops that structure
+explicitly and connects cascade dynamics to geometric control theory.
+
+\section{The Amplitwist Lie Group}
+
+\begin{proposition}
+The set of amplitwist transformations forms a Lie group isomorphic to
+$G = \mathbb{R}_{>0} \times SO(n)$.
+\end{proposition}
+
+\begin{proof}
+The amplitude scalings $\mathbb{R}_{>0}$ and rotations $SO(n)$ each
+form Lie groups under their respective operations. Their direct
+product $G = \mathbb{R}_{>0} \times SO(n)$ inherits a Lie group
+structure with multiplication
+$(\alpha_1,R_1)(\alpha_2,R_2) = (\alpha_1\alpha_2, R_1 R_2)$.
+Each amplitwist corresponds uniquely to such a pair.
+\end{proof}
+
+\section{The Amplitwist Lie Algebra}
+
+\begin{definition}[Amplitwist Generator]
+An \emph{amplitwist generator} is an element $X = (\lambda, T)$
+where $\lambda \in \mathbb{R}$ represents infinitesimal amplitude
+change and $T \in \mathfrak{so}(n)$ is a skew-symmetric matrix
+representing an infinitesimal rotation.
+\end{definition}
+
+The Lie algebra is $\mathfrak{g} = \mathbb{R} \oplus \mathfrak{so}(n)$.
+The Lie bracket satisfies
+\[
+[(\lambda_1, T_1), (\lambda_2, T_2)] = (0, [T_1, T_2]),
+\]
+so amplitude scalings commute with everything, while rotational
+generators interact through the standard bracket of $\mathfrak{so}(n)$.
+
+\section{Cascade Composition and BCH Expansion}
+
+\begin{theorem}[Baker--Campbell--Hausdorff]
+For generators $X,Y \in \mathfrak{g}$,
+\[
+\exp(X)\exp(Y) = \exp\!\Bigl(X + Y + \tfrac{1}{2}[X,Y]
++ \tfrac{1}{12}[X,[X,Y]] - \tfrac{1}{12}[Y,[X,Y]] + \cdots\Bigr).
+\]
+\end{theorem}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[node distance=2.2cm, >=Stealth,
+  every node/.style={font=\small}]
+\node (x0) {$x_0$};
+\node[right of=x0] (x1) {$x_1$};
+\node[right of=x1] (x2) {$x_2$};
+\node[right of=x2] (x3) {$x_3$};
+\draw[->] (x0) -- node[above] {$e^{X_1}$} (x1);
+\draw[->] (x1) -- node[above] {$e^{X_2}$} (x2);
+\draw[->] (x2) -- node[above] {$e^{X_3}$} (x3);
+\node at (3.3,-0.9) {cascade flow on $\mathbb{R}_{>0}\times SO(n)$};
+\end{tikzpicture}
+\caption{Layered amplitwist cascade as successive exponentials of Lie
+algebra generators. BCH corrections accumulate torsion through Lie
+brackets $[X_i, X_j]$.}
+\label{fig:lie-cascade}
+\end{figure}
+
+For a cascade of $N$ layers, the effective generator is
+\[
+X_{\mathrm{eff}} = \sum_{k=1}^N X_k
++ \sum_{i<j} \tfrac{1}{2}[X_i,X_j] + O(\epsilon^3),
+\]
+where the torsion term $\sum_{i<j}\tfrac{1}{2}[T_i,T_j]$ captures
+the non-commutativity of successive rotations and explains the
+curvature observed in linguistic and cultural cascade dynamics.
+
+\section{Cascade Flow and Continuous Limit}
+
+\begin{definition}[Cascade Flow]
+A \emph{cascade flow} is a path $A(t) = \exp(X(t))$ in $G$
+generated by a time-dependent generator $X(t) \in \mathfrak{g}$.
+\end{definition}
+
+The representation state evolves as $\dot{x}(t) = X(t) \cdot x(t)$,
+connecting amplitwist dynamics to the classical theory of flows on
+Lie groups.
+
+\section{Energy Constraints and Geometric Control}
+
+A transformation $A$ is energetically admissible when
+$\langle \nabla_\mathcal{X}\mathcal{E}, \delta_A \rangle \leq 0$.
+Infinitesimally, admissible generators lie in the subspace of
+$\mathfrak{g}$ for which $\frac{d}{dt}\mathcal{E}(x(t)) \leq 0$.
+This formulation identifies the cascade system as a control system
+$\dot{x} = \sum_i u_i(t)X_i(x)$ on the representation manifold,
+where the generators $X_i$ represent elementary transformations and
+the cascade weights $u_i(t)$ are control inputs.
+
+\section{Cascade Stability via Lie Algebra Norms}
+
+\begin{theorem}[Cascade Stability]
+\label{thm:cascade-stability}
+Let $C = \max_j\|T_j\|_{\mathrm{op}}$ and $\epsilon_\mathrm{crit}
+= 1/(CN)$. If $\epsilon_j < \epsilon_\mathrm{crit}$ for all
+$j \leq N$, then $\|\mathcal{R}_k - \mathrm{id}\|_{C^1} < 1$ for
+all $k \leq N$ and the vorticity satisfies
+\[
+\lim_{N\to\infty} \xi^{(N)} \leq
+\frac{C}{\mathrm{Vol}(M)}\int_M \|\nabla \times T_N(x)\|\,dx < \infty.
+\]
+\end{theorem}
+
+\begin{remark}
+The threshold $\epsilon_\mathrm{crit} = 1/(CN)$ is sufficient but
+not tight. A sharp characterization in terms of spectral properties
+of $\{T_j\}$ remains open.
+\end{remark}
+
+%%% CHAPTER 12 %%%
+
+\chapter[Recursive Cascades and Semantic Dynamics]{Recursive Amplitwist Cascades and Multiscale Semantic Dynamics}
+\label{ch:cascades}
+
+\section{Layered Deformation}
+
+Let $M$ be a smooth compact manifold. The $k$-layer deformation is
+\[
+\mathcal{R}_k(x) = x + \sum_{j=1}^k \epsilon_j T_j(x), \quad
+T_j \in \mathfrak{so}(n).
+\]
+This is the first-order approximation to $\exp(\epsilon_1 T_1)\circ
+\cdots \circ \exp(\epsilon_k T_k)$; BCH corrections introduce
+torsion $\Theta^{(N)} = \sum_{i<j}\epsilon_i\epsilon_j[T_i,T_j]
++ O(\epsilon^3)$ as shown in \cref{ch:amplitwist-lie}.
+
+The layer-$k$ amplitwist is
+\[
+A^{(k)}(x) = w_k(x)\cdot A(\mathcal{R}_k(x)), \qquad
+w_k(x) = \exp(-\lambda S(x)).
+\]
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[>=Latex, every node/.style={font=\small},
+  layer/.style={draw, circle, minimum size=1.3cm, align=center}]
+\node[layer] (R1) at (0,0) {$\mathcal{R}_1$};
+\node[layer] (R2) at (3,0) {$\mathcal{R}_2$};
+\node[layer] (R3) at (6,0) {$\mathcal{R}_3$};
+\node[layer] (A) at (9,0) {attractor};
+\draw[->,thick] (R1)--(R2);
+\draw[->,thick] (R2)--(R3);
+\draw[->,thick] (R3)--(A);
+\draw[decorate,decoration={snake,amplitude=1.2pt,segment length=8pt},thick]
+  (0.6,0.55)--(2.4,0.55);
+\draw[decorate,decoration={snake,amplitude=1.2pt,segment length=8pt},thick]
+  (3.6,0.55)--(5.4,0.55);
+\draw[decorate,decoration={snake,amplitude=1.2pt,segment length=8pt},thick]
+  (6.6,0.55)--(8.4,0.55);
+\node at (1.5,1.0) {$\epsilon_1 T_1$};
+\node at (4.5,1.0) {$\epsilon_2 T_2$};
+\node at (7.5,1.0) {$\epsilon_3 T_3$};
+\node at (4.5,-1.3) {recursive deformation across scales};
+\end{tikzpicture}
+\caption{Recursive amplitwist cascade. Deformation layers
+$\mathcal{R}_k$ apply Lie-algebraic perturbations whose cumulative
+effect generates semantic attractors.}
+\label{fig:amplitwist-cascade}
+\end{figure}
+
+\section{Multiscale Structure and Renormalization Analogy}
+
+Define the effective spatial scale of layer $k$ as
+$\ell_k \sim \|\epsilon_k T_k\|^{-1}$. Early layers with large
+$\epsilon_k$ produce large-scale deformations; later layers refine
+local details. This parallels Wilsonian renormalization.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.1]
+\draw[thick] (0,0) circle (2); \node at (0,2.5) {coarse scale};
+\draw[thick] (5,0) circle (1.4); \node at (5,2.5) {intermediate};
+\draw[thick] (9,0) circle (0.8); \node at (9,2.5) {fine scale};
+\draw[->,thick] (2.2,0)--(3.7,0);
+\draw[->,thick] (6.5,0)--(8.1,0);
+\node at (3.3,-0.8) {$\ell_1$};
+\node at (7.1,-0.8) {$\ell_2$};
+\end{tikzpicture}
+\caption{Cascade deformation across scales. Early layers generate
+large-scale transformations while later layers refine local structure.}
+\label{fig:renorm-scales}
+\end{figure}
+
+\section{Applications to Linguistic Evolution}
+
+The cascade models linguistic change as:
+$\mathcal{R}_1$: phonetic drift ($T_1$ = vowel shift);
+$\mathcal{R}_2$: grammaticalization ($T_2$ = aspect-to-tense);
+$\mathcal{R}_3$: semantic bleaching ($T_3$ = metaphor decay).
+The torsion $[T_1,T_2]$ captures documented interactions between
+sound change and grammaticalization. Empirical testing is tractable
+via diachronic word embedding corpora.
+
+%%% CHAPTER 13 %%%
+
+\chapter{Sheaf-Theoretic Constraint Propagation}
+\label{ch:sheaf-constraints}
+
+\section{Introduction}
+
+Triplet reconstruction, ultrametric geometry, and RSVP field
+inference all share a common structure: local information must
+propagate coherently to produce globally consistent configurations.
+Sheaf theory formalizes this phenomenon precisely.
+
+\section{Presheaves and Sheaves}
+
+\begin{definition}[Presheaf]
+A \emph{presheaf} $\mathcal{F}$ on a topological space $M$ assigns
+to each open set $U \subseteq M$ a set $\mathcal{F}(U)$ (the
+\emph{sections over $U$}) together with restriction maps
+$\rho_{UV} : \mathcal{F}(U) \rightarrow \mathcal{F}(V)$ for
+$V \subseteq U$, satisfying $\rho_{UU} = \mathrm{id}$ and
+$\rho_{VW} \circ \rho_{UV} = \rho_{UW}$.
+\end{definition}
+
+\begin{definition}[Sheaf]
+A presheaf $\mathcal{F}$ is a \emph{sheaf} if for every open cover
+$\{U_i\}$ of $U$: (i) sections agreeing on all $U_i$ are equal;
+(ii) locally compatible sections $s_i \in \mathcal{F}(U_i)$ with
+$\rho_{U_i,U_{ij}}(s_i) = \rho_{U_j,U_{ij}}(s_j)$ on all overlaps
+$U_{ij} = U_i \cap U_j$ glue to a unique section $s \in
+\mathcal{F}(U)$.
+\end{definition}
+
+\section{Constraint Systems as Sheaves}
+
+For each open set $U \subseteq M$, define
+\[
+\mathcal{F}(U) = \{ x \in \mathcal{X} \mid x \text{ satisfies
+all constraints in } U \}.
+\]
+
+\begin{proposition}
+The assignment $U \mapsto \mathcal{F}(U)$ defines a presheaf on $M$.
+When the constraint system is locally consistent, it extends to a
+sheaf.
+\end{proposition}
+
+\begin{definition}[Global Section]
+A \emph{global section} of $\mathcal{F}$ is an element of
+$\mathcal{F}(M)$, i.e., a configuration satisfying all constraints
+simultaneously.
+\end{definition}
+
+\begin{proposition}
+If the constraint system is consistent, the constraint presheaf
+admits at least one global section.
+\end{proposition}
+
+\section{Sheaf Interpretation of Triplet Reconstruction}
+
+Each triplet constraint restricts tree topologies on a small subset
+of leaves. Local compatibility ensures partial tree structures agree
+on overlapping leaf sets. When the triplet system is consistent,
+these local structures glue into a single global tree topology: the
+Triplet Reconstruction Theorem (\cref{thm:triplet-reconstruction})
+is the existence of a global section of the constraint sheaf over the
+leaf set.
+
+\section{Sheaf Interpretation of RSVP Inference}
+
+For each open region $U \subseteq M$, define
+$\mathcal{F}(U) = \{(\Phi,\mathbf{v},S) \mid (\Phi,\mathbf{v},S)$
+satisfies field constraints in $U\}$.
+Compatible field solutions on overlapping regions assemble into a
+global field configuration. RSVP inference is therefore a sheaf
+gluing problem, and well-posedness of the field equations
+(\cref{thm:local-existence}) guarantees the existence of local
+sections.
+
+\section{Cohomological Obstructions}
+
+When constraints conflict, global sections may fail to exist despite
+apparent local consistency. In sheaf theory, such failures are
+measured by elements of the first cohomology group $H^1(M,\mathcal{F})$.
+Non-trivial cohomology classes correspond to irresolvable
+inconsistencies in the constraint network. This connects the
+framework to applied topology and sheaf-based data analysis.
+
+\section{Relation to Categorical Alignment}
+
+Sheaves form categories whose morphisms are maps preserving
+restriction structure. Constraint propagation corresponds to
+functorial transport of local information. This connects directly to
+the alignment framework of \cref{ch:alignment}: the action functor
+$G : \mathcal{M} \rightarrow \mathcal{A}$ is required to be a
+morphism of sheaves, not merely a map of underlying sets.
+
+%%% CHAPTER 14 %%%
+
+\chapter{Spectral Geometry of Constraint Operators}
+\label{ch:spectral-constraints}
+
+\section{Introduction}
+
+Constraint systems can be interpreted as linear operators on spaces
+of configurations. Spectral analysis of these operators reveals the
+rigidity of the constraint system, the rate of inference convergence,
+and the degree to which local constraints determine global structure.
+
+\section{Constraint Laplacians}
+
+Let $\{o_i\}_{i=1}^m$ be a set of constraints with associated
+operators $C_{o_i}$. The \emph{constraint Laplacian} is
+\[
+L = \sum_{i=1}^m (I - C_{o_i}).
+\]
+
+\begin{proposition}
+Configurations satisfying all constraints lie in the kernel of $L$.
+\end{proposition}
+
+\begin{proof}
+If $Lv = 0$, then $(I - C_{o_i})v = 0$ for every $i$, so
+$C_{o_i}v = v$: the configuration satisfies every constraint.
+\end{proof}
+
+\section{Spectral Gap and Reconstruction Stability}
+
+Let $\lambda_2$ denote the smallest nonzero eigenvalue of $L$.
+
+\begin{definition}[Spectral Gap]
+The \emph{spectral gap} is $\gamma = \lambda_2$.
+\end{definition}
+
+\begin{proposition}
+A large spectral gap implies unique, rapidly convergent inference.
+A small spectral gap indicates that multiple configurations nearly
+satisfy the constraints, producing reconstruction ambiguity.
+\end{proposition}
+
+This connects the reconstruction theory to the Cheeger isoperimetric
+inequality and spectral graph theory via the Cheeger bound
+$\gamma \geq h^2/2$, where $h$ is the edge expansion constant of the
+constraint graph.
+
+\section{Diffusion Interpretation}
+
+The equation $\frac{dp}{dt} = -Lp$ defines a diffusion process on
+the hypothesis space.
+
+\begin{proposition}
+The diffusion dynamics converge to the kernel of $L$ exponentially
+at rate $\gamma$.
+\end{proposition}
+
+Thus constraint satisfaction is the equilibrium state of a diffusion
+process, and the spectral gap governs the rate of entropy descent.
+
+\section{Continuous Limit and the Laplace--Beltrami Operator}
+
+When the hypothesis space becomes continuous, the constraint
+Laplacian generalizes to the Laplace--Beltrami operator on the
+configuration manifold $M$. Eigenfunctions describe intrinsic modes
+of variation. Low-frequency modes correspond to global structural
+features; high-frequency modes correspond to local fluctuations. This
+spectral decomposition provides a geometric description of how
+constraints shape the representation manifold and complements the
+RSVP field equations \eqref{eq:phi}--\eqref{eq:S}.
+
+\section{Connection to Entropy Descent}
+
+Under the diffusion $\frac{dp}{dt} = -Lp$, entropy $H(p)$ decreases
+monotonically at rate bounded below by $\gamma \cdot H(p)$. Thus the
+spectral properties of the constraint operator directly govern the
+rate of entropy reduction, closing the connection between the spectral
+framework and the variational analysis of \cref{ch:information}.
+
+%%% CHAPTER 15 %%%
+
+\chapter[Stochastic Extensions of RSVP Dynamics]{Stochastic Extensions of RSVP Field Dynamics}
+\label{ch:stochastic-rsvp}
+
+\section{Introduction}
+
+The deterministic RSVP dynamics of \cref{ch:rsvp} model the
+evolution of $(\Phi,\mathbf{v},S)$ under coupled partial differential
+equations. Many real systems evolve under stochastic perturbations.
+This chapter extends the RSVP framework to a stochastic setting via
+the theory of stochastic partial differential equations.
+
+\section{Stochastic Field Equations}
+
+The stochastic RSVP equations are
+\begin{align}
+\frac{\partial\Phi}{\partial t}
+&= D_\Phi\nabla^2\Phi - \alpha_1\nabla\cdot(\Phi\mathbf{v})
+ - \beta_1 S\Phi + \sigma_\Phi\,\dot{W}_\Phi, \\
+\frac{\partial\mathbf{v}}{\partial t}
+&= D_v\nabla^2\mathbf{v} + \alpha_2\nabla\Phi - \beta_2 S\mathbf{v}
+ + \sigma_v\,\dot{W}_v, \\
+\frac{\partial S}{\partial t}
+&= D_S\nabla^2 S + \gamma_1|\nabla\cdot\mathbf{v}| - \gamma_2 S
+ + \sigma_S\,\dot{W}_S,
+\end{align}
+where $\dot{W}_\Phi$, $\dot{W}_v$, $\dot{W}_S$ are spatially
+correlated Gaussian white noise fields.
+
+\begin{definition}[Gaussian Noise]
+A stochastic field $\eta(x,t)$ is Gaussian white noise if
+$\mathbb{E}[\eta(x,t)] = 0$ and
+$\mathbb{E}[\eta(x,t)\eta(x',t')] = \sigma^2\delta(x-x')\delta(t-t')$.
+\end{definition}
+
+\section{Fokker--Planck Equation}
+
+The stochastic RSVP system defines a Markov process on $\mathcal{X}$.
+The probability density $P(\Phi,\mathbf{v},S,t)$ over field
+configurations evolves via the Fokker--Planck equation
+\[
+\frac{\partial P}{\partial t}
+= -\nabla\cdot(FP) + D\nabla^2 P,
+\]
+where $F$ is the deterministic drift from \eqref{eq:phi}--\eqref{eq:S}
+and $D = \tfrac{1}{2}(\sigma_\Phi^2 + \sigma_v^2 + \sigma_S^2)$.
+
+\section{Stationary Distributions and Free Energy}
+
+\begin{definition}[Stationary Distribution]
+$P^\ast$ is stationary if $\frac{\partial P^\ast}{\partial t} = 0$.
+\end{definition}
+
+Under detailed balance, the stationary distribution takes the Gibbs
+form $P^\ast(x) \propto \exp(-\mathcal{E}(x)/\tau)$ where $\tau$ is
+the effective temperature and $\mathcal{E}$ is the RSVP energy
+functional. The stochastic dynamics therefore minimize the free energy
+functional $F[P] = \mathbb{E}_P[\mathcal{E}] - \tau H(P)$, directly
+connecting the statistical physics formulation to the variational
+inference framework of \cref{ch:information}.
+
+\section{Fluctuation-Dissipation Relation}
+
+In physical equilibrium systems the noise amplitudes $\sigma_i$ and
+the damping coefficients $\beta_i$ satisfy the
+fluctuation-dissipation relation $\sigma_i^2 = 2\beta_i\tau$,
+ensuring convergence to the correct Gibbs stationary distribution.
+Departing from this relation introduces non-equilibrium dynamics,
+corresponding to driven systems that maintain persistent flows.
+
+\section{Stochastic Cascades}
+
+Amplitwist generators become stochastic: $X_k(t) = X_k +
+\xi_k(t)$ where $\xi_k$ is a random perturbation. The resulting
+cascade is a stochastic flow on the Lie group $G$, governed by a
+stochastic differential equation on $\mathbb{R}_{>0} \times SO(n)$.
+This provides a model of noisy hierarchical inference processes in
+which exploration and exploitation are balanced through the noise
+amplitude.
+
+\section{Implications for Inference and Alignment}
+
+Stochastic field dynamics allow the system to escape local minima of
+$\mathcal{E}$ and explore the configuration space more effectively.
+For alignment, stochasticity introduces additional complexity: the
+action functor $G$ must preserve invariants not only for
+deterministic trajectories but in expectation over stochastic
+realizations, requiring an averaged alignment condition
+$\mathbb{E}[\alpha(G,I)] = 1$ that is strictly stronger than
+pointwise alignment.
+
+%%% CHAPTER 16 %%%
+
+\chapter[Worked Examples of Cascade Dynamics]{Worked Examples of Amplitwist Cascade Dynamics}
+\label{ch:examples}
+
+\section{Introduction}
+
+This chapter illustrates the cascade mechanisms of
+\cref{ch:amplitwist-lie,ch:cascades} through concrete
+two-dimensional examples, making visible how local transformations
+accumulate to produce stable global structures.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.95, >=Latex, every node/.style={font=\small}]
+\draw[thin,->] (-2.5,0)--(2.5,0);
+\draw[thin,->] (0,-2.5)--(0,2.5);
+\draw[->,thick] (-1.8,0)--(-1.1,0);
+\draw[->,thick] (1.1,0)--(1.8,0);
+\draw[->,thick] (0,1.8)--(0,1.1);
+\draw[->,thick] (0,-1.1)--(0,-1.8);
+\draw[->,thick,rotate around={30:(0,0)}] (-1.8,0)--(-1.1,0);
+\draw[->,thick,rotate around={30:(0,0)}] (1.1,0)--(1.8,0);
+\draw[->,thick,rotate around={30:(0,0)}] (0,1.8)--(0,1.1);
+\draw[->,thick,rotate around={30:(0,0)}] (0,-1.1)--(0,-1.8);
+\node at (0,2.9) {original and transformed local flow};
+\node at (0,-2.9) {$\mathbf{v}_1 = A\mathbf{v}_0$};
+\end{tikzpicture}
+\caption{Worked example of amplitwist action on a local vector field.
+The original flow pattern is rotated and rescaled under the local
+operator $A$.}
+\label{fig:worked-flow-example}
+\end{figure}
+
+\section{Two-Layer Cascade}
+
+For the initial saddle field $\mathbf{v}_0(x,y) = (-x,y)^T$, two
+amplitwists $A_1 = s_1 R(\theta_1)$ and $A_2 = s_2 R(\theta_2)$
+compose as
+$A_2 A_1 = (s_1 s_2) R(\theta_1+\theta_2)$,
+demonstrating that complex global patterns emerge from simple
+compositional operations.
+
+\section{Entropy-Modulated Cascade and Attractor Formation}
+
+With entropy field $S$ concentrated near $x^\ast$, the
+entropy-modulated operator $A^{(\beta)}(x,y) = \alpha e^{-\beta
+S(x,y)} R(\theta)$ focuses transformations on the entropy minimum.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.0, >=Latex, every node/.style={font=\small}]
+\draw[thick,domain=0:4.5*pi,samples=120]
+  plot ({0.06*\x*cos(\x r)},{0.06*\x*sin(\x r)});
+\draw[thick,domain=0:4.5*pi,samples=120]
+  plot ({0.06*\x*cos(\x r+1.1)},{0.06*\x*sin(\x r+1.1)});
+\fill (0,0) circle (2.2pt);
+\node at (0,-2.2) {cascade attractor};
+\end{tikzpicture}
+\caption{Conceptual attractor produced by recursive entropy-modulated
+cascades. Trajectories spiral toward a stable semantic configuration.}
+\label{fig:cascade-attractor}
+\end{figure}
+
+\section{Cascade Manifold Deformation}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.0, >=Latex, every node/.style={font=\small}]
+\draw[thick] (-4,-1.5) .. controls (-2,1.5) and (2,1.5) .. (4,-1.5);
+\node at (0,-2) {$M$};
+\draw[thick,dashed] (-4,-0.8)..controls(-2,2.0)and(2,2.0)..(4,-0.8);
+\draw[thick,dotted] (-4,-0.1)..controls(-2,2.4)and(2,2.4)..(4,-0.1);
+\draw[->,thick] (4.3,-1.4)--(4.3,-0.7);
+\draw[->,thick] (4.3,-0.7)--(4.3,0.0);
+\node[right] at (4.3,-1.4) {$\mathcal{R}_1$};
+\node[right] at (4.3,-0.7) {$\mathcal{R}_2$};
+\node[right] at (4.3,0.0) {$\mathcal{R}_3$};
+\node at (0,2.7) {recursive manifold deformation};
+\end{tikzpicture}
+\caption{Recursive deformation of a representation manifold under
+amplitwist cascades. Each layer $\mathcal{R}_k$ applies a controlled
+Lie-algebraic perturbation.}
+\label{fig:cascade-deformation}
+\end{figure}
+
+\section{Discrete Network Example}
+
+When $M$ consists of a finite network of conceptual states, an
+amplitwist modifies transition weights (amplification) and transition
+directions (rotation). Successive cascade layers reinforce certain
+pathways until the network converges to a stable configuration,
+corresponding to the attractor predicted by
+\cref{thm:cascade-stability}.
+
+%%% CHAPTER 17 %%%
+
+\chapter[Empirical Observability]{Empirical Observability and Measurement of Field Structures}
+\label{ch:observability}
+
+\section{Introduction}
+
+For the framework to have empirical significance, the abstract
+quantities of the theory must correspond to measurable features.
+Let $\Sigma$ denote observable signals, $M$ the latent
+representation manifold, and $\psi : \Sigma \rightarrow M$ an
+encoding map.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[>=Latex, every node/.style={font=\small},
+  box/.style={draw, rounded corners, minimum width=2.9cm,
+    minimum height=1cm, align=center},
+  arrow/.style={->, thick}]
+\node[box] (Sigma) at (0,0) {$\Sigma$\\observable signals};
+\node[box] (psi) at (4,0) {$\psi$\\encoding};
+\node[box] (M) at (8,0) {$M$\\latent manifold};
+\node[box] (Phi) at (8,2) {$\Phi$\\scalar estimate};
+\node[box] (v) at (11,0.9) {$\mathbf{v}$\\flow estimate};
+\node[box] (S) at (11,-0.9) {$S$\\entropy estimate};
+\draw[arrow] (Sigma)--(psi);
+\draw[arrow] (psi)--(M);
+\draw[arrow] (M)--(Phi);
+\draw[arrow] (M)--(v);
+\draw[arrow] (M)--(S);
+\end{tikzpicture}
+\caption{Empirical observability schema. Observable signals are
+mapped into a latent representation manifold, from which scalar,
+vector, and entropy field estimates are constructed.}
+\label{fig:observability-schema}
+\end{figure}
+
+\section{Estimating the RSVP Fields}
+
+In neural data, $\Phi$ corresponds to activation magnitude; $\mathbf{v}$
+is estimated from velocity vectors between successive population
+states $x_{i+1} - x_i/(t_{i+1}-t_i)$; $S$ is estimated from the
+entropy of the local state distribution. In linguistic systems, $\Phi$
+is word frequency, $\mathbf{v}$ is the velocity of word embeddings
+across diachronic corpora, and $S$ is contextual diversity.
+
+\section{Identifying Amplitwist Transformations}
+
+The local Jacobian $J_x \approx \alpha_x R_x$ can be estimated from
+empirical trajectories by fitting the rotation and scaling components.
+Neural jPCA analysis \cite{dicarlo2015} detects rotational dynamics
+in population activity, providing a direct empirical handle on the
+rotation component $R_x$.
+
+\section{Limitations and the Realization Condition}
+
+The realization condition (\cref{def:realization}) is the formal
+bridge between theory and data: empirical methods estimate $\psi$ and
+bound the tolerance $\varepsilon$. Measurement noise, partial
+observability, and the requirement to approximate $\psi$ from finite
+samples all contribute to the irreducible tolerance floor.
+
+%%% CHAPTER 18 %%%
+
+\chapter[Representation, Action, and Alignment]{Representation, Action, and the Problem of Alignment}
+\label{ch:alignment}
+
+\section{The Separation of Representation and Action}
+
+A system possessing coherent representational structures does not
+automatically produce actions that preserve those structures. This
+chapter formalizes the representation--action gap categorically.
+
+\section{Representation and Action Categories}
+
+\begin{definition}[Representation Category]
+\label{def:rep-category}
+The representation category $\mathcal{M}$ has as objects the points
+of $\mathcal{X}$, and as morphisms the entropy-modulated amplitwist
+cascade operators $A^{(k)}$. Composition is cascade concatenation;
+identity morphisms are $A = I$.
+\end{definition}
+
+\begin{definition}[Action Category]
+The action category $\mathcal{A}$ has as objects action states and
+morphisms transitions between actions.
+\end{definition}
+
+\begin{definition}[Action Functor]
+A decision mechanism is a functor $G : \mathcal{M} \rightarrow
+\mathcal{A}$ preserving composition and identities.
+\end{definition}
+
+\section{Alignment Degree and Generic Misalignment}
+
+Let $\mathcal{M}_I \subseteq \mathcal{M}$ be the subcategory of
+morphisms satisfying structural invariant $I$.
+
+\begin{definition}[Alignment Degree]
+$\alpha(G,I) = \mu(\{f \in \mathcal{M}_I : G(f)\text{ satisfies }
+I\}) / \mu(\mathcal{M}_I)$.
+\end{definition}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[>=Latex, every node/.style={font=\small}]
+\draw[thick] (-4,-2) ellipse (2.3 and 1.3);
+\node at (-4,2) {$\mathcal{M}$};
+\draw[thick] (4,-2) ellipse (2.3 and 1.3);
+\node at (4,2) {$\mathcal{A}$};
+\draw[->,thick] (-2,-1)..controls(-0.5,-0.3)..(2,-1);
+\draw[->,thick] (-2,0.6)..controls(-0.5,1.1)..(2,0.7);
+\node at (0,1.6) {$G$};
+\draw[dashed] (-4,-2) ellipse (0.9 and 0.6);
+\node at (-4,-2.9) {$\mathcal{M}_I$};
+\draw[dashed] (4,-2) ellipse (0.9 and 0.6);
+\node at (4,-2.9) {$\mathcal{A}_I$};
+\end{tikzpicture}
+\caption{Alignment geometry. The functor $G$ maps representations to
+actions. Alignment requires preservation of the invariant
+subcategories $\mathcal{M}_I \to \mathcal{A}_I$.}
+\label{fig:alignment-geometry}
+\end{figure}
+
+\begin{theorem}[Generic Misalignment]
+\label{thm:generic-misalignment}
+Let $\mathcal{F}(\mathcal{M},\mathcal{A})$ be the space of all functors
+$G : \mathcal{M} \rightarrow \mathcal{A}$ with measure $\mu_F$
+induced by the RSVP field structure. Then
+\[
+\mu_F(\{G : \alpha(G,I) = 1\}) = 0.
+\]
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+$I$-structure-preserving functors satisfy the full-and-faithful
+condition on $\mathcal{M}_I$, imposing a system of equalities on
+the matrix entries of $G$. The set of such maps is a proper closed
+submanifold of $\mathcal{F}(\mathcal{M},\mathcal{A})$, hence
+measure zero with respect to any absolutely continuous measure $\mu_F$.
+\end{proof}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[every node/.style={font=\small}]
+\draw[thick] (0,0) ellipse (3.8 and 2.2);
+\draw[thick] (1.2,0) ellipse (0.9 and 1.5);
+\node at (0,2.55) {$\mathcal{F}(\mathcal{M},\mathcal{A})$};
+\node at (1.2,0) {\shortstack{aligned\\functors}};
+\node at (-1.7,-1.8) {generic functors};
+\end{tikzpicture}
+\caption{Measure-zero intuition for generic misalignment. The space
+of aligned functors is a proper closed submanifold of the full functor
+space.}
+\label{fig:generic-misalignment-geometry}
+\end{figure}
+
+\section{Goodhart's Law as Functorial Failure}
+
+\begin{proposition}
+Let $\Phi_W, \Phi_P : M \rightarrow \mathbb{R}$. If $G$ maximizes
+$\Phi_P$ rather than $\Phi_W$, then $G$ fails to preserve the
+ordering invariant $I_W$ on any region where $\Phi_P$ and $\Phi_W$
+conflict.
+\end{proposition}
+
+\section{Structure-Preserving Functors}
+
+\begin{definition}[Structure-Preserving Functor]
+$G$ is $I$-structure-preserving if $G|_{\mathcal{M}_I}$ is full
+and faithful.
+\end{definition}
+
+By \cref{thm:generic-misalignment}, such functors require deliberate
+design: they cannot arise by default from arbitrary training
+procedures.
+
+%%% CHAPTER 19 %%%
+
+\chapter[Unified Constraint Geometry]{Unified Constraint Geometry: From Hierarchies to Aligned Intelligence}
+\label{ch:synthesis}
+
+\section{Overview}
+
+This chapter synthesizes all preceding developments into a unified
+mathematical statement and identifies the three principal results
+of the monograph.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[>=Latex, every node/.style={font=\small, align=center},
+  box/.style={draw, rounded corners, minimum width=2.7cm,
+    minimum height=0.95cm}]
+\node[box] (local) at (0,0) {local observations\\and constraints};
+\node[box] (disc) at (4,1.6) {discrete structures\\trees, triplets};
+\node[box] (geom) at (4,0) {geometric structures\\ultrametrics, cones};
+\node[box] (field) at (4,-1.6) {field structures\\$(\Phi,\mathbf{v},S)$};
+\node[box] (global) at (8,0) {global coherent\\structure};
+\node[box] (action) at (12,0) {aligned action\\via preserved invariants};
+\draw[->,thick] (local)--(disc);
+\draw[->,thick] (local)--(geom);
+\draw[->,thick] (local)--(field);
+\draw[->,thick] (disc)--(global);
+\draw[->,thick] (geom)--(global);
+\draw[->,thick] (field)--(global);
+\draw[->,thick] (global)--(action);
+\end{tikzpicture}
+\caption{Synthesis of the monograph. Local constraints generate
+discrete, geometric, and field-theoretic structures that converge to
+coherent global organization, which must then be preserved across the
+representation--action boundary.}
+\label{fig:unified-constraint-geometry}
+\end{figure}
+
+\section{Unified Constraint Reconstruction}
+
+\begin{theorem}[Unified Constraint Reconstruction]
+\label{thm:unified}
+Let $\{C_i\}$ be a consistent and complete collection of constraints
+on a state space $\mathcal{X}$. Then the entropy of any posterior
+distribution over $\mathcal{X}$ consistent with $\{C_i\}$ converges
+to zero monotonically in the ordering of constraints by information
+gain.
+\end{theorem}
+
+\begin{proof}
+By completeness (\cref{def:complete-constraint}), each constraint
+eliminates at least one element not eliminated by previous constraints
+until only the unique element $x^\ast$ remains. By
+\cref{prop:entropy-decrease} each such step strictly reduces entropy.
+The Triplet Reconstruction Theorem (\cref{thm:triplet-reconstruction}),
+the Tree--Ultrametric Equivalence (\cref{thm:tree-ultrametric}), and
+the constraint framework of \cref{ch:information} are special cases
+corresponding to different choices of $\mathcal{X}$ and $\{C_i\}$.
+\end{proof}
+
+Structure emerges as the intersection of constraint manifolds. This is
+the monograph's central thesis, now proved.
+
+\section{Summary of Principal Results}
+
+The Triplet Reconstruction Theorem (\cref{thm:triplet-reconstruction})
+establishes that global hierarchical structure is determined by local
+triplet constraints. The Cascade Stability Theorem
+(\cref{thm:cascade-stability}) establishes that recursive amplitwist
+transformations generate bounded convergent vorticity under the
+explicitly characterized threshold $\epsilon_\mathrm{crit} = 1/(CN)$.
+The Generic Misalignment Theorem (\cref{thm:generic-misalignment})
+establishes that aligned functors form a measure-zero subset of all
+decision maps.
+
+Together these results instantiate \cref{thm:unified}: in each of the
+discrete, continuous, and categorical settings treated here, structure
+emerges through the coherent intersection of local constraints.
+
+\section{Implications for AI and Future Directions}
+
+Effective learning systems should emphasize mechanisms propagating
+structural constraints through internal representations (by
+\cref{thm:cascade-stability}). Stability requires entropy-like
+regulatory mechanisms (by \cref{prop:entropy-modulation}).
+Alignment requires deliberate $I$-structure-preserving design (by
+\cref{thm:generic-misalignment}). Three open problems remain: a tight
+characterization of $\epsilon_\mathrm{crit}$ via spectral properties
+of $\{T_j\}$; a complete proof of \cref{thm:generic-misalignment} in
+infinite-dimensional functor spaces; and empirical extraction of the
+encoding map $\psi$ from neural population recordings.
+
+\section{Conclusion}
+
+Intelligence may be understood as the capacity of a system to navigate
+constraint geometries, constructing coherent structures from incomplete
+information while ensuring that those structures guide action in a
+consistent and stable manner.
+
+\backmatter
+
+\chapter*{Afterword}
+
+The theories presented here remain exploratory and incomplete. The
+Cascade Stability Theorem provides a sufficient condition that is not
+tight. The Generic Misalignment proof operates at the level of a
+finite-dimensional linear map argument and requires extension to the
+full infinite-dimensional functor space. The realization condition for
+cortical columns requires methodological development for extracting
+encoding maps from neural recordings. The stochastic RSVP framework
+opens several analytic questions regarding the spectrum of the
+Fokker--Planck operator and its dependence on the coupling parameters.
+The sheaf-cohomological obstruction theory for constraint systems
+admits a more systematic treatment via derived functors.
+
+The categorical formalization of alignment failure as functorial
+non-preservation of structural invariants may offer a more tractable
+target for formal verification than behavioral or outcome-based
+alignment criteria. Future investigations may extend the framework to
+higher-dimensional and non-Euclidean manifolds, explore empirical
+applications in neuroscience and machine learning, and refine the
+coupling between representational and action-domain RSVP fields.
+
+\appendix
+
+\chapter{Notation and Symbol Reference}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lll}
+\hline
+Symbol & Meaning & First Introduced \\
+\hline
+$\mathcal{X}$ & State space & \cref{ch:foundations} \\
+$X$ & Finite leaf set & \cref{ch:hierarchy} \\
+$T^\ast$ & True latent tree & \cref{ch:hierarchy} \\
+$\mathcal{R}(T)$ & Triplet system of $T$ & \cref{ch:hierarchy} \\
+$\mathcal{H}$ & Hypothesis space & \cref{ch:hierarchy} \\
+$C_o$ & Constraint operator & \cref{ch:information} \\
+$d_T$ & Tree-induced ultrametric & \cref{ch:ultrametric} \\
+$\mathcal{U}(X)$ & Space of ultrametrics on $X$ & \cref{ch:ultrametric} \\
+$(X,d,\mu)$ & Metric measure space & \cref{ch:metric-measure} \\
+$d_{GH}$ & Gromov--Hausdorff distance & \cref{ch:metric-measure} \\
+$H(p)$ & Shannon entropy & \cref{ch:information} \\
+$D_{KL}(p\|q)$ & KL divergence & \cref{ch:information} \\
+$g_{ij}$ & Fisher information metric & \cref{ch:information} \\
+$F(p)$ & Free energy functional & \cref{ch:information} \\
+$M$ & Representation manifold & \cref{ch:rsvp} \\
+$\Phi$ & Scalar field (semantic salience) & \cref{ch:rsvp} \\
+$\mathbf{v}$ & Vector field (conceptual flow) & \cref{ch:rsvp} \\
+$S$ & Entropy density field & \cref{ch:rsvp} \\
+$\mathcal{E}$ & RSVP energy functional & \cref{ch:rsvp} \\
+$G = \mathbb{R}_{>0}\times SO(n)$ & Amplitwist Lie group & \cref{ch:amplitwist-lie} \\
+$\mathfrak{g}$ & Amplitwist Lie algebra & \cref{ch:amplitwist-lie} \\
+$A_x$ & Amplitwist operator at $x$ & \cref{ch:amplitwist} \\
+$A^{(\beta)}_x$ & Entropy-modulated amplitwist & \cref{ch:amplitwist} \\
+$\varepsilon$ & Realization tolerance & \cref{ch:amplitwist} \\
+$\mathcal{R}_k$ & $k$-layer deformation & \cref{ch:cascades} \\
+$A^{(k)}$ & Layer-$k$ cascade amplitwist & \cref{ch:cascades} \\
+$w_k$ & Entropy reliability weight & \cref{ch:cascades} \\
+$\xi^{(N)}$ & Cascade vorticity & \cref{ch:cascades} \\
+$\epsilon_\mathrm{crit}$ & Critical deformation bound & \cref{ch:amplitwist-lie} \\
+$\mathcal{F}(U)$ & Sheaf sections over $U$ & \cref{ch:sheaf-constraints} \\
+$L$ & Constraint Laplacian & \cref{ch:spectral-constraints} \\
+$\gamma$ & Spectral gap & \cref{ch:spectral-constraints} \\
+$P^\ast$ & Stationary distribution & \cref{ch:stochastic-rsvp} \\
+$\mathcal{M}$ & Representation category & \cref{ch:alignment} \\
+$\mathcal{A}$ & Action category & \cref{ch:alignment} \\
+$G$ & Action functor & \cref{ch:alignment} \\
+$\mathcal{M}_I$ & Invariant subcategory & \cref{ch:alignment} \\
+$\alpha(G,I)$ & Alignment degree & \cref{ch:alignment} \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{thebibliography}{99}
+
+\bibitem{needham1997}
+T.~Needham.
+\newblock \emph{Visual Complex Analysis}.
+\newblock Oxford University Press, 1997.
+
+\bibitem{mountcastle1957}
+V.~B. Mountcastle.
+\newblock Modality and topographic properties of single neurons of cat's
+  somatic sensory cortex.
+\newblock \emph{Journal of Neurophysiology}, 20(4):408--434, 1957.
+
+\bibitem{horton2005}
+J.~C. Horton and D.~L. Adams.
+\newblock The cortical column: a structure without a function.
+\newblock \emph{Philosophical Transactions of the Royal Society B},
+  360(1456):837--862, 2005.
+
+\bibitem{aho1981inferring}
+A.~V. Aho, Y.~Sagiv, T.~G. Szymanski, and J.~D. Ullman.
+\newblock Inferring a tree from lowest common ancestors.
+\newblock \emph{SIAM Journal on Computing}, 10(3):405--421, 1981.
+
+\bibitem{carhart2014}
+R.~L. Carhart-Harris et al.
+\newblock The entropic brain.
+\newblock \emph{Frontiers in Human Neuroscience}, 8:20, 2014.
+
+\bibitem{friston2010}
+K.~Friston.
+\newblock The free-energy principle: a unified brain theory?
+\newblock \emph{Nature Reviews Neuroscience}, 11(2):127--138, 2010.
+
+\bibitem{richman2000}
+J.~S. Richman and J.~R. Moorman.
+\newblock Physiological time-series analysis using approximate entropy and
+  sample entropy.
+\newblock \emph{American Journal of Physiology}, 278(6):H2039--H2049, 2000.
+
+\bibitem{higgins2017}
+I.~Higgins et al.
+\newblock $\beta$-{VAE}: Learning basic visual concepts with a constrained
+  variational framework.
+\newblock \emph{ICLR}, 2017.
+
+\bibitem{dicarlo2015}
+J.~J. DiCarlo and D.~D. Cox.
+\newblock Neural manifolds for the representation of learned motor skills.
+\newblock \emph{Nature Neuroscience}, 18(4):512--520, 2015.
+
+\bibitem{cohen2016}
+T.~S. Cohen and M.~Welling.
+\newblock Group equivariant convolutional networks.
+\newblock \emph{ICML}, 2016.
+
+\bibitem{connes1994}
+A.~Connes.
+\newblock \emph{Noncommutative Geometry}.
+\newblock Academic Press, 1994.
+
+\bibitem{vaswani2017}
+A.~Vaswani et al.
+\newblock Attention is all you need.
+\newblock \emph{NeurIPS}, 30, 2017.
+
+\bibitem{schwartz1980}
+E.~L. Schwartz.
+\newblock Computational anatomy and functional architecture of striate cortex.
+\newblock \emph{Vision Research}, 20(8):645--669, 1980.
+
+\bibitem{gu2004}
+X.~Gu et al.
+\newblock Genus zero surface conformal mapping and its application to brain
+  surface mapping.
+\newblock \emph{IEEE Transactions on Medical Imaging}, 23(8):949--958, 2004.
+
+\bibitem{mackay2003}
+D.~J.~C. MacKay.
+\newblock \emph{Information Theory, Inference, and Learning Algorithms}.
+\newblock Cambridge University Press, 2003.
+
+\bibitem{amari2000}
+S.~Amari and H.~Nagaoka.
+\newblock \emph{Methods of Information Geometry}.
+\newblock American Mathematical Society, 2000.
+
+\bibitem{maclane1998}
+S.~Mac Lane.
+\newblock \emph{Categories for the Working Mathematician}.
+\newblock 2nd~ed. Springer, 1998.
+
+\bibitem{burago2001}
+D.~Burago, Y.~Burago, and S.~Ivanov.
+\newblock \emph{A Course in Metric Geometry}.
+\newblock American Mathematical Society, 2001.
+
+\bibitem{gromov1999}
+M.~Gromov.
+\newblock \emph{Metric Structures for Riemannian and Non-Riemannian Spaces}.
+\newblock Birkh\"{a}user, 1999.
+
+\bibitem{villani2009}
+C.~Villani.
+\newblock \emph{Optimal Transport: Old and New}.
+\newblock Springer, 2009.
+
+\bibitem{hall2015}
+B.~Hall.
+\newblock \emph{Lie Groups, Lie Algebras, and Representations}.
+\newblock 2nd~ed. Springer, 2015.
+
+\bibitem{bredon1997}
+G.~E. Bredon.
+\newblock \emph{Sheaf Theory}.
+\newblock 2nd~ed. Springer, 1997.
+
+\bibitem{chung1997}
+F.~R.~K. Chung.
+\newblock \emph{Spectral Graph Theory}.
+\newblock American Mathematical Society, 1997.
+
+\bibitem{risken1989}
+H.~Risken.
+\newblock \emph{The Fokker--Planck Equation}.
+\newblock 2nd~ed. Springer, 1989.
+
+\end{thebibliography}
+
+\printindex
+
+\end{document}
