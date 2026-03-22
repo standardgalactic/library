@@ -75,10 +75,6 @@ text-decoration:none;
 border-bottom:1px solid #00ff00;
 }
 
-.link a:hover{
-opacity:1;
-}
-
 </style>
 </head>
 
@@ -89,6 +85,12 @@ opacity:1;
 <canvas id="scope"></canvas>
 
 <div class="controls">
+
+<!-- Track selector -->
+<select id="trackSelect">
+<option value="0">Text as Substrate</option>
+<option value="1">End of Video Recording</option>
+</select>
 
 <button id="toggle">Play</button>
 
@@ -114,25 +116,29 @@ Read the full essay
 </a>
 </div>
 
-<audio id="audio" src="Text_as_Substrate.mp3">
-<track kind="captions" src="Text_as_Substrate.vtt" srclang="en" default>
-</audio>
+<audio id="audio"></audio>
 
 <script>
 
-/* ===== Canvas ===== */
+/* ===== Playlist ===== */
+
+const playlist = [
+{
+audio: "Text_as_Substrate.mp3",
+vtt: "Text_as_Substrate.vtt"
+},
+{
+audio: "The_End_of_the_Video_Recording.mp3",
+vtt: "The_End_of_the_Video_Recording.vtt"
+}
+]
+
+let currentIndex = 0
+
+/* ===== Elements ===== */
 
 const canvas=document.getElementById("scope")
 const ctx=canvas.getContext("2d")
-
-const dpr=window.devicePixelRatio||1
-
-canvas.width=340*dpr
-canvas.height=340*dpr
-
-ctx.setTransform(dpr,0,0,dpr,0,0)
-
-/* ===== Elements ===== */
 
 const audio=document.getElementById("audio")
 const captions=document.getElementById("captions")
@@ -141,6 +147,14 @@ const toggle=document.getElementById("toggle")
 const loop=document.getElementById("loop")
 const timer=document.getElementById("timer")
 const speed=document.getElementById("speed")
+const trackSelect=document.getElementById("trackSelect")
+
+/* ===== Canvas ===== */
+
+const dpr=window.devicePixelRatio||1
+canvas.width=340*dpr
+canvas.height=340*dpr
+ctx.setTransform(dpr,0,0,dpr,0,0)
 
 /* ===== Audio Engine ===== */
 
@@ -166,52 +180,73 @@ buffer=new Uint8Array(analyser.fftSize)
 
 }
 
+/* ===== Load Track ===== */
+
+function loadTrack(i){
+
+currentIndex = i
+trackSelect.value = i
+
+const t = playlist[i]
+
+audio.pause()
+
+audio.src = t.audio
+
+audio.innerHTML = `<track kind="captions" src="${t.vtt}" srclang="en" default>`
+
+captions.textContent = ""
+
+audio.load()
+
+audio.addEventListener("loadedmetadata", attachTrack, { once:true })
+
+}
+
 /* ===== Subtitles ===== */
 
 function attachTrack(){
 
-const track=audio.textTracks[0]
+const track = audio.textTracks[0]
 if(!track) return
 
-track.mode="hidden"
+track.mode = "hidden"
 
-track.oncuechange=()=>{
-
-const cue=track.activeCues[0]
-
-captions.textContent=cue?cue.text:""
-
+track.oncuechange = ()=>{
+const cue = track.activeCues[0]
+captions.textContent = cue ? cue.text : ""
 }
 
 }
 
-/* ensure track is ready */
+/* ===== Auto Advance ===== */
 
-if(audio.textTracks.length>0){
-attachTrack()
+audio.addEventListener("ended", ()=>{
+
+if(audio.loop) return
+
+if(currentIndex < playlist.length - 1){
+loadTrack(currentIndex + 1)
+audio.play()
 }else{
-audio.addEventListener("loadedmetadata",attachTrack,{once:true})
+toggle.textContent="Play"
 }
+
+})
 
 /* ===== Timer ===== */
 
 function formatTime(sec){
-
 const m=Math.floor(sec/60)
 const s=Math.floor(sec%60)
-
 return`${m.toString().padStart(2,"0")}:${s.toString().padStart(2,"0")}`
-
 }
 
 function updateTimer(){
-
-if(audio.duration&&isFinite(audio.duration)){
+if(audio.duration && isFinite(audio.duration)){
 timer.textContent=formatTime(audio.duration-audio.currentTime)
 }
-
 requestAnimationFrame(updateTimer)
-
 }
 
 updateTimer()
@@ -223,28 +258,28 @@ toggle.onclick=()=>{
 initAudio()
 
 if(audio.paused){
-
 audioCtx.resume().then(()=>audio.play())
 toggle.textContent="Pause"
-
 }else{
-
 audio.pause()
 toggle.textContent="Play"
-
 }
 
 }
 
 loop.onclick=()=>{
-
 audio.loop=!audio.loop
 loop.textContent=audio.loop?"Loop On":"Loop Off"
-
 }
 
 speed.onchange=()=>{
 audio.playbackRate=parseFloat(speed.value)
+}
+
+/* ===== Track Selector ===== */
+
+trackSelect.onchange=(e)=>{
+loadTrack(parseInt(e.target.value))
 }
 
 /* ===== Oscilloscope ===== */
@@ -256,8 +291,6 @@ function draw(){
 if(analyser){
 
 analyser.getByteTimeDomainData(buffer)
-
-/* persistence */
 
 ctx.fillStyle="rgba(0,0,0,0.12)"
 ctx.fillRect(0,0,340,340)
@@ -297,7 +330,11 @@ requestAnimationFrame(draw)
 
 draw()
 
-/* ===== Error handling ===== */
+/* ===== Init ===== */
+
+loadTrack(0)
+
+/* ===== Errors ===== */
 
 audio.addEventListener("error",()=>{
 timer.textContent="ERR"

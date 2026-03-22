@@ -1,0 +1,1522 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage{fontspec}
+\setmainfont{TeX Gyre Pagella}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{microtype}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{tikz-cd}
+\usepackage{enumitem}
+\usepackage{booktabs}
+
+\geometry{margin=1.2in}
+\onehalfspacing
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=black,
+  citecolor=black,
+  urlcolor=black
+}
+
+\title{Text as Substrate:\\
+On Semantic Compression and the Emergence\\
+of a Universal Representational Medium}
+\author{Flyxion}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Contemporary compression theory is grounded in the statistical structure of signals: redundancy within waveforms, frequency-domain regularities, and inter-frame correlations are exploited to reduce bitrate while preserving fidelity. This essay proposes and develops a categorically distinct paradigm, in which compression is achieved not through signal approximation but through semantic reduction. Multimodal data is translated into structured textual representations capable of regenerating perceptually equivalent output via a shared generative substrate. Audio is encoded as lexical content augmented by prosodic and vocal metadata; video is represented as structured scenario descriptions composed of agents, actions, environments, and camera dynamics. The result is a universal representational medium in which text functions as a compact, interpretable, and generative interface between raw sensation and structured meaning.
+
+The theoretical development proceeds across three registers. First, an information-theoretic analysis demonstrates how semantic compression redistributes entropy between the description and the generative model, recovering a generalized rate--distortion framework in which model expressiveness replaces channel capacity as the primary resource. Second, a categorical formalization treats compression and reconstruction as adjoint functors between a category of multimodal signals and a category of structured textual descriptions, with natural transformations enforcing cross-modal coherence, fibered categories capturing hierarchical template structure, and sheaf conditions governing the local-to-global assembly of descriptions. Third, a constructive account introduces prototype libraries, structured deviation encoding, and iterative multi-scale refinement as the mechanisms through which this framework becomes computationally feasible.
+
+This convergence of information theory, category theory, and generative modeling redefines compression as an interpretive act rather than a purely numerical one. Its implications extend beyond storage and transmission to touch the foundations of representation, cognition, and the ontology of media itself.
+\end{abstract}
+
+\tableofcontents
+
+\newpage
+
+% ============================================================
+\section{Introduction}
+\label{sec:intro}
+% ============================================================
+
+Traditional approaches to data compression are grounded in signal processing and statistical estimation. Audio is reduced through frequency-domain approximations, psychoacoustic masking, and scalar quantization (Cover and Thomas, 2006). Video is compressed through motion estimation, inter-frame prediction, and block-transform coding (Shannon, 1948). The mature development of these methods---in codecs such as MP3, AAC, H.265, and AV1---represents decades of progress in exploiting statistical redundancy within well-defined signal domains (Berger, 1971; Gray, 2011). In each case, the guiding principle is fidelity: the compressed representation must permit reconstruction of a signal sufficiently close to the original, as measured by domain-specific distortion criteria.
+
+The implicit assumption underlying all such methods is that the signal itself is the appropriate object of representation. The compressed artifact is a degraded or approximated version of the original waveform or pixel array, not a description of anything. There is no interpreter; there is only an approximation.
+
+A fundamentally different approach becomes possible once two conditions are met: first, that generative models of sufficient fidelity exist, capable of synthesizing high-quality audio and video from compact structured inputs; and second, that the structure underlying such generation can be captured in a computable, transmissible form. Under these conditions, compression need no longer preserve the signal but may instead preserve its \emph{generative description}---the structured account of the information required to produce a perceptually equivalent output. The viability of this approach has been demonstrated in stages by neural generative models (Goodfellow et al., 2014; Kingma and Welling, 2014; van den Oord et al., 2016; Ho et al., 2020; Rombach et al., 2022), each of which learns to generate high-fidelity signals from compact latent descriptions.
+
+This reorientation is not merely a technical refinement but a conceptual transformation. It shifts the object of compression from signals to meanings, from redundancy elimination to semantic abstraction, and from numerical approximation to interpretive inference. In this paradigm, a compressed representation is a \emph{program} for generating experience, not a reduced copy of one.
+
+The present essay develops this claim systematically. Section~\ref{sec:audio} treats audio as prosodic text; Section~\ref{sec:video} develops the corresponding framework for video as structured scenario description. Section~\ref{sec:text_medium} establishes the sense in which text constitutes a universal representational medium. Sections~\ref{sec:perceptual_equivalence}--\ref{sec:entropy} address foundational questions about perceptual equivalence, expressivity, and information-theoretic optimality. Sections~\ref{sec:categorical}--\ref{sec:higher} develop the categorical formalism: functors, adjunctions, fibered categories, sheaves, monoidal structure, and higher categories. Sections~\ref{sec:prototypes}--\ref{sec:adaptive} treat the constructive mechanisms of prototype-based compression. Sections~\ref{sec:topology}--\ref{sec:algebra} extend the framework through topology, differential geometry, information geometry, stochastic models, causal structure, and algebraic language theory. Sections~\ref{sec:architecture}--\ref{sec:final_conclusion} address system design, ethics, economics, and the convergence toward a unified theory of representation. The appendices collect formal proofs and technical constructions.
+
+Throughout, the essay maintains the view that compression, understanding, and generation are not three distinct processes but three perspectives on a single underlying structure: the mapping between signals and their generating descriptions.
+
+% ============================================================
+\section{Audio as Prosodic Text}
+\label{sec:audio}
+% ============================================================
+
+An audio signal is, at the most primitive level of description, a time-indexed sequence of pressure values. The standard compression pipeline---exemplified by MP3 and AAC---exploits the statistical structure of this sequence by working in the frequency domain, applying psychoacoustic models to identify and discard components below perceptual threshold, and encoding the residual with variable-rate quantization (Cover and Thomas, 2006; Pierce, 1980). The result is a compressed bitstream that reconstructs a signal approximating the original within perceptual tolerance.
+
+This approach treats the waveform as opaque. It makes no commitment to what the signal \emph{means}. A speech recording and a piece of music are processed by the same pipeline, which has no access to the linguistic content of the former or the harmonic structure of the latter. The compression is blind to semantics.
+
+Semantic compression proceeds differently. It begins by observing that the vast majority of audio signals of interest to humans are not arbitrary waveforms but instances of a small number of generative processes: speech, music, environmental sound, and their combinations. Each of these processes is governed by structured principles---phonology, prosody, harmonic grammar, physical acoustics---that can be represented explicitly (Chomsky, 1965; Barwise and Perry, 1983).
+
+\subsection{Formal Encoding of Speech}
+
+For spoken language, the encoding decomposes the signal into its constituent generative parameters. A spoken utterance is characterized by its lexical content, the identity and physiological properties of the speaker, the prosodic contour governing pitch, timing, and rhythm, and the affective or emotional register that modulates delivery.
+
+\begin{definition}[Audio Semantic Encoding]
+Let $\mathcal{W}$ denote the space of acoustic waveforms. A \emph{semantic audio encoding} is a map
+\[
+\mathcal{A} : \mathcal{W} \rightarrow (T, P, V, E),
+\]
+where $T$ is the textual transcription, $P \in \mathbb{R}^{d_P}$ a vector of prosodic parameters (pitch contour, duration, stress pattern, speech rate), $V \in \mathbb{R}^{d_V}$ a vector of vocal characteristics (fundamental frequency statistics, formant structure, breathiness, speaker identity embedding), and $E \in \mathbb{R}^{d_E}$ an affective parameter vector (arousal, valence, modality).
+\end{definition}
+
+Reconstruction is performed by a generative model $\mathcal{G}_a : (T, P, V, E) \rightarrow \widehat{\mathcal{W}}$, which synthesizes a waveform consistent with the specified parameters. Contemporary neural synthesis architectures demonstrate that high-fidelity waveform generation from structured representations is achievable across a wide range of conditions (van den Oord et al., 2016; van den Oord et al., 2019).
+
+The compression ratio achievable by this representation depends on semantic rather than statistical redundancy. Repeated syntactic structures, consistent speaker identity across an utterance, and predictable prosodic patterns contribute to efficient encoding. In cases where the content is highly predictable---as in formulaic speech, repeated phrases, or acoustically consistent narration---the description length can be orders of magnitude smaller than the raw or even traditionally compressed waveform.
+
+\subsection{Non-Speech Audio}
+
+For non-speech audio, the semantic encoding must be adapted to the generative structure of the relevant domain. Music can be encoded via score-like representations augmented with performance parameters: tempo, dynamics, articulation, instrument identity, and mixing configuration. Environmental sound can be described in terms of source events, spatial configuration, and acoustic environment parameters.
+
+In each case, the encoded representation captures the generative structure of the signal rather than the signal itself. The waveform becomes a derived object, produced on demand by the generative model from the compact structured description.
+
+% ============================================================
+\section{Video as Scenario Description}
+\label{sec:video}
+% ============================================================
+
+Video compression has historically relied on the spatial and temporal redundancy of natural images. Block-based transform coding exploits intra-frame correlations; motion compensation exploits inter-frame correlations; variable-rate entropy coding exploits statistical regularities in the resulting residuals. The H.265 and AV1 codecs represent the mature development of this approach, achieving compression ratios that were unimaginable in the early history of digital video (Csisz\'{a}r and K\"{o}rner, 2011).
+
+Yet these methods remain semantically blind. They operate on pixel arrays, not on scenes. They have no representation of agents, objects, actions, or causal relations. A video of a person walking is processed identically to a video of random noise, except that the statistical regularities of the former permit more efficient encoding.
+
+Semantic video compression exploits the fact that natural video is not random but generative: it arises from a physical world containing objects that obey physical laws, agents that act according to intentions, and cameras that follow trajectories through space. Recent advances in latent diffusion models (Rombach et al., 2022) and text-to-image generation (Ramesh et al., 2021; Esser et al., 2021) demonstrate that high-fidelity reconstruction from compact structured descriptions is computationally feasible.
+
+\begin{definition}[Video Semantic Encoding]
+Let $\mathcal{V}$ denote the space of video sequences. A \emph{semantic video encoding} is a map
+\[
+\mathcal{V} : \mathcal{V} \rightarrow (S, E, C),
+\]
+where $S$ is a scenario graph (encoding agents, their properties, their actions, and their causal relationships over time), $E \in \mathbb{R}^{d_E}$ is an environment and rendering parameter vector (lighting, materials, weather, visual style), and $C$ is a camera trajectory specification (position, orientation, focal parameters, and their temporal evolution).
+\end{definition}
+
+\subsection{Scenario Graphs}
+
+A scenario graph is a directed temporal hypergraph in which nodes represent entities and events, and edges represent causal, spatial, or temporal relations. Each entity node carries attributes: identity, type, physical dimensions, surface appearance, and behavioral disposition. Each event node carries temporal coordinates and a description of the action or state transition it represents. The causal structure of scene events can be modeled formally using structural causal models (Pearl, 2009), which provide a principled language for representing how agent actions and environmental factors jointly determine outcomes.
+
+This structure closely resembles the internal representation used by physically-based game engines and simulation systems. The key difference lies in its use as a \emph{compression format}: instead of storing frames, one stores the causal structure sufficient to regenerate them.
+
+\subsection{Camera and Rendering Parameters}
+
+The camera specification encodes the observer's trajectory through the scene. Parameters include position and orientation as functions of time, focal length and depth-of-field configuration, and post-processing effects such as color grading, motion blur radius, and noise characteristics. These parameters are themselves compact, often requiring only a small number of keyframes with interpolation.
+
+The reconstruction map
+\[
+\mathcal{G}_v : (S, E, C) \rightarrow \widehat{\mathcal{V}}
+\]
+is realized by a neural renderer or physically-based simulation engine that accepts the structured description and produces a corresponding video sequence. The output need not be pixel-identical to the original; it is required only to be perceptually equivalent under the chosen distortion metric.
+
+% ============================================================
+\section{Text as Universal Medium}
+\label{sec:text_medium}
+% ============================================================
+
+The convergence of the audio and video frameworks suggests a unifying claim: that text, when extended to include structured symbolic descriptors beyond ordinary natural language, can function as a universal medium for representing multimodal sensory data.
+
+The word ``text'' here does not denote natural language alone. It denotes any compositional, linearizable, symbolic representation capable of encoding complex hierarchical structure. Text in this sense subsumes natural language, formal notation, data serialization formats, and programming languages. What these share is compositionality: the meaning of a complex expression is determined by the meanings of its parts and the rules by which they are combined (Chomsky, 1965). This property has deep roots in the categorical semantics of formal languages (Lawvere and Schanuel, 2009; Pierce, 2002), where compositional meaning is expressed as a functor from a syntactic category to a semantic one.
+
+\begin{definition}[Universal Textual Substrate]
+A \emph{universal textual substrate} for a category of signals $\mathcal{M}$ is a structured symbolic language $\mathcal{L}$ together with a generative interpreter $\llbracket \cdot \rrbracket : \mathcal{L} \rightarrow \mathcal{M}$ such that for every $x \in \mathcal{M}$ and every $\epsilon > 0$, there exists $t \in \mathcal{L}$ with $d(x, \llbracket t \rrbracket) < \epsilon$.
+\end{definition}
+
+The information-theoretic content of this definition is that $\mathcal{L}$ is \emph{dense} in $\mathcal{M}$ with respect to the perceptual metric $d$. Text need not represent every signal exactly but must be able to approximate every signal to arbitrary precision.
+
+The argument for universality rests on two claims. First, the physical world that gives rise to audio and video signals is governed by computable laws, and the space of its configurations is parameterizable in principle. Second, generative models of sufficient expressive power can approximate the map from descriptions to signals; this is the content of the universal approximation theorems for neural networks (Goodfellow, Bengio, and Courville, 2016; LeCun, Bengio, and Hinton, 2015). Together, these claims imply that the space of signals is well-approximated by the image of a sufficiently rich textual language under a sufficiently powerful generative interpreter.
+
+% ============================================================
+\section{Formal Semantics of Perceptual Equivalence}
+\label{sec:perceptual_equivalence}
+% ============================================================
+
+A central but implicit concept throughout the preceding development is that of perceptual equivalence. The categorical constructions, rate--distortion analysis, and fixed-point theorems all depend on a metric $d$ that captures when two signals are ``the same'' for a given task. We now make this notion explicit.
+
+\begin{definition}[Perceptual Equivalence Relation]
+Let $(\mathcal{M}, d)$ be an enriched category of signals. For $\epsilon > 0$, define an equivalence relation $\sim_\epsilon$ by
+\[
+x \sim_\epsilon y \iff d(x,y) < \epsilon.
+\]
+The equivalence classes $[x]_\epsilon$ represent perceptual indistinguishability at tolerance $\epsilon$.
+\end{definition}
+
+The quotient $\mathcal{M}/\!\sim_\epsilon$ is not merely a set but inherits categorical structure: morphisms descend when they preserve equivalence classes. Semantic compression is well-posed only with respect to this quotient. The appropriate perceptual metric is not uniquely determined but depends on the modality and task: for speech, intelligibility and speaker identity weigh heavily; for video, structural coherence and motion consistency matter more than exact photometric accuracy (Amari, 2016; Bishop, 2006).
+
+\begin{proposition}[Well-Definedness of Semantic Compression]
+If $\mathcal{G}$ is non-expansive and $\mathcal{C}$ is chosen to minimize distortion, then $\mathcal{C}$ factors through $\mathcal{M}/\!\sim_\epsilon$.
+\end{proposition}
+
+\begin{proof}
+Suppose $x \sim_\epsilon y$, i.e., $d(x,y) < \epsilon$. Since $\mathcal{G}$ is non-expansive, $d(\mathcal{G}(\mathcal{C}(x)), \mathcal{G}(\mathcal{C}(y))) \le d(\mathcal{C}(x), \mathcal{C}(y))$. The distortion-minimizing condition ensures that the descriptions $\mathcal{C}(x)$ and $\mathcal{C}(y)$ agree up to the tolerance $\epsilon$ imposed by $\sim_\epsilon$, so $\mathcal{C}$ cannot distinguish between perceptually equivalent signals.
+\end{proof}
+
+This formalizes the idea that compression need only preserve equivalence classes, not exact signals. It also clarifies that the ``loss'' in lossy compression is precisely the collapse of $\sim_\epsilon$ classes: the encoder maps each class to a single representative description, and the decoder maps that description back to a canonical element of the class.
+
+% ============================================================
+\section{Expressivity of the Textual Language}
+\label{sec:expressivity}
+% ============================================================
+
+The claim that text forms a universal substrate depends critically on the expressive power of the textual intermediate representation $\mathcal{L}$. This expressivity can be formalized using concepts from formal language theory and categorical semantics (Hopcroft, Motwani, and Ullman, 2006; Pierce, 2002).
+
+Let $\mathcal{F}(\mathcal{L})$ be the free category generated by the grammar of $\mathcal{L}$. The semantic interpretation functor
+\[
+\llbracket \cdot \rrbracket : \mathcal{F}(\mathcal{L}) \to \mathcal{M}
+\]
+is said to be \emph{essentially surjective up to $\epsilon$} if for every $x \in \mathcal{M}$, there exists $t \in \mathcal{L}$ such that $d(x, \llbracket t \rrbracket) < \epsilon$.
+
+\begin{definition}[Semantic Completeness]
+The textual language $\mathcal{L}$ is \emph{$\epsilon$-semantically complete} for $\mathcal{M}$ if $\llbracket \cdot \rrbracket$ is essentially surjective up to $\epsilon$.
+\end{definition}
+
+\begin{theorem}[Universality Criterion]
+If $\mathcal{L}$ is $\epsilon$-semantically complete and $\mathcal{G}$ is continuous with respect to $d$, then semantic compression achieves universal approximation on $\mathcal{M}$.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+By $\epsilon$-semantic completeness, for every $x \in \mathcal{M}$ there exists $t \in \mathcal{L}$ with $d(x, \llbracket t \rrbracket) < \epsilon$. Taking $\mathcal{C}(x) = t$ and $\mathcal{G} = \llbracket \cdot \rrbracket$ yields $d(x, \mathcal{G}(\mathcal{C}(x))) < \epsilon$. Continuity of $\mathcal{G}$ ensures that the approximation is stable under small perturbations of the description.
+\end{proof}
+
+This result makes precise the requirement that the textual language must be sufficiently expressive to capture all relevant generative structure. Insufficient expressivity manifests as irreducible residuals in compression---signals whose structure lies outside the language's generative scope. The design of the textual intermediate representation is therefore not arbitrary but constrained by expressivity requirements relative to the signal domain.
+
+% ============================================================
+\section{Information-Theoretic Foundations}
+\label{sec:infotheory}
+% ============================================================
+
+\subsection{The Semantic Rate--Distortion Function}
+
+Classical rate--distortion theory, due to Shannon (1948), characterizes the achievable trade-off between coding rate and reconstruction distortion for a given source distribution and distortion measure (Cover and Thomas, 2006; Berger, 1971). The rate--distortion function $R(D)$ specifies the minimum rate required to achieve expected distortion at most $D$:
+\[
+R(D) = \inf_{q(t|x) : \mathbb{E}[d(x,\hat{x})] \le D} I(X; T),
+\]
+where the infimum is over all conditional distributions $q(t|x)$ and $\hat{x}$ is the reproduction of $x$ under the encoder-decoder pair.
+
+Semantic compression modifies this framework in an essential way: the reconstruction is performed not by a simple lookup or linear mapping but by a generative model $\mathcal{G}$ that encodes substantial prior knowledge about the structure of signals in $\mathcal{M}$. The distortion becomes $d(x, \mathcal{G}(t))$, and the mutual information $I(X; T)$ quantifies only the information required to specify the description $t$, not the information required to reconstruct $x$ from scratch.
+
+\begin{definition}[Semantic Rate--Distortion Function]
+Given a source $X$ over $\mathcal{M}$, a generative model $\mathcal{G} : \mathcal{T} \rightarrow \mathcal{M}$, and a distortion functional $d$, the \emph{semantic rate--distortion function} is
+\[
+R_{\mathcal{G}}(D) = \inf_{q(t|x)} \left\{ I(X; T) \,\middle|\, \mathbb{E}_{x, t}\left[d\big(x, \mathcal{G}(t)\big)\right] \le D \right\}.
+\]
+\end{definition}
+
+\begin{proposition}
+For any generative model $\mathcal{G}$ and distortion $D$, $R_{\mathcal{G}}(D) \le R(D)$, with equality when $\mathcal{G}$ implements the identity. Moreover, $R_{\mathcal{G}}(D)$ is non-increasing in the expressive power of $\mathcal{G}$.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+Any encoder-decoder pair achieving rate $R$ and distortion $D$ in the classical sense can be replicated in the semantic framework by setting $\mathcal{G}(t) = \hat{x}(t)$, recovering the same rate. When $\mathcal{G}$ incorporates additional structural knowledge, the same distortion can be achieved with a description $t$ of lower information content, since the generative model fills in what the description does not specify. Monotonicity follows from the fact that a more expressive model can always be used as a less expressive one by ignoring the additional capacity.
+\end{proof}
+
+\subsection{The Information Bottleneck Connection}
+
+The semantic rate--distortion framework is closely related to the information bottleneck principle of Tishby and Zaslavsky (2015), which characterizes the optimal compression of a source $X$ with respect to a relevance variable $Y$:
+\[
+\min_{q(t|x)} \left[ I(X; T) - \beta \, I(T; Y) \right].
+\]
+
+In the semantic setting, the relevance variable $Y$ can be interpreted as the space of perceptual categories relevant to the downstream task. A description that preserves the perceptually relevant structure of a signal while discarding perceptually irrelevant detail achieves a favorable bottleneck trade-off. This interpretation connects semantic compression directly to the theory of perceptual relevance and task-dependent coding.
+
+% ============================================================
+\section{Compression as Interpretation: The Epistemic Dimension}
+\label{sec:interpretation}
+% ============================================================
+
+The shift from signal-based to semantic compression reframes compression as an epistemic act. The encoder is not merely measuring statistical properties of a signal but \emph{interpreting} it: identifying the underlying generative structure, assigning it to a category of meaningful events, and expressing the result in a form legible to a shared generative substrate.
+
+This interpretive character distinguishes semantic compression from all prior compression paradigms. It introduces a dependency on a shared prior---the generative model---that must be established between encoder and decoder before any communication can occur. The compressed representation is not self-contained; it is an instruction issued within a shared semantic context.
+
+This has several consequences. First, the efficiency of compression depends on the match between the generative model's prior and the actual distribution of signals. Second, compression and understanding become inseparable: an encoder that cannot understand a signal cannot compress it semantically. Third, errors in interpretation propagate into errors in reconstruction, introducing a qualitatively different failure mode from the artifact-based distortions of signal compression.
+
+The compression--interpretation equivalence can be made precise in the framework of minimum description length (Rissanen, 1978; Gr\"{u}nwald, 2007): the optimal compressed description of a signal is the shortest description relative to a model, and finding this description requires solving the same inference problem as understanding the signal within the model. This connection places semantic compression within the tradition of Solomonoff induction (Solomonoff, 1964) and algorithmic probability (Chaitin, 1987; Hutter, 2005): the optimal compressor is an optimal predictor.
+
+% ============================================================
+\section{Kolmogorov Complexity and Model-Relative Compression}
+\label{sec:kolmogorov}
+% ============================================================
+
+Kolmogorov complexity provides a resource-independent characterization of information content (Kolmogorov, 1965; Chaitin, 1987; Li and Vit\'{a}nyi, 2008). The Kolmogorov complexity $K(x)$ of a string $x$ is the length of the shortest program $p$ on a universal Turing machine $U$ such that $U(p) = x$. Classical Kolmogorov complexity does not depend on any statistical model and constitutes an absolute measure of descriptive complexity.
+
+Semantic compression can be understood as computing a \emph{model-relative} Kolmogorov complexity. Given a generative model $\mathcal{G}$, the model-relative complexity of a signal $x$ at tolerance $\epsilon$ is
+\[
+K_\epsilon(x \mid \mathcal{G}) = \min \{ |t| : d(x, \mathcal{G}(t)) < \epsilon \},
+\]
+where $|t|$ denotes the description length of $t$.
+
+\begin{proposition}[Model Compression Bound]
+\label{prop:kolmogorov}
+For any generative model $\mathcal{G}$ and signal $x$,
+\[
+K_\epsilon(x \mid \mathcal{G}) \le K_\epsilon(x) - K(\mathcal{G}) + O(1),
+\]
+where $K_\epsilon(x)$ is the $\epsilon$-approximate Kolmogorov complexity of $x$ and $K(\mathcal{G})$ is the complexity of the model itself.
+\end{proposition}
+
+Proposition~\ref{prop:kolmogorov} formalizes the intuition that complexity can be offloaded into the shared model. The total description cost of transmitting $x$ is approximately $K_\epsilon(x \mid \mathcal{G}) + K(\mathcal{G})$. When $\mathcal{G}$ is large but shared (i.e., its cost is amortized over many transmissions), the per-signal cost is determined entirely by $K_\epsilon(x \mid \mathcal{G})$, which can be dramatically smaller than $K_\epsilon(x)$ for signals well within $\mathcal{G}$'s distribution.
+
+This analysis connects semantic compression to the \emph{two-part code} formulation of MDL (Rissanen, 1978; Gr\"{u}nwald, 2007): the optimal code consists of a model description followed by a data description conditional on the model.
+
+% ============================================================
+\section{Entropy Redistribution and Model Dependence}
+\label{sec:entropy}
+% ============================================================
+
+A central claim of semantic compression is that it does not eliminate entropy but redistributes it between the description and the generative model. Let $H_{\mathcal{G}}(X)$ denote the entropy of the source as seen by the generative model: the entropy of the minimal description $T$ required for reconstruction to within tolerance $\epsilon$. The conservation relation
+\[
+H(X) \approx H_{\mathcal{G}}(X) + I_{\mathcal{G}}(X)
+\]
+holds, where $I_{\mathcal{G}}(X)$ measures the information about $X$ that is implicitly encoded in $\mathcal{G}$---the reduction in description entropy attributable to the model's prior knowledge.
+
+Increasing the expressive power of $\mathcal{G}$ increases $I_{\mathcal{G}}(X)$ and therefore decreases $H_{\mathcal{G}}(X)$, enabling more efficient compression. In the limit where $\mathcal{G}$ perfectly models the generative process producing $X$, the residual entropy $H_{\mathcal{G}}(X)$ approaches the entropy of the model's stochastic variation, which may be negligible.
+
+This perspective places semantic compression within the broader tradition of \emph{predictive coding} (Friston, 2010; Clark, 2015): compression is efficient to the extent that the model accurately predicts the signal, requiring only the transmission of unpredicted residuals. The difference is that predictive coding operates at the level of individual signal values, while semantic compression operates at the level of generative programs. This elevation from signal-level to program-level prediction is precisely what enables the dramatic compression ratios that semantic methods promise.
+
+% ============================================================
+\section{Complexity of Encoding and Decoding}
+\label{sec:complexity}
+% ============================================================
+
+Beyond information-theoretic optimality, practical viability depends on computational complexity. The encoding process consists of prototype search and deviation optimization, while decoding consists of generative execution. These operations are not symmetric, and understanding their asymmetry illuminates the fundamental structure of the paradigm.
+
+Let $|\mathcal{P}|$ denote the size of the prototype library and $n$ the dimensionality of the embedding space. Approximate nearest-neighbor search admits sublinear complexity $O(\log |\mathcal{P}|)$ under suitable indexing structures. Deviation optimization requires iterative evaluation of $\mathcal{G}$ and its gradients. If $\mathcal{G}$ has cost $C_{\mathcal{G}}$, then $k$-step optimization has cost $O(k \cdot C_{\mathcal{G}})$.
+
+\begin{proposition}[Asymptotic Encoding Cost]
+Under approximate nearest-neighbor search and bounded optimization steps,
+\[
+\mathrm{Cost}_{\mathrm{encode}}(x) = O(\log |\mathcal{P}| + k \cdot C_{\mathcal{G}}).
+\]
+\end{proposition}
+
+Decoding cost is dominated by generative rendering:
+\[
+\mathrm{Cost}_{\mathrm{decode}}(t) = O(C_{\mathcal{G}}).
+\]
+
+This asymmetry---encoding is more expensive than decoding---is fundamental and not incidental. It reflects the interpretive nature of compression: searching for the best description requires more computation than executing the description once found. This mirrors classical results in algorithmic information theory (Li and Vit\'{a}nyi, 2008), where finding a short description is computationally harder than executing it. In practical deployments, it suggests an asymmetric architecture in which encoding is performed by powerful servers while decoding is performed by lightweight client devices.
+
+% ============================================================
+\section{Categorical Structure of Semantic Compression}
+\label{sec:categorical}
+% ============================================================
+
+The transition from signal-based to semantic compression admits a natural and illuminating formulation in category-theoretic terms (Mac Lane, 1998; Riehl, 2016). Rather than viewing compression as a function between sets of bit-strings, we treat it as a \emph{functor} between structured categories whose morphisms capture admissible transformations.
+
+\begin{definition}[Category of Multimodal Signals]
+Let $\mathcal{M}$ be the category whose objects are multimodal signals (audio streams, video sequences, composite recordings) and whose morphisms are admissible perceptual transformations: temporal rescaling, perspective change, transposition, normalization, and analogous operations.
+\end{definition}
+
+\begin{definition}[Category of Textual Descriptions]
+Let $\mathcal{T}$ be the category whose objects are structured textual descriptions (in the sense of Section~\ref{sec:text_medium}) and whose morphisms are interpretability-preserving transformations: paraphrase, refinement, abstraction, compositional extension.
+\end{definition}
+
+Semantic compression and reconstruction are then captured by a pair of functors:
+\begin{align}
+\mathcal{C} &: \mathcal{M} \rightarrow \mathcal{T}, \\
+\mathcal{G} &: \mathcal{T} \rightarrow \mathcal{M}.
+\end{align}
+
+The composite $\mathcal{G} \circ \mathcal{C}$ approximates the identity on $\mathcal{M}$ up to perceptual equivalence. The quality of compression depends on how closely this composite approximates the identity functor $\mathrm{Id}_\mathcal{M}$ under the perceptual metric. The categorical formulation follows the standard development of compositional systems (Mac Lane, 1998; Spivak, 2014; Fong and Spivak, 2019), with the additional feature that the functors are approximate rather than exact.
+
+\subsection{Adjoint Structure}
+
+The pair $(\mathcal{C}, \mathcal{G})$ exhibits an adjoint-like structure. In an exact adjunction, there would exist natural transformations
+\[
+\eta : \mathrm{Id}_\mathcal{M} \Rightarrow \mathcal{G} \circ \mathcal{C}, \qquad \varepsilon : \mathcal{C} \circ \mathcal{G} \Rightarrow \mathrm{Id}_\mathcal{T},
+\]
+satisfying the triangle identities. In the semantic compression setting, these identities hold only approximately: $\eta_x$ maps each signal to its reconstruction up to perceptual tolerance, and $\varepsilon_t$ maps each description to a canonical compressed form of its reconstruction.
+
+The deviation from exact adjointness measures the \emph{semantic gap}: the extent to which compression introduces irreversible abstraction. A system with small semantic gap approximates an equivalence of categories; a system with large semantic gap loses significant perceptual information in the encoding step.
+
+Perfect reconstruction---in the sense of categorical equivalence---corresponds to the existence of a functor $\mathcal{C}$ such that $\mathcal{G} \circ \mathcal{C} \cong \mathrm{Id}_{\mathcal{M}/\!\sim}$, where $\mathcal{M}/\!\sim$ is the quotient category obtained by identifying perceptually equivalent signals.
+
+% ============================================================
+\section{Hierarchical Templates as Objects in a Fibered Category}
+\label{sec:fibered}
+% ============================================================
+
+Semantic descriptions are rarely flat. They exhibit hierarchical organization in which high-level structures---narrative templates, scene archetypes, prosodic patterns---constrain and generate lower-level detail. The mathematical structure appropriate to this hierarchy is that of a \emph{fibered category} (Grothendieck fibration), introduced by Grothendieck (1959) and developed extensively in (Jacobs, 1999; Mac Lane and Moerdijk, 1992).
+
+\begin{definition}[Grothendieck Fibration for Templates]
+Let $\mathcal{B}$ be a base category whose objects are abstract templates (scene layouts, narrative structures, conversational patterns, acoustic environments) and whose morphisms are template refinements. Over each $b \in \mathcal{B}$, define a \emph{fiber category} $\mathcal{F}_b$ consisting of concrete instantiations of template $b$.
+
+A \emph{fibration} $\pi : \mathcal{E} \rightarrow \mathcal{B}$ is a functor from the total category $\mathcal{E}$ to the base, satisfying the Cartesian lifting condition: for every morphism $f : b \rightarrow b'$ in $\mathcal{B}$ and every object $e' \in \mathcal{F}_{b'}$, there exists a Cartesian morphism over $f$ with codomain $e'$.
+\end{definition}
+
+A semantic description is then a \emph{section} of $\pi$: a functor $\sigma : \mathcal{B} \rightarrow \mathcal{E}$ such that $\pi \circ \sigma = \mathrm{Id}_\mathcal{B}$. Compression consists in selecting a base template $b$ and specifying only the fiber element $\sigma(b) \in \mathcal{F}_b$, i.e., the deviations from the template that individuate the particular signal.
+
+The Cartesian lifting condition ensures that template morphisms can be lifted consistently to the level of concrete descriptions---a coherence property essential for the modular assembly of complex descriptions from hierarchical components. Template-based compression is efficient by design, with efficiency increasing as the template library approaches coverage of the signal space.
+
+% ============================================================
+\section{Compositionality and Monoidal Structure}
+\label{sec:monoidal}
+% ============================================================
+
+Both semantic descriptions and generative processes exhibit compositional structure that warrants a symmetric monoidal categorical treatment (Mac Lane, 1998; Coecke and Kissinger, 2017). The tensor product
+\[
+\otimes : \mathcal{T} \times \mathcal{T} \rightarrow \mathcal{T}
+\]
+captures the independent composition of descriptions: two sub-scenes, two simultaneous audio streams, or two independent agents can be described independently and composed without interaction.
+
+\begin{definition}[Monoidal Functors]
+The compression and reconstruction functors $\mathcal{C}$ and $\mathcal{G}$ are \emph{monoidal} if they preserve the tensor product structure up to coherent natural isomorphism:
+\[
+\mathcal{C}(x \otimes y) \cong \mathcal{C}(x) \otimes \mathcal{C}(y), \qquad \mathcal{G}(s \otimes t) \cong \mathcal{G}(s) \otimes \mathcal{G}(t).
+\]
+\end{definition}
+
+Monoidality ensures that compression and reconstruction respect independence. In practice, independence is approximate: two sub-scenes may share lighting, background audio may correlate with foreground events, and agent actions may causally constrain one another. The monoidal structure provides an idealized baseline, with departures captured by explicit interaction terms in the scenario graph. The symmetric monoidal category also accommodates braiding: $x \otimes y \cong y \otimes x$, ensuring that the composition order of independent components does not affect the result.
+
+% ============================================================
+\section{Natural Transformations and Cross-Modal Consistency}
+\label{sec:natural}
+% ============================================================
+
+A central requirement of multimodal semantic compression is cross-modal coherence. Let $\mathcal{C}_a : \mathcal{M}_a \rightarrow \mathcal{T}$ and $\mathcal{C}_v : \mathcal{M}_v \rightarrow \mathcal{T}$ denote the audio and video compression functors, mapping into a common textual description category. Cross-modal consistency is expressed by a \emph{natural transformation}
+\[
+\eta : \mathcal{C}_a \circ \Phi \Rightarrow \mathcal{C}_v,
+\]
+where $\Phi : \mathcal{M}_v \rightarrow \mathcal{M}_a$ is a synchronization functor extracting the audio track from a video. The naturality condition requires that for any morphism $f : v \rightarrow v'$ in $\mathcal{M}_v$, the square
+\[
+\begin{tikzcd}
+\mathcal{C}_a(\Phi(v)) \arrow[r, "\mathcal{C}_a(\Phi(f))"] \arrow[d, "\eta_v"'] & \mathcal{C}_a(\Phi(v')) \arrow[d, "\eta_{v'}"] \\
+\mathcal{C}_v(v) \arrow[r, "\mathcal{C}_v(f)"'] & \mathcal{C}_v(v')
+\end{tikzcd}
+\]
+commutes. Naturality ensures that cross-modal consistency is preserved under all admissible signal transformations: temporal editing, perspective change, and resampling all propagate consistently from video to audio descriptions.
+
+In reconstruction, an analogous natural transformation governs the synchronized generation of audio and video from a joint textual description, ensuring that the generative processes for different modalities remain coordinated. The categorical framework of (Fong and Spivak, 2019; Baez and Stay, 2010) provides a natural language for expressing such multi-modal coherence requirements.
+
+% ============================================================
+\section{Sheaf-Theoretic Gluing of Local Descriptions}
+\label{sec:sheaves}
+% ============================================================
+
+Complex signals extend over continuous spacetime domains and are naturally analyzed by decomposing them into local regions. This problem has an exact mathematical counterpart in sheaf theory (Mac Lane and Moerdijk, 1992; SGA 4, 1972).
+
+\begin{definition}[Description Sheaf]
+Let $X$ be a topological space representing the spacetime domain of a signal. A \emph{description sheaf} $\mathcal{S}$ assigns to each open subset $U \subseteq X$ a set $\mathcal{S}(U)$ of admissible textual descriptions over $U$, together with restriction maps $\rho_{UV} : \mathcal{S}(U) \rightarrow \mathcal{S}(V)$ for $V \subseteq U$.
+
+$\mathcal{S}$ is a sheaf if it satisfies the gluing axiom: for any open cover $\{U_i\}$ of $U$ and any collection of local descriptions $t_i \in \mathcal{S}(U_i)$ satisfying $\rho_{U_i, U_i \cap U_j}(t_i) = \rho_{U_j, U_i \cap U_j}(t_j)$ for all $i,j$, there exists a unique $t \in \mathcal{S}(U)$ such that $\rho_{U, U_i}(t) = t_i$ for all $i$.
+\end{definition}
+
+The sheaf condition formalizes that local consistency implies global existence. When local fragments agree on overlap regions, they assemble into a unique global description. This supports both modular compression of large signals and partial description, where some regions are specified in detail while others remain abstract.
+
+% ============================================================
+\section{Enriched Categories and Metric Semantics}
+\label{sec:enriched}
+% ============================================================
+
+The equivalence between compressed and reconstructed data is perceptual rather than exact. This suggests enriching the categorical structure over a metric space (Lawvere and Schanuel, 2009).
+
+\begin{definition}[Metric Enrichment]
+An $\mathbb{R}_{\ge 0}$-enriched category (Lawvere metric space) $\mathcal{M}_d$ assigns to each pair of objects $(x,y)$ a non-negative real number $d(x,y)$ representing their perceptual dissimilarity, satisfying $d(x,x) = 0$ and $d(x,z) \le d(x,y) + d(y,z)$.
+\end{definition}
+
+In this setting, the compression-reconstruction composite $\mathcal{G} \circ \mathcal{C}$ is required to satisfy $d(x, \mathcal{G}(\mathcal{C}(x))) < \epsilon$ for a task-dependent tolerance $\epsilon$. Different modalities and tasks call for different enrichments. The metric enrichment also enables a precise formulation of the trade-off between compression and fidelity: a more aggressive compression corresponds to a functor $\mathcal{C}$ that maps more distant signals to the same description, accepting larger distortions in exchange for shorter descriptions.
+
+% ============================================================
+\section{Higher Categories and Generative Histories}
+\label{sec:higher}
+% ============================================================
+
+The generative process underlying reconstruction is inherently dynamic. Two distinct generative sequences may produce perceptually equivalent outputs. The space of equivalences between generative processes requires higher-categorical treatment (Lurie, 2009).
+
+In a \emph{2-category} framework:
+\begin{itemize}[noitemsep]
+\item 0-cells (objects) correspond to textual descriptions.
+\item 1-cells (morphisms) correspond to generative processes mapping descriptions to signals.
+\item 2-cells (morphisms between morphisms) correspond to equivalences between generative processes that produce perceptually indistinguishable outputs.
+\end{itemize}
+
+The 2-categorical structure captures the multiplicity of valid realizations. Rather than selecting a canonical reconstruction, the framework maintains the full space of equivalent generative histories---particularly relevant for stochastic generative models (Rezende, Mohamed, and Wierstra, 2014; Song and Ermon, 2019), where many outputs may satisfy the same description. Higher cells can also capture reparameterization equivalences between descriptions that are syntactically distinct but semantically identical.
+
+% ============================================================
+\section{Semantic Compression as a Limit Construction}
+\label{sec:limits}
+% ============================================================
+
+The derivation of a compact description from a complex signal can be interpreted as a limit construction in the category of representations (Mac Lane, 1998; Lor\'{e}gian, 2021).
+
+\begin{definition}[Description Diagram]
+A \emph{description diagram} for signal $x$ is a diagram $\mathcal{D}_x : J \rightarrow \mathcal{T}$, where each object $\mathcal{D}_x(j)$ is a candidate description for $x$ and morphisms in $J$ are refinement relations.
+\end{definition}
+
+The compressed representation of $x$ is the \emph{limit} of this diagram:
+\[
+\mathcal{C}(x) = \lim_{J} \mathcal{D}_x,
+\]
+the most constrained description consistent with all imposed semantic constraints. Dually, reconstruction can be viewed as a \emph{colimit}, assembling a signal from a diagram of generative components. The duality between limits (compression) and colimits (reconstruction) reflects the fundamental asymmetry between the interpretive and generative directions of the compression cycle.
+
+% ============================================================
+\section{Functorial Factorization of Representation}
+\label{sec:factorization}
+% ============================================================
+
+The mapping from signals to text typically proceeds through intermediate stages. A video is first parsed into a scene graph; the scene graph is then verbalized into a textual description. This corresponds to a factorization of the compression functor.
+
+\begin{definition}[Two-Stage Factorization]
+Let $\mathcal{S}$ be an intermediate category of structured semantic graphs. A \emph{two-stage factorization} of $\mathcal{C}$ consists of functors
+\[
+\mathcal{C}_1 : \mathcal{M} \rightarrow \mathcal{S}, \qquad \mathcal{C}_2 : \mathcal{S} \rightarrow \mathcal{T},
+\]
+such that $\mathcal{C} = \mathcal{C}_2 \circ \mathcal{C}_1$.
+\end{definition}
+
+The category $\mathcal{S}$ serves as the locus of \emph{meaning}: it is where signal and text meet, where the referential content of a description is anchored to the structural properties of the signal. Reconstruction factorizes analogously as $\mathcal{G} = \mathcal{G}_1 \circ \mathcal{G}_2$, where $\mathcal{G}_2$ parses text into semantic structure and $\mathcal{G}_1$ renders structure into signals. This layered decomposition mirrors the architecture of modern vision-language models (Radford et al., 2021) and neural renderers, providing a categorical framework for their analysis.
+
+% ============================================================
+\section{Prototype Libraries and Generative Priors}
+\label{sec:prototypes}
+% ============================================================
+
+The abstract framework developed in the preceding sections becomes computationally tractable through the introduction of prototype libraries. Rather than searching an unconstrained space of textual descriptions, the encoder selects from a structured library of canonical templates and parameterizes departures from them.
+
+\begin{definition}[Prototype Category]
+A \emph{prototype category} $\mathcal{P}$ is a subcategory of $\mathcal{T}$ whose objects are canonical parameterized templates---scenario archetypes, acoustic environments, prosodic patterns---each corresponding to a generative program capable of producing entire families of signals. Morphisms in $\mathcal{P}$ are refinement relations between templates.
+\end{definition}
+
+From a categorical perspective, $\mathcal{P}$ functions as a \emph{basis} for $\mathcal{T}$: every description can be approximated by a prototype plus a structured modification. The quality of this approximation depends on the density and diversity of the prototype library.
+
+\subsection{Nearest-Prototype Projection}
+
+Given an input signal $x \in \mathcal{M}$, compression begins by identifying the prototype that best approximates $x$:
+\begin{equation}
+\pi(x) = \arg\min_{p \in \mathcal{P}} \, d\big(x, \mathcal{G}(p)\big).
+\label{eq:projection}
+\end{equation}
+
+For large libraries, exact nearest-prototype search is intractable. One therefore introduces an embedding $\phi : \mathcal{M} \rightarrow \mathbb{R}^n$ and an index embedding $\iota : \mathcal{P} \rightarrow \mathbb{R}^n$ such that proximity in $\mathbb{R}^n$ approximates proximity under $d$. This is the approach used in contrastive representation learning (Radford et al., 2021; Hinton and Salakhutdinov, 2006) and reduces nearest-prototype selection to an approximate nearest-neighbor problem.
+
+\subsection{Difference Encoding as Structured Deviation}
+
+Once the nearest prototype $p = \pi(x)$ has been identified, the remaining information is captured by a structured description of deviations:
+\[
+\Delta(x, p) \in \mathrm{Hom}_\mathcal{T}(p, t_x),
+\]
+where $t_x$ is the full description of $x$ and the morphism $\Delta(x,p)$ specifies the transformation from $p$ to $t_x$. The compressed representation is the pair $(p, \Delta(x,p))$, factorizing the full description into a template identifier and a structured delta.
+
+% ============================================================
+\section{Differential Structure of Deviations}
+\label{sec:differential}
+% ============================================================
+
+When the prototype parameter space is smooth, the deviation $\Delta(x,p)$ can be refined by introducing differential structure (do Carmo, 1992; Lee, 2012). Let $\Theta_p$ denote the parameter manifold of prototype $p$, with tangent space $T_p\Theta_p$. An infinitesimal deviation is a tangent vector $\xi \in T_p\Theta_p$, and reconstruction becomes
+\[
+x \approx \mathcal{G}(p + \xi),
+\]
+where $p + \xi$ denotes the prototype perturbed in the direction $\xi$. Finite deviations are expressed via the exponential map: $\mathcal{G}(\exp_p(\xi))$.
+
+This differential structure enables gradient-based optimization of the deviation, allowing the encoder to refine $\xi$ iteratively until the reconstructed signal matches the input within tolerance. When the relevant transformations form a Lie group $G$ acting on $\mathcal{P}$---as for geometric transformations such as rotations, translations, and scaling---the parameter space has the structure of a Lie algebra $\mathfrak{g}$, and the exponential map $\exp : \mathfrak{g} \rightarrow G$ provides an efficient global parameterization. This is particularly useful for encoding camera trajectories, where the relevant group is $\mathrm{SE}(3)$ (Lang, 1995).
+
+% ============================================================
+\section{Compression as Variational Inference}
+\label{sec:variational}
+% ============================================================
+
+The selection of a prototype and its associated deviation can be unified in a variational inference framework (Kingma and Welling, 2014; Rezende, Mohamed, and Wierstra, 2014). Let $z = (p, \xi) \in \mathcal{P} \times \bigcup_{p} T_p\Theta_p$ denote a latent description. The optimal compressed representation minimizes the functional
+\begin{equation}
+\mathcal{L}(z; x) = d\big(x, \mathcal{G}(z)\big) + \lambda \, L(z),
+\label{eq:variational}
+\end{equation}
+where $L(z) = L(p) + L(\xi)$ is the total description length and $\lambda > 0$ controls the compression-fidelity trade-off.
+
+This is precisely the objective of the variational autoencoder (Kingma and Welling, 2014) when the prior over $z$ is set by the prototype library and the posterior is concentrated on a single prototype-deviation pair. The variational formulation makes the MDL interpretation explicit: the optimal description $z^*$ is a concise explanation of $x$ within the generative model. The parameter $\lambda$ encodes the relative cost of description bits versus distortion, directly corresponding to the inverse temperature in thermodynamic analogies (Section~\ref{sec:thermodynamics}).
+
+% ============================================================
+\section{Compositional Delta Algebra and Groupoid Structure}
+\label{sec:groupoid}
+% ============================================================
+
+The set of deviations $\Delta(x,p)$ forms an algebraic structure under composition. Given deviations $\Delta_1 : p \rightarrow p'$ and $\Delta_2 : p' \rightarrow p''$, their composition $\Delta_2 \circ \Delta_1 : p \rightarrow p''$ represents sequential application of transformations.
+
+\begin{proposition}[Groupoid Structure of Deviations]
+When every deviation is invertible, the category of prototypes and deviations forms a \emph{groupoid}.
+\end{proposition}
+
+The groupoid structure enables the reuse and recombination of transformations: a deviation library of common transformations can be applied to many prototypes, reducing description length from $O(n)$ for $n$ independent deviations to $O(\log n)$ for compositions of library elements. This connects naturally to the algebraic structures studied in process calculi (Milner, 1999) and the compositional treatment of morphisms in string diagrams (Coecke and Kissinger, 2017).
+
+% ============================================================
+\section{Temporal Factorization and Event Streams}
+\label{sec:temporal}
+% ============================================================
+
+Video signals possess intrinsic temporal structure. Natural video is not a continuous homogeneous sequence but a concatenation of \emph{events}: coherent episodes governed by consistent generative programs.
+
+\begin{definition}[Event Segmentation]
+An \emph{event segmentation} of a video $x : [0,T] \rightarrow \mathcal{F}$ is a partition $\{[t_0, t_1], [t_1, t_2], \dots, [t_{k-1}, t_k]\}$ of $[0,T]$ such that each segment $x|_{[t_{i-1}, t_i]}$ is well-approximated by a prototype $p_i$ with a single deviation $\Delta_i$.
+\end{definition}
+
+The compressed representation is the event sequence
+\[
+\mathcal{C}(x) = \big((p_1, \Delta_1, t_1), \, (p_2, \Delta_2, t_2), \, \dots, \, (p_k, \Delta_k, t_k)\big).
+\]
+
+The event segmentation problem---identifying the partition minimizing total description length---is a meaningful inference problem related to optimal change-point detection in causal models (Pearl, 2009). This factorization aligns with work on model-based world models (Ha and Schmidhuber, 2018; Schrittwieser et al., 2020), where an agent maintains a structured model of temporal dynamics rather than a raw buffer of observations.
+
+% ============================================================
+\section{Iterative Refinement and Multi-Scale Approximation}
+\label{sec:multiscale}
+% ============================================================
+
+A single prototype may not suffice to capture all aspects of a complex scene. Iterative refinement provides a principled approach, yielding a hierarchical representation
+\[
+x \approx \mathcal{G}\big(\Delta_n \circ p_n \circ \cdots \circ \Delta_1 \circ p_1\big),
+\]
+where each level captures structure at a different spatial or temporal resolution. The total description length is $\sum_{i=1}^n L(p_i) + L(\Delta_i)$, which decreases as the prototype library becomes more expressive at each scale. In the limit of an infinitely rich library, the description length approaches $K_\epsilon(x \mid \mathcal{G})$ from Section~\ref{sec:kolmogorov}.
+
+The multi-scale structure aligns with the fibered and sheaf-theoretic constructions of Sections~\ref{sec:fibered} and~\ref{sec:sheaves}: each level of the hierarchy corresponds to a layer of the fibration, and the gluing of local descriptions at each scale is governed by the sheaf condition.
+
+% ============================================================
+\section{Semantic Fixed Points and Compression Stability}
+\label{sec:stability}
+% ============================================================
+
+A compressor that operates on its own outputs should not diverge. This stability requirement is formalized as a fixed-point condition.
+
+\begin{definition}[Stable Representation]
+A signal $x^* \in \mathcal{M}$ is a \emph{semantic fixed point} of the compression-reconstruction operator $\Phi = \mathcal{G} \circ \mathcal{C}$ if $\Phi(x^*) \approx x^*$ within perceptual tolerance.
+\end{definition}
+
+\begin{theorem}[Existence of Semantic Fixed Points]
+If $\Phi$ is a contraction on $(\mathcal{M}, d)$---i.e., $d(\Phi(x), \Phi(y)) \le \kappa \, d(x,y)$ for some $\kappa < 1$---then by the Banach fixed-point theorem, $\Phi$ admits a unique fixed point in each connected component of $\mathcal{M}$.
+\end{theorem}
+
+Stable representations correspond to semantically robust descriptions---signals at the ``center'' of their prototype-deviation class, insensitive to minor perturbations. In practice, iterative application of $\Phi$ converges to the fixed point, providing a self-reinforcing process of semantic normalization.
+
+% ============================================================
+\section{Learning the Prototype Space}
+\label{sec:learning}
+% ============================================================
+
+The effectiveness of the framework depends critically on the construction of the prototype library. Rather than hand-engineering templates, one learns them from data.
+
+Given a corpus $\{x_1, \dots, x_N\} \subset \mathcal{M}$, the optimal prototype set minimizes the expected description length:
+\[
+\mathcal{P}^* = \arg\min_{\mathcal{P}} \mathbb{E}_{x \sim \mu} \left[ L\big(\mathcal{C}(x)\big) \right].
+\]
+
+Vector-quantized variational autoencoders (van den Oord, Vinyals, and Kavukcuoglu, 2017; van den Oord et al., 2019) implement a discrete approximation of this optimization: a codebook of latent prototypes is learned jointly with an encoder-decoder pair. The training objective---reconstruction loss plus commitment loss---approximates the variational functional~\eqref{eq:variational}. As the codebook size grows, coverage of $\mathcal{P}$ improves and description length decreases. Complementary approaches based on Bayesian nonparametrics (Blei, Ng, and Jordan, 2003) allow the codebook to grow without a pre-specified size.
+
+% ============================================================
+\section{Adaptive Prototype Expansion}
+\label{sec:adaptive}
+% ============================================================
+
+The prototype library need not be static. When the encoder encounters a signal that cannot be efficiently represented using existing prototypes, a new prototype can be introduced.
+
+\begin{definition}[Adaptive Expansion Rule]
+Given a threshold $\tau > 0$, the adaptive expansion rule adds a new prototype $p_{\mathrm{new}}$ to $\mathcal{P}$ when
+\[
+\min_{p \in \mathcal{P}} d\big(x, \mathcal{G}(p)\big) > \tau.
+\]
+\end{definition}
+
+The adaptive library can be viewed categorically as a \emph{colimit construction}: $\mathcal{P}$ grows by incorporating new objects and morphisms as novel patterns are encountered. This process resembles online clustering algorithms and the nonparametric Bayesian approaches of (Blei, Ng, and Jordan, 2003), where the number of components grows with the data. The trade-off between library size and description efficiency is governed by a rate-distortion-complexity surface parameterized by the coverage of $\mathcal{P}$.
+
+% ============================================================
+\section{Topological Structure of Signal and Description Spaces}
+\label{sec:topology}
+% ============================================================
+
+The spaces $\mathcal{M}$ and $\mathcal{T}$ admit natural topological structures that refine the metric enrichment of Section~\ref{sec:enriched}. These topologies encode continuity properties of both signals and descriptions, enabling a more precise treatment of convergence and stability.
+
+Let $\tau_d$ be the topology induced by the perceptual metric $d$ on $\mathcal{M}$, and let $\tau_L$ be a topology on $\mathcal{T}$ induced by description length and structural proximity.
+
+\begin{definition}[Continuous Generative Model]
+The generative model $\mathcal{G} : (\mathcal{T}, \tau_L) \to (\mathcal{M}, \tau_d)$ is \emph{continuous} if for every convergent sequence $t_n \to t$ in $\mathcal{T}$, $\mathcal{G}(t_n) \to \mathcal{G}(t)$ in $\mathcal{M}$.
+\end{definition}
+
+Continuity ensures that small changes in description yield small changes in the generated signal, a necessary condition for stable compression.
+
+\begin{proposition}[Compactness and Approximation]
+If $\mathcal{T}$ is compact under $\tau_L$ and $\mathcal{G}$ is continuous, then $\mathcal{G}(\mathcal{T})$ is compact in $\mathcal{M}$. In particular, every sequence of reconstructions admits a convergent subsequence.
+\end{proposition}
+
+This property is relevant for the analysis of iterative refinement (Section~\ref{sec:multiscale}) and the convergence of compression cycles. Compactness of the description space also provides a rigorous foundation for the learning of prototype libraries: the existence of an optimal finite prototype set follows from compactness together with continuity of the distortion functional.
+
+% ============================================================
+\section{Geometric Structure of the Prototype Manifold}
+\label{sec:geometry}
+% ============================================================
+
+The parameter spaces $\Theta_p$ associated with prototypes can be endowed with Riemannian structure, allowing the use of tools from differential geometry (do Carmo, 1992; Lee, 2012).
+
+Assume each $\Theta_p$ is a smooth manifold and that the collection $\{\Theta_p\}$ forms a fiber bundle over $\mathcal{P}$. The generative map lifts to $\mathcal{G} : \Theta \to \mathcal{M}$, and its differential $D\mathcal{G}$ defines a pullback metric on $\Theta$:
+\[
+g_\Theta(\xi, \eta) = \langle D\mathcal{G}(\xi), D\mathcal{G}(\eta) \rangle_{\mathcal{M}}.
+\]
+
+\begin{definition}[Geodesic Deviation]
+A deviation between parameter states $\theta_1, \theta_2 \in \Theta_p$ is a \emph{geodesic} if it minimizes the path integral $\int_0^1 \sqrt{g_\Theta(\dot{\gamma}, \dot{\gamma})} \, dt$ among all paths $\gamma$ connecting them.
+\end{definition}
+
+Geodesic deviations correspond to minimal transformations in perceptual space---the natural notion of difference encoding when the parameter space carries geometric structure. The Riemannian exponential map provides an efficient local parameterization of geodesics, and parallel transport provides a consistent way to compare tangent vectors across different base prototypes (Lang, 1995).
+
+% ============================================================
+\section{Information Geometry and Statistical Structure}
+\label{sec:infogeom}
+% ============================================================
+
+When the generative model $\mathcal{G}$ is probabilistic, the space of descriptions inherits a statistical manifold structure (Amari, 2016). Each description $t$ corresponds to a distribution $\mathcal{G}(t, \cdot)$ over $\mathcal{M}$, and the Fisher information metric defines a Riemannian structure on $\mathcal{T}$:
+\[
+g_{ij}(t) = \mathbb{E}_{x \sim \mathcal{G}(t)} \left[ \partial_i \log p(x|t) \, \partial_j \log p(x|t) \right].
+\]
+
+\begin{proposition}[Natural Gradient Descent]
+Optimization of the variational objective~\eqref{eq:variational} is improved by using the natural gradient $\tilde{\nabla}_t = g^{-1}(t) \nabla_t$, which respects the intrinsic geometry of the statistical manifold.
+\end{proposition}
+
+The natural gradient removes the dependence of gradient steps on arbitrary parameterizations of the description space, yielding faster and more stable convergence (Amari, 2016). This framework connects semantic compression to information geometry, providing a principled method for optimizing descriptions that is invariant to reparameterizations of $\mathcal{T}$.
+
+% ============================================================
+\section{Stochastic Generative Models and Measure-Theoretic Structure}
+\label{sec:stochastic}
+% ============================================================
+
+Many generative models are inherently stochastic, producing a distribution of outputs for a given description (Ho et al., 2020; Song and Ermon, 2019; Karras et al., 2022). This requires a measure-theoretic extension of the framework (Gray, 2011).
+
+Let $(\mathcal{M}, \Sigma)$ be a measurable space and $\mathcal{G}$ a stochastic kernel
+\[
+\mathcal{G}(t, \cdot) : \mathcal{T} \to \mathcal{P}(\mathcal{M}),
+\]
+assigning to each description a probability distribution over signals. The distortion becomes an expected value:
+\[
+d(x, \mathcal{G}(t)) = \mathbb{E}_{y \sim \mathcal{G}(t)}[d(x,y)].
+\]
+
+\begin{definition}[Probabilistic Semantic Compression]
+The optimal description minimizes
+\[
+\mathcal{C}(x) = \arg\min_t \left[ \mathbb{E}_{y \sim \mathcal{G}(t)} d(x,y) + \lambda L(t) \right].
+\]
+\end{definition}
+
+This formulation accommodates variability in reconstruction and aligns naturally with diffusion models and autoregressive generators. Stochasticity also introduces equivalence classes at the level of distributions: two descriptions are equivalent if they induce distributions that are indistinguishable under the perceptual metric. The appropriate notion of distance between distributions is the Wasserstein metric (Villani, 2009), which metrizes weak convergence and aligns well with perceptual distance for continuous signal domains.
+
+\begin{remark}
+The Wasserstein distance $W_p(\mathcal{G}(t_1, \cdot), \mathcal{G}(t_2, \cdot))$ between the distributions induced by two descriptions provides a principled extension of the perceptual metric $d$ to the stochastic setting, enabling all preceding categorical and variational constructions to carry over.
+\end{remark}
+
+% ============================================================
+\section{Connections to Causal Structure}
+\label{sec:causal}
+% ============================================================
+
+The scenario graph representation introduced in Section~\ref{sec:video} implicitly encodes causal structure. This can be formalized using structural causal models (Pearl, 2009).
+
+Let $S$ be a directed acyclic graph with structural equations
+\[
+X_i = f_i(\mathrm{pa}(X_i), U_i),
+\]
+where $\mathrm{pa}(X_i)$ are parent variables and $U_i$ are exogenous noise variables. A semantic description corresponds to specifying the functions $f_i$, the graph structure, and realizations of $U_i$.
+
+\begin{proposition}[Causal Compression Advantage]
+If a signal is generated by a causal model of complexity $K$, then semantic compression achieves description length $O(K)$ independent of signal duration.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+The causal model is constant across the duration of the signal; only initial conditions and stochastic inputs $\{U_i\}$ vary. The description encodes the causal model once and then specifies only the realizations of $U_i$, whose cumulative entropy grows as $O(T \cdot H(U))$ for signal duration $T$. However, when the $U_i$ are highly predictable from context (as they typically are in natural scenes), the residual entropy is negligible, yielding $O(K)$ total description length.
+\end{proof}
+
+This explains why long videos with repetitive structure can be compressed efficiently: the causal model is constant, and only the initial conditions and stochastic inputs vary. It also motivates the connection to probabilistic programming (Mansinghka et al., 2014; Goodman et al., 2015; Lake et al., 2015): a compressed description is essentially a probabilistic program whose execution generates the signal.
+
+% ============================================================
+\section{Thermodynamic Analogy and Free Energy}
+\label{sec:thermodynamics}
+% ============================================================
+
+The variational formulation of semantic compression admits a thermodynamic interpretation (Friston, 2010; Sohl-Dickstein et al., 2015). The objective
+\[
+\mathcal{L}(t) = d(x, \mathcal{G}(t)) + \lambda L(t)
+\]
+is analogous to free energy $F = E - TS$, where distortion plays the role of energy and description length the role of entropy.
+
+\begin{definition}[Semantic Free Energy]
+$F_{\mathcal{G}}(t; x) = d(x, \mathcal{G}(t)) + \lambda L(t)$.
+\end{definition}
+
+\begin{proposition}[Equilibrium Condition]
+At equilibrium, $\frac{\partial d}{\partial t} = -\lambda \frac{\partial L}{\partial t}$, balancing reconstruction accuracy against description compression.
+\end{proposition}
+
+This connects semantic compression to Friston's free-energy principle (Friston, 2010), in which the brain minimizes a variational free energy that bounds surprise. The generative model $\mathcal{G}$ plays the role of the brain's internal model, the description $t$ plays the role of the brain's belief state, and the distortion $d(x, \mathcal{G}(t))$ plays the role of prediction error. Semantic compression, in this light, is the same process the brain uses to represent its environment.
+
+% ============================================================
+\section{Limits of Compression under Model Mismatch}
+\label{sec:mismatch}
+% ============================================================
+
+The effectiveness of semantic compression depends on the alignment between the generative model $\mathcal{G}$ and the true data-generating process. Let $P_X$ be the true distribution and $P_{\mathcal{G}}$ the model distribution. Define the mismatch by the Kullback--Leibler divergence $D_{\mathrm{KL}}(P_X \| P_{\mathcal{G}})$ (Cover and Thomas, 2006).
+
+\begin{theorem}[Mismatch Penalty]
+The achievable compression rate satisfies
+\[
+R_{\mathcal{G}}(D) \ge R^*(D) + D_{\mathrm{KL}}(P_X \| P_{\mathcal{G}}),
+\]
+where $R^*(D)$ is the optimal rate under a perfect model.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+The semantic rate--distortion function under model $\mathcal{G}$ differs from the true rate--distortion function by the additional information required to correct for model mismatch. By the data processing inequality and properties of KL divergence (Cover and Thomas, 2006), this correction is bounded below by $D_{\mathrm{KL}}(P_X \| P_{\mathcal{G}})$.
+\end{proof}
+
+This theorem quantifies the cost of model misspecification and motivates the adaptive learning of the generative substrate. It also provides a diagnostic for monitoring compression quality: as $D_{\mathrm{KL}}(P_X \| P_{\mathcal{G}})$ decreases through continued training, the achievable compression rate approaches the theoretical optimum.
+
+% ============================================================
+\section{Robustness and Adversarial Considerations}
+\label{sec:robustness}
+% ============================================================
+
+Semantic compression introduces new robustness properties and new vulnerabilities relative to classical compression.
+
+\begin{definition}[Semantic Robustness]
+A compression scheme is $\epsilon$-robust if small perturbations $\delta x$ satisfying $d(x, x+\delta x) < \epsilon$ do not change the compressed description: $\mathcal{C}(x + \delta x) = \mathcal{C}(x)$.
+\end{definition}
+
+This robustness arises naturally when the encoder operates at the level of semantic structure rather than raw signals: perturbations below perceptual threshold are absorbed into the $\sim_\epsilon$ equivalence class and do not affect prototype selection.
+
+However, adversarial inputs can exploit the generative prior by forcing misclassification into incorrect prototypes.
+
+\begin{proposition}[Adversarial Misprojection]
+There exist inputs $x'$ arbitrarily close to $x$ such that $\pi(x') \neq \pi(x)$ when the embedding $\phi$ is not isometric.
+\end{proposition}
+
+This is the semantic analogue of adversarial examples in neural networks (Goodfellow et al., 2016). Mitigating it requires enforcing Lipschitz continuity of the embedding and incorporating uncertainty estimates in prototype selection. The connection between semantic robustness and adversarial robustness suggests that the two problems share the same fundamental structure: both concern the stability of category boundaries under perturbation.
+
+% ============================================================
+\section{Category of Generative Programs}
+\label{sec:programs}
+% ============================================================
+
+The textual descriptions can be interpreted as programs in a formal language (Pierce, 2002; Milner, 1999). This suggests defining a category $\mathcal{Prog}$ of generative programs.
+
+Objects in $\mathcal{Prog}$ are types of generative outputs; morphisms are programs transforming inputs to outputs; composition corresponds to program composition (Hopcroft, Motwani, and Ullman, 2006).
+
+\begin{definition}[Execution Functor]
+There exists a functor $\mathcal{E} : \mathcal{Prog} \to \mathcal{M}$ mapping programs to their execution results.
+\end{definition}
+
+Semantic compression factors through $\mathcal{Prog}$:
+\[
+\mathcal{M} \xrightarrow{\mathcal{C}} \mathcal{Prog} \xrightarrow{\mathcal{E}} \mathcal{M}.
+\]
+
+\begin{proposition}[Program Equivalence]
+Two programs $p_1, p_2 \in \mathcal{Prog}$ are equivalent if $\mathcal{E}(p_1) \sim_\epsilon \mathcal{E}(p_2)$. The quotient category $\mathcal{Prog}/\!\sim_\epsilon$ captures semantic equivalence of descriptions.
+\end{proposition}
+
+This perspective unifies compression with compilation and execution. A compressed description is a program that, when compiled by the generative model, produces the target signal. Compression is program synthesis (Lake et al., 2015; Solomonoff, 1964); decompression is program execution. The boundary between data and code dissolves entirely.
+
+% ============================================================
+\section{Homotopy and Equivalence of Descriptions}
+\label{sec:homotopy}
+% ============================================================
+
+Different textual descriptions may produce equivalent outputs. This redundancy can be formalized using homotopy theory (Lurie, 2009; Lurie, 2017).
+
+\begin{definition}[Homotopy of Descriptions]
+Two descriptions $t_0, t_1 \in \mathcal{T}$ are \emph{homotopic} if there exists a continuous path $H : [0,1] \to \mathcal{T}$ such that $d(\mathcal{G}(H(s)), \mathcal{G}(H(s'))) < \epsilon$ for all $s,s'$.
+\end{definition}
+
+The set of homotopy classes $\pi_0(\mathcal{T})$ represents equivalence classes of descriptions under perceptual equivalence.
+
+\begin{proposition}[Homotopy Invariance]
+Compression is invariant under homotopy: if $t_0 \sim t_1$, then $\mathcal{C}(\mathcal{G}(t_0)) = \mathcal{C}(\mathcal{G}(t_1))$.
+\end{proposition}
+
+This formalizes the idea that multiple descriptions may represent the same underlying content---the same semantic content can be expressed in many syntactically distinct ways. The higher homotopy groups $\pi_n(\mathcal{T})$ capture higher-order redundancies: paths between paths, and so on. A full homotopy-theoretic treatment would use $\infty$-groupoids (Lurie, 2009) to organize all levels of description equivalence simultaneously.
+
+% ============================================================
+\section{Algebraic Structure of the Description Language}
+\label{sec:algebra}
+% ============================================================
+
+The textual language $\mathcal{L}$ admits an algebraic structure that constrains and organizes the space of valid descriptions (Pierce, 2002; Hopcroft, Motwani, and Ullman, 2006).
+
+\begin{definition}[Description Algebra]
+Let $\mathcal{A}$ be the free algebra over generators $G$ (primitive constructs: objects, actions, parameters) with operations corresponding to composition, parallel combination ($\otimes$), and parameterization. Normal forms in $\mathcal{A}$ canonicalize descriptions by applying algebraic rewriting rules.
+\end{definition}
+
+\begin{proposition}[Normal Forms]
+Every description $t \in \mathcal{L}$ admits a normal form under the algebraic relations of $\mathcal{A}$.
+\end{proposition}
+
+Normal forms enable canonicalization of descriptions and efficient comparison between them---a description in normal form is the canonical representative of its homotopy class. The free algebra $\mathcal{A}$ corresponds to the free monoidal category generated by the primitive constructs, and the semantic functor $\llbracket \cdot \rrbracket$ is the unique monoidal functor extending the assignment of generators to their generative interpretations (Mac Lane, 1998).
+
+% ============================================================
+\section{Comparison with Classical Compression Paradigms}
+\label{sec:comparison}
+% ============================================================
+
+It is instructive to situate semantic compression relative to classical paradigms. Classical transform coding (Shannon, 1948; Cover and Thomas, 2006) projects signals onto a fixed basis and quantizes coefficients. Predictive coding (Friston, 2010) transmits residuals relative to local predictions. Entropy coding (Shannon, 1948; Csisz\'{a}r and K\"{o}rner, 2011) exploits statistical redundancy in symbol sequences.
+
+Semantic compression differs in that it replaces the signal domain with a generative domain. The basis is no longer fixed but learned; the residual is no longer numeric but structural; and entropy coding is replaced by model-relative description length.
+
+\begin{proposition}[Strict Generalization]
+Semantic compression strictly generalizes transform and predictive coding: both can be recovered as special cases where $\mathcal{G}$ is linear or locally predictive.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+Transform coding corresponds to $\mathcal{G}(t) = B t$ for a fixed orthonormal basis $B$. Predictive coding corresponds to $\mathcal{G}(t) = x_{<k} + t$ for local context $x_{<k}$. In both cases $\mathcal{G}$ is a special case of the general generative operator, so the semantic framework subsumes both.
+\end{proof}
+
+This establishes semantic compression not as an alternative but as a superset of existing methods, with the additional degrees of freedom provided by learned, non-linear, and globally-coherent generative models.
+
+% ============================================================
+\section{System Architecture and Layered Design}
+\label{sec:architecture}
+% ============================================================
+
+The realization of semantic compression as a practical system requires a layered architecture in which each component is responsible for a well-defined aspect of the transformation between signals and descriptions.
+
+The \emph{encoder} performs interpretation: it segments the input signal, assigns each segment to a prototype, computes the deviation, and serializes the result as structured text. The encoding pipeline has the factored structure $\mathcal{C} = \mathcal{C}_2 \circ \mathcal{C}_1$: a perceptual parser $\mathcal{C}_1$ that maps signals to semantic graphs, followed by a textualizer $\mathcal{C}_2$ that serializes semantic graphs as structured descriptions.
+
+The \emph{generative substrate} is the shared generative model $\mathcal{G}$, which must be synchronized between encoder and decoder. It defines the space of admissible reconstructions, embedding prior knowledge about speech, physical motion, visual appearance, and their interactions. The substrate draws on large pre-trained generative models (Brown et al., 2020; Rombach et al., 2022; van den Oord et al., 2019), potentially specialized by modality.
+
+The \emph{decoder} executes the textual description as a generative program. It parses the description, resolves prototype references, applies deviations, and invokes the appropriate generative policies to synthesize the output. The tight coupling between these layers introduces a dependency that must be managed through versioning and compatibility protocols.
+
+% ============================================================
+\section{A Textual Intermediate Representation}
+\label{sec:TIR}
+% ============================================================
+
+Central to the system is a carefully designed \emph{textual intermediate representation} (TIR) that balances expressiveness against compactness. The TIR must:
+
+\begin{enumerate}[noitemsep]
+\item Encode hierarchical structure (nested scenes, sub-events, recursive templates).
+\item Represent temporal dynamics (event sequences, state transitions, continuous trajectories).
+\item Capture cross-modal relations (synchronization, correlation, causal dependencies).
+\item Admit partial specification (coarse descriptions that are subsequently refined).
+\item Be linearizable as text for storage and transmission.
+\end{enumerate}
+
+These requirements suggest a language occupying an intermediate position between natural language and formal programming languages. The TIR employs the descriptive richness of natural language---enabling human interpretability and approximate matching---while imposing enough syntactic structure to support precise compositional semantics (Chomsky, 1965; Barwise and Perry, 1983).
+
+The functorial semantics of Section~\ref{sec:factorization} provide a mathematical foundation for the TIR's design. The compositionality requirement translates into a context-free grammar for the TIR, with each production rule corresponding to a functor in the categorical decomposition. The monoidal structure translates into a tensor product operator in the TIR, enabling independent components to be composed without interaction (Coecke and Kissinger, 2017).
+
+% ============================================================
+\section{Human Interpretability and Co-Authoring}
+\label{sec:human}
+% ============================================================
+
+A distinctive and consequential property of text-based compression is that the compressed representation is directly legible to humans. Unlike the bitstreams produced by signal-based codecs, textual descriptions can be read, understood, and modified by human users.
+
+This interpretability enables a novel form of media interaction: \emph{semantic co-authoring}. A viewer who can read the textual description of a video can identify the agents, events, and camera dynamics that constitute it, and can modify them directly---changing an agent's behavior, altering the lighting, or substituting a different camera trajectory---without access to the original signal or a conventional video editor. The modified description, when executed by the generative substrate, produces a new video consistent with the user's modifications.
+
+This capability transforms the relationship between media and its audience. Media consumption becomes an instance of collaborative authorship, with the generative substrate serving as the medium of co-production. The compressed description is not a closed artifact but an open specification, inviting interpretation and modification (Dennett, 1987). The interpretability of the TIR also facilitates debugging and quality control at the semantic level.
+
+% ============================================================
+\section{Cognitive Alignment and Perceptual Structure}
+\label{sec:cognitive}
+% ============================================================
+
+The semantic compression framework reflects a deep alignment with the structure of human cognition. Decades of research in cognitive science have established that humans perceive and remember the world not as sequences of sensory values but as structured descriptions of events, objects, and agents (Barwise and Perry, 1983; Tenenbaum et al., 2011; Goodman et al., 2015).
+
+This alignment has several consequences. First, it suggests that the prototype library learned by the system will converge toward representations that mirror human conceptual categories---not because human categories are imposed as a prior, but because natural video is generated by a world structured around the same categories. Second, it implies that the cognitive load required to process a textual description is lower than the load required to process the corresponding signal, since descriptions are represented in a format closer to the natural currency of cognition (Clark, 2015).
+
+Third, it connects semantic compression to the \emph{predictive processing} framework (Friston, 2010; Clark, 2015), in which perception is understood as a process of active inference: the brain constructs a generative model of the world and continuously updates it to minimize prediction error. Semantic compression, in other words, is cognitive compression---the same process by which the mind reduces the world to manageable form.
+
+% ============================================================
+\section{Generative Media Ontology: Description Replaces Signal}
+\label{sec:ontology}
+% ============================================================
+
+The framework developed here has implications that extend beyond compression technology into the ontology of media itself. If every signal can be faithfully represented by a generative description, and if that description is the object stored and transmitted, then the signal---the waveform, the pixel array---ceases to be the fundamental unit of media and becomes instead a derived, transient realization of the description.
+
+This inversion is ontologically significant. In traditional media, the recording is primary: the film, the tape, the digital file. In the semantic compression paradigm, the description is primary and the signal is generated on demand. Media becomes, in the terminology of Section~\ref{sec:intro}, a \emph{program} rather than a \emph{recording} (Dennett, 1987).
+
+The implications cascade: storage cost is determined by description complexity rather than signal duration; editing operates directly on the description; version control manages description delta histories; and transmission of compact descriptions replaces transmission of high-bandwidth signals. This paradigm shift transforms the economics of media production and distribution, shifting the bottleneck from bandwidth and storage to generative capability and description quality.
+
+% ============================================================
+\section{Ethical and Epistemic Considerations}
+\label{sec:ethics}
+% ============================================================
+
+The transformation of media into generative descriptions raises profound ethical and epistemic challenges.
+
+\subsection{Authenticity and Provenance}
+
+When a video is stored as a description rather than a recording, the link between the signal and its origin is severed. Multiple distinct descriptions may produce perceptually indistinguishable videos; a single description may be modified to change the depicted events. The traditional notion of an authentic recording does not survive the semantic compression paradigm.
+
+This requires new mechanisms for provenance and verification: cryptographic commitment schemes, description-level watermarking, and auditable generative substrates. The categorical framework provides a natural setting for provenance chains---morphisms in $\mathcal{T}$ that track the history of transformations applied to a description.
+
+\subsection{Epistemic Stability}
+
+The shared generative model embeds a worldview: a set of priors about what kinds of events, agents, and configurations are canonical. Signals that fall outside this worldview will be poorly represented, compressed to the nearest prototype even when that prototype is semantically inappropriate.
+
+This raises concerns about epistemic closure (Dennett, 1987). A system trained on data from one cultural or physical context will develop prototypes suited to that context. The adaptive expansion mechanism of Section~\ref{sec:adaptive} partially addresses this concern, but the initial distribution of prototypes remains biased by the training data.
+
+\subsection{Manipulation and Deception}
+
+The ease with which textual descriptions can be modified---precisely the property that enables co-authoring---also enables manipulation. A malicious actor with access to the description of a recording can alter agent behaviors, speech content, or causal relations, producing a modified video that is perceptually plausible but semantically false.
+
+Addressing these concerns requires both technical and social measures: authenticated descriptions, normative frameworks governing the use of generative editing tools, and public literacy about the generative nature of media in the semantic compression paradigm.
+
+% ============================================================
+\section{Economic and Infrastructural Implications}
+\label{sec:economics}
+% ============================================================
+
+The shift to semantic compression redraws the economic geography of media infrastructure. The cost of storage and transmission is radically reduced---descriptions are orders of magnitude smaller than the signals they encode---while the cost of generative computation is incurred locally at the point of consumption. This redistribution favors decentralized architectures: media can be distributed as compact descriptions, with each device performing its own reconstruction.
+
+The resulting ecosystem introduces new forms of value, centered on the creation and curation of prototype libraries, the certification of generative substrates, and the development of textual description standards. Whoever controls the most expressive and comprehensive generative substrate controls the quality of media reconstruction---a concentration of power analogous to the role of operating systems or platform standards in prior technological transitions.
+
+% ============================================================
+\section{Open Problems and Research Directions}
+\label{sec:open_problems}
+% ============================================================
+
+The framework developed here suggests numerous directions for further research.
+
+One fundamental problem concerns the design of perceptual metrics that are both mathematically tractable and aligned with human judgment. Another concerns the construction of universally expressive textual languages that remain compact and interpretable. The learning dynamics of prototype libraries remain poorly understood: the trade-off between library size, coverage, and generalization requires further theoretical analysis (Gr\"{u}nwald, 2007; Hutter, 2005).
+
+The interaction between stochastic generative models and deterministic textual descriptions raises questions about probabilistic semantics and uncertainty quantification (Goodman et al., 2015; Mansinghka et al., 2014). The connection to causal structure (Section~\ref{sec:causal}) suggests that interventional queries---``what would this video look like if the agent had acted differently?''---can be answered directly from the compressed description, connecting semantic compression to causal inference (Pearl, 2009).
+
+At the categorical level, a full higher-topos-theoretic treatment of semantic compression remains to be developed (Lurie, 2009; Lurie, 2017), potentially connecting the present framework to derived geometry and homotopical semantics. Finally, the ethical and epistemic implications outlined in Section~\ref{sec:ethics} demand formalization: provenance, authenticity, and trust must be incorporated into the mathematical structure of the system itself.
+
+These open problems suggest that semantic compression is not merely a technical innovation but the beginning of a broader theoretical program linking information, computation, and meaning.
+
+% ============================================================
+\section{Toward a Generative Media Ecology}
+\label{sec:ecology}
+% ============================================================
+
+The framework developed throughout this essay points toward a broader transformation in the nature of media itself. Static files are replaced by dynamic generative processes; recordings are replaced by descriptions; storage and transmission are replaced by program exchange. In this generative ecology, media is not an artifact but a process.
+
+This process is inherently evolutionary. Prototype libraries grow as new patterns are encountered. Generative models improve as training data accumulates (Brown et al., 2020; Schrittwieser et al., 2020). Description languages evolve to accommodate new modalities and new forms of experience. The media ecology is not a fixed infrastructure but a living system, continuously adapting to the signals it is called upon to represent.
+
+Text serves as the connective tissue of this ecology. As the medium of description, it links the physical world of signals to the computational world of generative models. As the medium of communication, it enables the sharing and modification of descriptions across participants. As the medium of interpretation, it aligns machine generation with human understanding.
+
+% ============================================================
+\section{Toward a Unified Theory of Representation}
+\label{sec:final_conclusion}
+% ============================================================
+
+The framework developed throughout this work reveals a deep unification between compression, generation, and interpretation. Signals are no longer primitive objects but realizations of generative descriptions; compression is no longer a numerical approximation but an act of inference; text is no longer a secondary representation but the primary substrate of media.
+
+The mathematical structures introduced---categories, sheaves, fibered spaces, statistical manifolds, and variational principles---are not incidental but necessary. They arise naturally when one attempts to formalize the relationship between signals and their generative descriptions (Mac Lane, 1998; Grothendieck, 1959; Amari, 2016; Kingma and Welling, 2014).
+
+In this light, semantic compression is not merely a new codec but a new theory of representation. It suggests that all perceptual data can be understood as points in a generative space, coordinatized by text and realized through computation. The boundary between data and program dissolves, and with it the distinction between storage, communication, and cognition.
+
+The long-term implication is a convergence: a single formal framework in which information theory (Shannon, 1948; Cover and Thomas, 2006), category theory (Mac Lane, 1998; Lurie, 2009), machine learning (Goodfellow, Bengio, and Courville, 2016), and cognitive science (Friston, 2010; Tenenbaum et al., 2011) are unified through the concept of generative description. In such a framework, text becomes the universal interface not only between machines and data but between minds and the worlds they inhabit.
+
+% ============================================================
+\newpage
+\section*{Appendices}
+\appendix
+% ============================================================
+
+\section{Formalization of Semantic Compression as an Optimization Problem}
+\label{app:optimization}
+
+Let $\mathcal{M}$ be a measurable space of multimodal signals and $\mathcal{T}$ a space of structured textual descriptions. Let $\mathcal{G} : \mathcal{T} \to \mathcal{M}$ be a generative operator and $d : \mathcal{M} \times \mathcal{M} \to \mathbb{R}_{\ge 0}$ a perceptual distortion functional.
+
+Semantic compression is defined as the variational problem
+\[
+\mathcal{C}(x) = \arg\min_{t \in \mathcal{T}} \left[ d\big(x, \mathcal{G}(t)\big) + \lambda \, L(t) \right],
+\]
+where $L : \mathcal{T} \to \mathbb{R}_{\ge 0}$ is a description length functional and $\lambda > 0$ is a trade-off parameter.
+
+Assuming $\mathcal{T}$ admits a parameterization $t = (p, \delta)$ with $p \in \mathcal{P}$ and $\delta \in T_p\Theta_p$, one obtains
+\[
+\mathcal{C}(x) = \arg\min_{p \in \mathcal{P}, \, \delta \in T_p\Theta_p} \left[ d\big(x, \mathcal{G}(p,\delta)\big) + \lambda \, (L(p) + L(\delta)) \right].
+\]
+
+Under regularity assumptions on $\mathcal{G}$ (specifically, that $\mathcal{G}$ is Fr\'{e}chet differentiable with respect to $\delta$), the first-order optimality condition for the continuous part is
+\[
+D_\delta \mathcal{G}(p, \delta)^* \, \nabla_{\mathcal{G}} d\big(x, \mathcal{G}(p,\delta)\big) + \lambda \, \nabla_\delta L(\delta) = 0,
+\]
+where $D_\delta \mathcal{G}^*$ is the adjoint of the Fr\'{e}chet derivative. This establishes semantic compression as a constrained inference problem in a generative model, analogous to rate--distortion theory but with structure-dependent priors.
+
+\section{Rate--Distortion Interpretation with Model Dependence}
+\label{app:ratedistortion}
+
+Let $X$ be a random variable over $\mathcal{M}$ and $T$ a random variable over $\mathcal{T}$. Define a joint distribution induced by an encoder $q(t|x)$. The expected distortion is
+\[
+D = \mathbb{E}_{x \sim X, \, t \sim q(\cdot|x)} \left[ d\big(x, \mathcal{G}(t)\big) \right].
+\]
+
+The semantic rate--distortion function is
+\[
+R_{\mathcal{G}}(D) = \inf_{q(t|x)} \left\{ I(X;T) \,\middle|\, \mathbb{E}[d(x,\mathcal{G}(t))] \le D \right\}.
+\]
+
+For any generative model $\mathcal{G}$ and any $D$, $R_{\mathcal{G}}(D) \le R(D)$. When $\mathcal{G}$ is a perfect generative model for the source, the semantic rate--distortion function satisfies
+\[
+R_{\mathcal{G}}(D) = H(Z) - I(Z; \text{residual}),
+\]
+where $Z$ is the latent variable and the residual captures stochastic variation not explained by the compressed description.
+
+\section{Categorical Equivalence up to Perceptual Isomorphism}
+\label{app:equivalence}
+
+Define $\sim_\epsilon$ by $x \sim_\epsilon y \iff d(x,y) < \epsilon$. Semantic compression achieves \emph{categorical equivalence} if there exists a functor $\mathcal{C} : \mathcal{M}/\!\sim_\epsilon \rightarrow \mathcal{T}$ such that
+\[
+\mathcal{G} \circ \mathcal{C} \cong \mathrm{Id}_{\mathcal{M}/\!\sim_\epsilon}.
+\]
+
+The category $\mathcal{T}$ serves as a skeletal representation of $\mathcal{M}/\!\sim_\epsilon$. The existence of such a $\mathcal{C}$ is guaranteed when $\mathcal{G}$ is surjective up to $\epsilon$ and metrically injective on $\mathcal{T}$.
+
+\section{Sheaf-Theoretic Construction of Global Descriptions}
+\label{app:sheaves}
+
+Let $X = [0,T] \times \mathbb{R}^2$ be the spacetime domain. Define a presheaf $\mathcal{F}$ on $X$ with restriction maps $\rho_{UV} : \mathcal{F}(U) \to \mathcal{F}(V)$. The sheaf condition requires: for any open cover $\{U_i\}$ of $U$ and compatible sections $t_i$, there exists a unique $t \in \mathcal{F}(U)$ restricting to each $t_i$.
+
+The sheaf condition is verified when $\mathcal{G}$ is \emph{locally determined}: its output over $V$ depends only on the restriction of the description to $V$. When descriptions contain global context (overall color grade, speaker identity), the global parameter must be factored out before local descriptions are assembled.
+
+\section{Lie Group Structure of Transformations}
+\label{app:lie}
+
+Let $G$ be a Lie group acting smoothly on $\mathcal{P}$ with $\alpha : G \times \mathcal{P} \to \mathcal{P}$ compatible with $\mathcal{G}$: $\mathcal{G}(\alpha(g,p)) = \mathcal{T}_g(\mathcal{G}(p))$. The Lie algebra $\mathfrak{g}$ parameterizes infinitesimal deviations via the exponential map $\exp : \mathfrak{g} \to G$:
+\[
+\mathcal{G}(\alpha(\exp(\xi), p)) \approx \mathcal{G}(p) + D_\xi \mathcal{G}(p) \cdot \xi + O(\|\xi\|^2).
+\]
+For camera trajectories, the relevant group is $\mathrm{SE}(3) = \mathrm{SO}(3) \ltimes \mathbb{R}^3$.
+
+\section{Kolmogorov Complexity Relative to a Generative Model}
+\label{app:kolmogorov}
+
+The model-relative Kolmogorov complexity is
+\[
+K_\epsilon(x \mid \mathcal{G}) \coloneqq \min \{ |t|_U : d(x, \mathcal{G}(U(t))) < \epsilon \}.
+\]
+
+By the invariance theorem, $K_\epsilon(x \mid \mathcal{G}) \le K_\epsilon(x) + c$, with improvement $K_\epsilon(x) - K_\epsilon(x \mid \mathcal{G}) \approx K(\mathcal{G}) - O(1)$ when $\mathcal{G}$ captures the generating process of $x$. When $\mathcal{G}$ is shared between encoder and decoder, the per-signal cost is $K_\epsilon(x \mid \mathcal{G})$ alone.
+
+\section{Fixed Point and Stability Analysis}
+\label{app:stability}
+
+\begin{theorem}[Banach Fixed Point for Compression]
+If $(\mathcal{M}, d)$ is a complete metric space and $\Phi = \mathcal{G} \circ \mathcal{C}$ is a strict contraction with $d(\Phi(x), \Phi(y)) \le \kappa \, d(x,y)$ for $\kappa \in [0,1)$, then $\Phi$ has a unique fixed point $x^* \in \mathcal{M}$, and the iterates $x_{n+1} = \Phi(x_n)$ converge to $x^*$ at rate $\kappa^n$.
+\end{theorem}
+
+When $\Phi$ is a local contraction on connected components of $\mathcal{M}$, the Banach theorem guarantees local fixed points---stable attractors within each perceptual category.
+
+\section{Functorial Semantics of the Textual Language}
+\label{app:functorial}
+
+Let $\mathcal{L}$ be a context-free grammar defining the TIR. The free model $\mathcal{F}(\mathcal{L})$ is a category whose objects are types and whose morphisms are derivations. A \emph{semantic interpretation} is a functor $\llbracket \cdot \rrbracket : \mathcal{F}(\mathcal{L}) \to \mathcal{M}$.
+
+Compositionality requires this functor to be monoidal: $\llbracket A \otimes B \rrbracket = \llbracket A \rrbracket \otimes \llbracket B \rrbracket$. The \emph{full completeness} condition---that every morphism in $\mathcal{M}$ is the image of some derivation in $\mathcal{F}(\mathcal{L})$---characterizes the expressiveness of the TIR.
+
+\section{Asymptotic Universality}
+\label{app:universality}
+
+Let $\{\mathcal{G}_n\}_{n \ge 1}$ be a sequence of generative models of increasing expressive power.
+
+\begin{theorem}[Asymptotic Universality]
+Suppose $\mathcal{G} = \bigcup_n \mathcal{G}_n$ is a universal approximator for $\mathcal{M}$: for every $x \in \mathcal{M}$ and $\epsilon > 0$, there exists $N$ and $t \in \mathcal{T}$ such that $d(x, \mathcal{G}_N(t)) < \epsilon$. Then
+\[
+\lim_{n \to \infty} K_\epsilon(x \mid \mathcal{G}_n) = K_\epsilon^*(x),
+\]
+where $K_\epsilon^*(x)$ is the minimum description length achievable by any effective procedure.
+\end{theorem}
+
+As generative models approach universal approximation, description lengths approach the information-theoretic lower bound. Text becomes a universal coordinate system for the space of perceptual phenomena.
+
+\newpage
+\begin{thebibliography}{99}
+
+\bibitem{shannon1948}
+C.~E. Shannon,
+\newblock ``A Mathematical Theory of Communication,''
+\newblock \emph{Bell System Technical Journal}, vol.~27, pp.~379--423, 1948.
+
+\bibitem{coverthomas}
+T.~M. Cover and J.~A. Thomas,
+\newblock \emph{Elements of Information Theory},
+\newblock Wiley, 2nd edition, 2006.
+
+\bibitem{berger}
+T.~Berger,
+\newblock \emph{Rate Distortion Theory: A Mathematical Basis for Data Compression},
+\newblock Prentice-Hall, 1971.
+
+\bibitem{gray}
+R.~M. Gray,
+\newblock \emph{Entropy and Information Theory},
+\newblock Springer, 2011.
+
+\bibitem{csiszar}
+I.~Csisz\'{a}r and J.~K\"{o}rner,
+\newblock \emph{Information Theory: Coding Theorems for Discrete Memoryless Systems},
+\newblock Cambridge University Press, 2nd edition, 2011.
+
+\bibitem{kolmogorov}
+A.~N. Kolmogorov,
+\newblock ``Three Approaches to the Quantitative Definition of Information,''
+\newblock \emph{Problems of Information Transmission}, vol.~1, no.~1, pp.~1--7, 1965.
+
+\bibitem{chaitin}
+G.~J. Chaitin,
+\newblock \emph{Algorithmic Information Theory},
+\newblock Cambridge University Press, 1987.
+
+\bibitem{li_vitanyi}
+M.~Li and P.~Vit\'{a}nyi,
+\newblock \emph{An Introduction to Kolmogorov Complexity and Its Applications},
+\newblock Springer, 3rd edition, 2008.
+
+\bibitem{rissanen}
+J.~Rissanen,
+\newblock ``Modeling by Shortest Data Description,''
+\newblock \emph{Automatica}, vol.~14, pp.~465--471, 1978.
+
+\bibitem{grunwald}
+P.~Gr\"{u}nwald,
+\newblock \emph{The Minimum Description Length Principle},
+\newblock MIT Press, 2007.
+
+\bibitem{solomonoff}
+R.~J. Solomonoff,
+\newblock ``A Formal Theory of Inductive Inference,''
+\newblock \emph{Information and Control}, vol.~7, pp.~1--22, 1964.
+
+\bibitem{hutter}
+M.~Hutter,
+\newblock \emph{Universal Artificial Intelligence: Sequential Decisions Based on Algorithmic Probability},
+\newblock Springer, 2005.
+
+\bibitem{tishby}
+N.~Tishby and N.~Zaslavsky,
+\newblock ``Deep Learning and the Information Bottleneck Principle,''
+\newblock \emph{IEEE Information Theory Workshop}, pp.~1--5, 2015.
+
+\bibitem{pierce}
+J.~R. Pierce,
+\newblock \emph{An Introduction to Information Theory: Symbols, Signals and Noise},
+\newblock Dover, 1980.
+
+\bibitem{weaver}
+W.~Weaver,
+\newblock ``Recent Contributions to the Mathematical Theory of Communication,''
+\newblock in C.~E. Shannon and W.~Weaver, \emph{The Mathematical Theory of Communication},
+\newblock University of Illinois Press, 1949.
+
+\bibitem{hinton}
+G.~E. Hinton and R.~R. Salakhutdinov,
+\newblock ``Reducing the Dimensionality of Data with Neural Networks,''
+\newblock \emph{Science}, vol.~313, no.~5786, pp.~504--507, 2006.
+
+\bibitem{lecun}
+Y.~LeCun, Y.~Bengio, and G.~Hinton,
+\newblock ``Deep Learning,''
+\newblock \emph{Nature}, vol.~521, pp.~436--444, 2015.
+
+\bibitem{goodfellow}
+I.~Goodfellow, Y.~Bengio, and A.~Courville,
+\newblock \emph{Deep Learning},
+\newblock MIT Press, 2016.
+
+\bibitem{goodfellow_gan}
+I.~Goodfellow, J.~Pouget-Abadie, M.~Mirza, B.~Xu, D.~Warde-Farley, S.~Ozair, A.~Courville, and Y.~Bengio,
+\newblock ``Generative Adversarial Nets,''
+\newblock \emph{Advances in Neural Information Processing Systems}, 2014.
+
+\bibitem{kingma}
+D.~P. Kingma and M.~Welling,
+\newblock ``Auto-Encoding Variational Bayes,''
+\newblock \emph{International Conference on Learning Representations}, 2014.
+
+\bibitem{rezende}
+D.~J. Rezende, S.~Mohamed, and D.~Wierstra,
+\newblock ``Stochastic Backpropagation and Approximate Inference in Deep Generative Models,''
+\newblock \emph{International Conference on Machine Learning}, 2014.
+
+\bibitem{oord}
+A.~van den Oord, N.~Kalchbrenner, and K.~Kavukcuoglu,
+\newblock ``Pixel Recurrent Neural Networks,''
+\newblock \emph{International Conference on Machine Learning}, 2016.
+
+\bibitem{oord_wavenet}
+A.~van den Oord, S.~Dieleman, H.~Zen, K.~Simonyan, O.~Vinyals, A.~Graves, N.~Kalchbrenner, A.~Senior, and K.~Kavukcuoglu,
+\newblock ``WaveNet: A Generative Model for Raw Audio,''
+\newblock \emph{9th ISCA Speech Synthesis Workshop}, 2016.
+
+\bibitem{vqvae}
+A.~van den Oord, O.~Vinyals, and K.~Kavukcuoglu,
+\newblock ``Neural Discrete Representation Learning,''
+\newblock \emph{Advances in Neural Information Processing Systems}, 2017.
+
+\bibitem{oord_vqvae2}
+A.~Razavi, A.~van den Oord, and O.~Vinyals,
+\newblock ``Generating Diverse High-Fidelity Images with VQ-VAE-2,''
+\newblock \emph{Advances in Neural Information Processing Systems}, 2019.
+
+\bibitem{diffusion}
+J.~Ho, A.~Jain, and P.~Abbeel,
+\newblock ``Denoising Diffusion Probabilistic Models,''
+\newblock \emph{Advances in Neural Information Processing Systems}, 2020.
+
+\bibitem{sohl}
+J.~Sohl-Dickstein, E.~Weiss, N.~Maheswaranathan, and S.~Ganguli,
+\newblock ``Deep Unsupervised Learning Using Nonequilibrium Thermodynamics,''
+\newblock \emph{International Conference on Machine Learning}, 2015.
+
+\bibitem{song}
+Y.~Song and S.~Ermon,
+\newblock ``Generative Modeling by Estimating Gradients of the Data Distribution,''
+\newblock \emph{Advances in Neural Information Processing Systems}, 2019.
+
+\bibitem{karras}
+T.~Karras, M.~Aittala, T.~Aila, and S.~Laine,
+\newblock ``Elucidating the Design Space of Diffusion-Based Generative Models,''
+\newblock \emph{Advances in Neural Information Processing Systems}, 2022.
+
+\bibitem{rombach}
+R.~Rombach, A.~Blattmann, D.~Lorenz, P.~Esser, and B.~Ommer,
+\newblock ``High-Resolution Image Synthesis with Latent Diffusion Models,''
+\newblock \emph{IEEE/CVF Conference on Computer Vision and Pattern Recognition}, 2022.
+
+\bibitem{taming}
+P.~Esser, R.~Rombach, and B.~Ommer,
+\newblock ``Taming Transformers for High-Resolution Image Synthesis,''
+\newblock \emph{IEEE/CVF Conference on Computer Vision and Pattern Recognition}, 2021.
+
+\bibitem{dalle}
+A.~Ramesh, M.~Pavlov, G.~Goh, S.~Gray, C.~Voss, A.~Radford, M.~Chen, and I.~Sutskever,
+\newblock ``Zero-Shot Text-to-Image Generation,''
+\newblock \emph{International Conference on Machine Learning}, 2021.
+
+\bibitem{clip}
+A.~Radford, J.~W. Kim, C.~Hallacy, A.~Ramesh, G.~Goh, S.~Agarwal, G.~Sastry, A.~Askell, P.~Mishkin, J.~Clark, G.~Krueger, and I.~Sutskever,
+\newblock ``Learning Transferable Visual Models From Natural Language Supervision,''
+\newblock \emph{International Conference on Machine Learning}, 2021.
+
+\bibitem{vaswani}
+A.~Vaswani, N.~Shazeer, N.~Parmar, J.~Uszkoreit, L.~Jones, A.~N. Gomez, \L.~Kaiser, and I.~Polosukhin,
+\newblock ``Attention Is All You Need,''
+\newblock \emph{Advances in Neural Information Processing Systems}, 2017.
+
+\bibitem{brown}
+T.~B. Brown, B.~Mann, N.~Ryder, M.~Subbiah, J.~Kaplan, P.~Dhariwal, A.~Neelakantan, P.~Shyam, G.~Sastry, A.~Askell, S.~Agarwal, A.~Herbert-Voss, G.~Krueger, T.~Henighan, R.~Child, A.~Ramesh, D.~M. Ziegler, J.~Wu, C.~Winter, C.~Hesse, M.~Chen, E.~Sigler, M.~Litwin, S.~Gray, B.~Chess, J.~Clark, C.~Berner, S.~McCandlish, A.~Radford, I.~Sutskever, and D.~Amodei,
+\newblock ``Language Models Are Few-Shot Learners,''
+\newblock \emph{Advances in Neural Information Processing Systems}, 2020.
+
+\bibitem{villani}
+C.~Villani,
+\newblock \emph{Optimal Transport: Old and New},
+\newblock Springer, 2009.
+
+\bibitem{amari}
+S.~Amari,
+\newblock \emph{Information Geometry and Its Applications},
+\newblock Springer, 2016.
+
+\bibitem{category}
+S.~Mac Lane,
+\newblock \emph{Categories for the Working Mathematician},
+\newblock Springer, 2nd edition, 1998.
+
+\bibitem{riehl}
+E.~Riehl,
+\newblock \emph{Category Theory in Context},
+\newblock Dover Publications, 2016.
+
+\bibitem{lawvere}
+F.~W. Lawvere and S.~H. Schanuel,
+\newblock \emph{Conceptual Mathematics: A First Introduction to Categories},
+\newblock Cambridge University Press, 2nd edition, 2009.
+
+\bibitem{jacobs}
+B.~Jacobs,
+\newblock \emph{Categorical Logic and Type Theory},
+\newblock Elsevier, 1999.
+
+\bibitem{spivak}
+D.~I. Spivak,
+\newblock \emph{Category Theory for the Sciences},
+\newblock MIT Press, 2014.
+
+\bibitem{fong_spivak}
+B.~Fong and D.~I. Spivak,
+\newblock \emph{An Invitation to Applied Category Theory: Seven Sketches in Compositionality},
+\newblock Cambridge University Press, 2019.
+
+\bibitem{loregian}
+F.~Lor\'{e}gian,
+\newblock \emph{(Co)end Calculus},
+\newblock Cambridge University Press, 2021.
+
+\bibitem{grothendieck}
+A.~Grothendieck,
+\newblock ``Cat\'{e}gories fibr\'{e}es et descente,''
+\newblock in \emph{S\'{e}minaire de G\'{e}om\'{e}trie Alg\'{e}brique du Bois-Marie}, 1959.
+
+\bibitem{sga4}
+M.~Artin, A.~Grothendieck, and J.-L.~Verdier,
+\newblock \emph{Th\'{e}orie des Topos et Cohomologie \'{E}tale des Sch\'{e}mas (SGA 4)},
+\newblock Springer, 1972.
+
+\bibitem{maclane_moerdijk}
+S.~Mac Lane and I.~Moerdijk,
+\newblock \emph{Sheaves in Geometry and Logic},
+\newblock Springer, 1992.
+
+\bibitem{lurie}
+J.~Lurie,
+\newblock \emph{Higher Topos Theory},
+\newblock Princeton University Press, 2009.
+
+\bibitem{lurie_ha}
+J.~Lurie,
+\newblock \emph{Higher Algebra},
+\newblock Preprint, available at \texttt{math.harvard.edu/\textasciitilde lurie/}, 2017.
+
+\bibitem{coecke}
+B.~Coecke and A.~Kissinger,
+\newblock \emph{Picturing Quantum Processes},
+\newblock Cambridge University Press, 2017.
+
+\bibitem{baez}
+J.~C. Baez and M.~Stay,
+\newblock ``Physics, Topology, Logic and Computation: A Rosetta Stone,''
+\newblock in B.~Coecke (ed.), \emph{New Structures for Physics}, Springer, 2010.
+
+\bibitem{doCarmo}
+M.~P. do Carmo,
+\newblock \emph{Riemannian Geometry},
+\newblock Birkh\"{a}user, 1992.
+
+\bibitem{lee}
+J.~M. Lee,
+\newblock \emph{Introduction to Smooth Manifolds},
+\newblock Springer, 2nd edition, 2012.
+
+\bibitem{lang}
+S.~Lang,
+\newblock \emph{Differential and Riemannian Manifolds},
+\newblock Springer, 1995.
+
+\bibitem{pierce_types}
+B.~C. Pierce,
+\newblock \emph{Types and Programming Languages},
+\newblock MIT Press, 2002.
+
+\bibitem{milner}
+R.~Milner,
+\newblock \emph{Communicating and Mobile Systems: The Pi-Calculus},
+\newblock Cambridge University Press, 1999.
+
+\bibitem{hopcroft}
+J.~Hopcroft, R.~Motwani, and J.~Ullman,
+\newblock \emph{Introduction to Automata Theory, Languages, and Computation},
+\newblock Pearson, 3rd edition, 2006.
+
+\bibitem{pearl}
+J.~Pearl,
+\newblock \emph{Causality: Models, Reasoning, and Inference},
+\newblock Cambridge University Press, 2nd edition, 2009.
+
+\bibitem{barwise}
+J.~Barwise and J.~Perry,
+\newblock \emph{Situations and Attitudes},
+\newblock MIT Press, 1983.
+
+\bibitem{chomsky}
+N.~Chomsky,
+\newblock \emph{Aspects of the Theory of Syntax},
+\newblock MIT Press, 1965.
+
+\bibitem{friston}
+K.~Friston,
+\newblock ``The Free-Energy Principle: A Unified Brain Theory?''
+\newblock \emph{Nature Reviews Neuroscience}, vol.~11, pp.~127--138, 2010.
+
+\bibitem{clark}
+A.~Clark,
+\newblock \emph{Surfing Uncertainty: Prediction, Action, and the Embodied Mind},
+\newblock Oxford University Press, 2015.
+
+\bibitem{dennett}
+D.~Dennett,
+\newblock \emph{The Intentional Stance},
+\newblock MIT Press, 1987.
+
+\bibitem{tenenbaum}
+J.~B. Tenenbaum, C.~Kemp, T.~L. Griffiths, and N.~D. Goodman,
+\newblock ``How to Grow a Mind: Statistics, Structure, and Abstraction,''
+\newblock \emph{Science}, vol.~331, pp.~1279--1285, 2011.
+
+\bibitem{goodman}
+N.~D. Goodman, J.~B. Tenenbaum, and T.~D. Ullman,
+\newblock ``Probabilistic Models of Cognition,''
+\newblock \emph{Trends in Cognitive Sciences}, vol.~19, no.~10, pp.~589--599, 2015.
+
+\bibitem{lake}
+B.~M. Lake, R.~Salakhutdinov, and J.~B. Tenenbaum,
+\newblock ``Human-Level Concept Learning through Probabilistic Program Induction,''
+\newblock \emph{Science}, vol.~350, pp.~1332--1338, 2015.
+
+\bibitem{mansinghka}
+V.~Mansinghka, D.~Selsam, and Y.~Perov,
+\newblock ``Venture: A Higher-Order Probabilistic Programming Platform with Programmable Inference,''
+\newblock arXiv:1404.0099, 2014.
+
+\bibitem{blei}
+D.~M. Blei, A.~Y. Ng, and M.~I. Jordan,
+\newblock ``Latent Dirichlet Allocation,''
+\newblock \emph{Journal of Machine Learning Research}, vol.~3, pp.~993--1022, 2003.
+
+\bibitem{bishop}
+C.~M. Bishop,
+\newblock \emph{Pattern Recognition and Machine Learning},
+\newblock Springer, 2006.
+
+\bibitem{ha}
+D.~Ha and J.~Schmidhuber,
+\newblock ``World Models,''
+\newblock \emph{Advances in Neural Information Processing Systems}, 2018.
+
+\bibitem{schrittwieser}
+J.~Schrittwieser, I.~Antonoglou, T.~Hubert, K.~Simonyan, L.~Sifre, S.~Schmitt, A.~Guez, E.~Lockhart, D.~Hassabis, T.~Graepel, T.~Lillicrap, and D.~Silver,
+\newblock ``Mastering Atari, Go, Chess and Shogi by Planning with a Learned Model,''
+\newblock \emph{Nature}, vol.~588, pp.~604--609, 2020.
+
+\bibitem{schmidhuber}
+J.~Schmidhuber,
+\newblock ``Formal Theory of Creativity, Fun, and Intrinsic Motivation,''
+\newblock \emph{IEEE Transactions on Autonomous Mental Development}, vol.~2, no.~3, pp.~230--247, 2010.
+
+\bibitem{silver}
+D.~Silver, A.~Huang, C.~J. Maddison, A.~Guez, L.~Sifre, G.~van den Driessche, J.~Schrittwieser, I.~Antonoglou, V.~Panneershelvam, M.~Lanctot, S.~Dieleman, D.~Grewe, J.~Nham, N.~Kalchbrenner, I.~Sutskever, T.~Lillicrap, M.~Leach, K.~Kavukcuoglu, T.~Graepel, and D.~Hassabis,
+\newblock ``Mastering the Game of Go with Deep Neural Networks and Tree Search,''
+\newblock \emph{Nature}, vol.~529, pp.~484--489, 2016.
+
+\end{thebibliography}
+
+\end{document}
