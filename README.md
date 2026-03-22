@@ -4,9 +4,14 @@ Enacting cognitive landscapes
 
 ![Glitch](glitch.gif)
 
+# Compression Algorithms
+
+[Text as Substrate](https://standardgalactic.github.io/library/baseline/) — Audio Overview
+
+
 # Functional Reduction and the End of Justification
 
-[More Info](https://github.com/standardgalactic/library/tree/main/vault/README.md)
+[More Info](https://github.com/standardgalactic/library/blob/main/vault/README.md)
 
 [Audio Overview - When Humans Become Friction](https://standardgalactic.github.io/library/vault/)
 
