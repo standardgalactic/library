@@ -4,10 +4,15 @@ Enacting cognitive landscapes
 
 ![Glitch](glitch.gif)
 
+# Projection Frameworks
+
+[Constraint Closure and its Failures](https://standardgalactic.github.io/library/research/constraint-closure.pdf)
+
+* [Why AI code and essays fail](https://standardgalactic.github.io/library/research/) – *Audio Overview*
+
 # Compression Algorithms
 
 [Text as Substrate](https://standardgalactic.github.io/library/baseline/) — Audio Overview
-
 
 # Functional Reduction and the End of Justification
 
