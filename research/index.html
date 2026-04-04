@@ -111,7 +111,7 @@ font-size:.8em;
 
 <body>
 
-<h2>Why AI Code and Essays Fail</h2>
+<h2 id="title">Why AI Code and Essays Fail</h2>
 
 <div class="scope-wrap">
 <canvas id="scope"></canvas>
@@ -121,6 +121,14 @@ font-size:.8em;
 <div class="controls">
 
 <button id="toggle">Play</button>
+
+<label>
+Track
+<select id="track">
+<option value="0">Why AI Code and Essays Fail</option>
+<option value="1">The Mathematics of Hollow AI Writing</option>
+</select>
+</label>
 
 <label>
 Speed
@@ -147,11 +155,26 @@ Pitch
 <div id="captions" class="captions"></div>
 
 <audio id="audio">
-<source src="Why_AI_code_and_essays_fail.mp3" type="audio/mpeg">
-<track kind="captions" src="Why_AI_code_and_essays_fail.vtt" default>
+<source id="audiosrc" src="Why_Al_code_and_essays_fail.mp3" type="audio/mpeg">
+<track id="tracksrc" kind="captions" src="Why_Al_code_and_essays_fail.vtt" default>
 </audio>
 
 <script>
+
+/* ===== track data ===== */
+
+const tracks = [
+{
+title: "Why AI Code and Essays Fail",
+audio: "Why_Al_code_and_essays_fail.mp3",
+vtt: "Why_Al_code_and_essays_fail.vtt"
+},
+{
+title: "The Mathematics of Hollow AI Writing",
+audio: "The-mathematics-of-hollow-AI-writing.mp3",
+vtt: "The-mathematics-of-hollow-AI-writing.vtt"
+}
+]
 
 /* ===== elements ===== */
 
@@ -162,6 +185,10 @@ const loop = document.getElementById("loop")
 const timer = document.getElementById("timer")
 const speed = document.getElementById("speed")
 const pitch = document.getElementById("pitch")
+const trackSelect = document.getElementById("track")
+const audioSrc = document.getElementById("audiosrc")
+const trackSrc = document.getElementById("tracksrc")
+const title = document.getElementById("title")
 
 /* ===== audio engine ===== */
 
@@ -183,7 +210,6 @@ analyser.connect(audioCtx.destination)
 
 buffer = new Uint8Array(analyser.fftSize)
 
-/* allow pitch shift */
 audio.preservesPitch = false
 audio.mozPreservesPitch = false
 audio.webkitPreservesPitch = false
@@ -194,21 +220,45 @@ audio.webkitPreservesPitch = false
 
 function attachTrack(){
 
-const track = audio.textTracks[0]
-if(!track) return
+const textTrack = audio.textTracks[0]
+if(!textTrack) return
 
-track.mode = "hidden"
+textTrack.mode = "hidden"
 
-track.oncuechange = ()=>{
-const cue = track.activeCues[0]
+textTrack.oncuechange = ()=>{
+const cue = textTrack.activeCues[0]
 captions.textContent = cue ? cue.text : ""
 }
 
 }
 
-audio.addEventListener("loadedmetadata", attachTrack)
+/* ===== track switching ===== */
 
-/* ===== controls ===== */
+function loadTrack(i){
+
+const t = tracks[i]
+
+audio.pause()
+toggle.textContent = "Play"
+
+audioSrc.src = t.audio
+trackSrc.src = t.vtt
+title.textContent = t.title
+
+audio.load()
+captions.textContent = ""
+
+audio.addEventListener("loadedmetadata", ()=>{
+attachTrack()
+}, { once:true })
+
+}
+
+trackSelect.onchange = ()=>{
+loadTrack(trackSelect.value)
+}
+
+/* ===== playback ===== */
 
 function updatePlayback(){
 const baseSpeed = parseFloat(speed.value)
@@ -335,6 +385,23 @@ draw()
 audio.addEventListener("error",()=>{
 timer.textContent="ERR"
 captions.textContent="Audio failed to load."
+})
+
+audio.addEventListener("ended", ()=>{
+
+let i = parseInt(trackSelect.value)
+
+/* move to next track */
+i = (i + 1) % tracks.length
+
+trackSelect.value = i
+loadTrack(i)
+
+/* autoplay next */
+audio.play().then(()=>{
+toggle.textContent = "Pause"
+})
+
 })
 
 </script>
