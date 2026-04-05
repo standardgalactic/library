@@ -190,6 +190,8 @@ const audioSrc = document.getElementById("audiosrc")
 const trackSrc = document.getElementById("tracksrc")
 const title = document.getElementById("title")
 
+audio.addEventListener("loadedmetadata", attachTrack)
+
 /* ===== audio engine ===== */
 
 let audioCtx, analyser, buffer
