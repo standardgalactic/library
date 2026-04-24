@@ -1,0 +1,1531 @@
+% The Binding Invariant: Synthetic Grounding as Cohomological Gradient Flow
+% Flyxion -- standardgalactic
+% April 2026
+
+\documentclass[11pt, letterpaper]{article}
+
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage{microtype}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{mathtools}
+\usepackage{tikz-cd}
+\usepackage{enumitem}
+\usepackage{abstract}
+\usepackage{booktabs}
+\usepackage{array}
+
+\geometry{margin=1.25in}
+\onehalfspacing
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=black,
+  urlcolor=black,
+  citecolor=black,
+  pdftitle={The Binding Invariant: Synthetic Grounding as Cohomological Gradient Flow},
+  pdfauthor={Flyxion},
+}
+
+\titleformat{\section}{\large\bfseries}{\thesection.}{0.75em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection.}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\itshape}{\thesubsubsection.}{0.5em}{}
+
+%% Theorem environments
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{interpretation}[theorem]{Interpretation}
+
+%% Notation
+\newcommand{\BI}{\mathcal{B}}
+\newcommand{\CC}{\mathcal{C}}
+\newcommand{\HH}{\mathcal{H}}
+\newcommand{\FF}{\mathcal{F}}
+\newcommand{\MM}{\mathfrak{M}}
+\newcommand{\EE}{\mathcal{E}}
+\newcommand{\OO}{\mathcal{O}}
+\newcommand{\Adm}{\mathcal{A}}
+\newcommand{\traj}{\mathsf{traj}}
+\newcommand{\op}{\mathrm{op}}
+\newcommand{\Map}{\mathrm{Map}}
+\newcommand{\holim}{\operatorname{holim}}
+\newcommand{\hocolim}{\operatorname{hocolim}}
+\newcommand{\Obs}{\mathrm{Obs}}
+\newcommand{\grad}{\nabla}
+\newcommand{\Grp}{\infty\text{-}\mathbf{Grpd}}
+\newcommand{\argmin}{\operatorname*{argmin}}
+\newcommand{\PSh}{\mathbf{PSh}}
+\newcommand{\Sem}{\mathbf{Sem}}
+\newcommand{\dSt}{\mathbf{dSt}}
+\newcommand{\Id}{\mathrm{Id}}
+
+\begin{document}
+
+%% Title
+\begin{center}
+  {\LARGE\bfseries The Binding Invariant}\\[1.2em]
+  {\large Synthetic Grounding as Cohomological Gradient Flow}\\[0.5em]
+  {\normalsize\itshape
+    Constraint Persistence, Derived Ambiguity, Process-Algebraic Equivalence,\\
+    and Neural Garbage Collection as Semantic Renormalization}\\[1.8em]
+  {\normalsize Flyxion}\\[0.4em]
+  {\small April 2026}\\[2em]
+\end{center}
+
+\begin{abstract}
+\noindent
+Every system that undergoes irreversible transformation faces the same question:
+what, if anything, carries through? This essay introduces the \emph{binding invariant}
+as the structured property that persists under constraint closure when a system
+passes from one regime of possibility to another.
+
+We formalize this notion using constraint sheaves over partially ordered time and
+prove the Binding Invariant Theorem: a system possesses a binding invariant if and
+only if its constraint history admits a coherent section in the topos of feasible
+trajectories. This yields precise criteria for uniqueness, stability, and rupture.
+
+We then extend the framework using derived algebraic geometry, modeling ambiguity
+as higher homotopy in a derived stack of semantic states. In this setting, the
+binding invariant emerges as a homotopy-stable minimum of a cohomological energy
+functional, and synthetic grounding is interpreted as a gradient flow that minimizes
+obstruction across scales.
+
+Bridging to concurrency theory, we show that Linear Logic Concurrent Constraint
+(LCC) programming provides the operational counterpart of this geometry:
+constraint consumption corresponds to obstruction reduction, and observational
+equivalence (bisimulation and barbed congruence) corresponds to equivalence classes
+of descent trajectories.
+
+We further formalize CLIO as a monoidal endofunctor on a category of semantic states
+and prove two central results: the associated energy functional is a
+bisimulation-invariant Lyapunov function, and LCC bisimulation corresponds to
+homotopy equivalence of descent trajectories.
+
+Finally, we show that Neural Garbage Collection (NGC) provides an empirical
+realization of the framework: its learned memory eviction dynamics implement
+constraint-driven descent, its uncertainty signal behaves as a Lyapunov function,
+and its graph-based reasoning approximates a homotopy colimit. A finite worked
+example with diagrammatic proof grounds the abstract theory.
+
+Taken together, these results establish a unified view in which identity is not a
+static property of states, but the Lyapunov-stable equivalence class of trajectories
+that remain coherent under irreversible constraint accumulation.
+\end{abstract}
+
+\newpage
+%% ===========================================================================
+%%  PART I
+%% ===========================================================================
+
+\begin{center}{\large\bfseries Part I: Foundational Framework}\end{center}
+\vspace{0.5em}
+
+\section{Introduction}
+
+A system changes. Something survives. But \emph{what} survives, and in what sense?
+
+This is not the ancient Ship of Theseus puzzle, though it rhymes with it. That problem
+asks whether numerical identity persists under material replacement. The question here
+is structurally deeper: it asks what \emph{constrains} the set of successors that a
+system can coherently be---not what the system \emph{is} after transformation, but what
+\emph{binds} its trajectory, making certain transformations continuations and others
+ruptures.
+
+We call this the \emph{binding invariant}: the property that must be preserved for a
+transformation to count as development rather than replacement. More precisely, it is
+the information-theoretic closure of the system's constraint history that any future
+state must be consistent with in order to inherit the system's trajectory.
+
+This question arises across multiple domains. In concurrency theory, observational
+equivalence replaces state identity as the primary notion of process sameness
+\cite{haemmerle2011}. In thermodynamics, irreversibility constrains possible
+evolutions and places asymmetric costs on state transitions \cite{landauer,bennett,lloyd}.
+In modern machine learning, systems that jointly learn reasoning and forgetting force a
+reconceptualization of what internal state \emph{is} \cite{ngc2026}. The binding
+invariant names what is preserved across all of these domains simultaneously.
+
+The binding invariant arises at the intersection of three lines of work in the RSVP
+theoretical program. \textbf{The Compiled Self} established that personal identity is
+not a continuous substrate but a fixed point of a constraint-preserving adjunction over
+an irreversible history topos; the binding invariant names what that fixed point
+\emph{is}. \textbf{The Constraint--Recurrence Principle} showed that systems return
+not to prior states but to prior constraint configurations, structured by a recurrence
+operator; the binding invariant is the kernel of that operator. \textbf{The Yarncrawler
+Identifiability Theorem} demonstrated that world-state reconstruction from partial
+observations is possible if and only if the observation sheaf admits a global section;
+the binding invariant is the analogue of that section in the context of
+self-reconstruction across time.
+
+The essay is organized as follows. Sections~2--4 (Part~I) develop the sheaf-theoretic
+foundations and prove the Binding Invariant Theorem. Sections~5--8 (Part~II) develop
+the derived-geometric and variational interpretation. Sections~9--11 (Part~III) bridge
+to Linear Concurrent Constraints. Sections~12--14 (Part~IV) formalize CLIO as a
+monoidal endofunctor with fixed-point algebra and sheaf-theoretic semantics.
+Sections~15--17 (Part~V) prove the Lyapunov and bisimulation theorems. Sections~18--21
+(Part~VI) absorb NGC and provide the worked example. A bibliography closes the essay.
+
+\section{Formal Setting}
+
+\subsection{The Site of Constraint Histories}
+
+Let $S$ be a system evolving through a partially ordered time set $(T, \leq)$.
+
+\begin{definition}[Site of Constraint Histories]
+The \emph{constraint site} of $S$ is $\mathcal{J}_S = (T, \tau_{\mathrm{Alex}})$
+where $\tau_{\mathrm{Alex}}$ is the Alexandrov topology on $(T, \leq)$, with coverings
+given by upward-directed families $\{U_i\}$ such that $U = \bigcup_i U_i$ and
+$t \in U_i, t \leq t' \Rightarrow t' \in U_i$.
+\end{definition}
+
+\begin{definition}[Constraint Sheaf]
+A \emph{constraint sheaf} for $S$ is a sheaf $\CC$ on $\mathcal{J}_S$ such that:
+(i)~the stalk $\CC_t$ is the set of constraints active at $t$; (ii)~restriction maps
+$\rho_{t't}: \CC_{t'} \to \CC_t$ are monotone for $t \leq t'$ (the
+\emph{irreversibility condition}: constraint satisfaction is preserved under forward
+evolution); and (iii)~the gluing axiom holds.
+\end{definition}
+
+\begin{definition}[Trajectory Sheaf]
+A trajectory is a section of a sheaf $\FF$ on $\mathcal{J}_S$ satisfying:
+\[
+  \FF(U) \;=\; \bigl\{\, \sigma : U \to \mathrm{States} \;\mid\; \sigma(t) \models \CC_t\,\bigr\}.
+\]
+\end{definition}
+
+\begin{definition}[Constraint History]
+The \emph{constraint history} of $S$ up to time $t$ is
+$\HH_t(S) = \varprojlim_{t' \leq t} \CC_{t'}$.
+\end{definition}
+
+$\HH_t(S)$ is the structural sediment of all prior constraint regimes---generally
+larger than $\CC_t$ because it retains the record of past closures even when present
+constraints do not directly reflect them. Constraint-based models of computation
+originate in Concurrent Constraint Programming, where systems evolve by monotonic
+accumulation of information \cite{saraswat}. Linear logic extensions introduce
+controlled consumption of constraints, breaking monotonicity while preserving logical
+structure \cite{saraswatlincoln,girard}.
+
+\begin{definition}[Closure Event]
+A \emph{closure event} at time $t$ is a pair $(t, \gamma)$ where
+$\gamma: \CC_t \to \CC_{t^+}$ is injective, generates strictly more constraints, and
+is irreversible in the sense that no constraint-compatible $\gamma^{-1}$ exists as a
+valid restriction map.
+\end{definition}
+
+\subsection{Topos of Feasible Trajectories}
+
+Let $\mathbf{Traj}(S)$ be the category of constraint-compatible trajectories of $S$
+and constraint-preserving maps between them.
+
+\begin{proposition}
+When $\CC$ satisfies the gluing condition, $\mathbf{Traj}(S)$ has the structure of a
+Grothendieck topos.
+\end{proposition}
+
+\begin{proof}
+The presheaf category $\widehat{T}$ is a topos. The constraint sheaf condition
+restricts to the full subcategory of sheaves, which is a reflective subcategory of
+$\widehat{T}$ and hence a topos by standard results in topos theory \cite{johnstone}.
+\end{proof}
+
+The subobject classifier $\Omega$ of $\mathbf{Traj}(S)$ classifies
+constraint-admissible sub-trajectories: the truth values for the proposition ``this
+sub-trajectory is a legitimate continuation of $S$.'' The use of $\Omega$ aligns the
+construction with standard topos-theoretic semantics, where truth values classify
+admissible substructures \cite{johnstone,maclane}.
+
+\section{The Binding Invariant}
+
+\begin{definition}[Binding Invariant]
+The \emph{binding invariant} of $S$ at time $t$ is
+\[
+  \BI_t(S) \;=\; \Gamma\!\bigl(\HH_t(S),\;\Omega_{\mathbf{Traj}(S)}\bigr),
+\]
+the global sections of the subobject classifier over the constraint history.
+\end{definition}
+
+$\BI_t(S)$ is not a single property but the structured space of coherent judgments
+about what counts as $S$ continuing. An element $b \in \BI_t(S)$ may be understood
+as a rule assigning to each admissible sub-trajectory $U \subseteq T$ a truth value
+indicating whether $U$ extends to a coherent global trajectory compatible with
+$\HH_t(S)$. Thus $\BI_t(S)$ \emph{classifies admissible continuations} rather than
+describing states.
+
+\begin{definition}[Binding Section]
+A \emph{binding section} at $(t, \gamma)$ is a section
+$b \in \Gamma(\HH_t(S), \CC)$ such that $b(t') \in \CC_{t'}$ for all $t' \leq t$
+and $\{b(t')\}$ is coherent in the inverse system.
+\end{definition}
+
+\begin{theorem}[Binding Invariant Theorem]
+\label{thm:bi}
+Let $S$ have irreversible constraint sheaf $\CC$ and closure sequence
+$E = \{(t_i, \gamma_i)\}_{i=1}^n$ with effective descent for trajectories. The
+following are equivalent:
+\begin{enumerate}[label=(\roman*), noitemsep]
+  \item $\BI_{t_n}(S) \neq \varnothing$.
+  \item $\mathbf{Traj}(S)$ admits a global section compatible with $\CC$ after the
+    last closure event.
+  \item $\HH_{t_n}(S)$ admits a binding section compatible with all events in $E$.
+  \item $E$ has a coherent limit in $\mathbf{Pro}(\mathbf{Traj}(S))$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The argument relies on standard sheaf-theoretic gluing and limit constructions
+\cite{maclane,riehl}. (i)$\Rightarrow$(ii): By Yoneda, a global section of $\Omega$
+over $\HH_{t_n}(S)$ corresponds to a non-empty object in $\mathbf{Traj}(S)$, which is
+a global trajectory section. (ii)$\Rightarrow$(iii): The constraint components
+$b(t') = \traj(\sigma(t')) \cap \CC_{t'}$ of any global section $\sigma$ form a
+binding section, compatible with all closure events via compatibility of $\sigma$ with
+the restriction maps of $\CC$. (iii)$\Rightarrow$(iv): A binding section defines a
+compatible family of morphisms in $\mathbf{Traj}(S)$; the pro-limit exists by the
+universal property. (iv)$\Rightarrow$(i): The pro-limit's projection maps define an
+element of $\varprojlim_i \mathbf{Traj}(S)_{t_i}$; by the sheaf condition on $\CC$
+this yields a global section of $\Omega$.
+\end{proof}
+
+\begin{corollary}[Uniqueness Criterion]
+$\BI_t(S)$ is a singleton iff $\mathbf{Traj}(S)$ is Boolean at $t$.
+\end{corollary}
+
+\begin{corollary}[Rupture Criterion]
+\label{cor:rupture}
+A transformation at $t$ is a \emph{rupture} (replacement, not continuation) iff
+$\BI_t(S) = \varnothing$.
+\end{corollary}
+
+\begin{corollary}[Binding Stability]
+\label{cor:stability}
+If $\BI_t(S) \neq \varnothing$ and all subsequent closure events are conservative,
+then $\BI_{t'}(S) \neq \varnothing$ for all $t' > t$.
+\end{corollary}
+
+\begin{remark}[Degrees of Rupture]
+Rupture may occur gradually. A weakening of the binding invariant corresponds to loss
+of coherence in portions of $\HH_t(S)$, reflected in the non-existence of sections
+over certain subdomains. Total rupture is $\BI_t(S) = \varnothing$; partial rupture is
+failure of gluing on a covering. Identity is therefore not an intrinsic property of
+states, but a fixed point in the category of constraint-consistent trajectories.
+\end{remark}
+
+\subsection{Dynamical Interpretation}
+
+The binding invariant admits a dynamical interpretation that bridges to Parts~II--VI.
+Let $\CC : X \to X$ be an update operator on semantic states, and let $\EE$ be an
+energy functional measuring constraint inconsistency. A trajectory $x_{t+1} = \CC(x_t)$
+induces a descent process $\EE(x_{t+1}) \leq \EE(x_t)$. Then $\BI_t(S)$ corresponds
+to the set of equivalence classes of trajectories converging to the same minimal energy
+configuration. The binding invariant is the fixed-point structure of a
+constraint-induced descent flow.
+
+\section{Applications and Philosophical Consequences}
+
+\textbf{Cognitive identity.} The binding invariant gives the Compiled Self thesis a
+precise interpretation: the self is the structured space of coherent judgments about
+what would count as \emph{this person} continuing. Identity is not a substance but a
+section; it is not determined by present state alone; rupture is formally possible; and
+amnesia is structural---severe disruption of the binding section, not merely data loss.
+This perspective aligns with modern machine learning systems in which reasoning and
+memory are jointly optimized, and internal state is actively pruned during inference
+\cite{ngc2026}.
+
+\textbf{Computation.} A computation's binding invariant is the record of what it has
+committed to. Na\"ive checkpointing fails when side effects alter the external
+constraint environment in ways not captured by the checkpoint. System migration (not
+mere update) is required when an upgrade destroys the binding section. In process
+calculi, equivalence is defined observationally: two processes are identical if no
+environment can distinguish them \cite{milner,haemmerle2011}.
+
+\textbf{Physical processes.} First-order phase transitions are closure events; absence
+of a binding section across the transition implies the post-transition system is a
+distinct entity. The thermodynamic arrow of time is the direction along which binding
+invariants accumulate: entropy production is the physical signature of irreversible
+closure \cite{landauer,bennett,lloyd,jacobson}.
+
+\textbf{Philosophical summary.} The binding invariant supports structural persistence
+(what continues is a coherence condition, not a substance), refutes presentism (the
+past is constitutive, not merely historical), and formalizes the distinction between
+development and rupture. This position is structurally aligned with categorical and
+structuralist approaches to identity, where objects are determined by their relations
+rather than intrinsic properties \cite{spivak,riehl}.
+
+%% ===========================================================================
+%%  PART II
+%% ===========================================================================
+
+\vspace{1.2em}
+\begin{center}{\large\bfseries Part II: Synthetic Grounding as Cohomological Gradient Flow}\end{center}
+\vspace{0.5em}
+
+\noindent\textit{Central claim}: A self, or coherent world-state, is a homotopy-stable
+minimum of a cohomological energy functional defined over a derived moduli space of
+candidate interpretations. The binding invariant is the structure that remains fixed at
+such minima.
+
+\section{Ambiguity as Higher Homotopy in Derived Stacks}
+
+\subsection{The Derived Stack of Semantic States}
+
+Let $\Omega$ denote the Spherepop event-log base. We model the space of candidate
+interpretations as a derived stack:
+\[
+  \MM \;:\; \Omega^{\op} \;\longrightarrow\; \Grp,
+\]
+assigning to each open event-history $U \subseteq \Omega$ an $\infty$-groupoid
+$\MM(U)$ of candidate interpretations. A ``thought''---a globally coherent
+interpretation---is a section:
+\[
+  x \;\in\; \Gamma(\Omega, \MM) \;\simeq\; \holim_{U \subseteq \Omega} \MM(U).
+\]
+
+Instead of assigning to each $U_i$ a set of local sections, we assign an
+$\infty$-groupoid whose objects are candidate local thoughts, whose 1-morphisms are
+identifications between candidate thoughts, whose 2-morphisms are homotopies between
+identifications, and so on. Ambiguity is not an external imperfection but intrinsic
+higher structure. A global thought is a point in the homotopy limit
+$\Gamma(\Omega, \MM) \simeq \holim_{U_i \in \mathcal{U}} \MM(U_i)$.
+
+\subsection{Mapping Spaces and Ambiguity}
+
+Two conflicting interpretations $x_1, x_2 \in \MM(U)$ are classified by the mapping
+space $\Map_{\MM(U)}(x_1, x_2)$:
+\begin{itemize}[noitemsep]
+  \item \emph{Empty}: hard contradiction.
+  \item \emph{Nontrivial}: ambiguity---a path exists but is underdetermined.
+  \item \emph{Contractible}: equivalence---no meaningful distinction survives.
+\end{itemize}
+
+Higher-order ambiguity corresponds to higher homotopy. When paths between $x_1$ and
+$x_2$ are themselves ambiguous, we ascend to 2-morphisms; ambiguity about 2-morphisms
+yields 3-morphisms, and so on. The system carries this tower forward without forcing
+premature resolution. Two candidate global thoughts need not be strictly identical in
+their overlap data; they may be related by a path in
+$\Map_{\MM(U_i \cap U_j)}(x_i|_{U_i \cap U_j}, x_j|_{U_i \cap U_j})$.
+
+\begin{definition}[Derived Binding Invariant]
+The \emph{derived binding invariant} of $S$ is
+\[
+  \mathbf{R}\BI(S) \;=\; \Map_{\dSt}(\HH_t(S),\;\MM).
+\]
+The classical $\BI_t(S)$ is recovered as $\pi_0(\mathbf{R}\BI(S))$.
+\end{definition}
+
+\subsection{The Self as $n$-Stack}
+
+The binding invariant in the derived setting is the homotopy limit of the system's
+homotopy-coherent diagram of candidate interpretations:
+\[
+  \BI_\infty(S) \;=\; \holim\bigl(\text{homotopy-coherent diagram of candidate sections}\bigr).
+\]
+
+\begin{theorem}[Derived Binding Invariant Theorem]
+$\mathbf{R}\BI(S) \neq \varnothing$ iff the homotopy-coherent diagram of candidate
+world-states over $\Omega$ has a non-trivial homotopy limit. When it exists,
+$\BI_\infty(S)$ is an $n$-stack---a derived geometric object that persists despite
+lower-dimensional fluctuations.
+\end{theorem}
+
+A point $x \in \MM$ has a tangent complex $T_x\MM$ encoding infinitesimal
+deformations, while its higher cohomology encodes obstructions to extending local
+deformations globally. A candidate thought is not merely present or absent: it has
+nearby deformations, infinitesimal continuations, and obstruction classes preventing
+extension into a stable global realization.
+
+\section{The Cohomological Energy Functional}
+
+\subsection{Obstruction Classes}
+
+Let $H^\bullet(\Omega, \MM)$ be the cohomology of $\MM$ over $\Omega$. The degrees
+carry distinct interpretations: $H^0$ recovers global sections; $H^1$ classifies local
+inconsistencies (gluing failures, contradictions between adjacent event windows); $H^k$
+for $k \geq 2$ classifies $k$-fold coherence failures (higher-order structural
+ambiguity). Let $\Obs^k(x) \in H^k(\Omega, \MM)$ denote the $k$-th obstruction class
+of state $x$.
+
+A local version over a cover $\{U_i\}$ provides operational form:
+\[
+  \EE_{\mathcal{U}}(x)
+  =
+  \sum_{i < j}\alpha_{ij}\,d(x_i|_{U_i \cap U_j}, x_j|_{U_i \cap U_j})^2
+  +
+  \sum_{i<j<k}\beta_{ijk}\|\omega_{ijk}\|^2
+  +
+  \mu S(x) + \nu C(x),
+\]
+where the first term measures pairwise mismatch on overlaps and the second measures
+higher cocycle defect on triple overlaps.
+
+\subsection{The Global Functional}
+
+Let $S(x)$ be semantic dispersion (entropy: the degree to which $x$ spreads
+probability mass over incompatible interpretations), $C(x)$ be substrate cost (memory,
+metabolic, or computational), $\mathcal{A}(x)$ the set of pending unsatisfied
+constraints, and $r(a,x)$ the residual cost of pending constraint $a$ under state $x$.
+
+\begin{definition}[Constraint Energy Functional]
+\label{def:energy}
+With parameters $\lambda_k, \mu, \nu, \eta > 0$:
+\[
+  \EE(x)
+  \;=\;
+  \sum_{k \geq 1} \lambda_k\,\bigl\|\Obs^k(x)\bigr\|^2
+  \;+\;
+  \mu\, S(x)
+  \;+\;
+  \nu\, C(x)
+  \;+\;
+  \eta \sum_{a \in \mathcal{A}(x)} r(a, x).
+\]
+\end{definition}
+
+The four terms penalize distinct failure modes: failure of constraint closure at each
+scale; semantic indeterminacy; unsustainable resource use; and residual unfulfilled
+constraints (the LCC ``ask'' term, which drives the connection to process algebra in
+Part~III). Low energy corresponds to vanishing obstruction, concentrated probability,
+efficient representation, and satisfied constraints.
+
+\section{Synthetic Grounding as Gradient Flow}
+
+\subsection{CLIO Dynamics as Descent}
+
+In the CLIO framework the system evolves via $x_{t+1} = \CC(x_t)$, where each step
+restricts (prunes incompatible sections), infers (extends by constraint propagation),
+and stabilizes. Geometrically: project $\to$ flow $\to$ stabilize.
+
+\begin{definition}[Synthetic Grounding]
+\emph{Synthetic grounding} is the stochastic gradient flow:
+\[
+  \frac{dx}{dt} \;=\; -\grad_x\,\EE(x),
+  \qquad
+  \mathbb{E}\bigl[\EE(x_{t+1})\bigr] \;\leq\; \mathbb{E}\bigl[\EE(x_t)\bigr],
+\]
+with strict decrease away from fixed points.
+\end{definition}
+
+Synthetic grounding is \emph{descent on cohomological inconsistency under resource
+constraint}: the system prunes incompatible sections (reduces $\|\Obs^k\|^2$), merges
+compatible ones (reduces $S(x)$), compresses redundancy (reduces $C(x)$), and
+satisfies outstanding constraints (reduces the residual ask-cost term).
+
+\subsection{Binding Invariants as Critical Points}
+
+\begin{theorem}[Binding Invariants as Critical Points]
+\label{thm:critical}
+The critical points of $\partial_t x = -\grad\EE(x)$ are precisely the binding
+invariants: states $x^*$ such that $[x^*] \in \BI_t(S)$.
+\end{theorem}
+
+\begin{proof}
+At a critical point, $\grad\EE(x^*) = 0$. The gradient of the obstruction terms
+vanishes iff $\Obs^k(x^*) = 0$ for all $k \geq 1$---$x^*$ is a globally coherent
+section. The gradient of $\mu S(x)$ vanishes at entropy-minimum; $\nu C(x)$ at the
+resource-efficient point; and $\eta\sum_a r(a,x)$ when all constraints are satisfied.
+Together these are equivalent to $x^*$ being a global section of $\MM$ compatible with
+the full event-history---a binding invariant.
+\end{proof}
+
+A binding invariant is:
+\[
+  x^* \;\in\; \argmin_{x \in \MM}\,\EE(x)
+  \quad\text{such that}\quad x^* \simeq \CC(x^*).
+\]
+The self is a \emph{cohomologically minimal, homotopy-stable fixed point of CLIO
+dynamics}.
+
+\begin{theorem}[Convergence of Synthetic Grounding]
+\label{thm:convergence}
+If $\EE$ is convex on $H^\bullet(\Omega, \MM)$ and the event-log satisfies bounded
+total variation, then $x(t) \to x^* \in \BI_t(S)$ as $t \to \infty$, uniquely when
+$\EE$ is strictly convex.
+\end{theorem}
+
+\begin{remark}[Non-convex case and basin structure]
+When $\EE$ is non-convex---as is typical for cognitive and social systems---the flow
+may converge to any local minimum. Different constraint histories $\HH_t(S)$ define
+different energy landscapes and hence different basins of attraction. CLIO is
+\emph{locally contractive} within a basin:
+$d(\CC(x), \CC(y)) \leq \kappa\, d(x,y)$ for $\kappa < 1$ when $x, y$ lie in the
+same basin. Return Under Constraint is therefore guaranteed within a basin, not
+globally. This explains identity fragmentation, allows multiple stable selves, and
+aligns with LCC non-determinism.
+\end{remark}
+
+\section{Return Under Constraint as Geometric Stability}
+
+\begin{proposition}
+Every binding invariant $x^* \in \BI_t(S)$ satisfies the return property:
+$\mathcal{R}_T(x^*) = x^*$ for all $T \geq 0$, where $\mathcal{R}_T = \Phi_T$ is the
+time-$T$ map of the gradient flow.
+\end{proposition}
+
+\begin{theorem}[Geometric Persistence Theorem]
+\label{thm:persist}
+If $S'$ is obtained from $S$ by a conservative closure event $\tau$, then:
+(i)~$S'$ has a binding invariant; (ii)~it is homotopic to that of $S$; (iii)~the
+gradient flows of $\EE$ on $S$ and $S'$ are conjugate via an isomorphism induced by $\tau$.
+\end{theorem}
+
+\begin{theorem}[The Self as Cohomological Fixed Point]
+\label{thm:self}
+Under the convergence conditions of Theorem~\ref{thm:convergence}:
+(i)~the self is $x^* = \lim_{t \to \infty} \Phi_t(x_0)$ for $x_0$ in the basin of
+attraction; (ii)~$x^*$ is the fixed point of the return operator; (iii)~$x^*$
+persists under $\tau$ iff $\tau$ is conservative; (iv)~rupture occurs iff $\tau$ moves
+$x_0$ outside the basin of attraction.
+\end{theorem}
+
+The self compiles itself continuously: each incoming event perturbs $x$, and synthetic
+grounding returns it to $x^*$. Identity is \emph{dynamical equilibrium}, not static
+persistence.
+
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Cognitive / epistemic concept & Derived-geometric realization \\
+\midrule
+Ambiguity & Nontrivial homotopy in $\MM(U)$ \\
+Contradiction & Empty mapping space \\
+Reasoning & Descent on $\EE$ \\
+Identity & Stable minimum of $\EE$ \\
+Memory & Retained structure along gradient flow \\
+Binding & Stability under recursive projection \\
+Rupture & Exit from basin of attraction \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+%% ===========================================================================
+%%  PART III
+%% ===========================================================================
+
+\vspace{1.2em}
+\begin{center}{\large\bfseries Part III: Process-Algebraic Correspondences}\end{center}
+\vspace{0.5em}
+
+\section{Linear Concurrent Constraints}
+
+\subsection{Background}
+
+Linear Concurrent Constraints (LCC), following Haemmerl\'e \cite{haemmerle2011}, is a
+process algebra built on a constraint store that evolves by \emph{consumption}: the
+$\mathsf{ask}$ operation reads a constraint from the store and destructs it, rewriting
+the state dynamically. This breaks the monotonicity of classical constraint systems
+\cite{saraswat} in precisely the way that CLIO dynamics breaks monotonicity via
+eviction and projection. The key notions of observational equivalence in LCC are:
+logical equivalence ($P^\dagger \vdash\dashv Q^\dagger$), may-testing, barbed
+congruence ($\forall C,\; C[P] \sim C[Q]$), and labeled bisimulation. Haemmerl\'e
+proves that labeled bisimilarity and barbed congruence coincide \cite{haemmerle2011}.
+
+\subsection{Accessible Constraints as Binding Residue}
+
+In LCC, the observable of a process $P$ is not its full state but
+\[
+  \OO_D(P) \;=\; \{\, c \mid P \;\Rightarrow\; P' \parallel c \,\}:
+\]
+the set of constraints that remain \emph{accessible} after evolution.
+
+\begin{proposition}[Accessible Constraints = Binding Residue]
+$\OO_D(P)$ is the operational shadow of the binding invariant: it corresponds to the
+support of $\BI_t(P)$ in the constraint lattice.
+\end{proposition}
+
+The identification is structural, not analogical. The binding invariant is the
+constraint-closed residue of the system's trajectory; $\OO_D(P)$ is the
+constraint-closed residue of the process's execution. They are the same object viewed
+from different levels of description.
+
+\subsection{Constraint Consumption as Obstruction Projection}
+
+\begin{proposition}
+Constraint consumption in LCC corresponds to the projection
+\[
+  H^k(\Omega, \MM) \;\longrightarrow\;
+  H^k(\Omega, \MM)\,/\,\langle\text{consumed constraints}\rangle.
+\]
+Each $\mathsf{ask}/\mathsf{consume}$ step modifies the cocycle data, reducing
+$\|\Obs^k\|^2$ in expectation:
+$\omega \mapsto \omega'$ with $\|\omega'\| \leq \|\omega\|$.
+\end{proposition}
+
+Constraint consumption is \emph{cohomological simplification}: it reduces obstruction
+data, driving the gradient flow toward lower energy.
+
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+LCC operation & Cohomological interpretation \\
+\midrule
+$\mathsf{tell}(c)$ & Add local section; may increase $H^1$ \\
+$\mathsf{ask}(c)$ & Consume constraint; reduce $H^k$ obstruction \\
+Parallel composition & Gluing of local sections \\
+Commitment / choice & Irreversible closure event \\
+Non-determinism & Branching of derived stack $\MM$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Equivalences as Geometric Relations}
+
+\subsection{Bisimulation as Gradient-Flow Equivalence}
+
+\begin{definition}[Flow Bisimulation]
+$P \approx_\EE Q$ iff for all flows $\Phi_t$, the trajectories $\Phi_t(P)$ and
+$\Phi_t(Q)$ are homotopic in $H^\bullet(\Omega, \MM)$ at all times $t$.
+\end{definition}
+
+\subsection{Barbed Congruence as Descent Congruence}
+
+\begin{definition}[Descent Congruence]
+$P \cong_\EE Q$ iff for all perturbations $\delta$ (context embeddings),
+$\CC(\delta(P)) \sim \CC(\delta(Q))$ under flow bisimulation.
+\end{definition}
+
+Barbed congruence is invariance under all gradient flows: no perturbation can separate
+the binding invariants of $P$ and $Q$. This is equivalence under irreversible descent.
+
+\section{CLIO-Observational Equivalence}
+
+\begin{definition}[CLIO-Observational Equivalence]
+\[
+  x \;\sim_\CC\; y
+  \;\;\Longleftrightarrow\;\;
+  \lim_{t \to \infty}\CC^t(x) \;=\; \lim_{t \to \infty}\CC^t(y).
+\]
+Two states are equivalent if they converge to the same binding invariant.
+\end{definition}
+
+The refined asymptotic version avoids requiring a unique attractor:
+\[
+  x \sim_\CC y
+  \;\Longleftrightarrow\;
+  \lim_{t\to\infty} \mathrm{dist}\bigl(\CC^t(x), \CC^t(y)\bigr) = 0.
+\]
+
+\begin{definition}[Strong CLIO-Observational Equivalence]
+$x \approx_\CC y$ iff $\forall t,\; \CC^t(x) \sim \CC^t(y)$. This is bisimulation
+lifted to gradient flow: indistinguishability at every stage of descent.
+\end{definition}
+
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+LCC concept & Geometric realization & Formal object \\
+\midrule
+Constraints & Local sections & $\MM(U)$ \\
+Accessible constraints & Binding residue & $\mathrm{supp}(\BI_t)$ \\
+$\mathsf{ask}/\mathsf{consume}$ & Obstruction projection & $H^k \to H^k/\langle c\rangle$ \\
+Bisimulation & Flow equivalence & $\Phi_t(P) \simeq \Phi_t(Q)$ \\
+Barbed congruence & Invariance under irreversible descent & $\CC(\delta P) \sim \CC(\delta Q)$ \\
+Logical equivalence & Derived stack equivalence & $\MM_P \simeq \MM_Q$ \\
+May-testing & Shared basin of attraction & $\exists x \in \holim\MM$ reachable from both \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{theorem}[Triple Characterization of the Binding Invariant]
+\label{thm:char}
+The binding invariant of $S$ admits three equivalent characterizations:
+(i)~global sections of $\Omega$ over $\HH_t(S)$ (Part~I);
+(ii)~homotopy-stable minima of $\EE$ (Part~II);
+(iii)~the CLIO-observational equivalence class:
+$\BI_t(S) \cong \{x \mid x \sim_\CC S\} / {\simeq}$ (Part~III).
+\end{theorem}
+
+%% ===========================================================================
+%%  PART IV
+%% ===========================================================================
+
+\vspace{1.2em}
+\begin{center}{\large\bfseries Part IV: CLIO as Monoidal Endofunctor}\end{center}
+\vspace{0.5em}
+
+\section{Semantic Category and Monoidal Structure}
+
+Let $\Sem$ be a symmetric monoidal category whose objects are semantic states
+$X \in \mathcal{X}$, whose morphisms $\phi: X \to Y$ are admissibility-preserving
+transformations, and whose tensor product $\otimes$ represents compositional
+aggregation of independent semantic components. We interpret $X = (\Phi, \mathbf{v}, S)$
+as a structured RSVP field object in $\Sem$, where $\Phi$ is a scalar semantic
+potential, $\mathbf{v}$ is a directional inferential flow, and $S$ is an entropy field
+capturing unresolved structure.
+
+\begin{definition}[CLIO Operator]
+The \emph{CLIO operator} is a map $\CC : \mathcal{X} \to \mathcal{X}$:
+\[
+  \CC(X) \;=\; \mathbb{E}_{o \sim \pi_\theta(\cdot \mid E(X))}\bigl[\mathcal{F}(E(X), o)\bigr],
+\]
+composing: (i)~restriction $X \mapsto E(X)$; (ii)~inference $o \sim \pi_\theta$;
+(iii)~state update $\mathcal{F}$.
+\end{definition}
+
+\begin{proposition}[Endofunctor Structure]
+$\CC$ is an endofunctor on $\Sem$: for any morphism $\phi: X \to Y$,
+$\CC(\phi): \CC(X) \to \CC(Y)$ is induced by functoriality of $\mathcal{F}$ and
+invariance of $E$ over admissible maps.
+\end{proposition}
+
+\begin{proposition}[Lax Monoidality]
+There exists a natural transformation
+$\mu_{X,Y}: \CC(X) \otimes \CC(Y) \to \CC(X \otimes Y)$
+making $\CC$ lax monoidal. Independent reasoning processes can be composed before or
+after constraint closure, but the two are not strictly equivalent: interaction terms
+arise through shared resource constraints.
+\end{proposition}
+
+\section{Fixed-Point Algebra of CLIO}
+
+\begin{definition}[CLIO Algebra]
+An algebra over $\CC$ is a pair $(X, \alpha)$ where $\alpha: \CC(X) \to X$.
+\end{definition}
+
+\begin{definition}[Fixed-Point Algebra]
+A \emph{fixed-point algebra} satisfies $\alpha \circ \CC(\alpha) = \alpha$, and in the
+special case $\alpha = \Id_X$, we obtain $\CC(X) = X$, or in the derived homotopy-correct
+form, $X \simeq \CC(X)$.
+\end{definition}
+
+\begin{theorem}[Cognitive Fixed Point]
+\label{thm:cogfixedpt}
+Cognitive states correspond to fixed-point algebras of $\CC$: states invariant under
+restriction (memory constraint), inference (generation), and update (state evolution).
+A \emph{thought} is not a sequence but a fixed point of a recursive constraint-inference
+operator.
+\end{theorem}
+
+\section{CLIO as Sheaf Endofunctor}
+
+We lift $\CC$ from an endofunctor on semantic states to an endofunctor on presheaves:
+\[
+  \CC : \PSh(\Omega) \;\longrightarrow\; \PSh(\Omega),
+\]
+acting on sections by $\CC(s_U) = \mathbb{E}_o[\mathcal{F}(E(s_U), o)]$.
+
+\begin{proposition}
+$\CC$ preserves restriction maps up to stochastic equivalence, making it a weak
+endofunctor on the category of presheaves.
+\end{proposition}
+
+\begin{definition}[Obstruction Class (Sheaf Form)]
+Given a cover $\{U_i\}$ of $\Omega$, the obstruction to gluing local sections $\{s_i\}$
+is $[\omega] \in \check{H}^1(\Omega, \FF)$.
+\end{definition}
+
+\begin{theorem}[Constraint Closure Criterion]
+\label{thm:closurecrit}
+A reasoning trajectory achieves constraint closure if and only if
+$\check{H}^1(\Omega, \FF) = 0$.
+Successful reasoning corresponds to the existence of a global section: all surviving
+local computations are mutually compatible.
+\end{theorem}
+
+\begin{theorem}[Obstruction Descent]
+\label{thm:obsdescent}
+Under the entropy-reduction condition,
+$\mathbb{E}[\|\check{H}^1(s^{(n+1)})\|] \leq \mathbb{E}[\|\check{H}^1(s^{(n)})\|]$.
+Thus CLIO induces a descent process on cohomological obstruction.
+\end{theorem}
+
+\begin{proposition}[Functoriality under Admissible Maps]
+If $\phi: \mathcal{X} \to \mathcal{X}$ preserves admissibility
+($\phi(\Adm_B) \subseteq \Adm_B$), then
+$\CC \circ \phi \approx \phi \circ \CC$
+up to stochastic equivalence.
+\end{proposition}
+
+We obtain a unified picture of the KV-cache model: the cache defines a presheaf of
+local semantic sections; reasoning generates local sections; eviction prunes sections
+to reduce obstruction; CLIO iterates this as a functor; and cognition converges to
+fixed points where obstruction vanishes.
+
+%% ===========================================================================
+%%  PART V
+%% ===========================================================================
+
+\vspace{1.2em}
+\begin{center}{\large\bfseries Part V: Lyapunov Stability and Bisimulation Theorems}\end{center}
+\vspace{0.5em}
+
+\section{Setup and Assumptions}
+
+Let $\mathcal{X}$ be a semantic state space equipped with CLIO update $\CC : X \to X$,
+energy functional $\EE : X \to \mathbb{R}_{\geq 0}$ of the form in
+Definition~\ref{def:energy}, and a realization map $F : \mathbf{LCC} \to X$ sending
+LCC processes to semantic states. Let $\sim$ denote the observational equivalence
+relation induced by LCC.
+
+We operate under the following assumptions:
+\begin{itemize}[noitemsep]
+  \item[(A1)] \textbf{Observational invariance}: $P \sim Q \Rightarrow F(P)$ and $F(Q)$
+    have the same accessible constraint image under $\OO_D$.
+  \item[(A2)] \textbf{Bisimulation-compatibility of CLIO}: $x \sim y \Rightarrow
+    \CC(x) \sim \CC(y)$.
+  \item[(A3)] \textbf{Class-function property}: $x \sim y \Rightarrow \EE(x) = \EE(y)$.
+  \item[(A4)] \textbf{Descent property}: $\EE(\CC(x)) \leq \EE(x)$ for all $x$,
+    with strict inequality unless $x$ is in the stationary set.
+  \item[(A5)] \textbf{Homotopy-coherent realization}: LCC transitions relevant for
+    bisimulation yield paths $\gamma_{P,\alpha}: [0,1] \to X$ well-defined up to homotopy.
+\end{itemize}
+
+\begin{definition}[Admissible Fixed Point]
+$X^* \in \Adm_B$ is an admissible fixed point if there exists $\pi_\theta$ such that
+$\mathbb{E}[X_{t+1} \mid X_t = X^*] = X^*$ and $R(X^*)$ is locally maximal under
+perturbations within $\Adm_B$.
+\end{definition}
+
+\begin{theorem}[Constrained Convergence]
+\label{thm:cc}
+Assume: (1)~$R: \mathcal{X} \to \mathbb{R}$ is bounded and Lipschitz on $\Adm_B$;
+(2)~$E_t$ satisfies $\mathbb{E}[d(E_t(X), E_t(Y))] \leq \kappa\, d(X,Y)$ for $\kappa < 1$;
+(3)~$\pi_\theta$ is updated via an unbiased policy gradient with diminishing step size.
+Then $\{X_t\}$ converges in distribution to a set of admissible fixed points.
+\end{theorem}
+
+\begin{proof}
+The contraction condition prevents unbounded growth of state variability. Boundedness
+and Lipschitz continuity of $R$ ensure stability under restriction. Standard stochastic
+approximation results imply convergence of $\pi_\theta$ to a stationary policy.
+Together, these imply that the coupled process $(X_t, \pi_\theta)$ converges to
+stationary points where both state and policy are invariant in expectation, corresponding
+to admissible fixed points.
+\end{proof}
+
+\begin{proposition}[Entropy Reduction under Restriction]
+\label{prop:entropy}
+If $E_t$ removes components whose expected contribution to future reward is
+non-positive, then $\mathbb{E}[S_{t+1}] \leq \mathbb{E}[S_t]$, with strict inequality
+whenever non-contributing components are present.
+\end{proposition}
+
+\section{Theorem 1: Bisimulation-Invariant Lyapunov Function}
+
+\begin{theorem}[CLIO Induces a Bisimulation-Invariant Lyapunov Function]
+\label{thm:lyapunov}
+Under assumptions A2--A4, $\EE$ is a Lyapunov function on the quotient space
+$\mathcal{X}/{\sim}$, and therefore a bisimulation-invariant Lyapunov function for
+CLIO.
+\end{theorem}
+
+\begin{proof}
+\textbf{Step 1.} By A3, $\EE$ descends to a well-defined function
+$\bar{\EE}: \mathcal{X}/{\sim} \to \mathbb{R}_{\geq 0}$, setting
+$\bar{\EE}([x]) := \EE(x)$. This is well-defined because $x \sim y$ implies
+$\EE(x) = \EE(y)$.
+
+\textbf{Step 2.} By A2, $\CC$ induces a quotient map
+$\bar{\CC}: \mathcal{X}/{\sim} \to \mathcal{X}/{\sim}$, setting
+$\bar{\CC}([x]) := [\CC(x)]$, which is well-defined because $x \sim y$ implies
+$\CC(x) \sim \CC(y)$.
+
+\textbf{Step 3.} Apply A4:
+$\bar{\EE}(\bar{\CC}([x])) = \EE(\CC(x)) \leq \EE(x) = \bar{\EE}([x])$.
+So $\bar{\EE}$ is non-increasing along CLIO iterates on equivalence classes. If $[x]$
+is not stationary, the decrease is strict, so $\bar{\EE}$ is a strict Lyapunov
+function away from the stationary set.
+
+Therefore $\EE$ is Lyapunov on $\mathcal{X}/{\sim}$ modulo bisimulation. \qed
+\end{proof}
+
+\begin{corollary}[Stationary Classes are Binding Invariants]
+If $\bar{\CC}([x^*]) = [x^*]$ and $\bar{\EE}$ is minimized at $[x^*]$, then $[x^*]$
+is a binding invariant in the strong sense: a stable observational class that no
+admissible CLIO update can distinguish from itself.
+\end{corollary}
+
+\begin{interpretation}
+Identity is not assigned at the level of raw presentation but at the level of
+observational class. $\EE$ does not care which representative is chosen, and CLIO
+dissipates it monotonically. What stabilizes is not a state snapshot but an equivalence
+class under interaction---in Haemmerl\'e's language, a bisimulation class; in ours, a
+binding invariant.
+\end{interpretation}
+
+\section{Theorem 2: Bisimulation as Homotopy Equivalence of Descent Trajectories}
+
+\begin{theorem}[LCC Bisimulation = Homotopy Equivalence of Descent Trajectories]
+\label{thm:bisim-homotopy}
+Assume A1, A2, A5. Let $P, Q$ be LCC processes such that $P \approx Q$ (labeled
+bisimilarity in Haemmerl\'e's sense). Then the CLIO descent trajectories issued from
+$F(P)$ and $F(Q)$ are homotopy equivalent in the quotient dynamics: for every
+bisimulation-matching transition sequence from $P$, there is a matching sequence from
+$Q$ whose realized geometric trajectory is homotopic relative endpoints in $X$.
+\end{theorem}
+
+\begin{proof}
+Labeled bisimulation means that if $P \xrightarrow{\alpha} P_1$, then there exists
+$Q_1$ such that $Q \xRightarrow{\alpha} Q_1$ and $P_1 \approx Q_1$ (Haemmerl\'e
+\cite{haemmerle2011}, Definition of DE-bisimulation). Apply $F$. By A5, the transition
+$P \xrightarrow{\alpha} P_1$ yields a path $\gamma_{P,\alpha}: [0,1] \to X$ from
+$F(P)$ to $F(P_1)$; the matched transition yields $\gamma_{Q,\alpha}$ from $F(Q)$ to
+$F(Q_1)$. By A1 and bisimulation, $F(P) \sim F(Q)$ and $F(P_1) \sim F(Q_1)$.
+Therefore in the quotient space $\mathcal{X}/{\sim}$, both paths represent the same
+arrow $[F(P)] \to [F(P_1)]$ up to homotopy. Iterating over all matched transitions
+yields a ladder diagram whose squares commute up to homotopy. By standard pasting, the
+full descent trajectories are homotopy equivalent relative endpoints. \qed
+\end{proof}
+
+\begin{corollary}[Barbed Congruence and Homotopy]
+Since Haemmerl\'e proves that labeled bisimilarity and barbed congruence coincide
+\cite{haemmerle2011}, the homotopy classification above applies equally to barbed
+congruence:
+$P \cong Q \;\Longleftrightarrow\; F(P), F(Q)$ determine the same homotopy class of
+descent trajectories. This is especially important because barbed congruence is the
+irreversible, committed-choice notion---exactly matching the RSVP program's emphasis on
+projection, path dependence, and return under constraint.
+\end{corollary}
+
+\begin{theorem}[Quotient Descent on Observational Classes]
+\label{thm:quotient-descent}
+Under A1--A5, CLIO defines a descent dynamics on the homotopy category of
+observational equivalence classes, and the induced $\EE$ is a Lyapunov function on
+that category.
+\end{theorem}
+
+\begin{proof}
+From Theorem~\ref{thm:lyapunov}, $\EE$ descends to a Lyapunov function on
+$\mathcal{X}/{\sim}$. From Theorem~\ref{thm:bisim-homotopy}, the morphisms generated
+by CLIO trajectories in $\mathcal{X}/{\sim}$ are precisely homotopy classes of
+operationally equivalent LCC evolutions. The quotient dynamics is simultaneously
+operationally meaningful and geometrically coherent.
+\end{proof}
+
+\noindent\textbf{Final compression of Part~V.} Two claims are now fully established:
+\begin{quote}
+\itshape
+(1) $\EE(\CC(x)) \leq \EE(x)$ is not merely an energy drop on raw states---it is an
+energy drop on bisimulation classes. The Lyapunov object is identity-respecting.
+
+(2) $P \approx Q$ does not merely mean two programs cannot be told apart by an
+observer. Under realization into the derived semantic space, it means their descent
+dynamics belong to the same homotopy class.
+\end{quote}
+
+%% ===========================================================================
+%%  PART VI
+%% ===========================================================================
+
+\vspace{1.2em}
+\begin{center}{\large\bfseries Part VI: Neural Garbage Collection as Constraint-Driven State Reduction}\end{center}
+\vspace{0.5em}
+
+\section{From Monotonic Context Growth to Adaptive State Restriction}
+
+Standard autoregressive language models operate under a monotonic growth assumption:
+the internal state $X_t$ expands strictly with each inference step:
+\[
+  X_{t+1} \;=\; \mathcal{F}(X_t, o_t),
+  \qquad X_0 \subseteq X_1 \subseteq X_2 \subseteq \cdots
+\]
+This presupposes that all previously generated information remains equally available
+and relevant.
+
+Neural Garbage Collection (NGC) \cite{ngc2026} introduces a fundamental deviation. At
+discrete intervals, the model applies a learned restriction operator
+$E_t: X_t \to X_t'$, yielding:
+\[
+  X_{t+1} \;=\; \mathcal{F}(E_t(X_t), o_t),
+\]
+breaking monotonicity. The model jointly learns \emph{what to think} and \emph{what to
+forget} under a single reward signal. The eviction decisions are not heuristic (like
+recency or attention thresholds) but are learned via reinforcement learning using only
+final task success. The most important sentence in the paper is essentially:
+\begin{quote}\itshape
+``If a model can learn to reason, why can't it learn to forget?''
+\end{quote}
+This is a conceptual inversion: previously, reasoning was learned and memory was
+engineered; now reasoning and memory are co-learned.
+
+\subsection{RSVP Field Representation}
+
+We reinterpret the internal state as an RSVP field:
+\[
+  X_t \;=\; (\Phi_t, \mathbf{v}_t, S_t),
+\]
+where $\Phi_t$ is the scalar semantic potential, $\mathbf{v}_t$ is the directional
+inferential flow, and $S_t$ is the unresolved entropy field. The KV cache is a
+discrete support over a domain $\Omega_t$:
+\[
+  X_t \;\approx\; X|_{\Omega_t}.
+\]
+Eviction corresponds to selection of a subdomain $K_t \subset \Omega_t$, yielding a
+restricted field:
+\[
+  X_t' \;=\; X|_{K_t},
+  \qquad
+  X_{t+1} \;=\; \mathcal{F}(X|_{K_t}, o_t).
+\]
+Reasoning proceeds not on the full accumulated field, but on a dynamically selected
+support: inference is no longer transport on a fixed field history, but transport on a
+\emph{self-pruned field manifold}.
+
+\subsection{Variational Formulation}
+
+Let $R(X_T)$ denote terminal task realizability and $C(K_t)$ retained computational
+substrate. The joint optimization over reasoning and eviction is:
+\[
+  \max_{\{o_t, K_t\}}\; R(X_T)
+  \quad\text{subject to}\quad
+  \sum_t C(K_t) \;\leq\; B.
+\]
+Introducing a Lagrange multiplier $\lambda$, we obtain the unconstrained functional:
+\[
+  \mathcal{J} \;=\; R(X_T) \;-\; \lambda\sum_t C(K_t).
+\]
+In RSVP language, this is a constrained variational principle: reasoning and forgetting
+are coupled controls minimizing future work while preserving task closure. This is
+precisely the ``selection determines reality'' thesis: the realized trajectory is the
+residue of a decimation process.
+
+\subsection{Eviction as Entropic Projection}
+
+\begin{definition}[Admissible Projection]
+Eviction is interpreted as an approximate projection
+\[
+  E_t: X_t \;\mapsto\; \Pi_{\Adm}(X_t),
+\]
+where $\Adm$ denotes the admissible subspace of states preserving downstream
+realizability under resource constraints.
+\end{definition}
+
+NGC implements \emph{entropic decimation}: components of the state that do not
+contribute to future constraint closure are removed. The realized trajectory is not the
+accumulation of all intermediate steps, but the residue of selective pruning.
+
+\subsection{Sheaf-Theoretic Interpretation}
+
+Let $\{U_i\}$ be a cover of the reasoning trajectory, where each $U_i$ corresponds to
+a contiguous block of reasoning tokens. The KV cache encodes local sections
+$s_i \in \FF(U_i)$. NGC performs a learned pruning $\{s_i\} \mapsto \{s_i\}_{i \in I_t}$
+of sections that are likely to admit extension to a global section under future
+constraints. Eviction functions as a coarse, learned filter on the gluing problem,
+discarding sections unlikely to contribute to eventual consistency. This interpretation
+is especially natural because NGC performs eviction at the level of contiguous token
+blocks, which correspond to semantically coherent subcomputations occupying contiguous
+spans.
+
+More precisely, eviction is an \emph{approximate obstruction-sensitive restriction
+functor}: the model is learning, however crudely, which local sections need not be
+preserved for later consistency. The stronger formulation is that a reasoning process
+should preserve precisely those local sections whose omission would change the
+obstruction class of the evolving global solution.
+
+\subsection{Policy Unification and Single-Signal Optimization}
+
+Let $\tau = \{(o_t, K_t)\}_{t=1}^T$ be a trajectory. The policy gradient objective
+is:
+\[
+  \grad_\theta\; \mathbb{E}_{\tau \sim \pi_\theta}[R(\tau)].
+\]
+There is no decomposition into separate objectives for reasoning and memory.
+Consequently, the model learns a joint strategy in which retained state determines
+future reasoning, reasoning determines reward, and reward updates both retention and
+reasoning. This \emph{closes the loop} between inference and state formation---the
+model becomes a self-editing dynamical system.
+
+\subsection{Budget-Aware Interoception as Field-Awareness}
+
+NGC prepends the eviction rate to the prompt so the model has explicit awareness of its
+own resource constraint before reasoning. In RSVP terms, this is not a superficial
+prompt trick but a crude form of \emph{endogenous field-awareness}: the system is told
+about its own thermodynamic boundary condition before transport begins. This moves it
+one step closer to a model that reasons as a function of its own internal constraint
+state.
+
+\subsection{The Replay Mask and Path-Faithful Admissibility}
+
+The replay-mask mechanism ensures that once the model has evicted parts of its history,
+training respects the exact visibility structure induced by those evictions. This is
+very close to the insistence that truth is not local plausibility but fixed-point
+realizability under the actual constraints of the path taken. A reasoning trace cannot
+be judged by a context it never possessed. The replay mask is a path-faithful
+reconstruction of the admissibility conditions under which each token was produced.
+
+\subsection{NGC's Empirical Lyapunov Signal}
+
+NGC's internal uncertainty functional behaves empirically as a Lyapunov function. The
+paper observes that the gradient of uncertainty with respect to time is negative for
+correct trajectories and positive for incorrect ones. This is not merely a heuristic
+observation: it is the defining property of a Lyapunov function. We can therefore
+identify
+\[
+  \text{uncertainty}(t) \;\approx\; \EE(x_t),
+\]
+and the empirical result becomes
+\[
+  \frac{d}{dt}\EE(x_t) \;<\; 0 \quad\text{on successful trajectories.}
+\]
+
+\begin{proposition}[Empirical Lyapunov Principle]
+The internal uncertainty functional measured by NGC behaves as a Lyapunov function for
+successful reasoning trajectories, providing empirical grounding for Theorem~\ref{thm:lyapunov}.
+\end{proposition}
+
+\subsection{Graph Aggregation as Computational Homotopy Colimit}
+
+NGC's graph-based aggregation constructs a graph of reasoning paths, clusters them, and
+merges them into a final structure. This is structurally:
+\[
+  \text{tree expansion} \to \text{selection} \to \text{collapse}.
+\]
+In the homotopy-theoretic picture:
+\begin{itemize}[noitemsep]
+  \item Different paths $\to$ different local trajectories (local sections).
+  \item Clustering $\to$ identification of equivalent reasoning (homotopy identification).
+  \item Summarization $\to$ quotienting (homotopy colimit).
+\end{itemize}
+NGC's graph reduction is therefore a computational version of taking a homotopy
+colimit:
+\[
+  \text{stable CLIO reasoning graph} \;\equiv\; \text{bisimulation equivalence class}.
+\]
+
+\subsection{Toward Semantic Renormalization}
+
+While NGC operates via binary retention decisions, the formalism suggests a broader
+class of operators. Instead of selecting subsets $K_t$, one may consider
+\emph{semantic renormalization operators}:
+\[
+  M_t : X_t \;\mapsto\; \tilde{X}_t
+\]
+that perform semantic compression, merging, or coarse-graining while preserving
+invariants relevant to realizability:
+\[
+  \mathcal{I}(M_t(X)) \;=\; \mathcal{I}(X).
+\]
+The generalized CLIO operator is:
+\[
+  \CC_M(X) \;=\; \mathbb{E}_{o \sim \pi_\theta(\cdot \mid M(X))}[\mathcal{F}(M(X), o)],
+\]
+supporting compression, merging, and abstraction rather than binary deletion. This
+defines a renormalization flow over semantic states, in which cognition operates by
+preserving invariants while reducing representational complexity:
+\[
+  \text{evict} \;\subset\; \text{restrict} \;\subset\; \text{quotient} \;\subset\; \text{renormalize}.
+\]
+Binary garbage collection is only the crudest member of this family. A more mature
+cognitive architecture would perform \emph{homotopy-aware renormalization}, preserving
+invariants while collapsing redundant or obstruction-producing structure.
+
+The deepest way to state the significance of NGC inside the present framework is this:
+it is an early empirical example of a system in which cognition is being forced to
+acknowledge that persistence is costly and that not all locally generated structure
+deserves continued ontological status. What survives is what remains useful under
+constraint. That is a weak form of the broader claim that realization is the residue
+left after incompatible structure has been decimated.
+
+\section{Worked Example: Binding and Rupture in a Finite Constraint System}
+
+We present a minimal example illustrating the Binding Invariant Theorem concretely,
+exhibiting a system with a non-trivial binding invariant, a closure event that preserves
+it, and a closure event that destroys it.
+
+\subsection{The Constraint System}
+
+Let $T = \{t_0 \leq t_1 \leq t_2\}$. Define:
+\[
+  \CC_{t_0} = \{A\},\quad
+  \CC_{t_1} = \{A, B\},\quad
+  \CC_{t_2} = \{A, B, C\},
+\]
+with restriction maps $\rho_{t_1 t_0}(A,B) = A$ and $\rho_{t_2 t_1}(A,B,C) = (A,B)$.
+The constraint history at $t_2$ is:
+\[
+  \HH_{t_2}(S) \;=\; \varprojlim\bigl\{\CC_{t_0} \leftarrow \CC_{t_1} \leftarrow \CC_{t_2}\bigr\}
+  \;=\; \bigl\{(A,\; (A,B),\; (A,B,C))\bigr\}.
+\]
+A valid trajectory $\sigma(t_i) = \bigwedge_{j \leq i}\CC_{t_j}$ exists:
+$\Gamma(T, \FF) \neq \varnothing$, hence $\BI_{t_2}(S) \neq \varnothing$.
+
+\subsection{Preserving Closure Event}
+
+Adjoining $D$ consistent with $(A,B,C)$: $\CC_{t_2^+} = \{A,B,C,D\}$. The binding
+section extends, $\BI_{t_2^+}(S) \neq \varnothing$, and the system continues.
+
+\subsection{Rupture Event}
+
+Imposing $\CC_{t_2'} = \{A, B, \lnot A\}$: since $A \wedge \lnot A = \bot$, no
+consistent state exists, no trajectory extends to $t_2'$, and $\BI_{t_2'}(S) =
+\varnothing$. By the Rupture Criterion (Corollary~\ref{cor:rupture}), this is
+replacement, not continuation.
+
+\subsection{Partial Rupture / Ambiguity}
+
+Imposing $\CC_{t_2''} = \{A, B, C \vee E\}$: multiple extensions exist, global
+sections exist but are non-unique, and $\BI_{t_2''}(S)$ has multiple elements.
+This is \emph{indeterminate continuation}: the system persists, but its future identity
+is underdetermined.
+
+\subsection{Diagrammatic Form}
+
+The three cases correspond to the existence, non-existence, and multiplicity of
+compatible cones over the inverse system.
+
+\medskip
+\noindent\textit{Binding (normal continuation).} The inverse limit
+$\HH_{t_2}(S)$ is the apex of a compatible cone:
+\[
+\begin{tikzcd}[column sep=2.2cm, row sep=1.8cm]
+  \HH_{t_2}(S)
+    \arrow[d, dashed, "\pi_2"']
+    \arrow[dr, dashed, "\pi_1"]
+  & \\
+  \{A,B,C\}
+    \arrow[r, "\rho_{t_2 t_1}"']
+  & \{A,B\}
+    \arrow[r, "\rho_{t_1 t_0}"']
+  & \{A\}
+\end{tikzcd}
+\]
+A compatible binding section exists; $\BI_{t_2}(S) \neq \varnothing$.
+
+\medskip
+\noindent\textit{Rupture.} Imposing $\lnot A$ alongside $A$ destroys compatibility:
+\[
+\begin{tikzcd}[column sep=2.2cm, row sep=1.8cm]
+  \{A,B,\lnot A\}
+    \arrow[d, "\rho_{t_2' t_1}"']
+    \arrow[dr, "\rho_{t_2' t_0}"]
+  & \\
+  \{A,B\}
+    \arrow[r, "\rho_{t_1 t_0}"']
+  & \{A\}
+\end{tikzcd}
+\]
+No object $\HH_{t_2'}(S)$ completes this as an inverse limit: any putative section
+would require $A \wedge \lnot A = \bot$. Hence $\BI_{t_2'}(S) = \varnothing$.
+
+\medskip
+\noindent\textit{Ambiguity.} The disjunctive constraint $C \vee E$ admits multiple extensions:
+\[
+\begin{tikzcd}[column sep=2.2cm, row sep=1.8cm]
+  \{A,B,C\vee E\}
+    \arrow[d, "\rho_{t_2'' t_1}"']
+    \arrow[dr, "\rho_{t_2'' t_0}"]
+  & \\
+  \{A,B\}
+    \arrow[r, "\rho_{t_1 t_0}"']
+  & \{A\}
+\end{tikzcd}
+\]
+Compatible cones exist, but not uniquely: $\BI_{t_2''}(S)$ is non-empty and
+non-singleton. The system persists with underdetermined continuation.
+
+\begin{remark}
+These diagrams make visible the core distinction of the theory. Preservation
+corresponds to extendability of cones. Rupture corresponds to non-existence of a
+compatible cone. Ambiguity corresponds to multiplicity of cones. The binding invariant
+is therefore best understood not as a substance carried through time, but as the
+existence and structure of a limiting cone over the system's constraint history. This
+finite example is the discrete analogue of cohomological obstruction: incompatibility
+of constraints corresponds to non-vanishing obstruction classes, while compatible
+extensions correspond to trivialization.
+\end{remark}
+
+\section{Open Problems}
+
+Three problems would convert the framework's correspondences into fully tight theorems.
+
+\textbf{Problem 1 (Lyapunov stability).} Prove that CLIO updates induce a
+bisimulation-invariant Lyapunov function $V(x) = \EE(x) - \EE(x^*)$ satisfying
+$V(\CC(x)) \leq V(x)$ for all $x$, with equality iff $x = x^*$, without requiring
+the assumptions A2--A4 as inputs---i.e., derive them from RSVP field dynamics.
+
+\textbf{Problem 2 (Fisher metric).} Define a natural Fisher information metric on
+$\MM$ making the gradient flow of $\EE$ explicit as a natural gradient flow in the
+sense of Amari. The entropy term $\mu S(x)$ suggests $\MM$ carries natural information
+geometry; the Fisher metric would make the gradient flow $\partial_t x = -\grad\EE(x)$
+the most efficient descent with respect to the geometry of distributions.
+
+\textbf{Problem 3 (LCC bisimulation as homotopy---converse).} The forward direction of
+Theorem~\ref{thm:bisim-homotopy} is proved. The converse---that homotopy equivalence
+of descent trajectories implies LCC bisimulation---requires a realizability result
+connecting the derived-stack semantics of $\MM$ to the operational semantics of LCC.
+
+A solution to all three would unify process algebra, derived algebraic geometry, and
+learning dynamics into a single formal object: the metric space of CLIO-observational
+equivalence classes under Fisher-information gradient flow.
+
+\section{Conclusion}
+
+We have developed the binding invariant through six interlocking formalisms.
+
+\textbf{Part~I} (sheaf and topos theory): the binding invariant is the global section
+of the subobject classifier over the constraint history topos. The Binding Invariant
+Theorem establishes four equivalent conditions; three corollaries characterize
+uniqueness, rupture, and stability.
+
+\textbf{Part~II} (derived algebraic geometry and variational dynamics): ambiguity is
+higher homotopy in a derived semantic stack; the self is the minimum-energy homotopy
+class of a multi-scale cohomological energy functional; synthetic grounding is gradient
+descent; return-under-constraint is the geometric stability of the fixed point. Identity
+is dynamical equilibrium, not static persistence.
+
+\textbf{Part~III} (process algebra): LCC constraint consumption is cohomological
+obstruction projection; bisimulation is gradient-flow equivalence; barbed congruence is
+invariance under irreversible descent. The Triple Characterization Theorem
+(Theorem~\ref{thm:char}) proves equivalence of all three levels.
+
+\textbf{Part~IV} (monoidal category theory): CLIO is a lax monoidal endofunctor on
+$\Sem$; cognitive states are fixed-point algebras of CLIO; the sheaf-theoretic lift
+makes CLIO an obstruction-descending functor on $\PSh(\Omega)$.
+
+\textbf{Part~V} (formal theorems): $\EE$ is a bisimulation-invariant Lyapunov function
+(Theorem~\ref{thm:lyapunov}); LCC bisimulation corresponds to homotopy equivalence of
+descent trajectories (Theorem~\ref{thm:bisim-homotopy}); quotient descent on
+observational classes is simultaneously operationally meaningful and geometrically
+coherent (Theorem~\ref{thm:quotient-descent}).
+
+\textbf{Part~VI} (concrete instantiation): NGC is a concrete empirical case of CLIO
+dynamics, its ``grow-then-evict'' mechanism is admissible-subspace projection in RSVP
+field coordinates, its internal uncertainty is an empirical Lyapunov signal, its graph
+aggregation is a computational homotopy colimit, and its limitation---binary
+retention---points toward semantic renormalization as the next architecture.
+
+The deepest result is the convergence of all six levels on the same object. The binding
+invariant is not an artifact of any one formal choice but the invariant structure that
+appears at every level of description of a system that undergoes irreversible change.
+The framework is not speculative: it is the correct mathematical language for what NGC
+is already doing. And the framework is not merely interpretive: it generates three open
+problems whose resolution would close the loop between process algebra, derived geometry,
+and machine learning.
+
+\begin{quote}
+\itshape
+The binding invariant is the minimum-energy homotopy class that survives irreversible
+projection---the observational equivalence class of a system under cohomological descent
+on its constraint structure. A system is ``itself'' if it lies in a homotopy class
+invariant under descent on a cohomological energy functional defined by its constraints.
+\end{quote}
+
+\vspace{2em}
+\hrule
+\vspace{10em}
+
+\noindent\textbf{Acknowledgments.}
+This essay develops ideas first articulated in \emph{The Compiled Self},
+\emph{Return Under Constraint}, and the Yarncrawler framework. Parts~III--V draw on
+Haemmerl\'e's formalization of Linear Concurrent Constraints. Part~VI engages with
+Li, Hamid, Fox, and Goodman's Neural Garbage Collection.
+
+\vspace{1em}
+\noindent\textbf{Keywords.}
+binding invariant, constraint closure, irreversibility, sheaf theory, topos theory,
+derived stacks, $\infty$-groupoids, cohomological energy functional, gradient flow,
+synthetic grounding, CLIO, RSVP field theory, Yarncrawler, linear concurrent
+constraints, bisimulation, barbed congruence, observational equivalence, neural garbage
+collection, semantic renormalization, monoidal endofunctor, fixed-point algebra.
+
+\newpage
+\begin{thebibliography}{99}
+
+\bibitem{maclane}
+S.~Mac Lane,
+\textit{Categories for the Working Mathematician},
+Springer, 2nd ed., 1998.
+
+\bibitem{johnstone}
+P.~T.~Johnstone,
+\textit{Sketches of an Elephant: A Topos Theory Compendium},
+Oxford University Press, 2002.
+
+\bibitem{lurie}
+J.~Lurie,
+\textit{Higher Topos Theory},
+Princeton University Press, 2009.
+
+\bibitem{riehl}
+E.~Riehl,
+\textit{Category Theory in Context},
+Dover, 2016.
+
+\bibitem{spivak}
+D.~I.~Spivak,
+\textit{Category Theory for the Sciences},
+MIT Press, 2014.
+
+\bibitem{girard}
+J.-Y.~Girard,
+Linear Logic,
+\textit{Theoretical Computer Science}, 50 (1987), 1--102.
+
+\bibitem{saraswat}
+V.~A.~Saraswat,
+\textit{Concurrent Constraint Programming},
+MIT Press, 1993.
+
+\bibitem{saraswatlincoln}
+V.~A.~Saraswat and P.~Lincoln,
+Higher-Order, Linear, Concurrent Constraint Programming,
+Technical Report, Xerox PARC, 1992.
+
+\bibitem{haemmerle2011}
+R.~Haemmerl\'e,
+Observational Equivalences for Linear Logic Concurrent Constraint Languages,
+\textit{Theory and Practice of Logic Programming},
+11(4--5): 469--485, 2011.
+Also available as arXiv:1108.0329.
+
+\bibitem{milner}
+R.~Milner,
+\textit{Communication and Concurrency},
+Prentice Hall, 1989.
+
+\bibitem{parrowvictor}
+J.~Parrow and B.~Victor,
+The Fusion Calculus: Expressiveness and Symmetry in Mobile Processes,
+\textit{Proceedings of LICS}, 1998.
+
+\bibitem{landauer}
+R.~Landauer,
+Irreversibility and Heat Generation in the Computing Process,
+\textit{IBM Journal of Research and Development}, 1961.
+
+\bibitem{bennett}
+C.~H.~Bennett,
+The Thermodynamics of Computation,
+\textit{International Journal of Theoretical Physics}, 1982.
+
+\bibitem{lloyd}
+S.~Lloyd,
+Ultimate Physical Limits to Computation,
+\textit{Nature}, 406 (2000), 1047--1054.
+
+\bibitem{jacobson}
+T.~Jacobson,
+Thermodynamics of Spacetime: The Einstein Equation of State,
+\textit{Physical Review Letters}, 75 (1995), 1260--1263.
+
+\bibitem{verlinde}
+E.~Verlinde,
+On the Origin of Gravity and the Laws of Newton,
+\textit{Journal of High Energy Physics}, 2011.
+
+\bibitem{ngc2026}
+M.~Y.~Li, J.~I.~Hamid, E.~B.~Fox, and N.~D.~Goodman,
+Neural Garbage Collection: Learning to Forget while Learning to Reason,
+arXiv:2604.18002, 2026.
+
+\bibitem{abramsky}
+S.~Abramsky and N.~Tzevelekos,
+Introduction to Categories and Categorical Logic,
+in \textit{New Structures for Physics}, Springer, 2011.
+
+\bibitem{sutton2019}
+R.~S.~Sutton,
+The Bitter Lesson, 2019.
+
+\end{thebibliography}
+
+\end{document}

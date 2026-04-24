@@ -1,0 +1,588 @@
+\documentclass[12pt]{article}
+
+% ---- Packages ----
+\usepackage[T1]{fontenc}
+
+
+\usepackage{geometry}
+\geometry{a4paper, margin=1.2in}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{hyperref}
+\usepackage{csquotes}
+\usepackage{enumitem}
+\usepackage[nameinlink,capitalise]{cleveref}
+\usepackage{natbib}
+\bibliographystyle{plainnat}
+\setcitestyle{authoryear,open={(},close={)}}
+
+% ---- Theorem environments ----
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{definition}{Definition}[section]
+\newtheorem{remark}{Remark}[section]
+
+% ---- Macros ----
+\newcommand{\bind}{\phi}
+\newcommand{\recomp}{\rho}
+\newcommand{\Jsel}{J_{\mathrm{sel}}}
+\newcommand{\Jclos}{J_{\mathrm{clos}}}
+\newcommand{\Jgrowth}{J_{\mathrm{growth}}}
+\newcommand{\dsem}{d_{\mathrm{sem}}}
+
+% ---- Formatting ----
+\setlength{\parskip}{0.5em}
+\setlength{\parindent}{1.5em}
+\sloppy
+
+% ---- Title ----
+\title{Constraint Regimes and the Structure of Surviving Objects\\
+\large On the Invariance of Selection Pressure Across Censorship, Feed Dynamics, and Cognitive Strategy}
+\author{Flyxion}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Three phenomena that appear historically and culturally unrelated—the formal
+properties of Soviet-era science fiction, the structural dynamics of feed-optimized
+media platforms, and the cognitive trajectory of agents who voluntarily adopt
+high-discipline intellectual regimes—are shown to be instances of a single
+underlying mechanism. In each case, a selection environment imposes a
+fragment-level survivability condition, and the global form of what survives is
+determined by that condition rather than by the intentions of the agents
+involved. We formalize this through the coupled variables of binding force
+$\bind(c)$—the degree to which a piece of content retains semantic identity
+under arbitrary decomposition—and recomposability $\recomp(c)$—the degree
+to which its affective or functional charge survives context-switching. Systems
+that select for high $\recomp$ converge to structurally shallow, fragment-safe
+outputs. Systems that select for high $\bind$ converge to internally coherent
+but low-circulation objects. Neither outcome depends on stated intent. The
+invariant is the constraint structure. As a corollary, voluntary adoption of a
+high-binding regime functions as an exit from recomposability-dominated
+selection environments, and the colloquial description of this strategy as
+``galaxy brain'' discipline masks a formal structural shift. We conclude that
+the full version of this claim cannot itself propagate without transformation,
+which is not a paradox but a fixed point of the framework.
+\end{abstract}
+
+\tableofcontents
+\clearpage
+
+% ============================================================
+\section{Introduction: Three Phenomena, One Mechanism}
+\label{sec:intro}
+% ============================================================
+
+Consider three situations that appear to have nothing in common.
+
+First: a pair of writers in the Soviet Union produce science fiction novels
+spanning decades. Their work is formally published, widely read, and broadly
+regarded as subversive. It escapes censorship not by avoiding critique but by
+being structured such that every extractable fragment can be defended as
+allegory, genre fiction, or ambiguity. The corpus feels ``perfectly calibrated,''
+as though a sophisticated editorial intelligence had tuned each sentence to
+the threshold of permissibility.
+
+Second: feed-optimized media platforms select for content that generates
+response without requiring full processing—content that can be clipped,
+quoted, embedded, and reacted to without loss of affective charge. The
+discourse that survives this selection is increasingly characterized by high
+affective intensity and low semantic stability: it circulates widely but means
+something different in every context it enters. This is not because the
+platform intended to destroy meaning. It is because the platform optimized
+for a property that is approximately inverse to meaning-preservation.
+
+Third: an individual notices that their intellectual environment has progressively
+supplied fewer genuinely difficult inputs—not because the world has become
+less interesting, but because their social network can no longer generate
+material above their internal processing threshold. To continue developing,
+they shift from consuming externally curated complexity to constructing it
+internally: writing formal papers, building systems, enforcing compression,
+and selecting reading for maximal transfer across domains. The output of this
+phase is structurally different from the input phase: less recomposable, more
+coherent, lower in circulation, higher in internal consistency.
+
+These three situations look unrelated. One is about political censorship, one
+about media economics, one about personal intellectual development. But
+once they are expressed in terms of constraint structure rather than domain
+content, they become instances of the same mechanism:
+
+\begin{quote}
+\emph{Any environment that imposes selection on fragments will shape the
+internal structure of what survives. The trade-off between binding force and
+recomposability determines whether surviving structures remain deep or
+become shallow.}
+\end{quote}
+
+This paper develops that claim formally, traces it through each of the three
+cases, and examines what follows from their unification.
+
+% ============================================================
+\section{The Core Variables}
+\label{sec:variables}
+% ============================================================
+
+\begin{definition}[Binding Force]
+\label{def:binding}
+The binding force of a content object $c$, denoted $\bind(c) \in [0,1]$,
+measures the degree to which the semantic content of $c$ is preserved under
+arbitrary context transformation. Formally, let $T_\sigma$ denote a
+context-transformation operator parameterized by context $\sigma$. Then:
+\[
+\bind(c) = 1 - \mathbb{E}_\sigma\bigl[\dsem(c,\, T_\sigma(c))\bigr]
+\]
+where $\dsem$ is a semantic distance measure and the expectation is taken
+over the distribution of contexts into which $c$ may be reinserted.
+High $\bind(c)$ indicates that meaning is preserved under context-switching.
+Low $\bind(c)$ indicates that affective charge survives while semantic content
+drifts.
+\end{definition}
+
+\begin{definition}[Recomposability]
+\label{def:recomp}
+The recomposability of $c$, denoted $\recomp(c) \in [0,1]$, measures the
+degree to which the affective or functional charge of $c$ is preserved under
+context transformation:
+\[
+\recomp(c) = \mathbb{E}_\sigma\bigl[A(T_\sigma(c))\bigr] \,/\, A(c)
+\]
+where $A(c)$ is the affective charge of $c$. Content is maximally
+recomposable when it generates equivalent response regardless of the
+context into which it is inserted.
+\end{definition}
+
+\begin{proposition}[Approximate Inversion]
+\label{prop:inversion}
+Under typical platform dynamics, $\recomp(c) \approx 1 - \bind(c)$. More
+precisely:
+\[
+\recomp(c) \leq 1 - \bind(c) + \varepsilon(c)
+\]
+where $\varepsilon(c) \geq 0$ measures the degree to which the affective
+charge of $c$ has become decoupled from its semantic content through prior
+recomposition or deliberate design. Content with $\varepsilon(c) = 0$ cannot
+be recomposed without losing both affect and meaning simultaneously.
+\end{proposition}
+
+The quantity $\varepsilon(c)$ indexes what may be called \emph{pseudo-binding}:
+the appearance of semantic constraint without actual resistance to
+recomposition. Content that performs depth while remaining affectively
+portable has high $\varepsilon(c)$. It is the dominant rhetorical mode of
+feed-adapted discourse.
+
+The inversion in \cref{prop:inversion} is the load-bearing element of the
+entire framework. If increasing $\recomp$ necessarily decreases $\bind$,
+then any selection environment that rewards $\recomp$ will systematically
+erode $\bind$, regardless of what the agents within it intend. No one has to
+decide to simplify things. The selection mechanism does it automatically.
+
+% ============================================================
+\section{Selection Regimes and Closure Regimes}
+\label{sec:regimes}
+% ============================================================
+
+\begin{definition}[Selection Regime]
+\label{def:selreg}
+A discourse or production environment operates in the \emph{selection regime}
+when its dominant selection functional rewards recomposability:
+\[
+\Jsel(c) = \alpha \cdot E(c) + \beta \cdot \recomp(c) - \gamma \cdot K(c)
+\]
+where $E(c)$ is engagement, $\recomp(c)$ is recomposability, $K(c)$ is
+cognitive cost to the consumer, and $\alpha, \beta, \gamma > 0$. Content
+survives by being detachable from context. The stable equilibrium is
+low-binding, high-recomposability discourse.
+\end{definition}
+
+\begin{definition}[Closure Regime]
+\label{def:closreg}
+An environment operates in the \emph{closure regime} when its dominant
+selection functional rewards semantic invariance under transformation:
+\[
+\Jclos(c) = \lambda \cdot \bind(c) - \mu \cdot \delta(c)
+\]
+where $\bind(c)$ is binding force and $\delta(c)$ is detected inconsistency
+under adversarial recomposition. Content survives by remaining identical to
+itself across contexts. The stable equilibrium is high-binding, low-entropy
+discourse.
+\end{definition}
+
+\begin{theorem}[Regime Incompatibility]
+\label{thm:incompatibility}
+For any content $c$:
+\[
+\nabla_c \Jsel \cdot \nabla_c \Jclos \leq 0
+\]
+with equality only on the set of measure zero where $\bind(c) = \recomp(c)
+= \tfrac{1}{2}$. Gradient ascent under $\Jsel$ is gradient descent under
+$\Jclos$ and vice versa. There is no smooth deformation that transforms a
+selection-regime system into a closure-regime system.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+$\Jsel$ increases in $\recomp(c) \approx 1 - \bind(c)$, so $\nabla_c \Jsel$
+points in the direction of increasing $\recomp$ and decreasing $\bind$.
+$\Jclos$ increases in $\bind(c)$, so $\nabla_c \Jclos$ points in the
+direction of increasing $\bind$ and decreasing $\recomp$. These gradients
+are antiparallel.
+\end{proof}
+
+The two regimes are not points on a spectrum. They are characterized by
+incompatible selection functionals, incompatible stable equilibria, and
+incompatible populations of content. This is why attempts to operate within
+a selection regime while preserving closure-regime properties—the ``Trojan
+horse'' strategy—fail structurally rather than contingently.
+
+\begin{corollary}[Trojan Horse Bound]
+\label{cor:trojan}
+Let $c$ be content with binding force $\bind(c)$. Let $c'$ be its
+translation into a more recomposable form with $\recomp(c') > \recomp(c)$.
+Then:
+\[
+\bind(c') \leq \bind(c)
+\]
+with equality only if the translation is semantically lossless, which
+requires $\recomp(c') = \recomp(c)$. Since the translation is performed
+precisely to increase $\recomp(c')$, we have $\bind(c') < \bind(c)$
+strictly. The propagating form binds less than the original.
+\end{corollary}
+
+The corollary removes a comforting belief: that ideas can be made widely
+transmissible without alteration. Once the trade-off is formalized,
+accessibility is not neutral. It is a transformation operator that necessarily
+changes the object. The ``smuggled'' idea is not the same idea; it is a
+projection that survives under higher recomposability constraints.
+
+% ============================================================
+\section{Three Instances of the Same Structure}
+\label{sec:instances}
+% ============================================================
+
+\subsection{Soviet-Era Fiction: Hostile Extraction as Selection Pressure}
+\label{ssec:soviet}
+
+The Strugatsky brothers published science fiction in the Soviet Union across
+several decades. Their work was broadly regarded as subversive, yet it
+escaped suppression. The standard explanation attributes this to authorial
+craft: deliberate calibration of transgressive content to the threshold of
+permissibility.
+
+This explanation is correct in its description but wrong in its causal
+structure. It implies a centralized optimizing agent—an author or a regime
+monitoring discourse—producing the calibration through intent. What
+actually produced it was a selection mechanism operating at the fragment
+level.
+
+The operative constraint was not: \emph{``this book as a whole must be
+defensible.''} It was: \emph{``any extractable fragment of this book,
+removed from context, must be defensible as fiction, allegory, or
+ambiguity.''} This is a fragment-level survivability condition—exactly the
+condition that maximizes $\bind(c)$ under hostile interpretation rather than
+maximizes $\recomp(c)$ under feed amplification.
+
+The result is a corpus where each piece is locally deniable under arbitrary
+extraction. Every paragraph about a medieval tyrant can be read as genre
+worldbuilding. Every passage about a population subjected to daily seizures
+of manufactured euphoria can be read as speculative fiction. The work feels
+``perfectly calibrated'' not because it was explicitly engineered that way,
+but because everything that was not fragment-safe failed to survive.
+
+\begin{remark}
+The Soviet censorship regime and the feed selection regime impose
+structurally identical fragment-level survivability conditions while
+optimizing for opposite properties. Censorship selects for maximum
+$\bind$ under hostile decomposition—every fragment must resist lethal
+extraction. Feeds select for maximum $\recomp$ under algorithmic
+amplification—every fragment must circulate without loss of charge.
+Both produce corpora where no fragment is ``unsafe'' in the relevant
+sense. Different penalty functions, same formal constraint structure,
+opposite equilibria.
+\end{remark}
+
+The conspiracy version of this observation—that the Strugatskys were
+managed by a state apparatus monitoring public discourse and serializing
+feedback—is narratively satisfying but explanatorily redundant. The
+selection mechanism produces the same output without coordination. This
+is not to say the conspiracy version is false; it is to say it is a
+limiting case of the selection mechanism, not the mechanism itself.
+
+\subsection{Feed-Optimized Platforms: Recomposability as Fitness}
+\label{ssec:feed}
+
+Feed architectures optimize for a property of content that is not identical to
+engagement but produces it: recomposability. A piece of content is
+recomposable to the degree that it generates response without requiring the
+respondent to have fully processed it. High recomposability content can be
+clipped, quoted, embedded, and reacted to across contexts without loss of
+affective charge.
+
+The binding force of such content is correspondingly low. High-binding
+content—content whose conclusion depends on the specific structure of its
+premises, whose meaning changes when removed from context—is maximally
+resistant to recomposition and therefore maximally penalized by the
+selection functional $\Jsel$.
+
+The practitioner class that has converged to high-$\recomp$ production has
+not found a strategy for operating within a degraded environment. It has
+converged to the only stable trajectory the environment admits. This
+convergence does not require motivation or awareness. It requires only that
+practitioners who do not converge lose visibility, and practitioners who do
+converge retain it. Over time, the visible population is the converged
+population.
+
+\begin{theorem}[Convergence to Low-Binding Equilibrium]
+\label{thm:convergence}
+Under a platform selection functional that rewards recomposability, and
+under boundary conditions that do not introduce strong countervailing
+pressures, the visible discourse converges to a low-binding equilibrium
+from which perturbations by high-binding content cannot produce
+asymptotic stabilization.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+By definition, $\Jsel$ assigns positive weight to $\recomp(c) \approx
+1 - \bind(c)$. Content with high $\bind$ receives systematically lower
+$\Jsel$ scores. Visibility is a monotone function of $\Jsel$. As
+practitioners observe visibility distributions, adaptive pressure pushes
+production toward low-binding strategies. A high-binding injection—a
+single dense argument, a formal proof, a structurally demanding
+essay—constitutes a local perturbation to the discourse state, but does
+not alter the platform architecture or the boundary conditions. The
+dynamics continue to be dominated by the gradients of $\Jsel$, which
+re-amplify low-binding content and attenuate high-binding content. The
+perturbation decays.
+\end{proof}
+
+\begin{corollary}[Insufficiency of Adaptive Strategies]
+Adaptive strategies that reduce binding force to increase recomposability
+do not alter the attractor structure of the system. They accelerate
+convergence to the low-binding equilibrium.
+\end{corollary}
+
+This corollary reformulates the standard paradox of media critique: why do
+sophisticated, well-intentioned practitioners keep producing content that
+reinforces the systems they are analyzing? The standard explanation
+invokes co-optation or false consciousness. The structural explanation is
+simpler. The practitioners who remain visible are precisely those whose
+output satisfied the recomposability constraint. The good versions did not
+get suppressed in a conspiratorial sense. They failed to meet the
+propagation threshold and became invisible. What looks like ideological
+drift is survivorship bias over outputs.
+
+\subsection{Voluntary Closure: The Self-Imposed Binding Regime}
+\label{ssec:voluntary}
+
+The third instance differs from the first two in that the selection pressure is
+self-imposed rather than externally enforced. But the formal structure is
+identical.
+
+An individual operating within an externally curated intellectual environment
+receives inputs filtered by other people's perception of difficulty. This
+functions as a distributed selection mechanism: the social network routes
+material above its own processing threshold toward the individual perceived
+as capable of handling it. The incoming material is already filtered for
+complexity. The individual's intellectual development occurs within a
+propagation regime, except that the selection criterion is perceived
+competence rather than recomposability.
+
+This arrangement saturates. Once the environment can no longer generate
+inputs above the individual's internal binding threshold—once nothing the
+network sends constitutes genuine difficulty—the distributed intake system
+collapses. The environment routes fewer hard problems not because the
+world has fewer hard problems, but because the social network has
+exhausted its capacity to identify problems hard enough to be useful.
+
+Continuing development at this point requires switching regimes. The
+individual must shift from consuming complexity to constructing it:
+generating formal problems, enforcing compression across domains,
+selecting reading for maximal transfer, producing objects with high
+internal coherence. This shift increases $\bind$ at the expense of $\recomp$.
+The outputs become less transmissible, more internally structured, and
+more resistant to decomposition.
+
+\begin{remark}
+The saturation of the externally curated input channel is not a failure
+state. It is a success metric: evidence that the first phase of
+distributed intake operated correctly. The appropriate response is not
+to seek out new sources of recomposable complexity but to switch
+selection functionals—from $\Jsel$ to $\Jclos$, in effect. The second
+phase is structurally harder because it removes the passive intake
+channel. It is also the only phase that scales indefinitely, because
+self-generated problems have no external ceiling.
+\end{remark}
+
+The individual in this third case is doing what the Strugatskys did
+unintentionally and what the feed resists structurally: constructing objects
+whose internal coherence is not contingent on context. The apparent
+``galaxy brain'' quality—the tendency to see structural patterns everywhere,
+to prefer domains where performance depends on skill rather than chance, to
+read for transfer rather than coverage—is the behavioral signature of
+operating under a self-imposed closure regime. It is not a personality trait.
+It is a constraint structure.
+
+% ============================================================
+\section{The Unified Principle}
+\label{sec:unified}
+% ============================================================
+
+The three instances share a single formal property. In each case:
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+\item A selection environment imposes a condition at the fragment level.
+\item Objects that satisfy the condition survive; objects that do not,
+      do not.
+\item The global form of the surviving corpus is determined by the
+      fragment-level condition rather than by the stated goals of the
+      agents involved.
+\item The apparent ``calibration'' of the output—its apparent fit to the
+      selective environment—requires no coordinating agent. It is a
+      consequence of the filter.
+\end{enumerate}
+
+Stated as a general principle:
+
+\begin{quote}
+\textbf{Constraint Invariance:} Any environment that imposes selection on
+fragments will shape the internal structure of what survives. The
+binding-recomposability trade-off determines whether surviving structures
+remain deep or become shallow. The apparent intentions of the selecting
+agent are irrelevant. The invariant is the constraint structure.
+\end{quote}
+
+This principle cuts through most of the usual explanatory apparatus in media
+critique, political analysis, and accounts of intellectual development. It
+does not require invoking coordination, conspiracy, manipulation, or
+co-optation. It requires only specifying the selection functional and
+reading off the equilibrium.
+
+The unification also removes a structural asymmetry in how we typically
+think about these cases. Soviet censorship is described as externally
+imposed and coercive. Feed dynamics are described as emergent and
+impersonal. Personal intellectual development is described as chosen and
+autonomous. These descriptions are accurate about the surface mechanism.
+They obscure the formal identity of the underlying structure. Specifying
+the constraint reveals what the surface descriptions conceal.
+
+% ============================================================
+\section{Corollary: The Galaxy Brain as Regime Exit}
+\label{sec:galaxybrain}
+% ============================================================
+
+The colloquial term ``galaxy brain'' originates in internet culture as a
+satirical description of reasoning that escalates through increasingly
+elaborate inferential steps to conclusions that appear absurd. The meme
+encodes a double register: sincere admiration for the capacity to operate
+at high levels of abstraction, and ironic awareness of the risk of
+decoupling from empirical feedback.
+
+This double register is structurally exact. It describes the phenomenology
+of operating under a self-imposed closure regime from the perspective of
+someone observing from within a selection regime. The outputs appear
+``galaxy-brained''—elaborate, internally consistent, disconnected from the
+propagation economy—precisely because they have been optimized for
+$\bind$ rather than $\recomp$.
+
+The irony in the meme performs the same function as the science-fiction
+framing in the Strugatsky corpus: it provides protective ambiguity. ``I am
+describing a cognitive strategy'' and ``I am mocking a cognitive failure''
+are simultaneously available interpretations. The content survives under
+hostile extraction—it can be read either way—because neither reading
+requires retracting the other.
+
+\begin{proposition}[Galaxy Brain as Closure Strategy]
+\label{prop:galaxybrain}
+Voluntary adoption of behaviors associated with ``galaxy brain''
+discipline—preference for strategy over chance, reading for transfer,
+compression of ideas into dense representations, avoidance of
+recomposability-optimized content domains—functions as a self-imposed
+closure regime. The colloquial framing masks a formal structural shift:
+from optimizing for propagation to optimizing for coherence. The
+cognitive gains are a byproduct of sustained exposure to high-binding
+problem classes rather than a direct effect of claimed identity.
+\end{proposition}
+
+The practical implication is not to ``think like a galaxy brain'' in the
+sense of adopting a self-flattering identity. It is to change the selection
+functional governing input and output. Specifically: select inputs by
+binding force rather than by recomposability, produce outputs that require
+context to be evaluated rather than outputs that circulate without it, and
+tolerate the reduction in visibility that results.
+
+The resulting corpus—formal papers in obscure repositories, dense
+monographs with limited circulation, systems that require significant prior
+investment to understand—is not a failure mode. It is the signature of
+correct operation under a self-imposed closure regime. It is also, by the
+Trojan Horse Bound, the only kind of output whose binding force is
+preserved rather than sacrificed in the act of production.
+
+% ============================================================
+\section{The Fixed Point}
+\label{sec:fixedpoint}
+% ============================================================
+
+This paper cannot propagate in its current form without transforming into
+something with lower binding force. Any version that achieves sufficient
+circulation to be widely recognized will have undergone the transformation
+$\bind(c') < \bind(c)$ that the Trojan Horse Bound predicts. The viral
+summary will be recomposable. The bound version will be invisible.
+
+This is not a paradox. It is a fixed point of the framework applied
+recursively. The paper predicts its own fate: wide readership is mild
+evidence against the integrity of the transmitted version. The correct
+publication strategy follows directly: maximize $\bind$, deposit in a
+context accessible to closure-regime readers, and do not attempt to
+optimize for propagation. A version optimized for propagation would
+refute itself by existing.
+
+The framework does not conclude with a reform proposal. Reform proposals
+that circulate within selection-regime environments have been selected for
+recomposability and have therefore already had their binding force reduced.
+The alternative to the selection regime already exists. It is structured by
+a different selection functional, it produces a different kind of object, and
+it is invisible from within the propagation economy because visibility within
+the propagation economy requires the property that the closure regime, by
+its structure, refuses to provide.
+
+The full version of this claim cannot propagate without changing form. That
+is not a counsel of despair. It is the most compressed statement of the
+argument.
+
+% ============================================================
+\section{Conclusion}
+\label{sec:conclusion}
+% ============================================================
+
+We began with three apparently unrelated phenomena and arrived at a single
+mechanism. Soviet-era science fiction, feed-optimized media dynamics, and
+voluntary high-discipline intellectual development are all expressions of the
+same underlying structure: selection environments that impose
+fragment-level survivability conditions shape the global form of surviving
+objects through the binding-recomposability trade-off.
+
+The conceptual contribution is the removal of motive from the explanatory
+apparatus. Whether the selecting agent is a state censor, an algorithmic
+recommendation system, or an individual imposing discipline on their own
+cognitive inputs, the behavior of the resulting corpus is determined by the
+constraint structure, not by intent. This replacement of intentional
+explanation with structural explanation is not cynicism. It is precision.
+
+The practical contribution is the identification of regime exit as an
+available option. The selection regime is not the only stable environment
+for intellectual production. The closure regime exists, operates under
+different principles, and produces objects with different properties. The
+transition requires accepting reduced recomposability—reduced
+transmissibility, reduced visibility, reduced circulation—in exchange for
+increased binding force. This is not a sacrifice. It is a change of
+optimization target.
+
+The framework eating itself—this paper predicting its own limited
+propagation—is the cleanest confirmation that the mechanism is correctly
+identified. An argument that predicts its own fate under the conditions it
+describes is not self-undermining. It is self-consistent.
+
+\end{document}

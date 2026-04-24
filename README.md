@@ -1,4 +1,13 @@
 # Library 
+[Constraint Regimes](https://standardgalactic.github.io/library/monograph/constraint_regimes.pdf)
+
+[The Topology of Intention](https://standardgalactic.github.io/library/monograph/topology_of_intention.pdf)
+
+[The Binding Invariant](https://standardgalactic.github.io/library/monograph/binding_invariant.pdf)
+
+* [Audio Overview](https://standardgalactic.github.io/library/monograph/)
+
+* [Notes](https://github.com/standardgalactic/library/blob/main/monograph/README.md)
 
 Enacting cognitive landscapes
 

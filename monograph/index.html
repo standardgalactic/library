@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trajectory Visualizer</title>
+
+<style>
+:root{
+  --fg:#7cffc4;
+}
+
+html,body{
+  margin:0;
+  height:100%;
+  background:#000;
+  overflow:hidden;
+  font-family:monospace;
+  color:var(--fg);
+}
+
+canvas{
+  position:fixed;
+  inset:0;
+}
+
+/* CRT overlay */
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.05) 0,
+    rgba(255,255,255,0.05) 1px,
+    transparent 2px,
+    transparent 4px
+  );
+  opacity:.15;
+}
+
+.title{
+  position:fixed;
+  top:18px;
+  left:50%;
+  transform:translateX(-50%);
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  font-size:13px;
+  text-shadow:0 0 8px var(--fg);
+}
+
+.ui{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  text-align:center;
+}
+
+select,button,input{
+  background:#000;
+  color:var(--fg);
+  border:1px solid var(--fg);
+  padding:6px;
+  font-family:monospace;
+}
+
+#advanced{
+  margin-top:10px;
+}
+
+#sub{
+  margin-top:8px;
+  min-height:2em;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="c"></canvas>
+
+<div class="title">Trajectory of Constraints</div>
+
+<div class="ui">
+  <select id="track"></select>
+  <button id="advBtn">ADV</button>
+
+  <div id="advanced" hidden>
+    <input id="seek" type="range" min="0" max="1000" value="0">
+    <input id="speed" type="range" min="0.5" max="1.5" step="0.01" value="1">
+    <input id="pitch" type="range" min="0" max="1" value="1">
+  </div>
+
+  <div id="sub"></div>
+</div>
+
+<audio id="audio"></audio>
+
+<script>
+/* TRACKS */
+const TRACKS = [
+  "Why_truth_cannot_survive_the_feed.mp3",
+  "Breaking_the_mold_from_within.mp3",
+  "The_Mathematical_Inevitability_of_Hollow_Virality.mp3",
+  "Your_identity_is_a_dynamic_shape.mp3",
+  "Identity_as_a_Trajectory_of_Constraints.mp3"
+]
+
+/* DOM */
+const audio = document.getElementById('audio')
+const trackSel = document.getElementById('track')
+const subEl = document.getElementById('sub')
+
+/* populate selector */
+TRACKS.forEach((t,i)=>{
+  const o = document.createElement('option')
+  o.value=i
+  o.textContent=t.replace(".mp3","").replace(/_/g," ")
+  trackSel.appendChild(o)
+})
+
+/* URL start */
+function getStartIndex(){
+  const p = new URLSearchParams(location.search)
+  const q = p.get("track")
+  if(!q) return 0
+
+  if(!isNaN(q)){
+    return Math.max(0,Math.min(TRACKS.length-1,Number(q)))
+  }
+
+  const i = TRACKS.findIndex(t=>t.toLowerCase().includes(q.toLowerCase()))
+  return i>=0 ? i : 0
+}
+
+let currentTrack = getStartIndex()
+
+/* load track */
+function loadTrack(i){
+  currentTrack = i
+  const file = TRACKS[i]
+
+  audio.src = file
+  audio.load()
+
+  while(audio.firstChild) audio.removeChild(audio.firstChild)
+
+  const tr = document.createElement("track")
+  tr.kind="subtitles"
+  tr.src=file.replace(".mp3",".vtt")
+  tr.default=true
+  audio.appendChild(tr)
+
+  tr.onload = ()=>{
+    const tt = audio.textTracks[0]
+    if(tt) tt.mode="hidden"
+  }
+
+  trackSel.value = i
+
+  /* trajectory mapping */
+  const t = i / (TRACKS.length-1)
+  scale = 0.6 + t*0.4
+  jitter = 0.01 + t*0.08
+  colorIndex = Math.floor(t * colors.length) % colors.length
+}
+
+trackSel.onchange = ()=> loadTrack(Number(trackSel.value))
+
+/* loop */
+audio.addEventListener("ended", ()=>{
+  loadTrack((currentTrack+1)%TRACKS.length)
+  audio.play()
+})
+
+/* audio */
+let ctxA, analyser, timeBuf
+
+function initAudio(){
+  if(ctxA) return
+  ctxA = new (window.AudioContext||window.webkitAudioContext)()
+  analyser = ctxA.createAnalyser()
+  analyser.fftSize = 1024
+  timeBuf = new Uint8Array(analyser.fftSize)
+
+  const src = ctxA.createMediaElementSource(audio)
+  src.connect(analyser)
+  analyser.connect(ctxA.destination)
+}
+
+document.body.onclick = async ()=>{
+  initAudio()
+  if(ctxA.state==='suspended') await ctxA.resume()
+  audio.paused ? audio.play() : audio.pause()
+}
+
+/* subtitles */
+audio.ontimeupdate = ()=>{
+  const tt = audio.textTracks[0]
+  if(!tt) return
+  const cue = tt.activeCues && tt.activeCues[0]
+  subEl.textContent = cue ? cue.text : ''
+}
+
+/* advanced */
+const adv = document.getElementById("advanced")
+document.getElementById("advBtn").onclick = ()=>{
+  adv.hidden = !adv.hidden
+}
+
+document.getElementById("seek").oninput = e=>{
+  if(audio.duration)
+    audio.currentTime = (e.target.value/1000)*audio.duration
+}
+
+audio.ontimeupdate = ()=>{
+  const s = document.getElementById("seek")
+  if(audio.duration)
+    s.value = (audio.currentTime/audio.duration)*1000
+
+  const tt = audio.textTracks[0]
+  if(tt){
+    const cue = tt.activeCues && tt.activeCues[0]
+    subEl.textContent = cue ? cue.text : ''
+  }
+}
+
+document.getElementById("speed").oninput = e=>{
+  audio.playbackRate = Number(e.target.value)
+}
+
+document.getElementById("pitch").oninput = e=>{
+  audio.preservesPitch = e.target.value == 1
+}
+
+/* canvas */
+const c = document.getElementById('c')
+const g = c.getContext('2d')
+
+let w,h,cx,cy
+function resize(){
+  w=c.width=innerWidth
+  h=c.height=innerHeight
+  cx=w/2; cy=h/2
+}
+resize()
+addEventListener('resize',resize)
+
+/* state */
+let scale=0.7
+let colorIndex=0
+let jitter=0.02
+
+let rotOuter=0
+let rotMid=0
+let rotInner=0
+
+const colors=['#7cffc4','#ff6','#f66','#6cf','#fff']
+
+/* interaction */
+c.addEventListener('mousemove',e=>{
+  if(e.buttons!==1) return
+
+  const d = Math.hypot(e.clientX-cx,e.clientY-cy)
+  const R = Math.min(w,h)*0.45
+
+  if(d>R*0.8){
+    scale = Math.max(0.2,Math.min(1.2,scale+e.movementX*0.002))
+    rotOuter += e.movementX*0.01
+  }
+  else if(d>R*0.6){
+    colorIndex = (colorIndex+(e.movementX>0?1:-1)+colors.length)%colors.length
+    rotMid += e.movementX*0.02
+  }
+  else{
+    jitter = Math.max(0,Math.min(0.2,jitter+e.movementX*0.0005))
+    rotInner += e.movementX*0.02
+  }
+})
+
+/* draw ring */
+function ring(r,rot,ticks){
+  g.save()
+  g.translate(cx,cy)
+  g.rotate(rot)
+
+  g.beginPath()
+  g.arc(0,0,r,0,Math.PI*2)
+  g.strokeStyle='rgba(124,255,196,0.4)'
+  g.stroke()
+
+  for(let i=0;i<ticks;i++){
+    const a=(i/ticks)*Math.PI*2
+    g.beginPath()
+    g.moveTo(Math.cos(a)*(r-6),Math.sin(a)*(r-6))
+    g.lineTo(Math.cos(a)*(r+6),Math.sin(a)*(r+6))
+    g.stroke()
+  }
+
+  g.restore()
+}
+
+/* draw */
+function draw(){
+
+  g.fillStyle='rgba(0,0,0,0.12)'
+  g.fillRect(0,0,w,h)
+
+  const R = Math.min(w,h)*0.45
+
+  g.save()
+  g.beginPath()
+  g.arc(cx,cy,R,0,Math.PI*2)
+  g.clip()
+
+  if(analyser){
+    analyser.getByteTimeDomainData(timeBuf)
+
+    const lag=20
+    const len=timeBuf.length
+
+    g.beginPath()
+
+    for(let i=0;i<len;i++){
+      const a=(timeBuf[i]-128)/128
+      const b=(timeBuf[(i+lag)%len]-128)/128
+      const t=i/len*Math.PI*2
+
+      const x = cx + Math.sin(t*2)*(a+Math.random()*jitter)*R*scale
+      const y = cy + Math.sin(t*3)*(b+Math.random()*jitter)*R*scale
+
+      i?g.lineTo(x,y):g.moveTo(x,y)
+    }
+
+    g.strokeStyle=colors[colorIndex]
+    g.shadowColor=colors[colorIndex]
+    g.shadowBlur=18
+    g.stroke()
+    g.shadowBlur=0
+  }
+
+  g.restore()
+
+  ring(R*0.85,rotOuter,48)
+  ring(R*0.7,rotMid,36)
+  ring(R*0.55,rotInner,24)
+
+  g.beginPath()
+  g.arc(cx,cy,R,0,Math.PI*2)
+  g.strokeStyle='#7cffc4'
+  g.lineWidth=2
+  g.stroke()
+
+  requestAnimationFrame(draw)
+}
+
+loadTrack(currentTrack)
+draw()
+</script>
+
+</body>
+</html>
