@@ -1,4 +1,5 @@
 # Library 
+
 [Constraint Regimes](https://standardgalactic.github.io/library/monograph/constraint_regimes.pdf)
 
 [The Topology of Intention](https://standardgalactic.github.io/library/monograph/topology_of_intention.pdf)

@@ -3,12 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Trajectory Visualizer</title>
+<title>Lissajous Monitor</title>
 
 <style>
-:root{
-  --fg:#7cffc4;
-}
+:root{ --fg:#7cffc4; }
 
 html,body{
   margin:0;
@@ -24,7 +22,7 @@ canvas{
   inset:0;
 }
 
-/* CRT overlay */
+/* CRT */
 body::after{
   content:"";
   position:fixed;
@@ -40,23 +38,15 @@ body::after{
   opacity:.15;
 }
 
-.title{
-  position:fixed;
-  top:18px;
-  left:50%;
-  transform:translateX(-50%);
-  letter-spacing:0.2em;
-  text-transform:uppercase;
-  font-size:13px;
-  text-shadow:0 0 8px var(--fg);
-}
-
+/* UI */
 .ui{
   position:fixed;
   bottom:20px;
   left:50%;
   transform:translateX(-50%);
+  width:min(90vw,520px);
   text-align:center;
+  box-sizing:border-box;
 }
 
 select,button,input{
@@ -67,13 +57,18 @@ select,button,input{
   font-family:monospace;
 }
 
-#advanced{
-  margin-top:10px;
-}
+select{ max-width:100%; }
 
 #sub{
   margin-top:8px;
   min-height:2em;
+  font-size:13px;
+  line-height:1.5;
+  word-wrap:break-word;
+  white-space:pre-wrap;
+  text-align:center;
+  text-shadow:0 0 6px var(--fg);
+  padding:0 8px;
 }
 </style>
 </head>
@@ -82,18 +77,9 @@ select,button,input{
 
 <canvas id="c"></canvas>
 
-<div class="title">Trajectory of Constraints</div>
-
 <div class="ui">
   <select id="track"></select>
   <button id="advBtn">ADV</button>
-
-  <div id="advanced" hidden>
-    <input id="seek" type="range" min="0" max="1000" value="0">
-    <input id="speed" type="range" min="0.5" max="1.5" step="0.01" value="1">
-    <input id="pitch" type="range" min="0" max="1" value="1">
-  </div>
-
   <div id="sub"></div>
 </div>
 
@@ -109,38 +95,30 @@ const TRACKS = [
   "Identity_as_a_Trajectory_of_Constraints.mp3"
 ]
 
-/* DOM */
 const audio = document.getElementById('audio')
 const trackSel = document.getElementById('track')
 const subEl = document.getElementById('sub')
 
-/* populate selector */
 TRACKS.forEach((t,i)=>{
   const o = document.createElement('option')
-  o.value=i
-  o.textContent=t.replace(".mp3","").replace(/_/g," ")
+  o.value = i
+  o.textContent = t.replace(".mp3","").replace(/_/g," ")
   trackSel.appendChild(o)
 })
 
-/* URL start */
-function getStartIndex(){
+function getStart(){
   const p = new URLSearchParams(location.search)
   const q = p.get("track")
   if(!q) return 0
-
-  if(!isNaN(q)){
-    return Math.max(0,Math.min(TRACKS.length-1,Number(q)))
-  }
-
+  if(!isNaN(q)) return Math.min(TRACKS.length-1, Math.max(0, Number(q)))
   const i = TRACKS.findIndex(t=>t.toLowerCase().includes(q.toLowerCase()))
   return i>=0 ? i : 0
 }
 
-let currentTrack = getStartIndex()
+let current = getStart()
 
-/* load track */
-function loadTrack(i){
-  currentTrack = i
+function load(i){
+  current = i
   const file = TRACKS[i]
 
   audio.src = file
@@ -154,37 +132,29 @@ function loadTrack(i){
   tr.default=true
   audio.appendChild(tr)
 
-  tr.onload = ()=>{
-    const tt = audio.textTracks[0]
-    if(tt) tt.mode="hidden"
-  }
-
   trackSel.value = i
-
-  /* trajectory mapping */
-  const t = i / (TRACKS.length-1)
-  scale = 0.6 + t*0.4
-  jitter = 0.01 + t*0.08
-  colorIndex = Math.floor(t * colors.length) % colors.length
 }
 
-trackSel.onchange = ()=> loadTrack(Number(trackSel.value))
+trackSel.onchange = ()=> load(Number(trackSel.value))
 
-/* loop */
-audio.addEventListener("ended", ()=>{
-  loadTrack((currentTrack+1)%TRACKS.length)
+audio.addEventListener("ended",()=>{
+  load((current+1)%TRACKS.length)
   audio.play()
 })
 
-/* audio */
-let ctxA, analyser, timeBuf
+/* AudioContext */
+let ctxA, analyser, buf
 
 function initAudio(){
-  if(ctxA) return
+  if(ctxA){
+    if(ctxA.state !== "running") ctxA.resume()
+    return
+  }
+
   ctxA = new (window.AudioContext||window.webkitAudioContext)()
   analyser = ctxA.createAnalyser()
   analyser.fftSize = 1024
-  timeBuf = new Uint8Array(analyser.fftSize)
+  buf = new Uint8Array(analyser.fftSize)
 
   const src = ctxA.createMediaElementSource(audio)
   src.connect(analyser)
@@ -193,47 +163,21 @@ function initAudio(){
 
 document.body.onclick = async ()=>{
   initAudio()
-  if(ctxA.state==='suspended') await ctxA.resume()
-  audio.paused ? audio.play() : audio.pause()
+  audio.paused ? await audio.play() : audio.pause()
+}
+
+/* prevent ADV click from toggling audio */
+document.getElementById("advBtn").onclick = e=>{
+  e.stopPropagation()
 }
 
 /* subtitles */
 audio.ontimeupdate = ()=>{
-  const tt = audio.textTracks[0]
+  const tt = audio.textTracks && audio.textTracks[0]
   if(!tt) return
+  tt.mode = "hidden"
   const cue = tt.activeCues && tt.activeCues[0]
   subEl.textContent = cue ? cue.text : ''
-}
-
-/* advanced */
-const adv = document.getElementById("advanced")
-document.getElementById("advBtn").onclick = ()=>{
-  adv.hidden = !adv.hidden
-}
-
-document.getElementById("seek").oninput = e=>{
-  if(audio.duration)
-    audio.currentTime = (e.target.value/1000)*audio.duration
-}
-
-audio.ontimeupdate = ()=>{
-  const s = document.getElementById("seek")
-  if(audio.duration)
-    s.value = (audio.currentTime/audio.duration)*1000
-
-  const tt = audio.textTracks[0]
-  if(tt){
-    const cue = tt.activeCues && tt.activeCues[0]
-    subEl.textContent = cue ? cue.text : ''
-  }
-}
-
-document.getElementById("speed").oninput = e=>{
-  audio.playbackRate = Number(e.target.value)
-}
-
-document.getElementById("pitch").oninput = e=>{
-  audio.preservesPitch = e.target.value == 1
 }
 
 /* canvas */
@@ -249,54 +193,25 @@ function resize(){
 resize()
 addEventListener('resize',resize)
 
-/* state */
-let scale=0.7
-let colorIndex=0
-let jitter=0.02
+/* rings (pure decoration) */
+let r1=0,r2=0,r3=0
 
-let rotOuter=0
-let rotMid=0
-let rotInner=0
-
-const colors=['#7cffc4','#ff6','#f66','#6cf','#fff']
-
-/* interaction */
-c.addEventListener('mousemove',e=>{
-  if(e.buttons!==1) return
-
-  const d = Math.hypot(e.clientX-cx,e.clientY-cy)
-  const R = Math.min(w,h)*0.45
-
-  if(d>R*0.8){
-    scale = Math.max(0.2,Math.min(1.2,scale+e.movementX*0.002))
-    rotOuter += e.movementX*0.01
-  }
-  else if(d>R*0.6){
-    colorIndex = (colorIndex+(e.movementX>0?1:-1)+colors.length)%colors.length
-    rotMid += e.movementX*0.02
-  }
-  else{
-    jitter = Math.max(0,Math.min(0.2,jitter+e.movementX*0.0005))
-    rotInner += e.movementX*0.02
-  }
-})
-
-/* draw ring */
-function ring(r,rot,ticks){
+function ring(r,rot,ticks,alpha){
   g.save()
   g.translate(cx,cy)
   g.rotate(rot)
 
   g.beginPath()
   g.arc(0,0,r,0,Math.PI*2)
-  g.strokeStyle='rgba(124,255,196,0.4)'
+  g.strokeStyle=`rgba(124,255,196,${alpha})`
+  g.lineWidth=0.8
   g.stroke()
 
   for(let i=0;i<ticks;i++){
     const a=(i/ticks)*Math.PI*2
     g.beginPath()
-    g.moveTo(Math.cos(a)*(r-6),Math.sin(a)*(r-6))
-    g.lineTo(Math.cos(a)*(r+6),Math.sin(a)*(r+6))
+    g.moveTo(Math.cos(a)*(r-4),Math.sin(a)*(r-4))
+    g.lineTo(Math.cos(a)*(r+4),Math.sin(a)*(r+4))
     g.stroke()
   }
 
@@ -305,11 +220,10 @@ function ring(r,rot,ticks){
 
 /* draw */
 function draw(){
-
   g.fillStyle='rgba(0,0,0,0.12)'
   g.fillRect(0,0,w,h)
 
-  const R = Math.min(w,h)*0.45
+  const R = Math.min(w,h)*0.38
 
   g.save()
   g.beginPath()
@@ -317,47 +231,48 @@ function draw(){
   g.clip()
 
   if(analyser){
-    analyser.getByteTimeDomainData(timeBuf)
-
-    const lag=20
-    const len=timeBuf.length
+    analyser.getByteTimeDomainData(buf)
+    const len=buf.length, lag=20
 
     g.beginPath()
-
     for(let i=0;i<len;i++){
-      const a=(timeBuf[i]-128)/128
-      const b=(timeBuf[(i+lag)%len]-128)/128
+      const a=(buf[i]-128)/128
+      const b=(buf[(i+lag)%len]-128)/128
       const t=i/len*Math.PI*2
 
-      const x = cx + Math.sin(t*2)*(a+Math.random()*jitter)*R*scale
-      const y = cy + Math.sin(t*3)*(b+Math.random()*jitter)*R*scale
+      const x = cx + Math.sin(t*2)*a*R*0.7
+      const y = cy + Math.sin(t*3)*b*R*0.7
 
       i?g.lineTo(x,y):g.moveTo(x,y)
     }
 
-    g.strokeStyle=colors[colorIndex]
-    g.shadowColor=colors[colorIndex]
-    g.shadowBlur=18
+    g.strokeStyle='#00ff88'
+    g.shadowColor='#00ff88'
+    g.shadowBlur=12
     g.stroke()
     g.shadowBlur=0
   }
 
   g.restore()
 
-  ring(R*0.85,rotOuter,48)
-  ring(R*0.7,rotMid,36)
-  ring(R*0.55,rotInner,24)
-
   g.beginPath()
   g.arc(cx,cy,R,0,Math.PI*2)
-  g.strokeStyle='#7cffc4'
-  g.lineWidth=2
+  g.strokeStyle='rgba(124,255,196,0.7)'
+  g.lineWidth=1.5
   g.stroke()
+
+  r1+=0.0008
+  r2-=0.0012
+  r3+=0.0018
+
+  ring(R*0.72,r1,32,0.25)
+  ring(R*0.54,r2,24,0.20)
+  ring(R*0.36,r3,16,0.15)
 
   requestAnimationFrame(draw)
 }
 
-loadTrack(currentTrack)
+load(current)
 draw()
 </script>
 
