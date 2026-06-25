@@ -1,0 +1,1559 @@
+% ============================================================
+%  Admissibility Before Truth
+%  On the Domain of Truth Predicates
+% ============================================================
+%  Engine: LuaLaTeX
+%  Font:   TeX Gyre Pagella
+%  Third paper in the repair-theoretic program.
+%  Companion papers:
+%    [Flyxion2026a] Observability Is Restorability
+%    [Flyxion2026b] Erasure Is Deformation
+% ============================================================
+
+\documentclass[12pt, oneside]{article}
+
+% ── Fonts & encoding ────────────────────────────────────────
+\usepackage{fontspec}
+\setmainfont{TeX Gyre Pagella}
+\usepackage{unicode-math}
+\setmathfont{TeX Gyre Pagella Math}
+
+% ── Layout ──────────────────────────────────────────────────
+\usepackage[
+  top=1.25in, bottom=1.25in,
+  left=1.35in, right=1.35in
+]{geometry}
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parskip}{0.55em}
+\setlength{\parindent}{1.4em}
+
+% ── Mathematics ─────────────────────────────────────────────
+\usepackage{amsmath, amsthm}
+\usepackage{mathtools}
+
+% Theorem environments
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{axiom}[theorem]{Axiom}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% ── Notation shorthands ─────────────────────────────────────
+\DeclareMathOperator{\Rest}{Rest}
+\DeclareMathOperator{\Obs}{Obs}
+\newcommand{\CR}{C_{\!R}}
+\newcommand{\AO}{\mathcal{A}}
+\newcommand{\Rzero}{\mathcal{R}}
+\newcommand{\Dsub}{\mathcal{D}}
+\newcommand{\Xsub}{X_S}
+\newcommand{\Tsub}{\mathcal{T}}
+\newcommand{\Ttilde}{\widetilde{\mathcal{T}}}
+\newcommand{\iotamap}{\iota}        % inclusion map Rest(R) -> D
+\newcommand{\RestR}{\Rest(\mathcal{R})}
+\newcommand{\bA}{\partial\mathcal{A}}
+\newcommand{\Undef}{\mathord{\perp}} % unevaluable truth value
+
+% ── Section & title styling ─────────────────────────────────
+\usepackage{titlesec}
+\titleformat{\section}{\normalfont\large\bfseries}{{\thesection}.}{0.6em}{}
+\titleformat{\subsection}{\normalfont\normalsize\bfseries}%
+  {{\thesubsection}.}{0.5em}{}
+
+% ── Hyperref (load last) ────────────────────────────────────
+\usepackage[
+  colorlinks=true,
+  linkcolor=black,
+  citecolor=black,
+  urlcolor=black
+]{hyperref}
+
+% ============================================================
+\begin{document}
+
+% ── Title block ─────────────────────────────────────────────
+\begin{center}
+  {\LARGE\bfseries Admissibility Before Truth}\\[0.9em]
+  {\large On the Domain of Truth Predicates}\\[1.5em]
+  {\normalsize Flyxion}\\[0.3em]
+  {\small\itshape Independent Researcher}\\[1.6em]
+  {\small\today}
+\end{center}
+
+\vspace{0.5em}
+
+% ── Abstract ────────────────────────────────────────────────
+\begin{abstract}
+\noindent
+Standard epistemology treats truth as the primary predicate and asks
+which beliefs satisfy it.
+This paper argues that truth is not primary but derived: it is a
+partial predicate whose domain is determined by a prior structure,
+the observer's admissibility manifold.
+We prove the \emph{Domain Restriction Theorem}: every well-defined
+truth predicate $\Tsub$ factors through the inclusion
+$\iotamap: \RestR \hookrightarrow \Dsub$
+of the restorable distinction space into the full distinction space,
+so that $\operatorname{dom}(\Tsub) \subseteq \RestR$.
+Distinctions outside the admissible set are not false; they are
+unevaluable, receiving the third value $\Undef$ in a natural
+three-valued extension.
+The theorem is not a philosophical claim but a structural consequence
+of the repair-theoretic framework developed in the companion papers
+\cite{Flyxion2026a,Flyxion2026b}: truth-evaluation is itself a repair
+process, and can only operate where repair capacity exists.
+Consequences are derived for Bayesian inference, machine learning,
+legal admissibility, language acquisition, and the Kuhnian account
+of scientific revolutions.
+In each case, what had appeared to be a domain-specific epistemic
+constraint is revealed to be an instance of the same domain
+restriction.
+The paper is the third in a five-paper program; an appendix
+summarises the definitions required from the companion papers so
+that the central theorem can be read independently.
+\end{abstract}
+
+\vspace{1.2em}
+\hrule
+\vspace{1.6em}
+
+% ============================================================
+\section{The Program and This Paper's Place in It}
+\label{sec:intro}
+% ============================================================
+
+This paper is the third in a sequence of five, each of which
+introduces one genuinely new layer of mathematical structure while
+relying on the previous layers rather than rebuilding them.
+The architecture is as follows.
+
+The first paper, \emph{Observability Is Restorability}~\cite{Flyxion2026a},
+defines the primitive objects: repair operators, restorable
+distinctions, the admissibility manifold $\AO(\mathcal{R})$, and
+the repair pseudometric.
+Its central theorem is that the set of observable distinctions
+coincides with the set of restorable distinctions.
+
+The second paper, \emph{Erasure Is Deformation}~\cite{Flyxion2026b},
+defines the dynamics of loss: repair-repertoire reduction deforms
+the admissibility manifold, generating metric singularities at the
+irrestorability boundary.
+Its central object is the pullback deformation tensor
+$E_t = \iota_t^* g_0 - g_t$ measuring how erasure distorts the
+geometry of what remains.
+
+The present paper establishes the logical consequences: truth is a
+partial predicate whose domain is the admissible distinction space.
+The central theorem is the Domain Restriction Theorem
+(Theorem~\ref{thm:domain-restriction}).
+
+The fourth paper, \emph{The Geometry of Witnesses}, will explain
+why admissibility persists over historical time, introducing
+second-order repair operators (witnesses that maintain repair
+operators rather than distinctions directly).
+
+The fifth paper, \emph{Conservation of Ambiguity}, will describe
+how finite repair resources are allocated across a living distinction
+space, with ambiguity, repair cost, and interference as competing
+claims on the same budget.
+
+The present paper is designed to serve as a conceptual entry point
+to the program.
+Its central theorem is stated and proved using only the definitions
+in Section~\ref{sec:background} and the Appendix; a reader
+encountering the program for the first time may read this paper
+first and return to the companion papers for full derivations.
+
+Standard epistemology begins with truth and asks which beliefs
+satisfy it.
+This ordering is standard but not mandatory.
+The repair-theoretic account reverses it: an observer must first
+establish which distinctions it can maintain (admissibility), then
+identify which of those distinctions it can discriminate in context
+(the observable subset), and only then assign truth values.
+The ordering $\mathcal{A}(\mathcal{R}) \to \mathcal{D}_O \to
+\mathcal{T}|_{\mathcal{D}_O}$ is not a philosophical preference.
+It is a theorem.
+
+The paper proceeds as follows.
+Section~\ref{sec:background} reviews the repair framework.
+Section~\ref{sec:truth} defines truth predicates formally.
+Section~\ref{sec:domain} states and proves the Domain Restriction
+Theorem.
+Section~\ref{sec:sahc} demonstrates that a state-of-the-art
+hierarchical classification architecture (SAHC) independently
+implements the same structure, and derives the Hierarchy
+Consistency Corollary.
+Section~\ref{sec:threeval} develops the three-valued semantics.
+Sections~\ref{sec:bayes}--\ref{sec:kuhn} derive consequences for
+Bayesian inference, machine learning, legal admissibility,
+language acquisition, and scientific revolutions.
+Section~\ref{sec:limits} shows the ordering does not reverse.
+Section~\ref{sec:open} states open problems.
+Section~\ref{sec:consequences} draws broader consequences.
+The Appendix collects required definitions from the companion
+papers.
+
+
+% ============================================================
+\section{Background: Repair, Distinctions, and Admissibility}
+\label{sec:background}
+% ============================================================
+
+We recall the definitions required from the companion papers.
+Full derivations appear in \cite{Flyxion2026a}; we state here only
+what is needed for the Domain Restriction Theorem.
+
+A \emph{substrate} $S = (\Xsub, \mathcal{P}, \Dsub)$ consists of
+a locally compact Hausdorff state space $\Xsub$, a perturbation
+semigroup $\mathcal{P}$, and a closed distinction relation
+$\Dsub \subseteq \Xsub \times \Xsub$.
+A \emph{repair repertoire} $\mathcal{R} \subseteq C(\Xsub, \Xsub)$
+is a sequentially compact set of continuous maps.
+The \emph{minimal repair cost} of distinction $d$ under $\mathcal{R}$
+is
+\[
+  \CR(d, \mathcal{R})
+  \;=\;
+  \sup_{p \in \mathcal{P}_d}
+  \inf_{\gamma \in \Gamma_d^p(\mathcal{R})}
+  \mathrm{cost}(\gamma),
+\]
+setting $\CR(d, \mathcal{R}) = +\infty$ when no finite repair path
+exists.
+The \emph{restorable distinction space} is
+\[
+  \RestR
+  \;=\;
+  \bigl\{ d \in \Dsub \;\big|\; \CR(d, \mathcal{R}) < +\infty \bigr\}.
+\]
+The \emph{admissibility manifold} is
+\[
+  \AO(\mathcal{R})
+  \;=\;
+  \overline{\bigl\{
+    x \in \Xsub \;\big|\;
+    \forall\, d \in \RestR,\;
+    \CR(d, \mathcal{R}) < +\infty \text{ from } x
+  \bigr\}}.
+\]
+The Repair Boundary Theorem \cite{Flyxion2026a} states that
+$x \in \bA(\mathcal{R})$ if and only if $\CR(d, \mathcal{R}) \to
++\infty$ for some $d \in \RestR$ as the system approaches $x$.
+
+\begin{remark}
+  An observer is, in the repair-theoretic account, a pair
+  $(S, \mathcal{R})$.
+  What the observer can observe is exactly $\RestR$.
+  What the observer cannot observe is not hidden from it; it is
+  simply not part of the observer's world.
+  The admissibility manifold $\AO(\mathcal{R})$ is the geometric
+  structure of that world.
+\end{remark}
+
+
+% ============================================================
+\section{Truth as a Partial Predicate}
+\label{sec:truth}
+% ============================================================
+
+The classical notion of a truth predicate takes the form
+$\Tsub: \Dsub \to \{0, 1\}$, assigning a truth value to every
+distinction in the full distinction space.
+We argue that this is the wrong domain.
+
+\begin{definition}[Truth predicate]
+  A \emph{truth predicate} for observer $(S, \mathcal{R})$ is a
+  function $\Tsub: X \to \{0, 1, \Undef\}$ defined on some subset
+  $X \subseteq \Dsub$, where $0$ denotes falsity, $1$ denotes
+  truth, and $\Undef$ denotes unevaluability.
+  The predicate is \emph{total} if $X = \Dsub$; it is
+  \emph{partial} if $X \subsetneq \Dsub$.
+\end{definition}
+
+\begin{definition}[Evaluability]
+  A distinction $d \in \Dsub$ is \emph{evaluable} by observer
+  $(S, \mathcal{R})$ if assigning a truth value to $d$ is
+  well-defined, i.e., if $d \in \operatorname{dom}(\Tsub)$ with
+  $\Tsub(d) \in \{0,1\}$.
+  A distinction is \emph{unevaluable} if $\Tsub(d) = \Undef$.
+\end{definition}
+
+The classical picture assumes total truth predicates.
+We show this assumption is incoherent for finite observers.
+
+\begin{lemma}[Truth-evaluation is repair]
+  Any procedure for evaluating the truth of distinction $d$ must
+  be capable of discriminating $d$ from its negation after
+  arbitrary admissible perturbation.
+  Formally, truth-evaluation of $d$ requires the existence of
+  a finite-cost repair path restoring $d$ after perturbation.
+  Therefore truth-evaluation of $d$ presupposes
+  $d \in \RestR$.
+  \label{lem:truth-is-repair}
+\end{lemma}
+
+\begin{proof}
+  Evaluating whether $d$ holds requires the evaluator to be in a
+  state from which $d$ is discriminable: the evaluator must be
+  able to distinguish the case $(x,y) \in \Dsub$ from the case
+  $(x,y) \notin \Dsub$.
+  If $d$ has been erased by an admissible perturbation $p$, the
+  evaluator must restore discriminability before it can evaluate.
+  The restoration of discriminability after perturbation is
+  precisely the repair of $d$: a finite-cost repair path
+  $\gamma \in \Gamma_d^p(\mathcal{R})$ returning the system to
+  a state where $d$ is discriminable.
+  If no such path exists --- if $\CR(d, \mathcal{R}) = +\infty$
+  --- then no evaluation procedure can operate, because there is
+  no state the evaluator can reach from which the discrimination
+  can be made.
+  Hence $d \notin \RestR$ implies $d$ is unevaluable.
+\end{proof}
+
+\begin{remark}
+  Lemma~\ref{lem:truth-is-repair} does not claim that
+  truth-evaluation literally requires executing a repair sequence.
+  It claims that the \emph{capacity} to evaluate truth requires
+  the \emph{existence} of such a sequence.
+  An observer that cannot in principle restore $d$ cannot in
+  principle evaluate $d$, because it cannot reliably distinguish
+  the truth condition from states reached by perturbation.
+  This is an operational constraint, not a claim about the
+  phenomenology of evaluation.
+\end{remark}
+
+
+% ============================================================
+\section{The Domain Restriction Theorem}
+\label{sec:domain}
+% ============================================================
+
+\begin{theorem}[Domain Restriction Theorem]
+  Let $(S, \mathcal{R})$ be an observer and let $\Tsub$ be a
+  well-defined truth predicate for this observer.
+  Then $\Tsub$ factors through the inclusion
+  $\iotamap: \RestR \hookrightarrow \Dsub$:
+  \[
+    \Tsub \;=\; \Ttilde \circ \iotamap,
+  \]
+  where $\Ttilde: \RestR \to \{0, 1\}$ is the restriction of
+  $\Tsub$ to the restorable distinction space.
+  Consequently,
+  \[
+    \operatorname{dom}(\Tsub) \;\subseteq\; \RestR.
+  \]
+  A well-defined truth predicate cannot assign truth values outside
+  the admissible distinction space.
+  \label{thm:domain-restriction}
+\end{theorem}
+
+\begin{proof}
+  By Lemma~\ref{lem:truth-is-repair}, every distinction in
+  $\operatorname{dom}(\Tsub)$ must be in $\RestR$.
+  Therefore $\operatorname{dom}(\Tsub) \subseteq \RestR$.
+
+  Define $\Ttilde: \RestR \to \{0,1\}$ by
+  $\Ttilde(d) = \Tsub(\iotamap(d)) = \Tsub(d)$ for all
+  $d \in \RestR$.
+  Since $\iotamap$ is the inclusion map (the identity on its domain),
+  $\Tsub = \Ttilde \circ \iotamap$ on $\operatorname{dom}(\Tsub)$.
+  For $d \notin \RestR$, $\Tsub(d) = \Undef$ by definition of
+  unevaluability, which is consistent with $\Ttilde$ being
+  undefined outside $\RestR$.
+\end{proof}
+
+\begin{remark}[The categorical reading]
+  The factorization $\Tsub = \Ttilde \circ \iotamap$ is a universal
+  property: every truth predicate factors through $\iotamap$.
+  In categorical terms, $\iotamap: \RestR \hookrightarrow \Dsub$ is
+  the unique morphism through which all well-defined truth
+  predicates factor.
+  This means that the inclusion of the admissible distinction space
+  into the full distinction space is the \emph{domain object} for
+  truth predicates: any construction involving truth automatically
+  inherits the admissibility constraint via this factorization.
+\end{remark}
+
+\begin{corollary}[The strict ordering]
+  The ordering
+  \[
+    \AO(\mathcal{R})
+    \;\longrightarrow\;
+    \RestR
+    \;\longrightarrow\;
+    \Tsub|_{\RestR}
+  \]
+  is strict at each arrow.
+  Admissibility determines the observer's world;
+  restorability determines the domain of truth;
+  truth is a predicate on that domain.
+  No step in this sequence can be reversed or collapsed without
+  contradiction.
+  \label{cor:strict-ordering}
+\end{corollary}
+
+\begin{proof}
+  The first arrow is strict because $\AO(\mathcal{R})$ is a subset
+  of $\Xsub$, not of $\Dsub$; the map sends the state manifold to
+  the distinction space via the induced discrimination structure.
+  The second arrow is strict because $\RestR \subsetneq \Dsub$
+  in general: there exist distinctions in $\Dsub$ that are not
+  restorable.
+  The third arrow is strict because $\Tsub$ is a partial function
+  on $\RestR$, not all of $\RestR$ is evaluable in practice even
+  if it is admissible in principle.
+\end{proof}
+
+\begin{theorem}[Geometry of the evaluability boundary]
+  The boundary of $\operatorname{dom}(\Tsub)$ within $\Dsub$
+  coincides with the irrestorability boundary: the set of
+  distinctions $d$ for which $\CR(d, \mathcal{R}) \to +\infty$.
+  The domain of truth therefore inherits the geometric structure
+  of the admissibility manifold: it has a well-defined metric
+  (the repair pseudometric), a boundary (where repair cost
+  diverges), and topological invariants (the homology groups of
+  the admissibility manifold).
+  \label{thm:evaluability-geometry}
+\end{theorem}
+
+\begin{proof}
+  $\operatorname{dom}(\Tsub) \subseteq \RestR$ by the Domain
+  Restriction Theorem.
+  The boundary of $\RestR$ within $\Dsub$ is exactly the set of
+  distinctions approaching which $\CR(d, \mathcal{R}) \to +\infty$,
+  by the Repair Boundary Theorem of \cite{Flyxion2026a}.
+  The repair pseudometric $d_R$ on $\RestR$ and the homology groups
+  $H_*(\AO(\mathcal{R}))$ are defined in \cite{Flyxion2026a,Flyxion2026b}
+  and are inherited by $\operatorname{dom}(\Tsub)$ via the inclusion
+  $\operatorname{dom}(\Tsub) \subseteq \RestR$.
+\end{proof}
+
+\begin{remark}
+  Theorem~\ref{thm:evaluability-geometry} means that evaluability
+  is not a flat binary partition of all possible claims into
+  evaluable and unevaluable.
+  The domain of truth has boundary structure: some distinctions are
+  marginally evaluable (near the irrestorability boundary, with high
+  repair cost), and the geometry of that margin is non-trivial.
+  Near-boundary evaluability corresponds to claims that can barely
+  be assessed, that require enormous epistemic effort, or that
+  become unevaluable under small perturbation.
+  This is the formal correlate of the philosophical notion of
+  ``borderline cases.''
+\end{remark}
+
+
+% ============================================================
+\section{Hierarchical Domain Restriction: Empirical Instantiation}
+\label{sec:sahc}
+% ============================================================
+
+The Domain Restriction Theorem is a mathematical result.
+This section argues that it is also an empirical one: a
+state-of-the-art deep learning architecture for satellite image
+classification independently converged on the same structure,
+and its performance gains over non-hierarchical baselines
+constitute evidence that the domain restriction is a
+genuine design principle, not a philosophical preference.
+
+\subsection{The Architecture as Factorization}
+
+Weikmann et al.~\cite{Weikmann2026} propose the
+Semantics-Aware Hierarchical Consensus (SAHC) method
+for multi-level remote sensing classification.
+Their architecture introduces $H$ classification heads
+$g^h \circ f$, one per hierarchical level, together with
+trainable hierarchy log-joint matrices $J^{h,h'}$ that project
+predictions between levels, and a consensus loss $L_{HC}$
+penalising disagreement among all projected predictions at
+a target level.
+The headline result is consistent improvement over
+non-hierarchical baselines across every level of a
+90-class taxonomy~\cite{Weikmann2026}.
+
+We claim that this architecture is an empirical instance of
+the Domain Restriction Theorem applied at multiple levels
+simultaneously.
+Let $h = 1$ (coarse), $h = 2$ (intermediate), $h = 3$ (fine)
+denote the three classification granularities.
+Define:
+\begin{itemize}
+  \item $\mathcal{R}_1$: the repair repertoire sufficient to
+    restore coarse-level distinctions (vegetation vs.\
+    non-vegetation; urban vs.\ rural);
+  \item $\mathcal{R}_2 \supseteq \mathcal{R}_1$: the repair
+    repertoire sufficient to restore intermediate distinctions
+    (forest vs.\ shrub; residential vs.\ industrial);
+  \item $\mathcal{R}_3 \supseteq \mathcal{R}_2$: the repair
+    repertoire sufficient to restore fine-grained distinctions
+    (deciduous forest vs.\ coniferous; compact residential
+    vs.\ sparse residential).
+\end{itemize}
+By Repair Monotonicity~\cite{Flyxion2026a},
+$\Rest(\mathcal{R}_1) \subseteq \Rest(\mathcal{R}_2) \subseteq
+\Rest(\mathcal{R}_3)$,
+so the admissibility manifolds are nested:
+$\mathcal{A}(\mathcal{R}_1) \subseteq \mathcal{A}(\mathcal{R}_2)
+\subseteq \mathcal{A}(\mathcal{R}_3)$.
+The Domain Restriction Theorem then yields a chain of
+inclusions for the truth predicates at each level:
+\[
+  \mathcal{T}_f
+  \;=\;
+  \widetilde{\mathcal{T}}_f
+  \circ \iotamap_{f,m}
+  \circ \iotamap_{m,c},
+\]
+where $\iotamap_{m,c}: \Rest(\mathcal{R}_2) \hookrightarrow
+\Rest(\mathcal{R}_1)$ and $\iotamap_{f,m}: \Rest(\mathcal{R}_3)
+\hookrightarrow \Rest(\mathcal{R}_2)$ are the admissibility-preserving
+inclusions.
+This says: the fine-level truth predicate $\mathcal{T}_f$
+factors through the intermediate admissibility domain,
+which in turn factors through the coarse admissibility domain.
+A pixel cannot be truthfully classified as ``deciduous forest''
+unless it is first admissible as ``forest'' and before that as
+``vegetation.''
+
+\subsection{Hierarchy Matrices as Approximate Inclusion Maps}
+
+SAHC's trainable matrices $J^{h,h'} \in [0,1]^{|\Omega^h|
+\times |\Omega^{h'}|}$ are initialised from a user-defined binary
+hierarchy and then learned from data.
+In the repair-theoretic reading, $J^{h,h'}$ is an empirical
+approximation of $\iotamap_{h,h'}$: it encodes the learned
+conditional probability that a fine-level class $\omega^h_i$
+lies within the admissibility domain of a coarser class
+$\omega^{h'}_j$.
+Where the user-defined hierarchy is rigid, $J^{h,h'}$ learns
+which semantic overlaps the rigid taxonomy missed.
+
+The heatmap of the learned joint probability matrix
+$J^{h_2,h_1}$ on the ELU dataset (reported in \cite{Weikmann2026})
+confirms this interpretation: the highest-weight entries align
+with the predefined hierarchy, but off-diagonal weights reveal
+genuine semantic adjacencies --- ``water basins'' and
+``aquaculture in the marine environment,'' ``continuous urban
+fabric'' and ``road networks'' --- that the rigid taxonomy
+excluded but the data supports.
+These off-diagonal weights are not noise.
+They are the learned repair cost relationships: two classes
+are semantically adjacent precisely when the repair operators
+for one partially restore the other.
+
+\subsection{The Consensus Loss as Domain Restriction Penalty}
+
+SAHC's hierarchical consensus loss $L_{HC}$ penalises the
+Jensen--Shannon divergence between the consensus prediction
+$\hat{p}^{\tilde{h}}_{HC}$ and the projected predictions from
+every other level:
+\[
+  L_{HC}
+  \;=\;
+  \frac{1}{N} \sum_n \sum_{\tilde{h}} \frac{1}{\log|\Omega^{\tilde{h}}|}
+  \sum_h \mathrm{JSD}^{h,\tilde{h}}(\hat{p}^{\tilde{h}}_{HC} \,\|\,
+  \hat{p}^{h \to \tilde{h}}).
+\]
+In the repair-theoretic reading, this is the penalty for
+violating the Domain Restriction Theorem:
+\[
+  L_{HC}
+  \;\approx\;
+  d\!\left(
+    \widetilde{\mathcal{T}} \circ \iotamap,\;
+    \mathcal{T}
+  \right),
+\]
+where $d$ is a divergence between the admissibility-restricted
+prediction and the unconstrained prediction.
+When $L_{HC} = 0$, the classifier's fine-level outputs are
+exactly consistent with their coarse-level projections:
+fine distinctions are admissible at every level above them.
+When $L_{HC} > 0$, the classifier has assigned a truth value
+to a fine distinction that cannot be projected into the coarser
+admissibility domains --- it has predicted ``deciduous forest''
+where the coarse head predicts ``urban area.''
+SAHC penalises this prediction as inadmissible.
+
+The ablation study in \cite{Weikmann2026} isolates this
+penalty's contribution: adding $L_{HC}$ to the multi-head
+baseline raises fine-grained OA from 96.44\% to 96.52\%,
+and adding both consensus training and consensus inference
+raises it further to 96.63\%.
+The performance gains are not large in absolute terms, but
+their mechanism is precisely the domain restriction: forcing
+fine-level truth assignments to be restorable through coarser
+admissibility levels reduces inadmissible predictions and
+improves accuracy.
+
+\subsection{Generalisation: From SAHC to TARTAN}
+
+SAHC assumes a fixed semantic hierarchy: levels are
+defined by a human-specified taxonomy, and hierarchy
+matrices encode transitions between taxonomy levels.
+This is one concrete instance of a more general structure.
+
+In the TARTAN framework, reality is represented as a
+hierarchy of interacting tiles at arbitrary resolutions.
+Each level carries its own admissibility constraints, and
+cross-scale consistency is maintained through transport
+operators $T_{i \to j}$ that need not follow a fixed semantic
+taxonomy.
+The TARTAN coherence functional,
+\[
+  L_{\mathrm{TARTAN}}
+  \;=\;
+  \sum_{i < j}
+  d\!\left(
+    T_{i \to j}(x_i),\; x_j
+  \right),
+\]
+enforces the Domain Restriction Theorem simultaneously
+across spatial, temporal, semantic, and computational scales.
+SAHC's $J^{h,h'}$ matrices are one specific parameterisation
+of $T_{i \to j}$ in the semantic hierarchy case;
+SAHC's $L_{HC}$ is one specific instance of $L_{\mathrm{TARTAN}}$
+under Jensen--Shannon divergence.
+
+The formal correspondence is:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{l@{\quad$\longleftrightarrow$\quad}l}
+  Hierarchy levels $h \in [1, H]$ & Resolution levels $i \in I$ \\
+  Hierarchy matrix $J^{h,h'}$ & Transport operator $T_{i \to j}$ \\
+  Projected prediction $\hat{p}^{h \to h'}$ & Transported state $T_{i \to j}(x_i)$ \\
+  Consensus loss $L_{HC}$ & Coherence functional $L_{\mathrm{TARTAN}}$ \\
+  Semantic taxonomy & Arbitrary resolution hierarchy \\
+\end{tabular}
+\end{center}
+
+SAHC is therefore not merely a hierarchical classifier
+but a specific instance of admissibility-preserving multiscale
+computation.
+Its empirical success across two datasets with very different
+hierarchical complexity suggests that the Domain Restriction
+Theorem is not only a logical consequence of the repair
+framework but a productive engineering principle when
+implemented at scale.
+
+\subsection{A Formal Consequence}
+
+\begin{corollary}[Hierarchy Consistency Corollary]
+  Let $\mathcal{R}_1 \subseteq \mathcal{R}_2 \subseteq \cdots
+  \subseteq \mathcal{R}_H$ be a hierarchy of repair repertoires
+  with admissibility-preserving inclusions
+  $\iotamap_{h,h'}: \Rest(\mathcal{R}_h) \hookrightarrow
+  \Rest(\mathcal{R}_{h'})$ for all $h > h'$.
+  Suppose a prediction architecture produces truth predicates
+  $\mathcal{T}_h$ at each level satisfying
+  \[
+    \mathcal{T}_h \;=\; \widetilde{\mathcal{T}}_h \circ \iotamap_{h,h'}
+    \quad \text{for all } h > h'.
+  \]
+  Then each $\mathcal{T}_h$ satisfies the Domain Restriction Theorem
+  at its own level, and the composition
+  $\mathcal{T}_H = \widetilde{\mathcal{T}}_H \circ \iotamap_{H,H-1}
+  \circ \cdots \circ \iotamap_{2,1}$
+  satisfies it simultaneously at all levels.
+  \label{cor:hierarchy-consistency}
+\end{corollary}
+
+\begin{proof}
+  By the Domain Restriction Theorem applied to each level:
+  $\operatorname{dom}(\mathcal{T}_h) \subseteq \Rest(\mathcal{R}_h)$
+  for each $h$.
+  Since $\mathcal{T}_h = \widetilde{\mathcal{T}}_h \circ \iotamap_{h,h'}$
+  and $\iotamap_{h,h'}$ maps $\Rest(\mathcal{R}_h)$ into
+  $\Rest(\mathcal{R}_{h'})$, evaluability at level $h$ implies
+  evaluability at level $h'$.
+  The composed factorization follows by induction on the
+  number of levels.
+\end{proof}
+
+\begin{remark}
+  Corollary~\ref{cor:hierarchy-consistency} is the formal
+  statement that SAHC-style architectures, when their hierarchy
+  matrices exactly implement the admissibility-preserving
+  inclusions $\iotamap_{h,h'}$, simultaneously satisfy the
+  Domain Restriction Theorem at every level.
+  SAHC's learned matrices $J^{h,h'}$ are approximate
+  implementations of $\iotamap_{h,h'}$; the consensus loss
+  $L_{HC}$ is the gradient signal that drives them toward
+  exactness.
+  The residual violation --- $L_{HC} > 0$ at convergence
+  --- measures the extent to which the architecture departs
+  from strict multi-level domain restriction.
+  Architectures with smaller $L_{HC}$ at convergence are, in
+  this precise sense, better implementations of the theorem.
+\end{remark}
+
+
+
+The Domain Restriction Theorem introduces $\Undef$ as a third
+truth value for unevaluable distinctions.
+This is not a mere convenience; the three-valued structure follows
+necessarily from the repair framework.
+
+\begin{proposition}[Unevaluability is not falsity]
+  If $d \notin \RestR$, then $\Tsub(d) \neq 0$.
+  An unevaluable distinction is not false.
+  \label{prop:bot-not-false}
+\end{proposition}
+
+\begin{proof}
+  Assigning $\Tsub(d) = 0$ (falsity) would itself be a truth
+  assignment, which by the Domain Restriction Theorem requires
+  $d \in \operatorname{dom}(\Tsub) \subseteq \RestR$.
+  But we assumed $d \notin \RestR$.
+  Contradiction.
+  Therefore $\Tsub(d) \neq 0$.
+  By the same argument, $\Tsub(d) \neq 1$.
+  Hence $\Tsub(d) = \Undef$.
+\end{proof}
+
+\begin{remark}
+  Proposition~\ref{prop:bot-not-false} resolves a persistent
+  confusion in accounts of semantic unevaluability.
+  Unevaluable distinctions are sometimes treated as ``false by
+  default'' (no truth-maker, no truth) or as ``indeterminate''
+  (neither true nor false).
+  The repair-theoretic account gives a precise meaning to neither:
+  $\Undef$ is not a weakened form of falsity or truth but a distinct
+  value arising from the failure of the precondition for evaluation.
+  The natural semantic framework is Kleene's strong three-valued
+  logic~\cite{Kleene1952}, in which $\Undef$ propagates through
+  connectives in a specific way.
+  Whether the repair-theoretic $\Undef$ satisfies the Kleene truth
+  tables exactly is a question for the logic paper this framework
+  suggests; we leave it as an open problem.
+\end{remark}
+
+\begin{proposition}[Admissibility expansion increases evaluability]
+  If $\mathcal{R}_1 \subseteq \mathcal{R}_2$, then
+  $\operatorname{dom}(\Tsub^{(1)}) \subseteq
+  \operatorname{dom}(\Tsub^{(2)})$.
+  Acquiring more repair operators strictly expands the domain
+  of truth.
+  \label{prop:expansion}
+\end{proposition}
+
+\begin{proof}
+  By the Repair Monotonicity Theorem of \cite{Flyxion2026a},
+  $\mathcal{R}_1 \subseteq \mathcal{R}_2$ implies
+  $\Rest(\mathcal{R}_1) \subseteq \Rest(\mathcal{R}_2)$.
+  Since $\operatorname{dom}(\Tsub^{(i)}) \subseteq
+  \Rest(\mathcal{R}_i)$, the inclusion follows.
+\end{proof}
+
+\begin{remark}
+  Proposition~\ref{prop:expansion} is the logical analogue of
+  the ``Learning enlarges worlds'' corollary from
+  \cite{Flyxion2026a}.
+  There it meant that acquiring repair operators expands the
+  observer's perceptual world.
+  Here it means acquiring repair operators expands the domain of
+  truth: claims that were unevaluable become evaluable.
+  Learning is not merely acquiring new true beliefs; it is
+  expanding the space of evaluable claims.
+\end{remark}
+
+
+% ============================================================
+\section{Bayesian Inference}
+\label{sec:bayes}
+% ============================================================
+
+Standard Bayesian inference assigns a prior $P: \Dsub \to [0,1]$
+to every distinction in the full distinction space, with
+$P(d)$ interpreted as the probability that $d$ is true.
+The Domain Restriction Theorem imposes a constraint on this picture
+that has not previously been made explicit.
+
+\begin{proposition}[Coherence requires admissibility]
+  A Bayesian prior $P$ is coherent for observer $(S, \mathcal{R})$
+  only if $\operatorname{supp}(P) \subseteq \RestR$.
+  Assigning a non-trivial prior to an inadmissible distinction is
+  incoherent.
+  \label{prop:bayes}
+\end{proposition}
+
+\begin{proof}
+  A non-trivial prior $P(d) \in (0,1)$ presupposes that $d$ can
+  in principle be evaluated: otherwise the probability cannot be
+  updated by evidence.
+  But by the Domain Restriction Theorem, $d$ is evaluable only if
+  $d \in \RestR$.
+  Therefore $P(d) \notin \{0, 1\}$ requires $d \in \RestR$, and
+  the support of any coherent prior lies within $\RestR$.
+\end{proof}
+
+\begin{remark}
+  Proposition~\ref{prop:bayes} does not prohibit assigning $P(d)=0$
+  to inadmissible distinctions; it prohibits treating that
+  assignment as meaningful.
+  A prior that places zero probability on $d \notin \RestR$ is
+  technically coherent but trivially so: it says nothing about $d$
+  because $d$ cannot be evaluated.
+  The operationally meaningful content of a Bayesian prior is
+  entirely concentrated on $\RestR$.
+
+  This has a practical consequence: bounded rationality is not a
+  cognitive limitation requiring separate modelling.
+  It is the necessary consequence of finite $\RestR$.
+  A perfectly rational Bayesian agent with finite repair capacity
+  has a prior supported on a proper subset of all logically possible
+  distinctions.
+  The shape of that subset is determined by the agent's admissibility
+  manifold, not by computational constraints.
+\end{remark}
+
+
+% ============================================================
+\section{Machine Learning}
+\label{sec:ml}
+% ============================================================
+
+A classifier trained to distinguish class $A$ from class $B$ is,
+in repair-theoretic terms, constructing an approximation to a repair
+operator for the distinction $d = (A, B)$.
+Training is the process of building $\mathcal{R}$ such that
+$d \in \RestR$.
+
+\begin{proposition}[Out-of-distribution failure is inadmissibility]
+  Let $d_{\text{train}}$ be the distinction for which a classifier
+  was trained and let $d_{\text{deploy}}$ be the distinction it
+  faces at deployment.
+  Out-of-distribution failure occurs when
+  $d_{\text{deploy}} \notin \Rest(\mathcal{R}_{\text{train}})$:
+  the distinction to be evaluated was not in the admissibility
+  manifold of the training repair repertoire.
+  \label{prop:ood}
+\end{proposition}
+
+\begin{proof}
+  Training builds repair operators sufficient to restore
+  $d_{\text{train}}$ after the perturbations seen during training.
+  At deployment, if $d_{\text{deploy}}$ differs from
+  $d_{\text{train}}$ in ways that require repair operators not
+  in $\mathcal{R}_{\text{train}}$, then $\CR(d_{\text{deploy}},
+  \mathcal{R}_{\text{train}}) = +\infty$ and the classifier
+  cannot evaluate $d_{\text{deploy}}$.
+  This is the formal content of out-of-distribution failure.
+\end{proof}
+
+\begin{remark}
+  The standard account of distribution shift appeals to statistical
+  distance between training and deployment distributions.
+  The repair-theoretic account gives a geometric alternative: the
+  relevant quantity is whether the deployment distinction lies
+  within or outside the admissibility manifold of the trained
+  repair repertoire.
+  These accounts are not equivalent.
+  Two distributions can be statistically close while the deployment
+  distinction lies outside the training admissibility manifold
+  (if the distributions agree on most features but differ on the
+  specific repair-relevant features).
+  Conversely, distributions can be statistically distant while the
+  deployment distinction remains admissible.
+  The geometric account is more fundamental.
+\end{remark}
+
+
+% ============================================================
+\section{Legal Admissibility}
+\label{sec:legal}
+% ============================================================
+
+Legal systems provide the most explicit real-world instance of the
+domain restriction structure.
+Rules of evidence define which distinctions are admissible for
+truth-evaluation in legal proceedings.
+The phrase ``admissibility of evidence'' is not a metaphor for the
+formal structure developed here; it is the same structure at the
+institutional level.
+
+\begin{definition}[Legal admissibility manifold]
+  The \emph{legal admissibility manifold} of a legal system is
+  $\AO(\mathcal{R}_{\text{legal}})$, where
+  $\mathcal{R}_{\text{legal}}$ consists of the evidentiary and
+  procedural rules that constitute the system's repair repertoire.
+  A distinction $d$ between legal and illegal conduct is evaluable
+  by the court if and only if $d \in \Rest(\mathcal{R}_{\text{legal}})$.
+\end{definition}
+
+\begin{proposition}[Verdicts are domain-restricted]
+  A legal verdict assigns a truth value ($1$ = guilty,
+  $0$ = not guilty) to a distinction $d$.
+  By the Domain Restriction Theorem, this is only coherent if
+  $d \in \Rest(\mathcal{R}_{\text{legal}})$.
+  Evidence that falls outside the legal admissibility manifold
+  does not make a verdict false; it makes the verdict unevaluable
+  through that evidence.
+\end{proposition}
+
+\begin{remark}
+  This accounts for two features of legal reasoning that seem
+  paradoxical from a purely truth-theoretic perspective.
+  First, an inadmissible piece of evidence is not excluded because
+  it is false or unreliable; it is excluded because the legal
+  system's repair repertoire cannot incorporate it.
+  The distinction it would resolve is not within
+  $\Rest(\mathcal{R}_{\text{legal}})$.
+  Second, a verdict of ``not guilty'' is not a verdict of
+  ``innocent''; it is a verdict that the distinction between guilt
+  and innocence was not established within the admissibility
+  manifold of the proceeding.
+  Both features follow immediately from the domain restriction.
+\end{remark}
+
+
+% ============================================================
+\section{Language Acquisition}
+\label{sec:language}
+% ============================================================
+
+A child acquiring a language is expanding $\RestR$ in a specific
+domain: the phonological, syntactic, and semantic distinctions
+that the language encodes.
+
+\begin{proposition}[Grammaticality is admissibility]
+  A sentence $s$ is grammatical in language $L$ if and only if
+  the distinctions $s$ expresses are in $\Rest(\mathcal{R}_L)$,
+  where $\mathcal{R}_L$ is the repair repertoire associated with
+  competence in $L$.
+  An ungrammatical sentence does not express a false proposition;
+  it fails to express a proposition at all, receiving $\Tsub(s)
+  = \Undef$.
+  \label{prop:grammar}
+\end{proposition}
+
+\begin{proof}
+  Grammaticality is the condition under which a sentence picks out
+  a recoverable distinction in the language's semantic space.
+  An ungrammatical sentence is one for which no repair path exists
+  from the noisy or degraded signal to a well-formed distinction:
+  $\CR(d_s, \mathcal{R}_L) = +\infty$.
+  By the Domain Restriction Theorem, $\Tsub(d_s) = \Undef$.
+\end{proof}
+
+\begin{remark}
+  Proposition~\ref{prop:grammar} makes precise a claim that
+  linguists and philosophers have approached informally: that
+  truth-conditional semantics presupposes grammaticality.
+  A sentence must be grammatical before it can be true or false.
+  The repair-theoretic account gives this presupposition a
+  formal home: grammaticality is admissibility, and admissibility
+  is prior to truth by the domain restriction.
+
+  Language acquisition is repair-repertoire expansion.
+  A child who learns a new grammatical construction acquires a
+  new class of repair operators, expanding $\RestR$ and therefore
+  expanding $\operatorname{dom}(\Tsub)$.
+  The child gains not merely new true beliefs but the capacity
+  to evaluate a larger class of claims.
+\end{remark}
+
+
+% ============================================================
+\section{Kuhn Without Relativism}
+\label{sec:kuhn}
+% ============================================================
+
+The Kuhnian account of scientific revolutions holds that scientists
+in different paradigms inhabit different conceptual worlds and that
+their claims are incommensurable.
+Critics have argued that this collapses into relativism: if there
+is no shared domain of evaluation, there is no fact of the matter
+about which paradigm is better.
+
+The repair-theoretic account dissolves this debate by making the
+structure precise.
+
+\begin{theorem}[Paradigm shifts as domain transitions]
+  Let $\mathcal{R}_{\text{old}}$ and $\mathcal{R}_{\text{new}}$
+  be the repair repertoires of two paradigms.
+  A non-trivial paradigm shift satisfies
+  \[
+    \Rest(\mathcal{R}_{\text{old}})
+    \;\triangle\;
+    \Rest(\mathcal{R}_{\text{new}})
+    \;\neq\; \emptyset,
+  \]
+  where $\triangle$ denotes symmetric difference.
+  By the Domain Restriction Theorem, the domains of truth differ:
+  \[
+    \operatorname{dom}(\Tsub^{\text{old}})
+    \;\triangle\;
+    \operatorname{dom}(\Tsub^{\text{new}})
+    \;\neq\; \emptyset.
+  \]
+  Some previously evaluable claims become unevaluable;
+  some previously unevaluable claims become evaluable.
+  \label{thm:paradigm-shift}
+\end{theorem}
+
+\begin{proof}
+  The first statement is the Paradigm Shift Theorem proved in
+  \cite{Flyxion2026a}.
+  The second follows immediately by applying the Domain Restriction
+  Theorem to both repertoires.
+\end{proof}
+
+\begin{remark}
+  Theorem~\ref{thm:paradigm-shift} gives precise content to
+  Kuhnian incommensurability without relativism.
+  Incommensurability is not the claim that two paradigms disagree
+  about the same facts.
+  It is the structural claim that their domains of truth differ:
+  $\operatorname{dom}(\Tsub^{\text{old}}) \triangle
+  \operatorname{dom}(\Tsub^{\text{new}}) \neq \emptyset$.
+  Claims in the symmetric difference are evaluable in one paradigm
+  and unevaluable in the other.
+
+  This is not relativism because the structure is observer-relative,
+  not truth-relative.
+  There is no claim that the same distinction is both true and false.
+  There is only the structural fact that different repair repertoires
+  generate different domains of evaluability.
+  Whether one paradigm is better than another is a question about
+  which admissibility manifold is more productive, more robust,
+  or more adequate to the phenomena — a comparison that is
+  perfectly meaningful without requiring a view from nowhere.
+\end{remark}
+
+
+% ============================================================
+\section{The Limits of the Ordering}
+\label{sec:limits}
+% ============================================================
+
+The Domain Restriction Theorem establishes that admissibility
+precedes truth.
+A natural question is whether this ordering can be reversed:
+can truth-evaluation expand the admissibility manifold?
+
+\begin{proposition}[The ordering does not reverse]
+  Truth-evaluation cannot expand $\RestR$.
+  Evaluating the truth of $d \in \RestR$ does not add any
+  distinction to $\RestR$.
+  \label{prop:no-reversal}
+\end{proposition}
+
+\begin{proof}
+  Truth-evaluation operates on distinctions already in
+  $\RestR$: it assigns $0$ or $1$ to $d$.
+  It does not create new repair operators.
+  Therefore $\RestR$ is unchanged by truth-evaluation.
+  Only acquiring new repair operators (expanding $\mathcal{R}$)
+  can expand $\RestR$, and that is a separate act from evaluation.
+\end{proof}
+
+\begin{remark}
+  The ordering $\mathcal{A}(\mathcal{R}) \to \RestR \to
+  \Tsub|_{\RestR}$ therefore forms a strict hierarchy with no
+  feedback from truth to admissibility.
+  Feedback does exist in practice: discovering that a distinction
+  is evaluable and important can motivate acquiring new repair
+  operators, thereby expanding admissibility.
+  But this feedback passes through the agent's actions, not through
+  the logical structure of truth-evaluation itself.
+  The logical ordering is irreversible; the causal story is richer.
+\end{remark}
+
+
+% ============================================================
+\section{Open Problems}
+\label{sec:open}
+% ============================================================
+
+\begin{enumerate}
+
+  \item \textbf{Three-valued semantics.}\;
+    Does the repair-theoretic $\Undef$ satisfy Kleene's strong
+    three-valued truth tables exactly, or does it require a
+    different connective structure?
+    The propagation of $\Undef$ through conjunction, disjunction,
+    and negation in the repair framework may differ from Kleene's
+    tables in cases where one conjunct is evaluable and the other
+    is not.
+    A formal comparison with paraconsistent and partial-logic
+    frameworks~\cite{Kleene1952} is needed.
+
+  \item \textbf{The topology of evaluability.}\;
+    Theorem~\ref{thm:evaluability-geometry} establishes that
+    $\operatorname{dom}(\Tsub)$ inherits the topology of
+    $\AO(\mathcal{R})$.
+    What are the topological invariants of the evaluability domain
+    for various natural observers (logical agents, scientific
+    communities, legal systems)?
+    Is the evaluability domain always connected?
+    What is the significance of non-trivial $H_1(\operatorname{dom}(\Tsub))$?
+
+  \item \textbf{Degrees of evaluability.}\;
+    The current framework is binary: a distinction is either
+    evaluable or not.
+    A graded generalisation would define evaluability as a function
+    of $\CR(d, \mathcal{R})$: high repair cost corresponds to
+    marginal evaluability, low repair cost to robust evaluability.
+    This would give a natural account of ``hard cases'' in law,
+    ``borderline cases'' in vagueness, and ``underdetermined''
+    hypotheses in philosophy of science.
+
+  \item \textbf{Joint evaluability and interference.}\;
+    When is a set of distinctions jointly evaluable?
+    The interference matrix from \cite{Flyxion2026a} measures
+    repair conflict between distinctions.
+    High interference ($I(d_1, d_2) > 0$) means jointly evaluating
+    $d_1$ and $d_2$ costs more than evaluating each separately.
+    Is there a notion of a \emph{consistent evaluation domain}:
+    a maximal set of distinctions that can be jointly evaluated
+    within a given repair budget?
+
+  \item \textbf{Truth predicates across paradigms.}\;
+    Theorem~\ref{thm:paradigm-shift} identifies the symmetric
+    difference of evaluability domains across a paradigm shift.
+    Can the repair pseudometric be used to define a distance between
+    paradigms: how much does the evaluability domain change?
+    A small symmetric difference with low repair cost corresponds
+    to a minor revision; a large or topologically complex one
+    corresponds to a major revolution.
+
+\end{enumerate}
+
+
+% ============================================================
+\section{Consequences}
+\label{sec:consequences}
+% ============================================================
+
+Taking the Domain Restriction Theorem seriously reorganises a
+range of standing debates.
+
+\medskip\noindent
+\textbf{Epistemology.}\;
+The classical problem of the criterion --- how do we know what we
+know without already knowing how to know it --- is dissolved by
+the domain restriction.
+The criterion is not epistemic but operational: the admissibility
+manifold $\AO(\mathcal{R})$ is determined by the observer's repair
+capacity, not by a prior epistemic standard.
+The regress terminates not in a foundational truth but in a repair
+repertoire.
+
+\medskip\noindent
+\textbf{Philosophy of science.}\;
+Scientific progress is not merely the accumulation of true beliefs.
+It is the expansion of the domain of evaluability: acquiring repair
+operators that make previously unevaluable distinctions evaluable.
+The history of science is the history of $\RestR$ growing.
+
+\medskip\noindent
+\textbf{Philosophy of language.}\;
+Meaning is not prior to truth; admissibility is prior to both.
+A meaningful sentence is one that picks out an admissible
+distinction; a true sentence is one that correctly characterises
+that distinction.
+The admissibility manifold is the formal home for what Wittgenstein
+called the limits of one's world.
+
+\medskip\noindent
+\textbf{Formal logic.}\;
+Classical two-valued logic is the limiting case in which the
+observer's repair repertoire is unlimited: $\RestR = \Dsub$.
+Three-valued and paraconsistent logics are not alternatives to
+classical logic but natural consequences of finite repair capacity.
+The logical framework appropriate to a finite observer is
+determined by its admissibility manifold.
+
+\medskip
+Admissibility is not a property truth has or lacks.
+It is the precondition for truth having anything to say.
+
+
+% ============================================================
+\appendix
+\section{Summary of Required Definitions}
+\label{app:defs}
+% ============================================================
+
+This appendix collects the definitions from \cite{Flyxion2026a}
+required for the main results.
+It is included so that the Domain Restriction Theorem
+(Theorem~\ref{thm:domain-restriction}) can be read independently.
+Full derivations, axioms, and proofs appear in \cite{Flyxion2026a}.
+
+\medskip\noindent
+\textbf{A.1 Substrate.}\;
+A \emph{substrate} $S = (\Xsub, \mathcal{P}, \Dsub)$ consists of
+a locally compact Hausdorff state space $\Xsub$, a perturbation
+semigroup $\mathcal{P}$, and a closed distinction relation
+$\Dsub \subseteq \Xsub \times \Xsub$.
+
+\medskip\noindent
+\textbf{A.2 Repair repertoire.}\;
+A \emph{repair repertoire} $\mathcal{R} \subseteq C(\Xsub, \Xsub)$
+is a sequentially compact set of continuous maps (repair operators)
+under the compact-open topology.
+
+\medskip\noindent
+\textbf{A.3 Minimal repair cost.}\;
+$\CR(d, \mathcal{R}) = \sup_{p \in \mathcal{P}_d}
+\inf_{\gamma \in \Gamma_d^p(\mathcal{R})} \mathrm{cost}(\gamma)$,
+with $\CR(d, \mathcal{R}) = +\infty$ if no finite repair path
+exists.
+
+\medskip\noindent
+\textbf{A.4 Restorable distinction space.}\;
+$\RestR = \{d \in \Dsub \mid \CR(d, \mathcal{R}) < +\infty\}$.
+
+\medskip\noindent
+\textbf{A.5 Admissibility manifold.}\;
+$\AO(\mathcal{R}) = \overline{\{x \in \Xsub \mid \forall\,
+d \in \RestR,\, \CR(d,\mathcal{R}) < +\infty \text{ from } x\}}$.
+
+\medskip\noindent
+\textbf{A.6 Repair pseudometric.}\;
+$d_R(d_i, d_j) = \inf_{\gamma: d_i \rightsquigarrow d_j}
+\int_\gamma c\, \mathrm{d}s$, defining a metric on $\RestR$ in
+the reversible case.
+
+\medskip\noindent
+\textbf{A.7 Repair Boundary Theorem} \emph{(proved in \cite{Flyxion2026a})}.
+$x \in \bA(\mathcal{R})$ if and only if
+$\CR(d, \mathcal{R}) \to +\infty$ for some $d \in \RestR$
+as the system approaches $x$.
+
+\medskip\noindent
+\textbf{A.8 Repair Monotonicity Theorem}
+\emph{(proved in \cite{Flyxion2026a})}.
+$\mathcal{R}_1 \subseteq \mathcal{R}_2$ implies
+$\Rest(\mathcal{R}_1) \subseteq \Rest(\mathcal{R}_2)$.
+
+\medskip\noindent
+\textbf{A.9 Paradigm Shift Theorem}
+\emph{(proved in \cite{Flyxion2026a})}.
+A non-trivial repair-repertoire change produces
+$\Rest(\mathcal{R}_{\text{old}}) \triangle
+\Rest(\mathcal{R}_{\text{new}}) \neq \emptyset$.
+
+
+% ============================================================
+\section{The Evaluability Measure}
+\label{app:measure}
+% ============================================================
+
+The main text treats evaluability as binary: a distinction $d$ is
+either evaluable ($d \in \RestR$) or unevaluable ($d \notin \RestR$).
+This appendix develops a graded version in which evaluability is a
+real-valued measure on the distinction space, vanishing at the
+irrestorability boundary and positive in the interior.
+
+\begin{definition}[Evaluability measure]
+  Let $f: [0, +\infty] \to [0, 1]$ be a continuous, strictly
+  decreasing function with $f(0) = 1$ and $\lim_{c \to \infty}
+  f(c) = 0$.
+  The \emph{evaluability measure} of distinction $d$ under
+  repertoire $\mathcal{R}$ is
+  \[
+    \mu_{\mathcal{R}}(d)
+    \;=\;
+    f\!\bigl(\CR(d, \mathcal{R})\bigr)
+    \;\in\; [0, 1].
+  \]
+  Natural choices include $f(c) = e^{-c}$ (exponential decay)
+  and $f(c) = (1 + c)^{-1}$ (hyperbolic decay).
+\end{definition}
+
+The evaluability measure extends the binary domain restriction to
+a soft version: $\mu_{\mathcal{R}}(d) = 1$ for costlessly
+restorable distinctions, $\mu_{\mathcal{R}}(d) \approx 0$ for
+near-irrestorable distinctions, and $\mu_{\mathcal{R}}(d) = 0$
+precisely when $d \notin \RestR$.
+The binary Domain Restriction Theorem is the $\{0,1\}$-valued
+special case obtained by thresholding at any level $\epsilon > 0$.
+
+\begin{proposition}[Monotonicity of the evaluability measure]
+  If $\mathcal{R}_1 \subseteq \mathcal{R}_2$, then
+  $\mu_{\mathcal{R}_1}(d) \leq \mu_{\mathcal{R}_2}(d)$
+  for all $d \in \Dsub$.
+  Acquiring more repair operators increases evaluability pointwise.
+  \label{prop:measure-monotone}
+\end{proposition}
+
+\begin{proof}
+  By Repair Monotonicity~\cite{Flyxion2026a},
+  $\CR(d, \mathcal{R}_2) \leq \CR(d, \mathcal{R}_1)$ for all $d$:
+  a larger repertoire can only reduce or maintain minimal repair cost.
+  Since $f$ is strictly decreasing,
+  $f(\CR(d, \mathcal{R}_2)) \geq f(\CR(d, \mathcal{R}_1))$,
+  giving $\mu_{\mathcal{R}_2}(d) \geq \mu_{\mathcal{R}_1}(d)$.
+\end{proof}
+
+\begin{proposition}[Boundary behaviour]
+  $\mu_{\mathcal{R}}(d) \to 0$ as $d$ approaches the
+  irrestorability boundary $\partial\AO(\mathcal{R})$ in the
+  repair pseudometric.
+  \label{prop:measure-boundary}
+\end{proposition}
+
+\begin{proof}
+  By the Repair Boundary Theorem~\cite{Flyxion2026a},
+  $\CR(d, \mathcal{R}) \to +\infty$ as $d \to \partial\AO(\mathcal{R})$.
+  Since $f(c) \to 0$ as $c \to +\infty$,
+  $\mu_{\mathcal{R}}(d) = f(\CR(d, \mathcal{R})) \to 0$.
+\end{proof}
+
+\begin{definition}[Total evaluability]
+  Let $\nu$ be a reference measure on $\Dsub$.
+  The \emph{total evaluability} of observer $(S, \mathcal{R})$ is
+  \[
+    E(\mathcal{R})
+    \;=\;
+    \int_{\Dsub} \mu_{\mathcal{R}}(d)\, \mathrm{d}\nu(d)
+    \;=\;
+    \int_{\Dsub} f(\CR(d, \mathcal{R}))\, \mathrm{d}\nu(d).
+  \]
+\end{definition}
+
+\begin{proposition}[Total evaluability and repair-repertoire reduction]
+  Let $(\mathcal{R}_t)_{t \geq 0}$ be an erasure path in the sense
+  of \cite{Flyxion2026b}.
+  Then $E(\mathcal{R}_t)$ is non-increasing in $t$:
+  progressive erasure weakly reduces total evaluability.
+  \label{prop:total-ev-decreasing}
+\end{proposition}
+
+\begin{proof}
+  For each $d$, $\CR(d, \mathcal{R}_t)$ is non-decreasing in $t$
+  along the erasure path (by the monotonicity of hysteresis under
+  progressive erasure, proved in \cite{Flyxion2026b}).
+  Since $f$ is decreasing, $\mu_{\mathcal{R}_t}(d)$ is non-increasing
+  in $t$ for each $d$.
+  By dominated convergence (each integrand is bounded in $[0,1]$),
+  $E(\mathcal{R}_t) = \int \mu_{\mathcal{R}_t}\, \mathrm{d}\nu$ is
+  non-increasing.
+\end{proof}
+
+\begin{remark}
+  Proposition~\ref{prop:total-ev-decreasing} connects the evaluability
+  measure to the erasure geometry of \cite{Flyxion2026b}: the total
+  evaluability $E(\mathcal{R}_t)$ is the integral of the evaluability
+  measure over the distinction space, and it decreases monotonically
+  as the admissibility manifold deforms under erasure.
+  The rate $-\mathrm{d}E/\mathrm{d}t$ is a scalar measure of how fast
+  the observer's domain of truth is shrinking --- a global version of
+  the boundary migration measure defined in \cite{Flyxion2026b}.
+  When $f = e^{-c}$, total evaluability $E(\mathcal{R})$ is the
+  Laplace transform of the repair cost distribution, evaluated at $s=1$,
+  giving a direct connection to the moment-generating function of $\CR$.
+\end{remark}
+
+
+% ============================================================
+\section{Domain Restriction in Continuous Resolution Towers}
+\label{app:tartan}
+% ============================================================
+
+Section~\ref{sec:sahc} showed that SAHC's finite hierarchy
+$h \in \{1, \ldots, H\}$ instantiates the Domain Restriction
+Theorem at each level.
+This appendix extends the Hierarchy Consistency Corollary
+(Corollary~\ref{cor:hierarchy-consistency}) to continuous resolution
+towers, which is the setting required for the full TARTAN
+framework.
+
+\begin{definition}[Resolution tower]
+  A \emph{resolution tower} is a directed family of repair
+  repertoires $(\mathcal{R}_s)_{s \in [0,\infty)}$ indexed by
+  a continuous resolution parameter $s$, with
+  $\mathcal{R}_s \subseteq \mathcal{R}_{s'}$ whenever $s \leq s'$.
+  Higher $s$ corresponds to finer resolution.
+  The associated restorable distinction spaces form a nested family:
+  $\Rest(\mathcal{R}_s) \subseteq \Rest(\mathcal{R}_{s'})$
+  for $s \leq s'$, by Repair Monotonicity.
+\end{definition}
+
+\begin{definition}[Transport operator]
+  A \emph{transport operator} between resolutions $s \leq s'$
+  is a map $T_{s \to s'}: \Rest(\mathcal{R}_s) \to
+  \Rest(\mathcal{R}_{s'})$ satisfying:
+  \begin{enumerate}
+    \item $T_{s \to s} = \mathrm{id}$ (identity at equal resolutions);
+    \item $T_{s \to s''} = T_{s' \to s''} \circ T_{s \to s'}$
+      for all $s \leq s' \leq s''$ (cocycle condition);
+    \item $T_{s \to s'}$ is admissibility-preserving: if
+      $\Tsub_s(d) \in \{0,1\}$ then $\Tsub_{s'}(T_{s \to s'}(d))
+      \in \{0,1\}$.
+  \end{enumerate}
+\end{definition}
+
+The cocycle condition makes the family $(T_{s \to s'})$ into a
+continuous analogue of the composition
+$\iotamap_{H,H-1} \circ \cdots \circ \iotamap_{2,1}$
+from the finite hierarchy case.
+Condition (3) is the continuous version of admissibility-preservation.
+
+\begin{theorem}[Continuous Hierarchy Consistency Theorem]
+  Let $(\mathcal{R}_s)_{s \in [0,\infty)}$ be a resolution tower
+  with transport operators $(T_{s \to s'})$.
+  Suppose a family of truth predicates $(\Tsub_s)_{s \geq 0}$
+  satisfies
+  \[
+    \Tsub_s(d) \;=\; \Tsub_{s'}(T_{s \to s'}(d))
+    \quad\text{for all } s \leq s' \text{ and all }
+    d \in \Rest(\mathcal{R}_s).
+  \]
+  Then each $\Tsub_s$ satisfies the Domain Restriction Theorem:
+  $\operatorname{dom}(\Tsub_s) \subseteq \Rest(\mathcal{R}_s)$.
+  Moreover, the assignment $s \mapsto \operatorname{dom}(\Tsub_s)$
+  is monotone: coarser resolutions have smaller evaluability domains.
+  \label{thm:continuous-hierarchy}
+\end{theorem}
+
+\begin{proof}
+  Fix $s \geq 0$.
+  Suppose $d \in \operatorname{dom}(\Tsub_s)$, so
+  $\Tsub_s(d) \in \{0,1\}$.
+  We must show $d \in \Rest(\mathcal{R}_s)$.
+
+  By Lemma~\ref{lem:truth-is-repair} applied at resolution $s$,
+  truth-evaluation of $d$ at resolution $s$ requires the existence
+  of a finite-cost repair path under $\mathcal{R}_s$.
+  Therefore $\CR(d, \mathcal{R}_s) < +\infty$, so
+  $d \in \Rest(\mathcal{R}_s)$.
+
+  Monotonicity: for $s \leq s'$, if $d \in \operatorname{dom}(\Tsub_s)$
+  then $d \in \Rest(\mathcal{R}_s) \subseteq \Rest(\mathcal{R}_{s'})$,
+  so $T_{s \to s'}(d) \in \Rest(\mathcal{R}_{s'})$ and
+  $\Tsub_{s'}(T_{s \to s'}(d)) = \Tsub_s(d) \in \{0,1\}$,
+  giving $T_{s \to s'}(d) \in \operatorname{dom}(\Tsub_{s'})$.
+  Therefore the evaluability domain grows with resolution:
+  $T_{s \to s'}(\operatorname{dom}(\Tsub_s)) \subseteq
+  \operatorname{dom}(\Tsub_{s'})$.
+\end{proof}
+
+\begin{definition}[TARTAN coherence functional]
+  Given a resolution tower with transport operators, the
+  \emph{TARTAN coherence functional} at resolutions
+  $s_1 < s_2 < \cdots < s_n$ is
+  \[
+    L_{\mathrm{TARTAN}}
+    \;=\;
+    \sum_{i < j}
+    d_R\!\left(
+      T_{s_i \to s_j}(x_{s_i}),\; x_{s_j}
+    \right),
+  \]
+  where $d_R$ is the repair pseudometric and $x_s$ denotes the
+  observer's distinction-space representation at resolution $s$.
+  \label{def:tartan-loss}
+\end{definition}
+
+\begin{proposition}[Zero coherence implies consistent domain restriction]
+  If $L_{\mathrm{TARTAN}} = 0$ for all pairs $(s_i, s_j)$,
+  then the truth predicates $(\Tsub_s)$ satisfy the consistency
+  condition of Theorem~\ref{thm:continuous-hierarchy} and the
+  Domain Restriction Theorem holds at every resolution.
+  \label{prop:tartan-zero}
+\end{proposition}
+
+\begin{proof}
+  $L_{\mathrm{TARTAN}} = 0$ implies $T_{s_i \to s_j}(x_{s_i}) =
+  x_{s_j}$ in the repair pseudometric for all pairs, which is
+  exactly the consistency condition $\Tsub_{s_i} = \Tsub_{s_j}
+  \circ T_{s_i \to s_j}$.
+  Theorem~\ref{thm:continuous-hierarchy} then applies.
+\end{proof}
+
+\begin{remark}
+  Proposition~\ref{prop:tartan-zero} gives a precise sense in which
+  $L_{\mathrm{TARTAN}}$ is a penalty for violating the Domain
+  Restriction Theorem across the continuous resolution tower.
+  Minimising $L_{\mathrm{TARTAN}}$ during training drives the
+  system toward a state where truth assignments at every resolution
+  are mutually consistent and each is restricted to its own
+  admissibility domain.
+  SAHC's consensus loss $L_{HC}$ is the finite, discrete-hierarchy
+  instance of $L_{\mathrm{TARTAN}}$: it penalises the same
+  violation at finitely many resolution levels using Jensen--Shannon
+  divergence as the specific choice of $d_R$.
+  The continuous version in Definition~\ref{def:tartan-loss} applies
+  equally to spatial resolution towers (pixels at $10\,\mathrm{m}$,
+  $100\,\mathrm{m}$, $1\,\mathrm{km}$), temporal resolution towers
+  (daily, monthly, annual), and semantic resolution towers
+  (species, genus, family), and to systems where all three
+  hierarchies are active simultaneously.
+\end{remark}
+
+
+% ============================================================
+\begin{thebibliography}{99}
+
+\bibitem{Flyxion2026a}
+Flyxion.
+\newblock Observability is restorability: Restorable distinctions and the
+  geometry of perceptual access.
+\newblock Preprint, 2026.
+
+\bibitem{Flyxion2026b}
+Flyxion.
+\newblock Erasure is deformation: Repair-repertoire reduction and the
+  geometry of memory loss.
+\newblock Preprint, 2026.
+
+\bibitem{Weikmann2026}
+Weikmann, Giulio, Gianmarco Perantoni, and Lorenzo Bruzzone.
+\newblock A semantics-aware hierarchical consensus approach to satellite image
+  time series classification.
+\newblock \emph{arXiv}:2510.04916, under review for \emph{IEEE Transactions
+  on Geoscience and Remote Sensing}, 2026.
+
+\bibitem{Kuhn1962}
+Kuhn, Thomas~S.
+\newblock \emph{The Structure of Scientific Revolutions}.
+\newblock University of Chicago Press, Chicago, 1962.
+
+\bibitem{Kleene1952}
+Kleene, Stephen~C.
+\newblock \emph{Introduction to Metamathematics}.
+\newblock North-Holland, Amsterdam, 1952.
+
+\bibitem{Tarski1944}
+Tarski, Alfred.
+\newblock The semantic conception of truth and the foundations of semantics.
+\newblock \emph{Philosophy and Phenomenological Research}, 4(3):341--376, 1944.
+
+\bibitem{Frege1892}
+Frege, Gottlob.
+\newblock \"{U}ber Sinn und Bedeutung.
+\newblock \emph{Zeitschrift f\"{u}r Philosophie und philosophische Kritik},
+  100:25--50, 1892.
+
+\bibitem{Quine1951}
+Quine, Willard~Van~Orman.
+\newblock Two dogmas of empiricism.
+\newblock \emph{The Philosophical Review}, 60(1):20--43, 1951.
+
+\bibitem{Wittgenstein1921}
+Wittgenstein, Ludwig.
+\newblock \emph{Tractatus Logico-Philosophicus}.
+\newblock Kegan Paul, Trench, Trubner \& Co., London, 1922.
+
+\bibitem{Munkres2000}
+Munkres, James~R.
+\newblock \emph{Topology}.
+\newblock Prentice Hall, Upper Saddle River, NJ, 2nd edition, 2000.
+
+\end{thebibliography}
+
+\end{document}

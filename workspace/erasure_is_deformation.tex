@@ -1,0 +1,1633 @@
+% ============================================================
+%  Erasure Is Deformation
+%  Repair-Repertoire Reduction and the Geometry of Memory Loss
+% ============================================================
+%  Engine: LuaLaTeX
+%  Font:   TeX Gyre Pagella
+%  Sequel to: Observability Is Restorability (Flyxion, 2026)
+% ============================================================
+
+\documentclass[12pt, oneside]{article}
+
+% ── Fonts & encoding ────────────────────────────────────────
+\usepackage{fontspec}
+\setmainfont{TeX Gyre Pagella}
+\usepackage{unicode-math}
+\setmathfont{TeX Gyre Pagella Math}
+
+% ── Layout ──────────────────────────────────────────────────
+\usepackage[
+  top=1.25in, bottom=1.25in,
+  left=1.35in, right=1.35in
+]{geometry}
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parskip}{0.55em}
+\setlength{\parindent}{1.4em}
+
+% ── Mathematics ─────────────────────────────────────────────
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{mathtools}
+
+% Theorem environments
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{axiom}[theorem]{Axiom}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% ── Notation shorthands ─────────────────────────────────────
+\DeclareMathOperator{\Rest}{Rest}
+\DeclareMathOperator{\Reach}{Reach}
+\DeclareMathOperator{\Obs}{Obs}
+\newcommand{\CR}{C_{\!R}}
+\newcommand{\AO}{\mathcal{A}}
+\newcommand{\At}{\mathcal{A}_t}
+\newcommand{\Azero}{\mathcal{A}_0}
+\newcommand{\Rt}{\mathcal{R}_t}
+\newcommand{\Rzero}{\mathcal{R}_0}
+\newcommand{\Restzt}{\Rest(\Rt)}
+\newcommand{\Restzero}{\Rest(\Rzero)}
+\newcommand{\iotat}{\iota_t}
+\newcommand{\Et}{E_t}
+\newcommand{\gt}{g_t}
+\newcommand{\gzero}{g_0}
+\newcommand{\dRt}{d_R^{(t)}}
+\newcommand{\IntMat}{\mathbf{I}}
+\newcommand{\Hyster}{H}
+\newcommand{\Mem}{\mathcal{M}}
+\newcommand{\Dsub}{\mathcal{D}}
+\newcommand{\Xsub}{X_S}
+\newcommand{\bA}{\partial\mathcal{A}}
+
+% ── Section & title styling ─────────────────────────────────
+\usepackage{titlesec}
+\titleformat{\section}{\normalfont\large\bfseries}{{\thesection}.}{0.6em}{}
+\titleformat{\subsection}{\normalfont\normalsize\bfseries}%
+  {{\thesubsection}.}{0.5em}{}
+
+% ── Hyperref (load last) ────────────────────────────────────
+\usepackage[
+  colorlinks=true,
+  linkcolor=black,
+  citecolor=black,
+  urlcolor=black
+]{hyperref}
+
+% ============================================================
+\begin{document}
+
+% ── Title block ─────────────────────────────────────────────
+\begin{center}
+  {\LARGE\bfseries Erasure Is Deformation}\\[0.9em]
+  {\large Repair-Repertoire Reduction and the Geometry of Memory Loss}\\[1.5em]
+  {\normalsize Flyxion}\\[0.3em]
+  {\small\itshape Independent Researcher}\\[1.6em]
+  {\small\today}
+\end{center}
+
+\vspace{0.5em}
+
+% ── Abstract ────────────────────────────────────────────────
+\begin{abstract}
+\noindent
+Memory is conventionally modelled as stored information.
+This paper proposes a different account: memory is repair capacity,
+and forgetting is the geometric deformation that results when repair
+operators are removed.
+We formalise erasure as reduction of a repair repertoire
+$\Rzero \to \Rt \subseteq \Rzero$ and study its consequences for
+the observer-relative admissibility manifold $\AO(\mathcal{R})$.
+The Admissibility Contraction Theorem establishes that
+$\At \subseteq \Azero$ with strict inclusion whenever distinctions
+are lost.
+The Erasure Deformation Theorem introduces the pullback deformation
+tensor
+$\Et = \iotat^* \gzero - \gt$,
+where $\iotat : \Restzt \hookrightarrow \Restzero$ is the inclusion
+of surviving repair domains, and proves that $|\Et| \to \infty$
+along sequences approaching the irrestorability boundary.
+Erasure therefore generates geometric singularities, not merely
+information gaps.
+The hysteresis functional $\Hyster(d) = \CR^{\mathrm{restore}}(d)
+- \CR^{\mathrm{destroy}}(d)$ characterises irreversibility:
+$\Hyster(d) = \infty$ is equivalent to permanent forgetting.
+Topological memory is defined via the homology groups
+$H_*(\At)$; component fragmentation, hole creation, and homology
+collapse correspond to distinct modes of memory loss.
+Applications are developed for neural injury, archive destruction,
+language death, institutional collapse, and scientific knowledge loss.
+The paper is a sequel to \emph{Observability Is Restorability}
+\cite{Flyxion2026a}, extending that framework from the question of
+what is observable to the question of what happens when observability
+itself degrades.
+\end{abstract}
+
+\vspace{1em}
+\hrule
+\vspace{1.6em}
+
+% ============================================================
+\section{Memory, Erasure, and Deformation}
+\label{sec:intro}
+% ============================================================
+
+The standard account of memory is a storage account.
+Memories are records inscribed in a medium, and forgetting is the
+degradation or loss of those records.
+On this picture, memory loss is subtraction: what was present is
+removed.
+
+This paper begins from a different premise, developed formally in
+the companion paper \emph{Observability Is Restorability}
+\cite{Flyxion2026a}: memory is not storage but repair capacity.
+To remember a distinction is to possess a repair path by which that
+distinction can be restored after perturbation.
+Forgetting is not the removal of a stored item but the loss of the
+repair operators by which the item could be reconstructed.
+
+If this is correct, then forgetting has geometric consequences that
+the storage account cannot capture.
+When repair operators are removed, the set of restorable distinctions
+contracts, the observer-relative admissibility manifold deforms, and
+the metric structure on surviving repair domains is distorted.
+Erasure is not subtraction.
+It is deformation.
+
+The paper makes this claim precise.
+We define erasure as reduction of a repair repertoire, study the
+geometry of the resulting deformation, characterise irreversibility
+via a hysteresis functional, and analyse the topological consequences
+of progressive operator loss.
+The framework applies equally to neural memory, institutional
+knowledge, scientific technique, linguistic structure, and any other
+system whose capacity for distinction-restoration can be degraded.
+
+The argument proceeds as follows.
+Section~\ref{sec:repair} reviews repair repertoires, restorable
+distinctions, and the admissibility manifold from
+\cite{Flyxion2026a}.
+Section~\ref{sec:erasure} defines erasure events, the erasure
+semigroup, and the lattice of sub-repertoires.
+Section~\ref{sec:contraction} proves the Admissibility Contraction
+Theorem.
+Section~\ref{sec:deformation} introduces the pullback deformation
+tensor and proves the Erasure Deformation Theorem.
+Section~\ref{sec:hysteresis} develops the hysteresis functional and
+the permanent forgetting condition.
+Section~\ref{sec:topology} defines topological memory via homology
+groups of the admissibility manifold.
+Sections~\ref{sec:bio}--\ref{sec:science} develop applications.
+Section~\ref{sec:consequences} draws consequences and identifies open
+problems.
+
+
+% ============================================================
+\section{Repair Repertoires and Admissibility}
+\label{sec:repair}
+% ============================================================
+
+We recall the essential definitions from \cite{Flyxion2026a}.
+A \emph{substrate} $S = (\Xsub, \mathcal{P}, \Dsub)$ consists of a
+locally compact Hausdorff state space $\Xsub$, a perturbation
+semigroup $\mathcal{P}$, and a closed distinction relation
+$\Dsub \subseteq \Xsub \times \Xsub$.
+A \emph{repair repertoire} $\mathcal{R} \subseteq C(\Xsub, \Xsub)$
+is a sequentially compact set of continuous maps equipped with the
+compact-open topology.
+The \emph{minimal repair cost} of distinction $d$ under repertoire
+$\mathcal{R}$ is
+\[
+  \CR(d, \mathcal{R})
+  \;=\;
+  \sup_{p \in \mathcal{P}_d}
+  \inf_{\gamma \in \Gamma_d^p(\mathcal{R})}
+  \mathrm{cost}(\gamma),
+\]
+and the set of \emph{finitely restorable distinctions} is
+\[
+  \Rest(\mathcal{R})
+  \;=\;
+  \bigl\{d \in \Dsub \;\big|\; \CR(d, \mathcal{R}) < +\infty\bigr\}.
+\]
+The \emph{repair pseudometric} on $\Rest(\mathcal{R})$ is
+\[
+  d_R(d_i, d_j)
+  \;=\;
+  \inf_{\gamma : d_i \leadsto d_j}
+  \int_\gamma c\, \mathrm{d}s,
+\]
+which defines a metric $g_{\mathcal{R}}$ on $\Rest(\mathcal{R})$
+in the reversible case.
+The \emph{observer-relative admissibility manifold} is
+\[
+  \AO(\mathcal{R})
+  \;=\;
+  \overline{\bigl\{
+    x \in \Xsub \;\big|\;
+    \forall\, d \in \Rest(\mathcal{R}),\;
+    \CR(d, \mathcal{R}) < +\infty \text{ from } x
+  \bigr\}}.
+\]
+The Repair Boundary Theorem \cite{Flyxion2026a} states that
+$x \in \partial\AO(\mathcal{R})$ if and only if
+$\CR(d, \mathcal{R}) \to +\infty$ for some $d \in \Rest(\mathcal{R})$
+as the system approaches $x$.
+
+\begin{remark}
+  Throughout this paper, \emph{memory} denotes $\Rest(\mathcal{R})$
+  together with its metric structure $g_{\mathcal{R}}$.
+  This is not a storage register but a geometric object: the
+  metrised space of distinctions the observer can maintain.
+  Forgetting is change of this object.
+\end{remark}
+
+\begin{remark}[Observer persistence]
+  Throughout this paper we assume that the observer persists across
+  the erasure path: $\Rzero \to \Rt$ is a reduction belonging to
+  the same observer, not a transition to a different observer.
+  This assumption is non-trivial.
+  Severe forgetting --- traumatic brain injury, late-stage
+  neurodegeneration, total institutional collapse --- may change not
+  only what the observer can restore but which distinctions the
+  observer constitutes.
+  In those cases $(\AO(\Rzero), \gzero)$ and $(\At, \gt)$ may be
+  geometries of different observers rather than different states of
+  the same one.
+  The question of whether observer identity is itself defined by a
+  path in the category of admissibility manifolds --- so that
+  forgetting is \emph{observer deformation} rather than memory
+  deformation --- is left for future work.
+  The current framework is exactly correct for the regime in which
+  identity persists: partial or moderate erasure where the surviving
+  repair domain is non-empty and the observer remains recognisably
+  continuous.
+\end{remark}
+
+\begin{remark}[The invariant making comparison meaningful]
+  The reviewer of an earlier draft raised the question: if both the
+  observer and the distinction set change under erasure, what
+  invariant makes the comparison $\Et = \iotat^* \gzero - \gt$
+  meaningful?
+  The answer is the inclusion $\iotat : \Restzt \hookrightarrow
+  \Restzero$.
+  The pullback construction exists precisely because surviving
+  distinctions are identified with their original representatives
+  via $\iotat$.
+  The deformation tensor measures how the geometry of those surviving
+  distinctions has changed, relative to the geometry they had before
+  erasure.
+  No universal distinction space $\mathcal{D}_\infty$ is needed and
+  none is assumed; the entire framework is observer-relative, which
+  is the correct register for a repair-theoretic account.
+  Introducing a universal distinction space would move the theory
+  toward latent-space realism, which the parent paper
+  \cite{Flyxion2026a} was designed to avoid.
+\end{remark}
+
+
+% ============================================================
+\section{Erasure: Operators, Events, and the Sub-Repertoire Lattice}
+\label{sec:erasure}
+% ============================================================
+
+\begin{definition}[Erasure event]
+  An \emph{erasure event} at time $t$ is a map
+  $\varepsilon_t : \mathcal{R} \mapsto \mathcal{R}'$ with
+  $\mathcal{R}' \subseteq \mathcal{R}$, removing one or more repair
+  operators from the available repertoire.
+  An erasure event is \emph{local} if it removes operators acting
+  on a bounded region of $\Xsub$; \emph{global} if it removes
+  operators whose domain is all of $\Xsub$.
+\end{definition}
+
+\begin{definition}[Erasure path]
+  An \emph{erasure path} is a decreasing family of repertoires
+  $(\Rt)_{t \in [0,T]}$ with $\mathcal{R}_s \subseteq \mathcal{R}_t$
+  for all $s \geq t$, and $\mathcal{R}_0$ the initial repertoire.
+  The family is parameterised by $t$ increasing in the direction of
+  greater loss.
+\end{definition}
+
+\begin{definition}[Erasure monoid and lattice action]
+  The set of all erasure events under composition forms a
+  \emph{monoid} $(\mathcal{E}, \circ, \varepsilon_\emptyset)$:
+  the composition $\varepsilon_s \circ \varepsilon_t$ applies
+  $\varepsilon_t$ first, then $\varepsilon_s$;
+  the identity is the null erasure $\varepsilon_\emptyset =
+  \mathrm{id}$.
+  The monoid is not in general a group: erasure events need not
+  be invertible.
+
+  The monoid $\mathcal{E}$ acts on the sub-repertoire lattice
+  $\mathcal{L}(\Rzero)$ by
+  \[
+    \mathcal{E} \times \mathcal{L}(\Rzero)
+    \;\longrightarrow\; \mathcal{L}(\Rzero),
+    \quad
+    (\varepsilon, \mathcal{R}) \;\mapsto\; \varepsilon(\mathcal{R})
+    \;\subseteq\; \mathcal{R}.
+  \]
+  An erasure path is an orbit segment of this action.
+  Path-dependence of erasure is the statement that two orbits with
+  the same endpoints need not traverse the same intermediate
+  lattice elements, producing different intermediate admissibility
+  geometries.
+  The orbit structure of $\mathcal{E}$ on $\mathcal{L}(\Rzero)$
+  encodes all possible forgetting trajectories from $\Rzero$.
+\end{definition}
+
+\begin{remark}[Structure over elements]
+  Meadows~\cite{Meadows2008} argues that in any complex system,
+  the interconnections and feedback loops among elements are more
+  determinative of system behaviour than the elements themselves.
+  The repair-theoretic account instantiates this principle
+  precisely: the admissibility geometry $\AO(\mathcal{R})$ and
+  the deformation tensor $\Et$ are properties of the
+  \emph{structure} of the repair repertoire --- how operators
+  compose, what they jointly restore, how their removal cascades
+  through the lattice $\mathcal{L}(\Rzero)$ --- not properties
+  of individual operators in isolation.
+  Erasing one operator changes the geometry not only of the
+  distinctions that operator directly maintained but, through
+  the causal linkages encoded in the lattice, of every
+  distinction whose repair paths passed through it.
+  This is the formal analogue of Meadows' observation that
+  changing a single connection in a system can alter the
+  entire pattern of its behaviour.
+\end{remark}
+
+\begin{definition}[Sub-repertoire lattice]
+  The set of all sub-repertoires of $\Rzero$, ordered by inclusion,
+  forms a complete lattice $(\mathcal{L}(\Rzero), \subseteq)$.
+  Meets are intersections; joins are unions (when the union is still
+  a valid repertoire).
+  An erasure path is a descending chain in this lattice.
+\end{definition}
+
+\begin{remark}[Path-dependence of erasure]
+  Two erasure paths with the same endpoints
+  $\Rzero \to \mathcal{R}_T$ may pass through different intermediate
+  repertoires and produce different intermediate admissibility
+  geometries, even when $\AO(\mathcal{R}_T)$ is identical.
+  This path-dependence is the first indication that erasure is a
+  geometric process, not merely a set-theoretic one.
+  It is the precursor of the hysteresis phenomenon studied in
+  Section~\ref{sec:hysteresis}.
+\end{remark}
+
+\begin{definition}[Partial and total repertoire collapse]
+  An erasure path reaches \emph{partial collapse} at time $t$ if
+  $\Rest(\Rt) \subsetneq \Restzero$ with $\Rest(\Rt) \neq \emptyset$.
+  It reaches \emph{total collapse} if $\Rest(\Rt) = \emptyset$.
+  Total collapse corresponds to the observer losing all observational
+  capacity.
+\end{definition}
+
+
+% ============================================================
+\section{Admissibility Contraction}
+\label{sec:contraction}
+% ============================================================
+
+\begin{theorem}[Admissibility Contraction Theorem]
+  Let $\Rt \subseteq \Rzero$ be a repair-repertoire reduction.
+  Then
+  \[
+    \AO(\Rt) \;\subseteq\; \AO(\Rzero).
+  \]
+  Moreover, if $\Restzt \subsetneq \Restzero$, the inclusion is
+  strict and at least one boundary component of $\AO(\Rzero)$
+  migrates inward: there exists a point $x \in \AO(\Rzero)$ such
+  that $x \notin \AO(\Rt)$.
+  \label{thm:contraction}
+\end{theorem}
+
+\begin{proof}
+  $(\subseteq)$\;
+  Suppose $x \in \AO(\Rt)$.
+  Then from $x$, every distinction in $\Restzt$ is finitely
+  restorable under $\Rt$.
+  Since $\Rt \subseteq \Rzero$, every repair path available in
+  $\Rt$ is also available in $\Rzero$.
+  Hence every distinction in $\Restzt \subseteq \Restzero$ is also
+  finitely restorable under $\Rzero$ from $x$, so
+  $x \in \AO(\Rzero)$.
+
+  \textbf{Strict inclusion.}\;
+  Suppose $d^* \in \Restzero \setminus \Restzt$.
+  Then $\CR(d^*, \Rt) = +\infty$: there exists an admissible
+  perturbation of $d^*$ from which no finite repair path in $\Rt$
+  restores it.
+  Let $x_0$ be a state from which $d^*$ was restorable under
+  $\Rzero$.
+  Since $d^* \notin \Restzt$, there is no finite repair path from
+  $x_0$ under $\Rt$ restoring $d^*$.
+  Therefore $x_0 \notin \AO(\Rt)$.
+  But $x_0 \in \AO(\Rzero)$, establishing strict inclusion.
+  By continuity of $\CR(\cdot, \Rzero)$, the set of such points
+  $x_0$ is non-empty and open, so a boundary component of
+  $\AO(\Rzero)$ has migrated inward.
+\end{proof}
+
+\begin{corollary}[Monotonicity of memory under erasure]
+  Repair-repertoire reduction monotonically contracts memory:
+  \[
+    \Rt \subseteq \Rzero
+    \quad\Longrightarrow\quad
+    \Rest(\Rt) \subseteq \Rest(\Rzero).
+  \]
+  This is the direct analogue of the Repair Monotonicity Theorem
+  of \cite{Flyxion2026a}, now stated in the erasure direction.
+\end{corollary}
+
+\begin{corollary}[Boundary migration]
+  Under a non-trivial erasure path $(\Rt)_{t \in [0,T]}$,
+  the admissibility boundary $\partial\AO(\Rt)$ migrates inward
+  monotonically: $\partial\AO(\mathcal{R}_s)$ is strictly interior
+  to $\AO(\mathcal{R}_t)$ for $s > t$ whenever the erasure removes
+  distinctions.
+  The observer's world contracts with every operator removed.
+\end{corollary}
+
+
+% ============================================================
+\section{The Erasure Deformation Tensor}
+\label{sec:deformation}
+% ============================================================
+
+The Admissibility Contraction Theorem is a set-theoretic result.
+It tells us that the repair domain shrinks but not how it is
+distorted.
+To capture distortion we need a tensor.
+
+The key point is that after erasure, the surviving repair domain
+$\Restzt$ sits inside the original domain $\Restzero$ via the
+inclusion
+\[
+  \iotat : \Restzt \hookrightarrow \Restzero.
+\]
+The original metric $\gzero = g_{\Rzero}$ pulls back to
+$\iotat^* \gzero$ on $\Restzt$.
+The reduced repertoire $\Rt$ induces its own metric $\gt =
+g_{\Rt}$ on $\Restzt$.
+These need not agree.
+
+\begin{definition}[Erasure deformation tensor]
+  The \emph{erasure deformation tensor} at time $t$ is
+  \[
+    \Et
+    \;=\;
+    \iotat^* \gzero - \gt,
+  \]
+  a symmetric $(0,2)$-tensor on $\Restzt$.
+  Positive definiteness of $\Et$ at a distinction $d$ means the
+  original metric assigns greater distances near $d$ than the
+  reduced metric; negative definiteness means the reduced metric is
+  locally more spread.
+\end{definition}
+
+\begin{remark}
+  The pullback construction is essential.
+  Writing $\Et = \gzero - \gt$ would compare metrics on different
+  spaces, since $\gzero$ is defined on $\Restzero$ and $\gt$ is
+  defined on the strictly smaller set $\Restzt$.
+  The inclusion $\iotat$ identifies surviving distinctions with
+  their images in the original space, so the comparison is
+  meaningful: $\Et$ measures how erasure has distorted the geometry
+  of what remains, measured against the geometry it formerly had.
+\end{remark}
+
+\begin{lemma}[Repair Cost Coercivity]
+  Let $d_R^{(t)}$ denote the repair pseudometric induced by the
+  repertoire $\Rt$.
+  Assume that for every $M < +\infty$, the set of repair paths of
+  cost at most $M$ under $\Rt$,
+  \[
+    \Gamma_M^{(t)}
+    \;=\;
+    \bigl\{
+      \gamma \in \Rt^* \;\big|\; \mathrm{cost}(\gamma) \leq M
+    \bigr\},
+  \]
+  is sequentially compact under the product topology induced by the
+  compact-open topology on $\Rt$.
+  Suppose $d^* \in \Restzero \setminus \Restzt$ and
+  $(d_n)_{n \geq 1}$ is a sequence in $\Restzt$ with
+  $d_n \to d^*$ in the $\gzero$-topology.
+  Then for every fixed $d_0 \in \Restzt$ not approaching $d^*$,
+  \[
+    d_R^{(t)}(d_n, d_0) \;\to\; +\infty.
+  \]
+  \label{lem:coercivity}
+\end{lemma}
+
+\begin{proof}
+  Suppose for contradiction that the distances remain bounded:
+  $d_R^{(t)}(d_n, d_0) \leq M$ for all sufficiently large $n$
+  and some $M < +\infty$.
+  Then there exists a sequence of repair paths
+  $(\gamma_n) \subseteq \Gamma_{M+1}^{(t)}$ with
+  $\gamma_n : d_n \leadsto d_0$.
+
+  By the assumed sequential compactness of $\Gamma_{M+1}^{(t)}$,
+  a subsequence $(\gamma_{n_k})$ converges to a limit path
+  $\gamma^* \in \Gamma_{M+1}^{(t)}$.
+  By joint continuity of evaluation in the compact-open topology
+  on the locally compact Hausdorff substrate $\Xsub$
+  (Axioms 1--3 of \cite{Flyxion2026a}), the terminal states
+  converge: $d_{n_k} \to d^*$ implies $\gamma^*$ connects $d^*$
+  to $d_0$.
+  Since the distinction relation $\Dsub$ is closed
+  (Axiom 2 of \cite{Flyxion2026a}) and the terminal state of
+  $\gamma_{n_k}$ lies in $\Dsub$, the terminal state of $\gamma^*$
+  also lies in $\Dsub$.
+  By lower semi-continuity of the cost functional,
+  \[
+    \mathrm{cost}(\gamma^*) \;\leq\; \liminf_k \mathrm{cost}(\gamma_{n_k})
+    \;\leq\; M + 1 \;<\; +\infty.
+  \]
+  This means $d^*$ is finitely restorable under $\Rt$,
+  contradicting $d^* \notin \Restzt$.
+  Therefore no uniform bound $M$ exists, and
+  $d_R^{(t)}(d_n, d_0) \to +\infty$.
+\end{proof}
+
+\begin{remark}[On the path-space compactness hypothesis]
+  The hypothesis that $\Gamma_M^{(t)}$ is sequentially compact is
+  the path-space analogue of Axiom 3 (compact repair repertoire)
+  from \cite{Flyxion2026a}.
+  It holds whenever $\Rt$ is a compact set of continuous maps and
+  the set of efficient paths of bounded cost can be uniformly
+  parameterised --- for instance, when paths have uniformly bounded
+  length under the cost density $c$.
+  Without this assumption, a bounded-cost sequence of repair paths
+  can oscillate indefinitely without converging, leaving the
+  contradiction argument incomplete.
+  The assumption is satisfied in all concrete applications
+  considered in this paper.
+\end{remark}
+
+\begin{theorem}[Erasure Deformation Theorem]
+  Let $(\Rt)_{t \geq 0}$ be an erasure path satisfying the
+  path-space compactness hypothesis of Lemma~\ref{lem:coercivity},
+  and let $(d_n)_{n \geq 1}$ be a sequence in $\Restzt$ approaching
+  a distinction $d^* \in \Restzero \setminus \Restzt$ in the
+  $\gzero$-topology.
+  Fix any $d_0 \in \Restzt$ not approaching $d^*$, and let
+  $|\cdot|$ denote the operator norm on symmetric $(0,2)$-tensors
+  induced by $\gzero$.
+  Then
+  \[
+    |\Et|(d_n) \;\to\; +\infty
+    \quad\text{as } d_n \to d^*.
+  \]
+  Erasure generates geometric singularities at the irrestorability
+  boundary.
+  \label{thm:deformation}
+\end{theorem}
+
+\begin{proof}
+  We evaluate the two components of $\Et = \iotat^* \gzero - g(\dRt)$
+  along the sequence $(d_n)$, where $g(\dRt)$ denotes the
+  $(0,2)$-tensor induced by the repair pseudometric $\dRt =
+  d_R^{(t)}$ under the identification of $\Restzt$ as a metric
+  space (in the reversible case) or, more generally, the bilinear
+  form $g(\dRt)(u,v) = \dRt(u, v) + \dRt(v, u)$ symmetrised from
+  the pseudometric.
+
+  \textbf{Pullback component is bounded.}\;
+  The pullback metric $(\iotat^* \gzero)(d_n, d_0)$ is the
+  $\gzero$-distance between $d_n$ and $d_0$ measured in the
+  intact repair space $\Restzero$.
+  Since $d_n \to d^*$ in $\Restzero$ and $d_0$ is fixed away from
+  $d^*$, the sequence $(\iotat^* \gzero)(d_n, d_0)$ converges to
+  $\gzero(d^*, d_0) < +\infty$.
+  In particular, $(\iotat^* \gzero)(d_n, d_0)$ is bounded above.
+
+  \textbf{Induced form from reduced pseudometric diverges.}\;
+  By Lemma~\ref{lem:coercivity}, $\dRt(d_n, d_0) \to +\infty$.
+  Therefore $g(\dRt)(d_n, d_0) \to +\infty$.
+
+  \textbf{Tensor norm diverges.}\;
+  The operator norm satisfies
+  \[
+    |\Et|(d_n)
+    \;\geq\;
+    \bigl|(\iotat^* \gzero)(d_n, d_0) - g(\dRt)(d_n, d_0)\bigr|.
+  \]
+  Since $(\iotat^* \gzero)(d_n, d_0)$ is bounded while
+  $g(\dRt)(d_n, d_0) \to +\infty$, the right-hand side diverges.
+  Therefore $|\Et|(d_n) \to +\infty$.
+\end{proof}
+
+\begin{remark}
+  Theorem~\ref{thm:deformation} is the geometric content of the
+  title.
+  Erasure does not merely remove distinctions; it deforms the metric
+  structure of surviving distinctions near the lost boundary.
+  An observer approaching the irrestorability boundary experiences
+  not just loss but increasing distortion of what remains.
+  This captures phenomenological features of memory degradation:
+  distinctions near the boundary of recall become harder to
+  separate, more costly to maintain, and eventually indistinguishable.
+\end{remark}
+
+\begin{proposition}[Metric degeneration at the irrestorability boundary]
+  Let $\gt$ be a smooth Riemannian metric on $\Restzt$ (in the
+  reversible case, where the repair pseudometric satisfies the
+  symmetry condition of Proposition~3.5 in \cite{Flyxion2026a}).
+  If $|\Et(d_n)| \to +\infty$ along a sequence approaching an
+  irrestorability boundary, then either:
+  \begin{enumerate}
+    \item the smallest eigenvalue of $\gt$ approaches zero
+      (metric collapse: the manifold develops a degenerate
+      direction), or
+    \item the largest eigenvalue of $\gt$ diverges
+      (metric blow-up: distances in some direction become
+      infinite).
+  \end{enumerate}
+  In either case, the metric $\gt$ becomes singular at the
+  irrestorability boundary.
+  \label{prop:metric-degen}
+\end{proposition}
+
+\begin{proof}
+  Since $|\Et| \to +\infty$ and $\iotat^* \gzero$ is bounded
+  (Theorem~\ref{thm:deformation}), the eigenvalues of $\gt$ must
+  be unbounded or approach zero along the sequence, for otherwise
+  $|\Et|$ would remain bounded.
+  The two cases correspond to opposite-signed singularities of the
+  metric.
+\end{proof}
+
+\begin{corollary}[Forgetting generates metric singularities]
+  Under the conditions of Proposition~\ref{prop:metric-degen},
+  curvature divergence follows if $\gt$ has bounded derivatives.
+  Without this regularity assumption, the weaker statement is that
+  the metric becomes singular --- which is a necessary condition for
+  curvature blow-up but does not imply it in full generality.
+  Forgetting is therefore curvature change in the regular case, and
+  metric degeneration in general.
+\end{corollary}
+
+
+% ============================================================
+\section{Hysteresis and Irreversibility}
+\label{sec:hysteresis}
+% ============================================================
+
+The deformation tensor describes the geometry of erasure at a fixed
+time.
+The hysteresis functional describes the dynamics of restoration
+after erasure.
+
+\begin{definition}[Destruction and restoration cost]
+  For a distinction $d \in \Restzero$, define:
+  \begin{itemize}
+    \item the \emph{destruction cost}
+      $\CR^{\mathrm{destroy}}(d)$: the minimal cost required to
+      remove an operator from $\Rzero$ such that $d$ becomes
+      irrestorable;
+    \item the \emph{restoration cost}
+      $\CR^{\mathrm{restore}}(d, \Rt)$: the minimal cost of
+      re-acquiring operators sufficient to return $d$ to
+      $\Rest(\Rt)$, starting from the reduced repertoire $\Rt$.
+  \end{itemize}
+  Both costs admit concrete operational interpretations:
+  in biological systems, cost is metabolic energy or cellular
+  resources ($\CR^{\mathrm{destroy}}$ = energy to eliminate a
+  synaptic pathway; $\CR^{\mathrm{restore}}$ = energy to grow a
+  new one); in institutional systems, cost is organisational
+  resources ($\CR^{\mathrm{destroy}}$ = cost of decommissioning
+  an archive or retiring a specialist;
+  $\CR^{\mathrm{restore}}$ = cost of rebuilding equivalent
+  capacity from scratch); in linguistic systems, cost is
+  measurable in speaker-years
+  ($\CR^{\mathrm{destroy}}$ = attrition required to make a
+  distinction irrestorable; $\CR^{\mathrm{restore}}$ =
+  revitalisation effort required to restore it).
+  The key asymmetry is that destruction cost is measured going
+  down the sub-repertoire lattice, while restoration cost is
+  measured going up from $\Rt$; the hysteresis functional
+  captures this asymmetry in a single signed quantity.
+\end{definition}
+
+\begin{definition}[Hysteresis functional]
+  The \emph{hysteresis functional} of distinction $d$ under
+  erasure path $(\Rt)$ is
+  \[
+    \Hyster_t(d)
+    \;=\;
+    \CR^{\mathrm{restore}}(d, \Rt)
+    - \CR^{\mathrm{destroy}}(d).
+  \]
+  \label{def:hysteresis}
+\end{definition}
+
+Three regimes characterise the hysteresis functional:
+
+\begin{itemize}
+  \item $\Hyster_t(d) = 0$: \emph{reversible erasure}.
+    Restoration costs exactly as much as destruction.
+    The distinction is forgotten and recovered with equal effort.
+    This regime governs ordinary perturbation within the
+    admissibility interior.
+
+  \item $0 < \Hyster_t(d) < +\infty$: \emph{partial hysteresis}.
+    Restoration is more costly than destruction.
+    This is the generic biological and institutional regime:
+    synaptic weakening is reversible but synaptic elimination
+    requires costly re-growth; institutional procedures once
+    suspended require substantial effort to reinstate.
+
+  \item $\Hyster_t(d) = +\infty$: \emph{permanent forgetting}.
+    The distinction cannot be restored from $\Rt$ at any finite
+    cost.
+\end{itemize}
+
+\begin{theorem}[Permanent Forgetting Theorem]
+  $\Hyster_t(d) = +\infty$ if and only if
+  $d \notin \Rest(\Rt)$.
+  Infinite hysteresis is equivalent to the distinction having
+  crossed the irrestorability boundary.
+  \label{thm:permanent}
+\end{theorem}
+
+\begin{proof}
+  $(\Rightarrow)$\;
+  If $\Hyster_t(d) = +\infty$, then
+  $\CR^{\mathrm{restore}}(d, \Rt) = +\infty$: no finite
+  re-acquisition of operators restores $d$ from $\Rt$.
+  This means $d \notin \Rest(\Rt)$.
+
+  $(\Leftarrow)$\;
+  If $d \notin \Rest(\Rt)$, then $d$ is not finitely restorable
+  under $\Rt$.
+  Any sequence of operator acquisitions that would restore $d$
+  must ultimately recover a repertoire $\mathcal{R}'$ with
+  $d \in \Rest(\mathcal{R}')$.
+  The cost of doing so from $\Rt$ is $\CR^{\mathrm{restore}}(d,
+  \Rt) = +\infty$ if no finite extension of $\Rt$ suffices ---
+  which holds whenever the operators needed to restore $d$ are
+  themselves irrecoverable (as in biological cell death or archive
+  destruction).
+  Hence $\Hyster_t(d) = +\infty$.
+\end{proof}
+
+\begin{remark}
+  The Permanent Forgetting Theorem connects the dynamical notion
+  (infinite restoration cost) to the geometric notion (crossing the
+  admissibility boundary).
+  It is the hysteresis analogue of the Repair Boundary Theorem of
+  \cite{Flyxion2026a}: where that theorem characterised the boundary
+  via diverging repair cost, this theorem characterises it via
+  diverging restoration cost after the boundary has been crossed.
+\end{remark}
+
+\begin{proposition}[Monotonicity of hysteresis under progressive erasure]
+  Along an erasure path $(\Rt)_{t \geq 0}$, the hysteresis
+  functional is non-decreasing in $t$:
+  \[
+    s \geq t \quad\Longrightarrow\quad
+    \Hyster_s(d) \geq \Hyster_t(d)
+  \]
+  for all $d \in \Rest(\Rzero)$.
+  Further erasure never makes restoration easier.
+\end{proposition}
+
+\begin{proof}
+  Since $\mathcal{R}_s \subseteq \Rt$ for $s \geq t$, the set of
+  operators available for restoration at time $s$ is a subset of
+  those available at time $t$.
+  Therefore $\CR^{\mathrm{restore}}(d, \mathcal{R}_s) \geq
+  \CR^{\mathrm{restore}}(d, \Rt)$, giving
+  $\Hyster_s(d) \geq \Hyster_t(d)$.
+\end{proof}
+
+\begin{theorem}[Hysteresis--Boundary Correspondence]
+  Let $d \in \Restzero$.
+  Then
+  \[
+    \Hyster_t(d) = +\infty
+    \quad\Longleftrightarrow\quad
+    \inf_{\gamma}
+    \Bigl(
+      \sup_{x \in \gamma} \CR(x,\, \Rt)
+    \Bigr)
+    = +\infty,
+  \]
+  where the infimum is taken over all restoration trajectories
+  $\gamma$ from $\Rt$ to any repertoire $\mathcal{R}' \supseteq \Rt$
+  with $d \in \Rest(\mathcal{R}')$.
+  Permanent forgetting is equivalent to every restoration trajectory
+  encountering a minimax barrier of infinite repair cost.
+  \label{thm:hysteresis-boundary}
+\end{theorem}
+
+\begin{proof}
+  $(\Rightarrow)$\;
+  Suppose $\Hyster_t(d) = +\infty$, so
+  $\CR^{\mathrm{restore}}(d, \Rt) = +\infty$.
+  Suppose for contradiction that there exists a restoration
+  trajectory $\gamma^*$ with
+  \[
+    \sup_{x \in \gamma^*} \CR(x,\, \Rt) \;<\; +\infty.
+  \]
+  Then every point along $\gamma^*$ lies at finite repair cost, and
+  the total restoration cost accumulated along $\gamma^*$ is bounded
+  above by the path length times this finite supremum.
+  Therefore $\CR^{\mathrm{restore}}(d, \Rt) < +\infty$, contradicting
+  the hypothesis.
+  Hence no such trajectory exists: every restoration trajectory
+  $\gamma$ satisfies $\sup_{x \in \gamma} \CR(x, \Rt) = +\infty$.
+  Taking the infimum over all trajectories gives
+  $\inf_\gamma \sup_{x \in \gamma} \CR(x, \Rt) = +\infty$.
+
+  $(\Leftarrow)$\;
+  Suppose $\inf_\gamma \sup_{x \in \gamma} \CR(x, \Rt) = +\infty$.
+  Then for every restoration trajectory $\gamma$,
+  $\sup_{x \in \gamma} \CR(x, \Rt) = +\infty$.
+  By the Repair Boundary Theorem of \cite{Flyxion2026a}, points
+  where $\CR(\cdot, \Rt) \to +\infty$ are precisely points on the
+  irrestorability boundary $\partial\AO(\Rt)$.
+  Every trajectory therefore accumulates at boundary points of
+  infinite repair cost and cannot reach $d$ at finite total cost.
+  Hence $\CR^{\mathrm{restore}}(d, \Rt) = +\infty$, giving
+  $\Hyster_t(d) = +\infty$.
+\end{proof}
+
+\begin{remark}
+  The Hysteresis--Boundary Correspondence gives permanent forgetting
+  a variational characterisation: $\Hyster_t(d) = +\infty$ if and
+  only if the minimax repair cost over all restoration trajectories
+  is infinite.
+  This is the exact analogue of barrier-crossing formulations in
+  control theory, large deviations theory, and energy landscape
+  analysis, where a transition between states is impossible if the
+  infimum of the worst-case cost over all paths is infinite.
+  The theorem unifies admissibility geometry (the boundary),
+  dynamical cost (the hysteresis functional), and the Permanent
+  Forgetting Theorem into a single minimax equivalence.
+  Every concept introduced in this paper --- contraction,
+  deformation, hysteresis, permanent forgetting --- is now
+  a consequence of a single geometric fact: that irrestorability
+  boundaries are minimax barriers of infinite repair cost.
+\end{remark}
+
+\begin{theorem}[Boundary Migration]
+  Let $(\Rt)_{t \geq 0}$ be a non-trivial erasure path.
+  For each $t > 0$ such that $\Restzt \subsetneq \Restzero$,
+  there exists an open set $U_t \subset \Azero$ with
+  $U_t \cap \At = \emptyset$ and $U_t \cap \partial\At \neq
+  \emptyset$: the irrestorability boundary $\partial\At$ has
+  migrated inward into the former interior of $\Azero$.
+  \label{thm:migration}
+\end{theorem}
+
+\begin{proof}
+  By the Admissibility Contraction Theorem, $\At \subseteq \Azero$
+  with strict inclusion when $\Restzt \subsetneq \Restzero$.
+  Let $x_0 \in \Azero \setminus \At$.
+  Since $\Azero$ is the closure of its interior, points arbitrarily
+  close to $x_0$ were formerly in the interior of $\Azero$.
+  As $\At \not\ni x_0$, the boundary $\partial\At$ lies between
+  $x_0$ and the interior of $\At$, establishing $U_t$.
+\end{proof}
+
+\begin{definition}[Boundary migration measure]
+  The \emph{boundary migration measure} at time $t$ is
+  \[
+    V(t)
+    \;=\;
+    \inf_{x \in \partial\At}\;
+    \inf_{y \in \partial\Azero}\;
+    d_R^{(0)}(x, y),
+  \]
+  where $d_R^{(0)}$ is the original repair pseudometric and the
+  double infimum gives the point-to-set distance from the current
+  irrestorability boundary $\partial\At$ to the original boundary
+  $\partial\Azero$ in the original repair geometry.
+  $V(t)$ is non-negative with $V(t) > 0$ whenever the boundary has
+  migrated inward.
+  Whether $V(t)$ is differentiable in $t$, and what the derivative
+  would represent as a migration speed, depends on regularity
+  assumptions about the boundary evolution not established here;
+  this is an open problem.
+\end{definition}
+
+\begin{remark}
+  Theorem~\ref{thm:migration} reformulates forgetting as a
+  moving-front problem.
+  The irrestorability boundary advances inward through the
+  admissibility manifold, sweeping formerly admissible states into
+  the irrestorable region.
+  The migration measure $V(t)$ quantifies how far the front has
+  advanced without requiring smoothness of the boundary, making it
+  applicable even when the boundary fragments or develops
+  topological complexity under erasure.
+  Biological analogues include the penumbra in stroke and the
+  retreat of phonological distinctions as speaker populations
+  decline.
+\end{remark}
+
+
+% ============================================================
+\section{Topological Memory}
+\label{sec:topology}
+% ============================================================
+
+The deformation tensor and hysteresis functional are local objects:
+they describe geometry near individual distinctions and boundaries.
+To capture global structure of memory loss, we need topology.
+
+The metric and topological levels of the framework answer different
+questions and should be clearly distinguished.
+The metric structure --- the repair pseudometric $\dRt$ and the
+deformation tensor $\Et$ --- answers the question: \emph{how costly
+is access to a distinction?}
+It is quantitative, local, and sensitive to the specific distances
+between distinctions in the repair domain.
+The topological structure --- the homology groups $H_k(\At)$ and
+the persistence module $PH_*(\AO)$ --- answers the question:
+\emph{which distinctions remain mutually accessible at all?}
+It is qualitative, global, and invariant under homeomorphism.
+These are independent.
+Large metric deformation can occur without any topological change
+(if the repair domain contracts but remains connected and simply
+connected).
+Conversely, topological change --- fragmentation, hole creation ---
+can occur with bounded local metric deformation.
+The full geometry of forgetting requires both levels: topology
+describes the qualitative structure of what remains, metric geometry
+describes the quantitative structure of how easily it is accessed.
+
+The erasure path $(\Rt)_{t \geq 0}$ generates a filtration of
+admissibility manifolds:
+\[
+  \Azero \;\supseteq\; \AO(\mathcal{R}_1) \;\supseteq\; \AO(\mathcal{R}_2)
+  \;\supseteq\; \cdots
+\]
+This filtration is the natural input to persistent homology.
+The individual homology groups $H_k(\At)$ record topology at a
+single time $t$; the persistence module records how that topology
+evolves across the entire erasure path.
+
+\begin{definition}[Persistence module of memory]
+  The \emph{persistence module} of the observer's memory under the
+  erasure path $(\Rt)$ is the collection of maps
+  \[
+    \mathbf{PH}_k
+    \;=\;
+    \bigl(H_k(\At;\, \mathbb{Z}),\;
+    \phi_{s,t} : H_k(\At) \to H_k(\AO(\mathcal{R}_s))\bigr)_{s \geq t},
+  \]
+  where $\phi_{s,t}$ is induced by the inclusion $\AO(\mathcal{R}_s)
+  \hookrightarrow \At$.
+  The \emph{persistent topological memory} is
+  \[
+    PH_*(\AO)
+    \;=\;
+    \bigoplus_{k \geq 0} \mathbf{PH}_k.
+  \]
+\end{definition}
+
+The persistence diagram of $PH_*(\AO)$ records, for each
+homological feature, its birth time $t_b$ (the erasure time at
+which it first appears) and death time $t_d$ (the time at which
+it is destroyed by further erasure).
+Features with large lifespan $t_d - t_b$ represent structurally
+robust repair capacity; features with small lifespan represent
+fragile repair cycles sensitive to operator loss.
+
+\begin{remark}[On homology coefficients]
+  We use $\mathbb{Z}$ coefficients throughout.
+  With $\mathbb{Z}$ coefficients, $H_0(\At; \mathbb{Z})$ is the
+  free abelian group on connected components of $\At$, so
+  $\mathrm{rank}(H_0) = $ number of components --- exactly the
+  quantity relevant for the Fragmentation Theorem.
+  With $\mathbb{Z}/2$ coefficients the rank would agree for
+  orientable manifolds, but $\At$ need not be orientable after
+  erasure.
+  Integer coefficients are the natural choice when we wish to
+  count components and loops without orientability assumptions,
+  which is the appropriate setting for admissibility manifolds
+  whose topology may be altered by non-orientable erasure events.
+\end{remark}
+
+\begin{definition}[Topological memory]
+  The \emph{topological memory} of an observer at time $t$ is
+  the graded object
+  \[
+    \Mem_t
+    \;=\;
+    \bigoplus_{k \geq 0} H_k(\At;\, \mathbb{Z}),
+  \]
+  where $\At = \AO(\Rt)$ is the admissibility manifold at time $t$.
+  The full memory across the erasure path is $PH_*(\AO)$.
+\end{definition}
+
+Each homology group captures a distinct mode of persistent memory
+structure:
+
+\begin{itemize}
+  \item $H_0(\At)$: connected components of the admissibility
+    manifold.
+    A single component corresponds to a globally connected repair
+    space; multiple components indicate \emph{repair domain
+    fragmentation} --- regions of the distinction space that can
+    no longer be jointly maintained.
+
+  \item $H_1(\At)$: loops in the admissibility manifold.
+    Non-trivial loops correspond to \emph{repair cycles} ---
+    closed sequences of repair operations that return to their
+    starting point.
+    Their birth and death in $PH_1$ records the creation and
+    destruction of circular repair redundancy under erasure.
+
+  \item $H_k(\At)$ for $k \geq 2$: higher-order topological
+    features corresponding to repair structures with more complex
+    boundary behaviour.
+\end{itemize}
+
+\begin{definition}[Topological forgetting]
+  A mode of \emph{topological forgetting} occurs when an erasure
+  event changes the homology of $\At$:
+  \begin{itemize}
+    \item \emph{Fragmentation}: $\mathrm{rank}(H_0(\At))$ increases.
+    \item \emph{Hole creation}: $\mathrm{rank}(H_1(\At))$ increases.
+    \item \emph{Homology collapse}: $\mathrm{rank}(H_k(\At))$
+      decreases for some $k$.
+  \end{itemize}
+  All three modes are visible in the persistence diagram as
+  births, long-lived features, and deaths respectively.
+\end{definition}
+
+\begin{theorem}[Fragmentation Theorem]
+  Let $(\Rt)_{t \geq 0}$ be an erasure path that removes a
+  distinction $d^* \in \Restzero$.
+  If $d^*$ was a cut-point of $\Azero$, then the erasure event
+  that removes $d^*$ increases $\mathrm{rank}(H_0(\At))$ by at
+  least one.
+  Fragmentation is the topological signature of the loss of a
+  structurally critical distinction.
+  \label{thm:homology-change}
+\end{theorem}
+
+\begin{proof}
+  If $d^*$ is a cut-point of $\Azero$, then $\Azero \setminus
+  \{d^*\}$ is disconnected.
+  After the erasure event making $d^*$ irrestorable, $\At$ is
+  contained in $\Azero \setminus \{d^*\}$ and is therefore
+  disconnected, increasing $\mathrm{rank}(H_0(\At))$.
+\end{proof}
+
+\begin{theorem}[Hole Creation Theorem]
+  Let $U \subset \At$ be a contractible region of the admissibility
+  manifold whose repair operators are entirely removed by an erasure
+  event, so that $U \cap \AO(\mathcal{R}_{t+\varepsilon}) =
+  \emptyset$ for all small $\varepsilon > 0$.
+  If the removal of $U$ does not disconnect $\At$ but creates a
+  non-contractible loop in $\At \setminus U$, then
+  \[
+    \mathrm{rank}(H_1(\AO(\mathcal{R}_{t+\varepsilon})))
+    \;>\;
+    \mathrm{rank}(H_1(\At)).
+  \]
+  Erasure can increase topological complexity even while decreasing
+  admissible volume.
+  \label{thm:hole-creation}
+\end{theorem}
+
+\begin{proof}
+  The removed region $U$ becomes inaccessible under the reduced
+  repertoire.
+  The complement $\At \setminus U$ contains a loop surrounding $U$
+  that is not the boundary of any admissible $2$-chain in
+  $\At \setminus U$: no $2$-chain can fill the loop because $U$ is
+  no longer part of the admissible space.
+  Hence a new non-trivial homology class appears in $H_1$, and the
+  rank increases.
+\end{proof}
+
+\begin{remark}
+  Theorem~\ref{thm:hole-creation} captures a counter-intuitive
+  phenomenon: an observer can become topologically more complex
+  through forgetting.
+  The emergence of inaccessible repair cycles --- holes in the
+  admissibility manifold --- represents a kind of structural
+  complication that progressive erasure introduces even as the
+  total admissible volume shrinks.
+  This is the geometric analogue of the observation that partial
+  memory loss can produce confabulatory behaviour: the system
+  develops topological constraints it cannot see and cannot
+  navigate around.
+\end{remark}
+
+\begin{remark}
+  Ray~Barman et al.~\cite{RayBarman2026} observe a sharp phase
+  transition in $H_0$ and a peak in $H_1$ of semantic embedding
+  spaces at a critical connectivity threshold, with $H_1$ reaching
+  $534 \pm 24$ at the transition.
+  This is an empirical instance of the Hole Creation Theorem:
+  at the critical threshold, the removal of connectivity between
+  semantic clusters creates non-contractible loops in the surviving
+  space, exactly as Theorem~\ref{thm:hole-creation} predicts.
+  The persistence diagram of their embedding space is the empirical
+  correlate of $PH_*(\AO)$ for a retrieval observer undergoing
+  progressive interference-driven erasure.
+\end{remark}
+
+\begin{definition}[Persistent topological memory]
+  A topological feature of $PH_*(\AO)$ \emph{persists} if its
+  lifespan $t_d - t_b$ in the persistence diagram exceeds a
+  threshold $\tau > 0$.
+  Persistent features are the structurally robust components of
+  memory; ephemeral features are fragile repair cycles that erasure
+  quickly destroys.
+  The persistence diagram provides a complete summary of which
+  repair structures survive progressive operator loss.
+\end{definition}
+
+
+% ============================================================
+\section{Biological Forgetting}
+\label{sec:bio}
+% ============================================================
+
+The biological substrate for distinction-maintaining repair is
+the neural system.
+Repair operators include synaptic strengthening, protein synthesis,
+glial repair, and the broader repertoire of cellular maintenance
+processes.
+Erasure events include synaptic weakening, synaptic elimination,
+cell death, and axonal degeneration.
+
+\begin{example}[Synaptic decay and partial hysteresis]
+  Long-term potentiation (LTP) is a repair operator that
+  strengthens synaptic connections, increasing the probability of
+  successful distinction restoration.
+  Synaptic weakening below the LTP threshold is reversible:
+  $0 < \Hyster_t(d) < +\infty$.
+  Synaptic elimination by pruning or excitotoxicity is in general
+  irreversible: $\Hyster_t(d) = +\infty$ if the cellular
+  machinery for synapse formation is also lost.
+  The transition between these regimes is a biological instance of
+  the boundary crossing described by Theorem~\ref{thm:permanent}.
+\end{example}
+
+\begin{example}[Neural injury and admissibility contraction]
+  Focal cortical lesions remove repair operators acting on specific
+  regions of the substrate.
+  By the Admissibility Contraction Theorem, the admissibility
+  manifold of the injured system is a strict subset of the intact
+  system's manifold.
+  The deformation tensor $\Et$ is non-trivial near the lesion
+  boundary: distinctions that were easily maintained before the
+  lesion become increasingly costly as they approach the injured
+  region.
+  This is the geometric correlate of the penumbra effect in
+  stroke: the region surrounding the infarct in which repair is
+  expensive but not yet impossible.
+\end{example}
+
+\begin{example}[Developmental pruning and homology change]
+  Synaptic pruning during development eliminates a substantial
+  fraction of early repair operators.
+  If pruned synapses were cut-points of the admissibility manifold,
+  Theorem~\ref{thm:homology-change} predicts fragmentation of the
+  repair domain.
+  Conversely, if pruning eliminates redundant paths while
+  preserving connectivity, $H_0(\At)$ is unchanged and only
+  higher-order homology is affected.
+  The distinction between pathological and healthy pruning may
+  correspond precisely to whether pruning changes $H_0$ (harmful)
+  or only higher homology (reorganising without fragmenting).
+\end{example}
+
+
+% ============================================================
+\section{Institutional Forgetting}
+\label{sec:institutional}
+% ============================================================
+
+Institutions are observers whose repair repertoires consist of
+codified procedures, trained personnel, and maintained
+infrastructure.
+Erasure events include staff attrition, procedural reform,
+budget cuts, and physical destruction of facilities.
+
+\begin{example}[Archive destruction]
+  A physical archive is a repair operator: it restores distinctions
+  between historical states by maintaining retrieval paths from
+  present queries to past records.
+  Destruction of an archive removes those operators.
+  By the Permanent Forgetting Theorem, distinctions whose only
+  repair paths passed through the destroyed archive acquire
+  $\Hyster_t(d) = +\infty$: they cannot be restored at any finite
+  cost from the reduced repertoire.
+  The distinctions do not become false; they become unrestorable.
+  This is the precise sense in which archive destruction is
+  epistemically irreversible.
+\end{example}
+
+\begin{example}[Language death]
+  A living language is a repair repertoire for semantic and
+  phonological distinctions.
+  Language death is an erasure path: as speakers die or shift to
+  other languages, the repair operators (speakers capable of
+  producing and recognising the language's distinctions) are
+  progressively removed.
+  The deformation tensor $\Et$ is non-trivial near the distinctions
+  specific to the dying language: they become increasingly costly
+  to maintain as the speaker population falls.
+  Total collapse of the speaker population corresponds to
+  $\Restzt = \emptyset$: topological total forgetting.
+  Language revitalisation is the re-acquisition of repair operators,
+  with a hysteresis cost determined by how far along the erasure
+  path the language has progressed.
+\end{example}
+
+\begin{example}[Institutional collapse]
+  The collapse of a legal or governmental institution removes
+  procedural repair operators.
+  The Paradigm Shift Theorem of \cite{Flyxion2026a} showed that
+  non-trivial repertoire change produces incomparable restorable
+  sets.
+  Institutional collapse is the limiting case: the entire
+  repertoire is lost, and the new institution that replaces it
+  typically has a different restorable set, not a subset.
+  Reconstruction of collapsed institutions is path-dependent:
+  different reconstruction paths through the sub-repertoire lattice
+  produce different admissibility geometries even when the
+  nominal repertoire is nominally restored.
+  Meadows~\cite{Meadows2008} identifies \emph{eroding goals} and
+  \emph{policy resistance} as characteristic system traps: when
+  a system loses the feedback loops that maintain a standard, the
+  standard itself erodes rather than the gap between standard and
+  performance being corrected.
+  In repair-theoretic terms, eroding goals correspond to a slow
+  erasure path in which the operators that enforce a distinction
+  are progressively weakened before being eliminated, with the
+  distinction boundary migrating inward --- precisely the
+  moving-front dynamics of Theorem~\ref{thm:migration} --- before
+  the distinction becomes permanently irrestorable.
+\end{example}
+
+
+% ============================================================
+\section{Scientific Forgetting}
+\label{sec:science}
+% ============================================================
+
+Scientific knowledge is maintained by a collective repair
+repertoire: experimental techniques, trained practitioners,
+instrumentation, and institutional infrastructure.
+Scientific forgetting is the loss of repair operators from this
+collective repertoire.
+
+\begin{example}[Loss of experimental technique]
+  Certain experimental techniques become inaccessible when the
+  practitioners who developed them retire without training
+  successors.
+  The technique is an operator $r \in \Rzero$; its loss is an
+  erasure event.
+  Distinctions whose restoration depended exclusively on that
+  technique acquire $\Hyster_t(d) = +\infty$ if the technique
+  cannot be reconstructed from surviving operators.
+  This is institutionally invisible: the distinctions remain
+  nominally part of the scientific record but are practically
+  unrestorable.
+\end{example}
+
+\begin{example}[Paradigm transitions as structured erasure]
+  The Paradigm Shift Theorem of \cite{Flyxion2026a} characterised
+  paradigm transitions as producing incomparable restorable sets.
+  Under the erasure framework, a paradigm transition is an erasure
+  path followed by a repertoire acquisition path: old operators
+  are removed, new ones are added.
+  The net effect on the deformation tensor depends on whether the
+  new operators can restore the distinctions made irrestorable by
+  the old operators' removal.
+  If not, the transition involves permanent scientific forgetting
+  --- the Kuhnian claim that paradigm shifts make some distinctions
+  permanently invisible --- formalised as $\Hyster_T(d) = +\infty$
+  for distinctions in $\Restzero \setminus \Rest(\mathcal{R}_T)$.
+\end{example}
+
+\begin{example}[Replication crisis as repair failure]
+  The replication crisis in empirical sciences can be recast as
+  a collective repair failure: experimental results that were
+  nominally in $\Restzero$ are found, upon attempted restoration
+  under independent operators, to have $\CR(d, \Rzero) = +\infty$
+  --- they were never genuinely restorable, only apparently so.
+  The crisis is the discovery that the admissibility boundary was
+  mislocated: distinctions believed to be in the interior of
+  $\Azero$ were in fact on or outside it.
+  %% EXPAND: connection to distinction-reorganisation papers.
+\end{example}
+
+
+% ============================================================
+\section{Consequences, Open Problems, and Future Directions}
+\label{sec:consequences}
+% ============================================================
+
+The framework developed here yields a unified account of phenomena
+that are conventionally treated as belonging to different domains.
+
+\medskip\noindent
+\textbf{Memory is geometry.}\;
+The metrised repair space $(\Rest(\mathcal{R}), d_R)$ is the
+formal object corresponding to what an observer remembers.
+Memory loss is not subtraction of stored items but deformation of
+this metric space, measured by the tensor $\Et$.
+
+\medskip\noindent
+\textbf{The right objects are invariants, not components.}\;
+The deformation tensor $\Et$ is a symmetric $(0,2)$-tensor; its
+components in any particular basis carry no direct physical
+meaning.
+The meaningful objects are invariants: the operator norm $|\Et|$
+measures total deformation; the eigenvalues of $\Et$ (relative to
+$\gzero$) identify principal directions of forgetting; the trace
+$\mathrm{tr}(\Et)$ measures mean distortion; the determinant
+measures volume change in the surviving repair domain.
+This is precisely how strain tensors are interpreted in continuum
+mechanics: not component by component, but through invariant
+quantities such as principal strains, volumetric strain, and
+deviatoric strain.
+A fading memory corresponds not to a particular tensor component
+becoming large but to a specific invariant --- likely $|\Et|$ or
+a principal eigenvalue --- diverging in the direction associated
+with the distinction being lost.
+
+\medskip\noindent
+\textbf{Forgetting is irreversible in the generic case.}\;
+The hysteresis functional $\Hyster_t(d)$ is non-decreasing along
+any erasure path.
+For biological and institutional observers, the operators most
+likely to be lost --- cell death, archive destruction, speaker
+extinction --- are precisely those for which
+$\Hyster_t(d) = +\infty$.
+Reversible forgetting is the special case, not the default.
+
+\medskip\noindent
+\textbf{Restoration is path-dependent.}\;
+Two observers that have undergone different erasure paths to the
+same reduced repertoire may have different restoration costs,
+because intermediate states of the admissibility manifold affect
+what residual structure is available for reconstruction.
+This connects the framework to the broader distinction-history
+program: what matters is not the current state but the trajectory.
+
+\medskip\noindent
+\textbf{Forgetting has two independent modes.}\;
+Metric deformation ($|\Et| \to \infty$) and topological change
+($H_*(\At)$ changing) are independent phenomena.
+The full geometry of forgetting requires both: metric deformation
+describes how costly access becomes; topological change describes
+which distinctions lose mutual accessibility entirely.
+A storage theory of memory can represent neither.
+
+\subsection*{Open Problems}
+
+\begin{enumerate}
+
+  \item \textbf{Boundary migration speed.}\;
+    The migration measure $V(t) = \inf_{x \in \partial\At}
+    \inf_{y \in \partial\Azero} d_R^{(0)}(x, y)$
+    is defined but its time
+    derivative is not established.
+    Under what regularity conditions on the erasure path and the
+    admissibility boundary is $V(t)$ differentiable?
+    When it is, $\dot{V}(t)$ is the migration speed --- a scalar
+    quantifying how fast the irrestorability front advances.
+    Is there an equation of motion for the front analogous to the
+    eikonal equation in geometric optics?
+
+  \item \textbf{Rate of deformation.}\;
+    How does $\Et$ evolve along an erasure path?
+    Is there a flow equation $\partial_t \Et = F(\Et, g_0, \Rt)$?
+    The analogy with Ricci flow is suggestive: curvature-driven
+    deformation might model how metric singularities propagate
+    through the repair domain after a localised erasure event.
+    Ricci flow develops singularities in finite time, which would
+    correspond to the onset of permanent forgetting.
+
+  \item \textbf{Critical repair operators.}\;
+    The Fragmentation Theorem identifies cut-points as structurally
+    critical distinctions; the Hole Creation Theorem identifies
+    contractible removable regions.
+    Characterise the full set of \emph{critical repair operators}:
+    those whose removal changes $H_*(\At)$.
+    Are there operators that stabilise the manifold topology
+    against the removal of other operators?
+    If so, they are candidates for targeted preservation in
+    biological, archival, and linguistic contexts.
+
+  \item \textbf{Minimal restoration.}\;
+    Given a reduced repertoire $\Rt$ and a target distinction set
+    $D \subseteq \Restzero \setminus \Restzt$, what is the minimal
+    operator set that must be re-acquired to restore $D$?
+    This is an inverse problem on the sub-repertoire lattice
+    $\mathcal{L}(\Rzero)$.
+    The orbit structure of the erasure monoid
+    (Section~\ref{sec:erasure}) constrains the answer: not all
+    paths from $\Rt$ to a repertoire restoring $D$ have equal cost.
+
+  \item \textbf{Erasure and the interference matrix.}\;
+    How does the interference matrix $\IntMat$ of
+    \cite{Flyxion2026a} evolve under erasure?
+    Does operator loss preferentially increase positive eigenvalues
+    (more repair conflict among surviving distinctions) or decrease
+    negative eigenvalues (less synergy)?
+    The effective dimensionality concentration found by
+    Ray~Barman et al.~\cite{RayBarman2026} --- all tested embedding
+    models concentrating variance into roughly 16 effective
+    dimensions regardless of nominal dimensionality --- suggests
+    that biological and artificial memory systems operate in a regime
+    where a small number of operators account for most repair
+    capacity, making them catastrophically vulnerable to targeted
+    erasure.
+    A prediction: erasure of the operators corresponding to the
+    top eigenvectors of $\IntMat$ should produce disproportionate
+    fragmentation relative to erasure of random operators.
+
+  \item \textbf{Optimal erasure paths.}\;
+    On $\mathcal{L}(\Rzero)$, characterise the erasure paths that
+    minimise total deformation $\int_0^T |\Et|\, \mathrm{d}t$
+    subject to a fixed endpoint $\mathcal{R}_T$.
+    Such paths represent maximally graceful forgetting.
+    The dual problem --- paths that maximise $\int_0^T |\Et|\,
+    \mathrm{d}t$ --- characterises maximally disruptive forgetting,
+    relevant to adversarial institutional erasure.
+
+\end{enumerate}
+
+\subsection*{Future Directions}
+
+The following questions lie beyond the scope of this paper but
+are natural extensions of its framework.
+
+\medskip\noindent
+\textbf{Stratified admissibility manifolds.}\;
+The current framework assumes $\At$ is a topological manifold.
+The Fragmentation and Hole Creation Theorems predict, however,
+that progressive erasure can produce non-manifold spaces:
+boundaries may become fractal, strata may appear at different
+dimensions, and the singular set of $\At$ may itself have
+non-trivial topology.
+The natural generalisation is to work in the category of
+\emph{stratified spaces}~\cite{Munkres2000}, where the metric
+tensor lives on each stratum and the homology groups are computed
+globally.
+This would accommodate the full range of singularities that
+erasure generates without requiring smoothness assumptions that
+cannot be established in general.
+
+\medskip\noindent
+\textbf{Thermodynamics of erasure.}\;
+The framework uses repair cost as a primitive but does not
+specify its physical nature.
+Landauer's principle~\cite{Landauer1961} establishes that the
+erasure of one bit of information requires at least $kT \ln 2$
+of work.
+If distinctions are identified with bits and erasure events are
+identified with logical irreversibility, the hysteresis functional
+$\Hyster_t(d)$ should satisfy a Landauer-type lower bound:
+$\CR^{\mathrm{destroy}}(d) \geq kT \ln 2$ for any distinction
+whose erasure is informationally irreversible.
+Whether the deformation tensor $\Et$ is conjugate to a
+stress-energy tensor in the physical sense --- whether there is
+a genuine variational principle underlying erasure deformation
+--- is an open question connecting this framework to the
+thermodynamics of computation and the physics of information.
+
+\medskip\noindent
+\textbf{Continuous operator weights.}\;
+The current framework treats repair operators as present or
+absent: $r \in \mathcal{R}$ or $r \notin \mathcal{R}$.
+In biological systems, synaptic connections are weakened
+continuously before elimination; in institutional systems,
+procedures are degraded incrementally before abandonment.
+A natural extension defines operator weights $w_r \in [0, 1]$
+and replaces the discrete lattice $\mathcal{L}(\Rzero)$ with a
+continuous space of weighted repertoires.
+The deformation tensor $\Et$ would then vary continuously with
+the weights, and its singularities would correspond to weight
+thresholds at which distinctions cross from restorable to
+irrestorable.
+Partial hysteresis ($0 < \Hyster_t(d) < +\infty$) is precisely
+the regime this extension would formalise rigorously.
+
+\medskip\noindent
+\textbf{Observer identity deformation.}\;
+The current paper assumes observer persistence: the observer
+before and after the erasure path is the same observer with
+reduced capacity.
+For sufficiently severe forgetting, this assumption fails.
+A stroke patient with extensive cortical damage, a language
+community reduced to one elderly speaker, or an institution that
+has lost all organisational memory may constitute a different
+observer rather than a depleted version of the same one.
+The natural question is whether observer identity is itself
+definable as a path-connected component of the category of
+admissibility manifolds: two observers are the same if there
+exists an erasure path connecting their repertoires within a
+single connected component; they are different if no such path
+exists.
+This would make observer identity a topological invariant of the
+admissibility geometry, and observer deformation --- the passage
+between observer-identity classes --- a phenomenon requiring the
+full categorical machinery to describe.
+It is probably the deepest question to which the current
+framework points.
+
+\medskip
+Erasure is not information loss.
+It is the deformation of a world.
+What is forgotten is not gone; it has moved to a boundary where
+repair costs diverge, where the metric of what remains is singular,
+and where the topology of the admissible has been irreversibly
+changed.
+The observer that forgets is not smaller.
+It is differently shaped.
+
+% ============================================================
+\begin{thebibliography}{99}
+
+\bibitem{Flyxion2026a}
+Flyxion.
+\newblock Observability is restorability: Restorable distinctions and the
+  geometry of perceptual access.
+\newblock Preprint, 2026.
+
+\bibitem{RayBarman2026}
+Ray~Barman, Sambartha, Andrey Starenky, Sophia Bodnar, Nikhil Narasimhan,
+  and Ashwin Gopinath.
+\newblock The geometry of forgetting.
+\newblock \emph{arXiv}:2604.06222, 2026.
+
+\bibitem{Ashby1956}
+Ashby, W.~Ross.
+\newblock \emph{An Introduction to Cybernetics}.
+\newblock Chapman \& Hall, London, 1956.
+
+\bibitem{Kuhn1962}
+Kuhn, Thomas~S.
+\newblock \emph{The Structure of Scientific Revolutions}.
+\newblock University of Chicago Press, Chicago, 1962.
+
+\bibitem{Munkres2000}
+Munkres, James~R.
+\newblock \emph{Topology}.
+\newblock Prentice Hall, Upper Saddle River, NJ, 2nd edition, 2000.
+
+\bibitem{RockafellarWets1998}
+Rockafellar, R.~Tyrrell, and Roger~J.-B. Wets.
+\newblock \emph{Variational Analysis}.
+\newblock Springer, Berlin, 1998.
+
+\bibitem{Villani2009}
+Villani, C\'edric.
+\newblock \emph{Optimal Transport: Old and New}.
+\newblock Springer, Berlin, 2009.
+
+\bibitem{Hatcher2002}
+Hatcher, Allen.
+\newblock \emph{Algebraic Topology}.
+\newblock Cambridge University Press, Cambridge, 2002.
+
+\bibitem{EdelsbrunnerHarer2010}
+Edelsbrunner, Herbert, and John~L. Harer.
+\newblock \emph{Computational Topology: An Introduction}.
+\newblock American Mathematical Society, Providence, RI, 2010.
+
+\bibitem{Sontag1998}
+Sontag, Eduardo~D.
+\newblock \emph{Mathematical Control Theory}.
+\newblock Springer, New York, 1998.
+
+\bibitem{Landauer1961}
+Landauer, Rolf.
+\newblock Irreversibility and heat generation in the computing process.
+\newblock \emph{IBM Journal of Research and Development}, 5(3):183--191, 1961.
+
+\bibitem{Meadows2008}
+Meadows, Donella~H.
+\newblock \emph{Thinking in Systems: A Primer}.
+\newblock Edited by Diana Wright.
+\newblock Chelsea Green Publishing, White River Junction, VT, 2008.
+
+\end{thebibliography}
+
+\end{document}

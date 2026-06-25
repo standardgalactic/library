@@ -1,0 +1,6620 @@
+% ============================================================
+%  Conservation of Ambiguity
+%  Repair Budgets, Distinction Sharpness,
+%  and the Geometry of Cognitive Resource Allocation
+% ============================================================
+%  Engine: LuaLaTeX
+%  Font:   TeX Gyre Pagella
+%  Fifth paper in the repair-theoretic program.
+%
+%  Companion papers:
+%    [Flyxion2026a] Observability Is Restorability
+%    [Flyxion2026b] Admissibility Before Truth
+%    [Flyxion2026c] The Geometry of Reconstruction
+%    [Flyxion2026d] The Cost of Knowing:
+%                   Measurement Debt and the Ecology of Distinctions
+% ============================================================
+
+\documentclass[12pt,oneside]{article}
+
+% ────────────────────────────────────────────────────────────
+% Fonts & Encoding
+% ────────────────────────────────────────────────────────────
+
+\usepackage{fontspec}
+\setmainfont{TeX Gyre Pagella}
+
+\usepackage{unicode-math}
+\setmathfont{TeX Gyre Pagella Math}
+
+% ────────────────────────────────────────────────────────────
+% Layout
+% ────────────────────────────────────────────────────────────
+
+\usepackage[
+  top=1.25in,
+  bottom=1.25in,
+  left=1.35in,
+  right=1.35in
+]{geometry}
+
+\usepackage{setspace}
+\setstretch{1.15}
+
+\setlength{\parindent}{1.4em}
+\setlength{\parskip}{0.55em}
+
+% ────────────────────────────────────────────────────────────
+% Mathematics
+% ────────────────────────────────────────────────────────────
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+
+% Theorem environments
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{axiom}[theorem]{Axiom}
+\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% ────────────────────────────────────────────────────────────
+% Mathematical notation
+% ────────────────────────────────────────────────────────────
+
+\DeclareMathOperator{\Rest}{Rest}
+\DeclareMathOperator{\Obs}{Obs}
+\DeclareMathOperator{\Hist}{Hist}
+\DeclareMathOperator{\Vol}{Vol}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\IntMat}{IntMat}
+
+% Repair-theoretic notation
+
+\newcommand{\AO}{\mathcal{A}}
+\newcommand{\Rzero}{\mathcal{R}}
+\newcommand{\RestR}{\Rest(\mathcal{R})}
+\newcommand{\HistSpace}{\Hist}
+\newcommand{\Repair}{\mathcal{R}}
+\newcommand{\RepairSpace}{\mathfrak{R}}
+\newcommand{\Budget}{\Phi}
+
+\newcommand{\CR}{C_{\!R}}
+\newcommand{\Interference}{I}
+\newcommand{\Amb}{A}
+
+\newcommand{\bA}{\partial\mathcal{A}}
+
+\newcommand{\Undef}{\mathord{\perp}}
+
+% Common operators
+
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\grad}{\nabla}
+\newcommand{\Lie}{\mathcal{L}}
+
+% ────────────────────────────────────────────────────────────
+% Section formatting
+% ────────────────────────────────────────────────────────────
+
+\usepackage{titlesec}
+
+\titleformat{\section}
+{\normalfont\large\bfseries}
+{\thesection.}
+{0.6em}
+{}
+
+\titleformat{\subsection}
+{\normalfont\normalsize\bfseries}
+{\thesubsection.}
+{0.5em}
+{}
+
+% ────────────────────────────────────────────────────────────
+% Hyperlinks
+% ────────────────────────────────────────────────────────────
+
+\usepackage[
+colorlinks=true,
+linkcolor=black,
+citecolor=black,
+urlcolor=black
+]{hyperref}
+
+% ============================================================
+\begin{document}
+
+% ============================================================
+% Title
+% ============================================================
+
+\begin{center}
+
+{\LARGE\bfseries
+Conservation of Ambiguity}
+
+\vspace{0.9em}
+
+{\large
+Repair Budgets, Distinction Sharpness,\\
+and the Geometry of Cognitive Resource Allocation}
+
+\vspace{1.5em}
+
+{\normalsize
+Flyxion}
+
+\vspace{0.3em}
+
+{\small\itshape
+Independent Researcher}
+
+\vspace{1.6em}
+
+{\small
+June 2026}
+
+\end{center}
+
+\vspace{0.5em}
+
+\abstract
+
+Observability Is Restorability established that observation is possible only through repair, Admissibility Before Truth showed that truth predicates are defined only over repair-stable distinctions, and The Geometry of Reconstruction demonstrated that repair operators themselves persist only through higher-order maintenance. One question nevertheless remains unanswered: how is finite repair capacity distributed across the distinctions an observer seeks to preserve? This paper develops a repair-theoretic conservation law showing that ambiguity is not itself the conserved quantity. Rather, finite observers possess a conserved repair budget whose allocation determines distinction sharpness, evaluability, and the geometry of admissibility.
+
+Distinction sharpness is identified with repair cost, while ambiguity emerges as the operational consequence of limited investment in maintaining a distinction under perturbation. A repair budget functional combining ambiguity, repair cost, and repair interference is introduced as the fundamental conserved quantity governing finite observers. The central Redistribution Theorem proves that increasing the sharpness of any distinction necessarily redistributes repair resources throughout the remaining distinction space according to the observer's interference geometry. Local increases in precision therefore require compensating changes elsewhere; ambiguity is not eliminated but displaced.
+
+This framework resolves several open problems left by the earlier papers. The admissibility manifold acquires a graded geometry determined by available repair budget, three-valued semantics emerge from resource limitations rather than logical primitives, reconstruction redundancy becomes a geometric property of independent maintenance pathways, history space inherits a natural metric from repair expenditure, and maintenance stability is characterized by the spectrum of the repair interference operator. Dynamic learning, institutional adaptation, biological evolution, and continual machine learning are unified as constrained flows on repair-budget geometry.
+
+Applications are developed to legal systems, scientific classification, education, cognitive attention, bureaucratic organization, biological inheritance, and artificial intelligence. In each case, increasing precision within one region of distinction space necessarily reallocates finite repair capacity throughout the remainder of the system. The resulting theory completes the conservation principles of the repair-theoretic program by identifying finite repair allocation as the geometric origin of ambiguity and by establishing repair-budget conservation as the common mathematical structure underlying cognition, maintenance, learning, and the long-term persistence of distinctions.
+
+\newpage
+
+\section{Introduction: Finite Observers and the Economics of Distinction}
+
+The preceding papers in this series progressively relocated the foundations of epistemology from propositions to operations. Observability Is Restorability argued that observation is not the passive reception of information but the active capacity to restore distinctions after perturbation. Admissibility Before Truth then established that truth predicates are defined only on the repair-stable domain \Rest(\mathcal{R}), proving that evaluability precedes truth. The Geometry of Reconstruction extended the theory one level higher by demonstrating that repair operators are themselves historical structures requiring continual reconstruction. Together these results replaced a static conception of knowledge with a hierarchy of maintenance extending from observation through repair to reconstruction.
+
+A fundamental question nevertheless remains unresolved. Every previous paper implicitly assumes that an observer possesses a repair repertoire capable of maintaining admissible distinctions. Nothing has yet been said about how that capacity is distributed. Repair operators have been treated as available resources whose presence or absence determines admissibility, but no theory has been given explaining why certain distinctions become increasingly precise while others remain vague, or why improvements in one region of conceptual space are often accompanied by losses of precision elsewhere.
+
+The purpose of the present paper is to show that these phenomena are not accidental. They arise from a general conservation principle governing finite observers. A finite observer cannot simultaneously maximize the precision of every distinction it maintains. Every increase in repair investment devoted to one distinction necessarily changes the resources available for maintaining others. Ambiguity is therefore not a defect awaiting elimination, nor merely a temporary consequence of incomplete information. It is the inevitable manifestation of finite repair capacity.
+
+This observation suggests a significant change in perspective. Traditional epistemology often treats ambiguity as a property of propositions or linguistic expressions. Information theory frequently interprets ambiguity as uncertainty within a probability distribution. Cognitive science sometimes regards ambiguity as a limitation of memory or computation. The repair-theoretic viewpoint developed here differs from each of these interpretations. Ambiguity is neither primarily semantic, probabilistic, nor computational. It is operational. A distinction remains ambiguous precisely because insufficient repair capacity has been allocated to preserve it against perturbation.
+
+The central claim of this paper is therefore stronger than a conservation law for ambiguity alone. What is actually conserved is a repair budget governing the maintenance of distinctions throughout an observer's admissibility manifold. Ambiguity, repair cost, and interference between repair operators represent different observable manifestations of this underlying budget. Eliminating ambiguity locally does not destroy it; it redistributes finite repair resources across the remaining distinction space. Ambiguity conservation is thus revealed to be a special case of a more general conservation principle governing repair allocation.
+
+This shift has important consequences for the earlier theory. In Admissibility Before Truth, the repair-stable domain \Rest(\mathcal{R}) was introduced as the domain on which truth predicates are meaningful. That domain was treated as determined by the observer's repair repertoire. The present paper shows that admissibility is itself resource dependent. A distinction is not merely restorable or unrestorable. Its stability depends upon the quantity of repair investment available to sustain it. The admissibility manifold therefore acquires an internal geometry whose shape reflects the allocation of finite repair resources rather than simply the existence of repair operators.
+
+Likewise, several open problems left unresolved in The Geometry of Reconstruction become natural consequences of repair-budget geometry. Reconstruction redundancy becomes a measure of independent repair investment rather than a simple count of historical pathways. Histories inherit a metric from the repair cost required to transform one maintenance strategy into another. Maintenance graphs acquire spectral interpretations through the redistribution of repair budgets, while dynamic reconstruction becomes the evolution of constrained repair allocations over time. Rather than introducing new mathematical primitives, the present theory derives these structures from a single conservation principle.
+
+The mathematical development proceeds in three stages. First, distinction sharpness is identified with repair cost, allowing ambiguity to be interpreted as the operational dual of repair investment. Second, a repair budget functional is introduced that combines ambiguity, repair expenditure, and repair interference into a single conserved quantity. Third, a Redistribution Theorem is proved showing that every local increase in distinction sharpness necessarily induces compensating changes throughout the remaining distinction space according to the interference geometry established in Observability Is Restorability.
+
+The resulting framework completes an important transition within the repair-theoretic program. Earlier papers established the logical ordering
+
+\[
+\text{observation}
+\rightarrow
+\text{repair}
+\rightarrow
+\text{admissibility}
+\rightarrow
+\text{truth}.
+\]
+This paper introduces the economic structure underlying that hierarchy:
+
+\[
+\text{finite repair budget}
+\rightarrow
+\text{repair allocation}
+\rightarrow
+\text{admissibility geometry}
+\rightarrow
+\text{truth}.
+\]
+Truth remains defined only on admissible distinctions, but admissibility itself is now understood as a consequence of finite maintenance resources. The geometry of knowledge is therefore not determined solely by logical consistency or observational capability. It is equally determined by the distribution of the repair capacities required to preserve distinctions through time. Every finite observer inhabits not merely a space of truths, but an economy of distinctions whose structure is governed by the conservation of repair.
+
+\section{Distinction Sharpness, Repair Cost, and Ambiguity} 
+
+The Domain Restriction Theorem established that truth predicates are defined only over the repair-stable domain \Rest(\mathcal{R}). Although this theorem determines which distinctions are, in principle, evaluable, it says nothing about the relative stability of different admissible distinctions. In practice, some distinctions are extraordinarily robust. They survive noise, perturbation, degradation, and repeated reconstruction with little difficulty. Others remain fragile, requiring continual attention and repeated corrective intervention merely to persist. The distinction between these cases cannot be captured by binary admissibility alone. It requires a quantitative theory of repair investment.
+
+The natural measure of this investment is the repair cost associated with maintaining a distinction. Throughout the earlier papers, repair cost appeared as an operational quantity characterizing the effort required to restore a distinction after perturbation. Here it becomes the fundamental measure of distinction sharpness itself. A sharp distinction is not one that is merely conceptually precise. It is one that possesses sufficient repair capacity to remain discriminable under repeated disturbance.
+
+\begin{definition}[Distinction Sharpness]
+Let d\in\Rest(\mathcal{R}) be a restorable distinction. The sharpness of d is defined by
+
+\[
+\sigma(d)=C_R(d),
+\]
+where C_R(d) denotes the repair cost required to maintain the distinction under admissible perturbations.
+\end{definition}
+
+This definition deliberately reverses the traditional intuition that increasing precision simply reduces uncertainty. Within repair theory, increasing sharpness requires additional operational commitment. A sharper distinction demands a richer repair repertoire, greater reconstructive redundancy, or more sustained maintenance activity. Precision is therefore expensive rather than free.
+
+Conversely, distinctions requiring little repair investment necessarily remain operationally vague. Their boundaries fluctuate under perturbation because insufficient resources have been committed to preserving them. This motivates the complementary notion of ambiguity.
+
+\begin{definition}[Operational Ambiguity]
+The ambiguity of a distinction is a monotone decreasing function of its repair cost. The simplest choice is
+
+\[
+A(d)=\frac{1}{C_R(d)},
+\]
+although any strictly decreasing monotone transformation produces an equivalent ordering.
+\end{definition}
+
+Ambiguity is therefore not interpreted as ignorance, incomplete information, or subjective uncertainty. It measures the degree to which a distinction has been left under-maintained. Distinctions are ambiguous because the observer has not allocated sufficient repair capacity to stabilize them against perturbation.
+
+This interpretation immediately explains why ambiguity often persists even when abundant information is available. An institution may possess extensive records while remaining unable to distinguish subtle legal cases because the relevant repair operators have never been developed. A scientist may possess large quantities of experimental data while lacking the conceptual machinery required to stabilize new classifications. A machine learning model may receive additional training examples yet continue confusing particular categories because its representational capacity has already been committed elsewhere. In every case the limiting factor is not information itself but repair allocation.
+
+The relationship between sharpness and ambiguity should therefore be understood as an operational duality rather than a logical opposition. Increasing one necessarily decreases the other because both are derived from the same underlying repair investment. They are different descriptions of a single maintenance process viewed from complementary perspectives.
+
+The preceding papers treated admissibility as a binary property. A distinction either belonged to \Rest(\mathcal{R}) or it did not. Such a characterization was sufficient for establishing the logical ordering between admissibility and truth, but it intentionally suppressed quantitative structure. The present framework restores that structure by recognizing that admissibility possesses margins of stability determined by available repair resources.
+
+Let \Phi(d) denote the repair budget currently allocated to distinction d, and let \Phi_{\min}(d) denote the minimum budget required to maintain that distinction within the admissible domain.
+
+\begin{definition}[Evaluability Margin]
+The evaluability margin of a distinction is
+
+\[
+E(d)
+\frac{\Phi(d)}
+{\Phi_{\min}(d)}.
+\]
+
+A distinction is robustly admissible whenever E(d)>1, critically admissible when E(d)=1, and operationally unevaluable whenever E(d)<1.
+\end{definition}
+
+This quantity resolves one of the principal open problems from Admissibility Before Truth. The three-valued semantics developed there no longer require the unevaluable value \perp to be introduced as an independent logical primitive. Instead,
+
+\[
+\perp
+\quad\Longleftrightarrow\quad
+E(d)<1.
+\]
+Operational failure replaces logical stipulation. A distinction becomes unevaluable because insufficient repair capacity exists to preserve it, not because an additional semantic truth value has been postulated.
+
+This graded interpretation also clarifies the phenomenon of learning. Earlier papers described learning as the acquisition of new repair operators expanding the admissibility manifold. The present perspective shows that learning also redistributes repair investment within existing admissible regions. Some distinctions become increasingly stable through repeated reinforcement, while others gradually lose precision as maintenance resources are redirected. Expertise is therefore characterized not simply by possessing more distinctions, but by maintaining selected distinctions with substantially greater repair investment than would otherwise be possible.
+
+The same reasoning applies at every scale. Individual cognition, scientific disciplines, legal institutions, educational systems, and artificial intelligence all maintain distinctions of varying sharpness because they allocate finite repair resources unevenly. Distinction sharpness is therefore not an intrinsic property of concepts themselves. It is an emergent property of sustained maintenance.
+
+These observations lead naturally to the central object of the present paper. If sharpness reflects repair investment and ambiguity reflects the complementary absence of such investment, then finite observers must possess a total quantity of repair capacity that constrains every possible allocation. The next section formalizes this intuition by introducing the repair budget functional whose conservation governs the redistribution of distinction sharpness throughout admissibility space.
+
+\section{The Repair Budget Functional}
+
+The previous section established that distinction sharpness is determined by repair investment rather than by an intrinsic logical property of propositions. A sharper distinction requires a greater capacity for restoration after perturbation, while ambiguity reflects comparatively little maintenance investment. These observations naturally raise a more fundamental question. If every distinction requires repair resources, what limits the total amount of repair that an observer can perform?
+
+The answer follows from the assumption that every observer is finite. Whether the observer is a biological organism, a scientific community, a legal institution, or an artificial intelligence, its repertoire of repair operators is necessarily bounded by the physical substrate implementing those operators. Memory, computation, energy, time, personnel, experimental apparatus, and institutional organization all impose limits upon the amount of distinction maintenance that can be sustained simultaneously. Repair is therefore not merely an operational capability but an allocatable resource.
+
+This observation motivates the introduction of a global repair budget distributed across the observer's admissibility manifold. Rather than assigning repair costs independently to each distinction, we regard every distinction as drawing from a common finite maintenance capacity.
+
+\begin{definition}[Repair Budget]
+Let \mu be a measure on the admissible distinction space \Rest(\mathcal{R}). The total repair budget is
+
+\[
+\Phi_{\mathrm{tot}}
+\int_{\Rest(\mathcal{R})}
+C_R(d),
+\mathrm{d}\mu(d),
+\]
+
+where C_R(d) denotes the repair investment allocated to distinction d.
+\end{definition}
+
+The quantity \Phi_{\mathrm{tot}} is not interpreted as energy in the physical sense, nor as information in the Shannon sense. It measures the observer's total capacity to preserve distinctions against perturbation. Different substrates may realize this capacity through entirely different mechanisms, yet the same mathematical constraint remains: finite observers possess finite repair budgets.
+
+The existence of a finite repair budget immediately changes the interpretation of admissibility. Earlier papers described the repair-stable domain as the set of distinctions for which suitable repair operators exist. The present formulation refines this statement. Repair operators may exist in principle while remaining operationally unavailable because insufficient repair budget has been allocated to maintain them. Admissibility therefore depends not only upon the repertoire of possible repairs but also upon how that repertoire is distributed across distinction space.
+
+A finite repair budget also explains why observers exhibit selective precision. Human experts distinguish phenomena invisible to novices because they have invested repair capacity into maintaining highly refined distinctions. Scientific disciplines develop increasingly elaborate taxonomies by concentrating institutional maintenance on particular regions of conceptual space. Machine learning systems improve performance on selected tasks by reallocating representational capacity toward specific classifications. Every increase in local precision therefore reflects a deliberate concentration of finite repair resources.
+
+Repair costs alone, however, do not completely determine this allocation. Earlier work introduced the repair interference functional,
+
+\[
+I(d_i,d_j),
+\]
+which measures the extent to which maintaining one distinction changes the maintenance requirements of another. Some distinctions compete for the same repair operators. Increasing precision in one makes another more expensive to maintain. Other distinctions reinforce one another, allowing improvements in one region of distinction space to reduce repair costs elsewhere. Repair allocation is therefore constrained not only by finite resources but also by the geometry of interactions among distinctions.
+
+To accommodate these effects, we introduce a generalized repair budget functional.
+
+\begin{definition}[Generalized Repair Budget Functional]
+The repair budget associated with an observer is
+
+\[
+\Phi
+A
++
+\lambda C_R
++
+\mu I,
+\]
+
+where
+
+\[
+A
+\]
+measures ambiguity,
+
+\[
+C_R
+\]
+measures repair investment,
+
+and
+
+\[
+I
+\]
+measures the cumulative effect of repair interference throughout distinction space.
+
+The coefficients
+
+\[
+\lambda
+\quad\text{and}\quad
+\mu
+\]
+are Lagrange multipliers arising from the constrained optimization of finite repair resources.
+\end{definition}
+
+This expression should not be interpreted as an arbitrary linear combination of unrelated quantities. Each term represents a different observable manifestation of the same underlying maintenance economy. Ambiguity measures where repair investment is lacking. Repair cost measures where resources have been concentrated. Interference measures how those allocations constrain one another. Together they describe the state of a finite observer operating under a single global conservation law.
+
+The appearance of Lagrange multipliers is particularly significant. The coefficients \lambda and \mu are not phenomenological parameters introduced to improve mathematical flexibility. They emerge because every observer faces a constrained optimization problem. Repair capacity is finite, and every allocation must satisfy the global budget constraint
+
+\[
+\Phi
+\Phi_{\mathrm{tot}}.
+\]
+
+The optimal distribution of repair investment therefore follows from variational principles rather than arbitrary design decisions. Learning, institutional organization, scientific specialization, and cognitive attention can all be interpreted as solutions to constrained optimization problems over the same repair budget functional.
+
+One immediate consequence is that ambiguity alone is generally not conserved. Increasing the precision of a distinction may increase or decrease ambiguity elsewhere depending upon how repair costs and interference change simultaneously. Only the complete repair budget remains invariant under conservative reallocations. The familiar intuition that reducing ambiguity in one place necessarily increases it somewhere else is therefore revealed to be a limiting approximation that neglects the geometry of repair interactions.
+
+This observation resolves another open question from Admissibility Before Truth. There, joint evaluability was proposed as a possible extension in which interference between distinctions alters the cost of evaluation. The repair budget functional provides precisely this extension. Distinctions fail to be jointly evaluable not because they are logically incompatible, but because their combined maintenance requirements exceed the finite repair budget available to the observer. Joint evaluability is therefore a geometric property of repair allocation rather than an independent logical relation.
+
+The repair budget functional thus becomes the central mathematical object of the present theory. It simultaneously determines the stability of admissibility, the distribution of distinction sharpness, the geometry of repair interference, and the limits of joint evaluation. Having established the conserved quantity, we may now ask how it changes under local modifications of repair investment. The answer is provided by the Redistribution Theorem, which demonstrates that every local increase in distinction sharpness necessarily induces compensating changes throughout the remainder of distinction space while preserving the total repair budget.
+
+\section{The Redistribution Theorem} 
+
+The introduction of a finite repair budget immediately suggests a conservation principle. If every observer possesses only a limited capacity for maintaining distinctions, then increasing repair investment devoted to one distinction cannot occur independently of every other distinction. Unless additional repair capacity is created, every local increase in maintenance must be accompanied by compensating changes elsewhere. The purpose of this section is to make that intuition precise.
+
+The key observation is that repair operators are not independent. As established in Observability Is Restorability, the maintenance of one distinction may alter the maintenance requirements of another through the repair interference functional,
+
+\[
+I(d_i,d_j).
+\]
+Interference measures the operational coupling between distinctions rather than their semantic similarity. Two distinctions may concern entirely unrelated subjects while nevertheless competing for the same reconstructive machinery, computational resources, institutional procedures, or cognitive attention. Conversely, apparently different distinctions may share repair operators so effectively that improving one reduces the cost of maintaining the other.
+
+These interactions divide naturally into three operational regimes.
+
+\begin{definition}[Repair Interference]
+Let d_i,d_j\in\Rest(\mathcal R). The repair interference
+
+\[
+I(d_i,d_j)
+\]
+is the change in repair cost of d_j induced by an infinitesimal increase in repair investment devoted to d_i.
+\end{definition}
+
+Positive interference,
+
+\[
+I(d_i,d_j)>0,
+\]
+indicates repair competition. Concentrating repair resources upon d_i makes d_j more expensive to maintain. Such competition may arise because both distinctions depend upon overlapping computational capacity, institutional attention, educational effort, or reconstructive infrastructure.
+
+Negative interference,
+
+\[
+I(d_i,d_j)<0,
+\]
+indicates repair synergy. Improvements in one distinction reduce the maintenance burden of another because they share supporting structure. Learning a more general mathematical technique, for example, often reduces the effort required to maintain many related distinctions simultaneously. Scientific unification, conceptual compression, and algorithmic abstraction frequently generate this form of negative interference.
+
+Finally,
+
+\[
+I(d_i,d_j)=0
+\]
+describes operational independence. Repair investment in one distinction leaves the maintenance cost of the other unchanged.
+
+These three cases already suggest that ambiguity need not be redistributed uniformly. A local increase in distinction sharpness may propagate outward through the repair network in highly anisotropic ways determined by the interference geometry. Some regions of distinction space become more precise together, while others necessarily lose stability.
+
+The conservation law governing these interactions is expressed by the central theorem of the paper.
+
+\begin{theorem}[Redistribution Theorem]
+Let
+
+\[
+\Phi
+A
++
+\lambda C_R
++
+\mu I
+\]
+
+be the repair budget functional of a finite observer. Suppose the total repair budget
+
+\[
+\Phi_{\mathrm{tot}}
+\]
+is held fixed.
+
+Then every admissible variation satisfying
+
+\[
+\delta C_R(d_1)>0
+\]
+for some distinction d_1 induces compensating variations throughout the remaining distinction space such that
+
+\[
+\delta\Phi=0.
+\]
+Consequently, no local increase in distinction sharpness can occur without global redistribution of ambiguity, repair cost, or repair interference.
+\end{theorem}
+
+The theorem follows directly from constrained variation of the repair budget functional. Since the observer possesses no additional maintenance capacity, every increase in repair investment devoted to one region of distinction space must appear elsewhere as a corresponding change in one or more of the remaining terms of the budget. Conservation therefore applies to the complete repair economy rather than to ambiguity considered in isolation.
+
+Several immediate corollaries follow.
+
+\begin{corollary}[Local Precision Requires Global Redistribution]
+No finite observer can sharpen a distinction without altering the operational state of at least one other distinction.
+\end{corollary}
+
+This statement is considerably stronger than the familiar claim that attention is limited. It applies equally to scientific disciplines, legal systems, educational institutions, biological organisms, and machine learning architectures. Every increase in precision has a maintenance cost extending beyond the distinction being refined.
+
+\begin{corollary}[Ambiguity Conservation as a Limiting Case]
+If repair costs and interference remain fixed,
+
+\[
+\delta C_R
+\delta I
+
+0,
+\]
+
+then
+
+\[
+\delta A=0.
+\]
+Thus ambiguity conservation is recovered as a special case of repair-budget conservation.
+\end{corollary}
+
+The assumptions required for this corollary are exceptionally restrictive. In realistic systems, sharpening one distinction almost always changes both repair costs and interference relationships. Consequently, ambiguity alone is generally not conserved. The conserved quantity is the complete repair budget.
+
+The theorem also clarifies the operational meaning of learning. Earlier papers characterized learning as expansion of the repair repertoire and enlargement of the admissibility manifold. The Redistribution Theorem shows that learning simultaneously performs a redistribution of finite maintenance resources within that enlarged space. Expertise is therefore not simply the acquisition of additional distinctions. It is the reorganization of repair investment so that selected distinctions become increasingly robust while others become comparatively inexpensive to maintain or are allowed to remain ambiguous.
+
+The same reasoning applies to institutional development. Legal systems continually sharpen statutory distinctions, scientific communities refine taxonomies, educational curricula specialize disciplines, and machine learning models optimize particular classification boundaries. None of these processes create unlimited precision. They rearrange finite maintenance capacity according to changing operational priorities. Every gain in one region of distinction space necessarily alters the maintenance landscape elsewhere.
+
+This perspective also provides a geometric interpretation of cognitive attention. Attention is often described as selecting particular stimuli for enhanced processing. Within repair theory, attention becomes a temporary redistribution of repair budget. Attended distinctions acquire increased sharpness because additional maintenance capacity has been allocated to them. Simultaneously, unattended distinctions lose relative stability because fewer repair resources remain available. Attention is therefore not merely selective perception but dynamic repair allocation over finite distinction space.
+
+The Redistribution Theorem establishes the principal conservation law of the present paper. Its significance lies not simply in proving that repair resources are finite, but in demonstrating that every process of refinement, learning, institutional specialization, or conceptual clarification is governed by a common geometric constraint. Distinction sharpness is not independently adjustable at each point of admissibility space. It is coupled globally through the conservation of repair budget. The next section develops this idea further by examining the internal geometry induced by the repair budget functional and showing how admissibility itself acquires a graded structure determined by finite maintenance resources.
+
+\section{Geometry of Finite Admissibility}
+
+The Redistribution Theorem establishes that finite repair capacity cannot be concentrated locally without inducing compensating changes throughout the remainder of distinction space. This result has an important consequence that was absent from the earlier papers. The admissibility manifold is no longer merely the domain upon which truth predicates are defined. It becomes a geometric object whose local structure is determined by the allocation of repair resources.
+
+In Admissibility Before Truth, the Domain Restriction Theorem established that
+
+\[
+\operatorname{dom}(\mathcal T)
+\subseteq
+\Rest(\mathcal R).
+\]
+The set \Rest(\mathcal R) was treated as a binary object. A distinction either belonged to the repair-stable domain or it did not. This binary formulation was sufficient for establishing the logical ordering
+
+\[
+\text{repair}
+\rightarrow
+\text{admissibility}
+\rightarrow
+\text{truth},
+\]
+but it intentionally ignored the quantitative structure within the admissible region itself. The present theory removes that simplification by recognizing that admissibility is determined by continuously varying repair investment rather than by the mere existence of repair operators.
+
+The natural object is therefore not the repair repertoire alone but the distribution of repair budget across that repertoire.
+
+\begin{definition}[Budget-Induced Admissibility]
+Let
+
+\[
+\Phi(d)
+\]
+denote the repair budget currently allocated to distinction d, and let
+
+\[
+\Phi_{\min}(d)
+\]
+denote the minimum repair investment required for operational restoration.
+
+The admissibility manifold is
+
+\[
+\Rest(\mathcal R)
+\left{
+d
+:
+\Phi(d)
+\ge
+\Phi_{\min}(d)
+\right}.
+\]
+\end{definition}
+
+This definition immediately changes the interpretation of admissibility. Membership in the repair-stable domain is no longer an intrinsic property of a distinction. It depends upon how the observer allocates finite maintenance resources. A distinction may move into or out of the admissible domain without any change to the external world simply because the observer reorganizes its repair budget.
+
+Learning therefore acquires two complementary forms. The first, emphasized in earlier papers, enlarges the repair repertoire itself through the acquisition of new repair operators. The second, developed here, redistributes existing repair investment among already available operators. Expertise frequently consists as much in efficient repair allocation as in acquiring additional knowledge.
+
+Because admissibility now depends upon continuously varying repair investment, it admits a natural quantitative measure.
+
+\begin{definition}[Evaluability Margin]
+The evaluability margin of distinction d is
+
+\[
+E(d)
+\frac{\Phi(d)}
+{\Phi_{\min}(d)}.
+\]
+\end{definition}
+
+This quantity measures the operational distance from the admissibility boundary. Three qualitatively different regimes emerge immediately.
+
+When
+
+\[
+E(d)>1,
+\]
+the distinction possesses surplus repair capacity. Perturbations may occur without threatening evaluability because additional maintenance resources remain available.
+
+When
+
+\[
+E(d)=1,
+\]
+the distinction lies precisely on the admissibility boundary. Every unit of repair investment is committed to maintaining operational stability. Even small perturbations may render the distinction unevaluable.
+
+Finally, when
+
+\[
+E(d)<1,
+\]
+the observer lacks sufficient repair capacity to maintain the distinction. The distinction therefore lies outside the admissibility manifold.
+
+This resolves one of the principal open problems from Admissibility Before Truth. The unevaluable truth value
+
+\[
+\perp
+\]
+is no longer introduced axiomatically. It arises naturally from insufficient repair allocation:
+
+\[
+\mathcal T(d)
+\perp
+\quad
+\Longleftrightarrow
+\quad
+E(d)<1.
+\]
+
+The logical semantics are therefore consequences of maintenance geometry rather than independent logical primitives.
+
+This reinterpretation also clarifies the nature of truth itself. Earlier papers argued that truth predicates cannot extend beyond the admissible domain. The present framework shows something stronger. Truth possesses varying degrees of operational stability depending upon available repair investment. Some truths remain extraordinarily robust because large repair budgets preserve them against perturbation. Others persist only under highly favorable maintenance conditions. Truth therefore acquires an operational margin analogous to stability margins in dynamical systems.
+
+The geometry induced by repair allocation also resolves the earlier problem of joint evaluability. Previously, it remained unclear how multiple individually admissible distinctions might become mutually difficult to evaluate. The repair budget functional provides the missing mechanism. Suppose distinctions
+
+\[
+d_1,\ldots,d_n
+\]
+are each individually admissible. Joint evaluation requires that their combined repair investment satisfy
+
+\[
+\sum_{i=1}^{n}
+\Phi(d_i)
++
+\sum_{i\neq j}
+I(d_i,d_j)
+\le
+\Phi_{\mathrm{tot}}.
+\]
+Failure of this inequality produces operational rather than logical incompatibility. The observer cannot simultaneously maintain all distinctions because their combined repair requirements exceed the available maintenance budget.
+
+This perspective explains a wide variety of familiar phenomena. Human cognition often fails when too many distinctions require simultaneous attention. Scientific theories become difficult to compare when each demands extensive conceptual maintenance. Legal reasoning struggles with large collections of interacting precedents because maintaining every distinction simultaneously exceeds institutional capacity. Large machine learning models encounter representational interference when multiple tasks compete for limited parameter resources. In every case the limiting factor is finite repair allocation rather than abstract logical inconsistency.
+
+The geometry of admissibility also provides a natural interpretation of conceptual specialization. Regions of distinction space receiving sustained repair investment develop increasingly large evaluability margins and become highly stable domains of expertise. Regions receiving comparatively little maintenance remain close to the admissibility boundary and therefore exhibit greater ambiguity and instability. Scientific disciplines, professional specializations, educational curricula, and individual expertise can all be viewed as different patterns of repair-budget concentration within the same underlying distinction space.
+
+More generally, the repair budget induces a local geometry on the admissibility manifold itself. Small changes in repair allocation deform the manifold by altering the location of its boundary and the evaluability margins of nearby distinctions. The shape of admissibility therefore becomes a dynamic object continuously responding to changing maintenance priorities. Learning, forgetting, institutional reform, technological innovation, and biological adaptation all become geometric deformations generated by redistribution of finite repair resources.
+
+The previous papers established that truth depends upon admissibility and that admissibility depends upon repair. The present section completes this hierarchy by showing that admissibility possesses an internal geometry determined by repair allocation. The repair-stable domain is not simply a set of evaluable distinctions. It is a curved maintenance landscape whose local structure records the distribution of finite repair capacity throughout distinction space.
+
+Having established the geometry induced by the repair budget, we next examine the global structure governing these redistributions. The repair interference operator introduced in Observability Is Restorability will be shown to possess a spectral decomposition whose eigenstructure reveals the principal directions along which ambiguity and repair investment naturally flow.
+
+\section{Spectral Geometry of Ambiguity Redistribution} 
+
+The Redistribution Theorem establishes that repair investment cannot be altered locally without inducing compensating changes elsewhere in distinction space. Although this theorem identifies the existence of global coupling, it does not yet describe its structure. Different reallocations of repair budget need not propagate in the same manner. Some perturbations remain highly localized, while others spread throughout large portions of the admissibility manifold. Understanding these propagation patterns requires examining the global geometry of repair interference itself.
+
+The appropriate mathematical object was introduced in Observability Is Restorability as the repair interference operator. There, interference measured the operational dependence between pairs of distinctions. The present paper gives this operator a new interpretation. Rather than merely recording interactions, it governs the flow of repair budget through distinction space.
+
+Suppose an observer maintains a finite collection of admissible distinctions
+
+\[
+{d_1,d_2,\ldots,d_n}.
+\]
+The repair interference matrix is
+
+\[
+\IntMat
+\left(
+I(d_i,d_j)
+\right)_{i,j=1}^{n},
+\]
+
+where each entry records the infinitesimal change in repair cost of d_j produced by increasing repair investment devoted to d_i.
+
+Unlike an adjacency matrix in an ordinary graph, the entries of \IntMat need not be non-negative. Positive entries represent repair competition, while negative entries represent repair synergy. Consequently, ambiguity does not simply diffuse across distinction space. It propagates according to a geometry containing both cooperative and antagonistic directions.
+
+The global behavior of this system is determined by the spectrum of the interference operator.
+
+\begin{definition}[Principal Repair Modes]
+The eigenvectors of
+
+\[
+\IntMat
+\]
+are called the principal repair modes of the observer. Their associated eigenvalues determine the characteristic directions along which repair-budget redistribution naturally propagates.
+\end{definition}
+
+Each principal mode represents a coordinated deformation of many distinctions simultaneously. Instead of examining individual repair costs one at a time, the eigensystem identifies combinations of distinctions that behave collectively under changes in repair allocation.
+
+Suppose
+
+\[
+\IntMat,v_k
+\lambda_k v_k.
+\]
+
+If the observer increases repair investment in the direction represented by v_k, the resulting redistribution throughout distinction space is governed entirely by the corresponding eigenvalue.
+
+Large positive eigenvalues identify stiff directions within repair space. Concentrating repair resources along these modes produces substantial increases in maintenance costs elsewhere. Such directions correspond to tightly coupled conceptual systems in which every refinement carries widespread operational consequences.
+
+Eigenvalues near zero identify nearly decoupled directions. Repair investment may be redistributed along these modes with relatively little effect upon the remainder of distinction space. These directions represent regions where conceptual refinement can proceed with comparatively little global disruption.
+
+Negative eigenvalues indicate cooperative repair modes. Increasing repair investment along these directions reduces maintenance costs elsewhere by creating new synergies among distinctions. Mathematical abstraction, conceptual unification, and the discovery of general principles frequently produce such cooperative modes. A single repair investment simultaneously sharpens many previously independent distinctions.
+
+This spectral interpretation substantially strengthens the earlier theory. Previously, ambiguity redistribution was understood only qualitatively through pairwise interference. The eigendecomposition reveals that repair allocation possesses intrinsic global coordinates determined by the geometry of the interference operator itself. Observers therefore do not redistribute repair budget arbitrarily. They naturally evolve along the principal modes of their repair geometry.
+
+This viewpoint also provides a geometric solution to one of the principal open problems from The Geometry of Reconstruction. There, maintenance graphs were conjectured to possess a meaningful spectral theory capable of predicting institutional fragility before visible collapse occurred. The repair budget formalism provides precisely such a theory. Maintenance stability is encoded in the spectrum of the coupled repair operator.
+
+Let
+
+\[
+L_M
+\]
+denote the Laplacian associated with the maintenance graph constructed from reconstruction dependencies. Then the second-smallest eigenvalue,
+
+\[
+\lambda_2(L_M),
+\]
+measures the connectivity of the maintenance hierarchy. As
+
+\[
+\lambda_2(L_M)
+\rightarrow
+0,
+\]
+the reconstruction network approaches fragmentation. Repair operators become increasingly isolated, reconstruction redundancy declines, and portions of the admissibility manifold become vulnerable to irreversible collapse long before operational failures become externally visible.
+
+This result is particularly significant because it transforms maintenance resilience from a descriptive notion into a measurable geometric quantity. Institutions need not wait until repair capacity visibly disappears. They may instead monitor the spectrum of their maintenance geometry for early warning signs of structural instability.
+
+The spectral viewpoint also explains why certain conceptual revolutions appear disproportionately influential. Scientific paradigms, mathematical frameworks, and technological innovations often sharpen many distinctions simultaneously while simplifying others. Such changes correspond to movement along dominant cooperative eigenmodes of the repair operator. Rather than improving isolated concepts individually, they reorganize the geometry through which repair resources propagate.
+
+Conversely, periods of conceptual fragmentation frequently correspond to excitation of highly competitive modes. Increasing precision within one region of distinction space raises maintenance costs throughout neighboring regions, producing increasingly specialized but mutually isolated bodies of knowledge. Many historical episodes of disciplinary fragmentation, bureaucratic proliferation, and representational interference in machine learning may be interpreted in this way.
+
+The repair interference operator also induces a natural local metric on admissibility space. Small perturbations of repair allocation satisfy
+
+\[
+\delta^2\Phi
+\delta d^{\mathrm T}
+,
+\IntMat
+,
+\delta d,
+\]
+
+showing that the second variation of the repair budget determines the local stiffness of distinction space. Directions corresponding to large eigenvalues exhibit high curvature because small reallocations produce substantial global consequences. Directions associated with small eigenvalues remain comparatively flat, allowing repair investment to move with relatively little resistance.
+
+The geometry of ambiguity is therefore fundamentally spectral. Individual distinctions are not isolated objects but components of a coupled maintenance field whose principal modes determine how repair resources, ambiguity, and evaluability propagate across the admissibility manifold. The spectrum of the interference operator provides the observer's intrinsic geometry of cognitive trade-offs.
+
+The next section returns to the reconstruction hierarchy developed in the previous paper and shows that many of its outstanding problems—including reconstruction redundancy, metrics on history space, dynamic maintenance, recursive maintenance hierarchies, and catastrophic forgetting—follow naturally once maintenance itself is interpreted as constrained redistribution within the same repair-budget geometry.
+
+\section{Reconstruction Geometry Revisited}
+
+The Geometry of Reconstruction established that repair operators are not permanent mathematical objects but historical structures requiring continual reconstruction. Histories, educational systems, archives, scientific communities, and institutions were interpreted as mechanisms whose primary function is the preservation of repair capacity rather than the storage of information alone. That paper concluded with a series of open problems concerning the geometry of maintenance itself. The repair budget formalism developed here resolves many of those questions without introducing additional mathematical primitives. Once maintenance is understood as the constrained allocation of finite repair resources, the previously conjectural geometry of reconstruction follows naturally.
+
+The first unresolved problem concerned reconstruction redundancy. Earlier, redundancy was defined by counting the number of independent histories capable of reconstructing a repair operator. Although operationally useful, that definition treated all histories as equally independent. In practice this assumption rarely holds. Two histories may differ superficially while sharing nearly identical maintenance structures. Losing one provides little additional resilience because the remaining history fails under essentially the same perturbations. Conversely, two histories employing entirely different reconstruction mechanisms may provide substantial robustness even if only two such pathways exist.
+
+Repair-budget geometry suggests a more natural definition.
+
+\begin{definition}[Effective Reconstruction Redundancy]
+Let
+
+\[
+W:\Hist\rightarrow\mathcal R
+\]
+be the reconstruction map.
+
+The effective redundancy of repair operator r is the repair-budget volume of independent histories reconstructing r,
+
+\[
+\operatorname{Red}_{\mathrm{eff}}(r)
+\Vol_{\Phi}
+\left(
+W^{-1}(r)
+\right),
+\]
+
+where volume is measured using the metric induced by the repair budget functional.
+\end{definition}
+
+Redundancy is therefore no longer determined by cardinality. It measures the size of the region of maintenance space capable of reconstructing a repair operator while remaining operationally independent. Histories contribute additional resilience only when they occupy genuinely distinct regions of repair geometry.
+
+This immediately resolves the second open problem concerning distance on history space. Earlier formulations distinguished histories only by whether they reconstructed the same repair operator. The repair budget instead induces a natural metric.
+
+Let
+
+\[
+h_1,h_2\in\Hist.
+\]
+The distance between histories is defined by the minimum repair expenditure required to transform one maintenance strategy into the other,
+
+\[
+d_{\Hist}(h_1,h_2)
+\inf_{\gamma}
+\int_{\gamma}
+\sqrt{
+g^{\Phi}_{ij}
+\dot h^i
+\dot h^j
+}
+,dt,
+\]
+
+where
+
+\[
+g^{\Phi}
+\]
+is the metric tensor generated by the second variation of the repair budget functional.
+
+Two histories are therefore close not because they contain similar information but because they require similar maintenance investments. Small curricular revisions, incremental laboratory refinements, and gradual software updates correspond to short geodesics in history space. Revolutionary methodological changes traverse much longer paths because they require large-scale redistribution of repair resources.
+
+The third open problem concerned spectral maintenance theory. The previous paper conjectured that maintenance graphs should possess eigenstructures capable of predicting structural failure before visible collapse occurred. Section 6 has already shown that the repair interference operator possesses precisely such a spectrum. The maintenance graph therefore inherits a spectral geometry whose low-frequency modes characterize long-range robustness.
+
+Maintenance resilience is consequently no longer measured solely by the existence of reconstruction pathways. It depends upon the spectral distribution of repair investment throughout the reconstruction network. Highly connected maintenance hierarchies possess broad cooperative modes allowing repair resources to redistribute smoothly under perturbation. Fragmented hierarchies exhibit localized competitive modes in which small failures rapidly isolate portions of the reconstruction graph.
+
+The fourth unresolved question concerned dynamic maintenance. Earlier, reconstruction was represented by a fixed operator,
+
+\[
+W:\Hist\rightarrow\mathcal R.
+\]
+The repair budget formalism replaces this static picture by a continuously evolving family,
+
+\[
+W_t:
+\Hist_t
+\rightarrow
+\mathcal R_t,
+\]
+whose evolution is constrained by conservation of the repair budget. Learning, institutional reform, technological innovation, and cultural evolution become trajectories through reconstruction space generated by successive reallocations of finite maintenance resources.
+
+The governing dynamics need not preserve individual repair operators. Instead, they preserve the total repair budget while redistributing investment among evolving reconstruction pathways. Maintenance therefore becomes a constrained flow on repair geometry rather than a sequence of isolated historical events.
+
+Perhaps the most philosophically significant open problem concerned recursive maintenance itself. If histories reconstruct repair operators, what reconstructs the histories? Does the hierarchy continue indefinitely?
+
+Within the repair-budget framework, the apparent infinite regress is replaced by convergence of maintenance investment. Let
+
+\[
+\Phi^{(n)}
+\]
+denote the repair budget allocated at the n-th level of reconstruction. Stability is achieved whenever
+
+\[
+\lim_{n\rightarrow\infty}
+\left(
+\Phi^{(n+1)}
+\Phi^{(n)}
+\right)
+0. 
+\]
+The maintenance hierarchy therefore need not terminate at a privileged level. Instead, persistence is characterized by convergence toward a stable repair allocation. Mature institutions, established scientific disciplines, and well-trained intelligent systems are distinguished not by the absence of higher-order maintenance but by the stabilization of repair investment across successive reconstructive levels.
+
+The repair budget also clarifies several problems in artificial intelligence that were identified only speculatively in the previous paper. Catastrophic forgetting becomes the collapse of reconstruction volume within history space. Continual learning corresponds to expanding the repair repertoire while preserving effective redundancy among previously acquired reconstruction pathways. Regularization techniques stabilize maintenance geometry by discouraging excessive concentration of repair investment within narrow regions of parameter space. Replay methods, modular architectures, and parameter isolation can all be interpreted as mechanisms preserving reconstruction volume under successive reallocations of finite repair budget.
+
+A similar reinterpretation applies to biological evolution. Organisms repair damaged structures throughout life, while heredity reconstructs the mechanisms responsible for those repairs across generations. Evolution therefore reallocates repair budgets over evolutionary time rather than merely selecting static traits. Development, immune function, genetic inheritance, and adaptation occupy successive levels of a common maintenance hierarchy governed by the same conservation principle.
+
+Finally, the repair budget resolves the last open question linking maintenance to admissibility. Earlier papers described a one-way dependency,
+
+\[
+\text{maintenance}
+\rightarrow
+\text{repair}
+\rightarrow
+\text{admissibility}
+\rightarrow
+\text{truth}.
+\]
+The present theory replaces this with a coupled dynamical system. Repair allocation determines the admissibility manifold, but the resulting admissibility geometry simultaneously determines which repair operators remain valuable enough to justify continued maintenance. Maintenance and admissibility therefore co-evolve through continual redistribution of finite repair resources.
+
+The Geometry of Reconstruction thus appears, in retrospect, as a special case of repair-budget geometry. Histories, reconstruction pathways, maintenance graphs, recursive repair hierarchies, institutional continuity, biological inheritance, and continual learning all become different manifestations of the same underlying conservation law. What previously appeared as independent mathematical questions are revealed to be consequences of finite repair allocation acting across multiple levels of organizational scale.
+
+The remaining task is to demonstrate the explanatory power of this unified framework. The next section applies repair-budget geometry to legal systems, scientific classification, machine learning, bureaucratic organization, biological evolution, and cognitive attention, showing that each may be understood as a distinct maintenance economy governed by the same conservation principle.
+
+\section{Applications}
+
+The repair budget formalism developed in the preceding sections is intentionally substrate independent. Nothing in its construction depends upon biological cognition, digital computation, legal institutions, or scientific practice. The only assumptions are that distinctions require maintenance, that maintenance consumes finite repair resources, and that repair operators interact through an interference geometry. Consequently, the same conservation law should appear wherever finite systems preserve distinctions over time. This section illustrates that claim across several domains.
+
+8.1 Legal Systems
+
+Legal systems are commonly viewed as collections of rules governing social behavior. From the repair-theoretic perspective, however, their primary function is the stabilization of distinctions. Every legal doctrine attempts to preserve operational differences between categories such as ownership and theft, negligence and accident, contract and gift, or lawful and unlawful conduct.
+
+Maintaining these distinctions requires substantial institutional repair capacity. Courts, legislatures, legal education, appellate review, evidentiary standards, and archival precedent all function as repair operators preserving legal distinctions against continual perturbation arising from novel cases.
+
+The repair budget immediately predicts that increasing precision in one region of law cannot occur without consequences elsewhere. A legislature that codifies increasingly detailed tax regulations necessarily commits maintenance resources to that domain. Those resources are no longer available for maintaining equally precise distinctions in other areas. The resulting ambiguity does not disappear; it migrates.
+
+Legal codification therefore redistributes ambiguity throughout the legal system rather than eliminating it. Areas receiving extensive statutory attention become highly stable, while adjacent regions increasingly depend upon judicial interpretation, customary practice, or discretionary reasoning. The distinction between statutory law and common law may thus be understood as a particular allocation of institutional repair budget.
+
+This interpretation also clarifies the evolution of legal language. Increasing specificity within one body of legislation frequently produces broader interpretive uncertainty elsewhere because finite institutional maintenance must accommodate an expanding collection of increasingly specialized distinctions. Legal complexity is therefore not merely cumulative. It is redistributive.
+
+8.2 Machine Learning
+
+Machine learning provides perhaps the clearest computational realization of repair-budget geometry.
+
+A trained neural network represents a finite collection of parameters maintaining distinctions between input classes. Training sharpens selected distinctions by modifying those parameters through repeated optimization. Conventional learning theory interprets this process as minimizing prediction error. Repair theory instead interprets it as reallocating finite repair investment across distinction space.
+
+Suppose a classifier is optimized to distinguish two previously ambiguous categories,
+
+\[
+d_1.
+\]
+If the representational capacity of the network is finite, increasing repair investment devoted to d_1 alters the resources available for maintaining other distinctions,
+
+\[
+d_2,d_3,\ldots.
+\]
+Representational interference, catastrophic forgetting, and capacity limitations therefore become direct consequences of repair-budget conservation.
+
+Continual learning illustrates this particularly clearly. Every newly acquired task requires repair investment. Unless additional representational capacity is introduced, preserving new distinctions necessarily changes the maintenance geometry supporting earlier ones. Existing continual-learning methods—experience replay, elastic weight consolidation, parameter isolation, modular architectures, and knowledge distillation—may all be interpreted as different strategies for preserving reconstruction redundancy while redistributing finite repair budgets.
+
+Attention mechanisms admit a similar interpretation. Attention does not create additional computational resources. It temporarily concentrates repair investment within selected regions of distinction space, increasing evaluability margins locally while reducing relative investment elsewhere. The dynamics of attention are therefore instances of time-dependent repair-budget redistribution.
+
+8.3 Scientific Classification
+
+Scientific progress is frequently described as the accumulation of increasingly accurate knowledge. Repair theory emphasizes a complementary process. Science continually reorganizes the maintenance of distinctions.
+
+Every scientific taxonomy requires sustained observational, experimental, mathematical, and institutional investment. New distinctions between diseases, chemical elements, biological species, astronomical objects, or particle interactions become operationally meaningful only after repair operators capable of maintaining those distinctions have been developed.
+
+Refining one scientific classification therefore consumes maintenance resources that cannot simultaneously be devoted elsewhere. The remarkable specialization of modern scientific disciplines reflects repeated concentration of repair budgets within selected regions of conceptual space.
+
+Conversely, major theoretical syntheses often correspond to cooperative repair modes identified in the previous section. A successful unification reduces maintenance costs across many previously independent distinctions simultaneously. Maxwell's electromagnetic theory, the periodic organization of the chemical elements, and modern evolutionary biology all illustrate the reduction of global repair expenditure through conceptual integration.
+
+Scientific revolutions thus involve not merely replacing theories but reorganizing the allocation of repair investment throughout the conceptual landscape.
+
+8.4 Bureaucratic Organization
+
+Administrative systems provide another instructive example. Bureaucratic reform is commonly motivated by the desire to simplify procedures, eliminate redundancy, or increase efficiency. Repair-budget geometry predicts that such simplification cannot eliminate complexity altogether.
+
+Whenever administrative procedures become more explicit and standardized, repair investment is concentrated within the codified workflow. This increases stability for routine cases while simultaneously reducing the flexibility available for unusual situations.
+
+Edge cases therefore become increasingly difficult to resolve precisely because maintenance resources have been concentrated elsewhere. Complexity is exported rather than destroyed.
+
+Many familiar organizational phenomena follow naturally from this observation. Simplified application forms generate increasingly complicated exception procedures. Standardized regulations require expanding systems of appeals and discretionary review. Digital automation reduces ambiguity within routine workflows while increasing ambiguity surrounding failures, unusual inputs, and boundary conditions.
+
+The repair budget provides a unified explanation for these trade-offs without treating them as accidental implementation failures.
+
+8.5 Biological Evolution
+
+Biological systems maintain distinctions continuously throughout their existence. Cells distinguish self from non-self, organisms distinguish nutrients from toxins, immune systems distinguish pathogens from healthy tissue, and nervous systems distinguish environmental states relevant to survival.
+
+Maintaining these distinctions requires continual repair. Cellular repair mechanisms, developmental regulation, immune surveillance, and physiological homeostasis all consume finite biological resources.
+
+Evolution extends this maintenance hierarchy across generations. DNA preserves not merely structural information but mechanisms responsible for preserving structures. Natural selection therefore reallocates repair budgets over evolutionary time, favoring organisms whose maintenance economies remain robust under persistent perturbation.
+
+Adaptation consequently becomes redistribution rather than unrestricted optimization. Increasing investment in one physiological distinction necessarily alters the maintenance resources available for others. Trade-offs between immunity and reproduction, growth and repair, specialization and adaptability, all become instances of the Redistribution Theorem acting within biological substrates.
+
+8.6 Human Cognition
+
+The repair budget provides a unified interpretation of several familiar cognitive phenomena.
+
+Attention is dynamic repair allocation. Working memory is temporary concentration of repair investment within a limited collection of distinctions. Expertise reflects sustained long-term investment producing exceptionally large evaluability margins in selected conceptual regions. Forgetting corresponds not simply to information loss but to gradual withdrawal of maintenance resources from distinctions no longer receiving sufficient repair investment.
+
+Learning itself possesses two complementary components. New repair operators enlarge the admissibility manifold, while repair-budget redistribution reorganizes the stability of distinctions already present. Effective education therefore involves not merely transmitting information but teaching efficient maintenance strategies that allocate finite repair resources toward the most operationally valuable distinctions.
+
+From this perspective, intelligence is neither unrestricted computational power nor unlimited representational capacity. It is the ability to organize finite repair budgets so that distinctions essential for successful interaction with the environment remain robust despite continual perturbation.
+
+Across all of these examples, the same mathematical structure appears repeatedly. Precision is never created without cost. Stability is never increased locally without changing the surrounding maintenance landscape. Every finite system preserving distinctions—from legal institutions and scientific communities to biological organisms and artificial intelligence—operates within the same repair economy. The differences between these domains arise from the particular substrates implementing repair operators, not from the underlying conservation law governing their allocation.
+
+These applications suggest that repair-budget conservation is considerably more general than any individual theory of cognition, learning, or institutional organization. It provides a common operational principle explaining why finite systems invariably exhibit trade-offs between precision, flexibility, robustness, and ambiguity. The final sections of this paper return to the abstract theory by examining the coupled evolution of maintenance and admissibility and by asking whether the repair budget itself admits a Noether-type conservation principle.
+
+\section{Coupled Dynamics of Maintenance and Admissibility}
+
+The preceding sections have treated repair-budget conservation primarily as a constraint governing the allocation of finite maintenance resources at a given moment. Such a description is necessarily incomplete. Real observers do not inhabit static repair landscapes. They continually acquire new distinctions, abandon obsolete ones, reorganize maintenance priorities, and modify the repair operators through which admissibility itself is realized. The geometry developed thus far must therefore be extended from a static conservation law to a coupled dynamical system.
+
+Earlier papers in this series established a strict ordering among the principal concepts of repair theory,
+
+\[
+\text{maintenance}
+\longrightarrow
+\text{repair}
+\longrightarrow
+\text{admissibility}
+\longrightarrow
+\text{truth}.
+\]
+This ordering was intentionally asymmetric. Repair determines admissibility, and admissibility determines the domain upon which truth predicates are meaningful. The reverse direction was deliberately excluded because truth alone cannot enlarge the admissible domain. A proposition cannot become evaluable merely because it is asserted to be true.
+
+Although this logical ordering remains correct, it is not dynamically complete. The present theory reveals an important feedback mechanism. Once admissibility changes, the operational value of different repair operators changes as well. Distinctions that cease to contribute meaningfully to the observer's interaction with the environment gradually lose repair investment, while newly valuable distinctions attract increasing maintenance resources. The maintenance hierarchy therefore evolves in response to the geometry of admissibility that it previously created.
+
+The relationship is therefore better represented as a coupled system,
+
+\[
+\mathcal{M}_t
+\longrightarrow
+\mathcal{R}_t
+\longrightarrow
+\Rest(\mathcal{R}_t),
+\]
+together with the feedback relation
+
+\[
+\Rest(\mathcal{R}t)
+\longrightarrow
+\mathcal{M}{t+\Delta t}.
+\]
+Maintenance shapes admissibility, but admissibility simultaneously reorganizes future maintenance.
+
+This feedback has several important consequences. First, the repair budget itself becomes a time-dependent field,
+
+\[
+\Phi_t(d),
+\]
+whose evolution reflects both external perturbations and internal redistribution. The observer is therefore described not by a single conserved allocation but by a trajectory through the space of admissible repair budgets. Conservation applies instantaneously, while the location of the conserved budget within distinction space evolves continuously.
+
+Second, the admissibility manifold becomes a moving boundary. Earlier papers treated
+
+\[
+\Rest(\mathcal{R})
+\]
+as a fixed subset of distinction space determined by the repair repertoire. The present formulation instead regards it as the solution of a constrained maintenance problem,
+
+\[
+\Rest(\mathcal{R}_t)
+\left{
+d:
+\Phi_t(d)
+\ge
+\Phi_{\min}(d)
+\right}.
+\]
+
+Learning, institutional reform, technological innovation, and biological adaptation therefore appear as deformations of this boundary generated by successive redistributions of repair investment.
+
+The resulting dynamics possess a characteristic hysteresis. Once substantial repair investment has been concentrated within a region of distinction space, removing that investment does not necessarily return the observer to its previous state. Reconstruction pathways, educational practices, institutional memory, and historical infrastructure may continue supporting distinctions long after their original motivating conditions have disappeared. Conversely, rebuilding a previously abandoned distinction frequently requires substantially greater investment than was required to maintain it continuously.
+
+Repair geometry therefore predicts path dependence as a generic property of finite observers. The future admissibility manifold depends not only upon present repair allocation but also upon the sequence of historical redistributions through which that allocation was produced.
+
+The coupled dynamics also illuminate the process of scientific change. New experimental techniques expand admissibility by introducing novel repair operators. The resulting distinctions reorganize scientific priorities, attracting additional maintenance resources toward newly accessible conceptual regions. Established disciplines may consequently decline not because their previous distinctions become false, but because finite repair budgets are reallocated toward regions possessing greater operational significance.
+
+A similar process occurs within education. Curricula continually evolve by redistributing instructional effort among competing distinctions. New mathematical techniques, computational methods, and scientific theories enter educational practice because they increase future repair efficiency throughout large portions of conceptual space. Older material may disappear despite remaining correct because maintaining it no longer represents an efficient allocation of finite educational repair budgets.
+
+Artificial intelligence exhibits analogous dynamics during continual learning. As new tasks become relevant, optimization reallocates representational capacity toward recently valuable distinctions. Unless reconstruction pathways are explicitly preserved, previously stable distinctions gradually lose evaluability margins and become increasingly susceptible to catastrophic forgetting. Continual learning is therefore fundamentally a problem of maintaining stable repair trajectories rather than merely accumulating additional parameters.
+
+Biological evolution provides perhaps the largest-scale realization of the same principle. Environmental change alters the operational significance of biological distinctions. Evolution responds by redistributing developmental and physiological repair investment across successive generations. New adaptive distinctions gradually accumulate repair capacity, while obsolete structures lose maintenance investment and eventually disappear. Evolution thus follows trajectories through repair-budget space constrained by the continual interaction between environmental admissibility and biological maintenance.
+
+These examples suggest that maintenance and admissibility should not be regarded as independent geometries. They form two coupled components of a single evolving system. Maintenance determines which distinctions can persist, while the resulting distinction landscape determines which maintenance strategies remain evolutionarily, cognitively, or institutionally advantageous. The two continually reshape one another through constrained redistribution of finite repair resources.
+
+This coupled viewpoint resolves the final major open problem left by The Geometry of Reconstruction. There, maintenance appeared to occupy the deepest level of the hierarchy. The present paper shows instead that maintenance is dynamically self-organizing. It continually adjusts itself in response to the evolving geometry of admissibility generated by its own previous allocations. Persistence therefore emerges not from static reconstruction alone but from continual mutual adaptation between maintenance and the distinctions that maintenance preserves.
+
+The repair-theoretic hierarchy is thus complete. Observation gives rise to repair, repair determines admissibility, admissibility enables truth, and the finite repair budget governs how the entire hierarchy evolves through time. The remaining question concerns the mathematical origin of the conservation law itself. If repair-budget conservation is fundamental, does it arise from an underlying symmetry analogous to the conservation laws of classical physics? The final theoretical section addresses this possibility by examining a Noether-type formulation of repair geometry.
+
+\section{Toward a Noether Theory of Repair}
+
+The Redistribution Theorem establishes that finite repair budgets are conserved under admissible reallocations of maintenance resources. Although this conservation law follows naturally from the assumption of finite observers, an important mathematical question remains unanswered. Is repair-budget conservation merely a bookkeeping identity, or does it arise from a deeper structural symmetry of repair space?
+
+Throughout modern mathematics and physics, conservation laws rarely exist in isolation. They typically reflect underlying invariance principles. The conservation of linear momentum follows from translational symmetry, angular momentum from rotational symmetry, and energy from temporal symmetry. Noether's theorem provides the general relationship between continuous symmetries and conserved quantities. It is therefore natural to ask whether the repair-theoretic conservation law admits an analogous interpretation.
+
+The present paper does not attempt to establish a complete Noether theorem for repair geometry. Instead, it identifies the symmetry whose existence would explain the conservation of repair budgets and thereby unify the preceding sections within a single variational framework.
+
+The crucial observation is that the Redistribution Theorem concerns reallocations rather than creation or destruction of repair capacity. Suppose an observer modifies its maintenance strategy while preserving total repair budget,
+
+\[
+\Phi_{\mathrm{tot}}
+\text{constant}.
+\]
+Although individual distinctions gain or lose repair investment, the observer remains within the same equivalence class of admissible allocations. Operationally different maintenance strategies therefore belong to a common repair orbit generated by budget-preserving transformations.
+
+This motivates the following definition.
+
+\begin{definition}[Repair Symmetry]
+A repair transformation
+
+\[
+\Gamma:
+\Phi
+\rightarrow
+\Phi'
+\]
+is called budget preserving if
+
+\[
+\Phi'
+\Phi
+\]
+while redistributing repair investment among distinctions without changing the total repair capacity available to the observer.
+\end{definition}
+
+The Redistribution Theorem may then be interpreted as stating that all physically realizable reallocations belong to this symmetry class. The observer moves continuously through the space of repair allocations while remaining on a constant-budget manifold.
+
+This perspective suggests that repair geometry possesses an action principle analogous to those appearing throughout analytical mechanics. Let
+
+\[
+\mathcal{S}_{\Phi}
+\int
+L_{\Phi}
+,dt
+\]
+
+denote a repair action constructed from a repair Lagrangian
+
+\[
+L_{\Phi}
+L(A,C_R,I),
+\]
+whose arguments are ambiguity, repair investment, and repair interference.
+
+Stationary trajectories satisfy
+
+\[
+\delta
+\mathcal{S}_{\Phi}
+0,
+\]
+subject to the global budget constraint
+
+\[
+\Phi
+\Phi_{\mathrm{tot}}.
+\]
+The resulting Euler--Lagrange equations determine optimal redistribution paths through distinction space. Learning, institutional adaptation, biological development, and scientific specialization may therefore be viewed as extremal trajectories minimizing constrained repair expenditure.
+
+This formulation provides a unified interpretation of many processes discussed throughout the repair-theoretic program. Cognitive attention becomes a short-time extremal trajectory concentrating repair investment within a restricted region of distinction space. Educational curricula approximate long-time optimization over future repair expenditure. Scientific paradigms evolve by seeking maintenance configurations minimizing global repair cost while maximizing operational reach. Biological evolution becomes constrained optimization over repair budgets accumulated across generations.
+
+The distinction between conservative redistribution and irreversible degradation also becomes mathematically transparent.
+
+When
+
+\[
+\delta\Phi
+0,
+\]
+repair resources are merely redistributed. The observer changes its maintenance priorities without altering total repair capacity. Learning, specialization, institutional reform, and conceptual refinement belong to this conservative regime.
+
+When
+
+\[
+\delta\Phi
+<
+0,
+\]
+the observer experiences genuine loss of repair capacity. Repair operators disappear, reconstruction pathways collapse, redundancy declines, and portions of the admissibility manifold become permanently inaccessible.
+
+This distinction provides the conceptual bridge to the companion paper Erasure Is Deformation. The present work studies trajectories confined to constant-budget manifolds. Erasure corresponds to motion between manifolds of decreasing total repair capacity. Redistribution and degradation therefore represent fundamentally different geometric processes. The former changes the allocation of repair resources, whereas the latter changes the size of the repair economy itself.
+
+The repair action also suggests a natural interpretation of entropy production. Classical thermodynamics distinguishes reversible transformations from irreversible ones through entropy increase. Repair geometry admits an analogous distinction.
+
+Define the irreversible repair dissipation
+
+\[
+\Sigma_{\Phi}
+- 
+\frac{d\Phi_{\mathrm{tot}}}{dt}.
+\]
+Whenever
+
+\[
+\Sigma_{\Phi}
+0,
+\]
+the observer undergoes purely conservative redistribution. Positive values indicate irreversible consumption of repair capacity through accumulated damage, loss of reconstruction pathways, institutional decay, biological aging, or catastrophic forgetting.
+
+Unlike classical entropy, however, repair dissipation measures the loss of future restoration capacity rather than microscopic disorder. It quantifies the shrinking of the admissibility manifold itself.
+
+This interpretation also clarifies the role of finite observers within the broader repair-theoretic framework. Earlier papers repeatedly emphasized that observation, truth, and reconstruction are observer dependent because every observer possesses a finite repair repertoire. The present paper identifies the deeper mathematical reason. Finite observers occupy constrained repair orbits rather than unconstrained state spaces. Every trajectory they follow must satisfy conservation of repair budget except where genuine degradation alters the available maintenance capacity.
+
+The possibility of a complete Noether theorem for repair geometry therefore remains an important direction for future work. One seeks conditions under which every continuous symmetry of repair allocation generates a corresponding conserved quantity and, conversely, whether all repair-theoretic conservation laws arise from such symmetries. The present paper establishes only the first step by identifying repair-budget conservation as the fundamental invariant governing finite maintenance systems.
+
+Viewed from this perspective, ambiguity is no longer an accidental feature of finite cognition. It is the inevitable consequence of symmetry-constrained repair allocation. Every observer, regardless of substrate, evolves upon a repair manifold whose conserved geometry determines which distinctions may become sharp, which remain ambiguous, and how maintenance resources flow between them. The conservation law is therefore not merely an empirical regularity but the organizing principle underlying the operational geometry of finite intelligence.
+
+The repair-theoretic program has now established complementary conservation principles governing observation, admissibility, reconstruction, and repair allocation. The concluding section draws these threads together and argues that finite repair budgets provide the common mathematical foundation upon which the persistence of distinctions, the stability of truth, and the organization of intelligent systems ultimately depend.
+
+\section{Conclusion}
+
+The repair-theoretic program began by replacing passive observation with operational restoration. A distinction became meaningful not because it could be represented, but because it could be repaired after perturbation. From that starting point, Observability Is Restorability identified repair as the operational foundation of observation, Admissibility Before Truth proved that truth predicates are defined only over repair-stable distinctions, and The Geometry of Reconstruction demonstrated that repair operators themselves persist only through higher-order maintenance. The present paper completes this sequence by introducing the conservation law governing how finite repair capacity is distributed throughout distinction space.
+
+The central result is that ambiguity is not itself a conserved quantity. What finite observers conserve is a repair budget. Ambiguity, repair cost, and repair interference are complementary manifestations of that underlying budget viewed from different operational perspectives. Every increase in distinction sharpness therefore requires a corresponding redistribution of repair resources elsewhere. Finite observers cannot eliminate ambiguity; they can only determine where it resides.
+
+This conclusion substantially extends the earlier theory of admissibility. Previously, the repair-stable domain
+
+\[
+\Rest(\mathcal R)
+\]
+was treated as the set of distinctions upon which truth predicates could meaningfully operate. The present paper shows that this domain possesses an internal geometry determined by repair allocation. Distinctions differ not only in whether they are admissible but also in the degree of repair investment supporting their stability. Evaluability therefore becomes graded rather than purely binary, and the logical value of operational failure emerges naturally from insufficient repair capacity rather than from an independently postulated semantics.
+
+The repair budget also resolves several questions left open by the earlier papers. Reconstruction redundancy becomes a geometric property of independent maintenance pathways rather than a simple count of histories. History space acquires a natural metric generated by repair expenditure. Maintenance graphs admit a spectral theory whose eigenstructure predicts resilience and fragmentation. Dynamic reconstruction becomes constrained evolution of repair budgets through time, while recursive maintenance hierarchies converge through stabilization of higher-order repair investment rather than terminating at an arbitrary level. None of these developments require additional primitives. They emerge from the conservation of finite repair resources.
+
+The applications developed throughout this paper illustrate the generality of this framework. Legal systems allocate institutional repair budgets across competing distinctions. Scientific disciplines redistribute maintenance investment as conceptual priorities evolve. Educational systems teach efficient allocation of repair resources rather than merely transmitting information. Biological organisms continuously reorganize repair investment across physiological distinctions, while evolution reallocates those budgets across generations. Machine learning systems optimize finite representational resources through continual redistribution of repair capacity. Human cognition itself appears as a dynamic economy of distinctions in which attention, memory, learning, and expertise reflect changing patterns of repair allocation rather than unrestricted computational growth.
+
+A common mathematical structure therefore underlies phenomena that are ordinarily studied independently. Wherever distinctions persist under finite resources, repair budgets must be allocated. Wherever repair budgets are allocated, ambiguity must be redistributed. The specific substrate implementing repair operators may differ dramatically, but the conservation law governing their organization remains the same.
+
+Perhaps the most important conceptual consequence concerns the nature of intelligence itself. Intelligence is often characterized in terms of information processing, optimization, prediction, or representation. The repair-theoretic framework suggests a more operational interpretation. Intelligent systems are distinguished by their ability to allocate finite repair budgets efficiently across evolving distinction spaces. Learning enlarges and reorganizes admissibility, attention concentrates repair investment temporarily, expertise stabilizes selected conceptual regions, and abstraction reduces maintenance costs by creating cooperative repair structures. Intelligence is therefore fundamentally a geometry of maintenance rather than a geometry of representation.
+
+This perspective also clarifies the relationship between conservation and irreversible change. The present paper has considered conservative redistributions satisfying
+
+\[
+\delta\Phi=0.
+\]
+Such processes alter the organization of repair without changing the observer's total maintenance capacity. Yet real systems also experience aging, degradation, forgetting, institutional collapse, and the destruction of reconstruction pathways. These phenomena cannot be understood through redistribution alone because they reduce the total repair budget itself. They require a complementary theory describing irreversible deformation of repair geometry.
+
+The companion paper Erasure Is Deformation provides precisely this extension. Together, the two theories describe the complete dynamics of finite maintenance systems. Conservation governs how repair resources are redistributed while total capacity remains fixed. Deformation governs the irreversible contraction of the repair economy itself. Every trajectory through distinction space is therefore determined by the interaction between these two processes: the conservative reorganization of finite maintenance and the irreversible loss of maintenance capacity.
+
+The broader implication is that ambiguity, admissibility, reconstruction, and truth are no longer independent concepts. They are successive expressions of a single operational geometry generated by finite repair. Observation depends upon repair, truth depends upon admissibility, admissibility depends upon repair allocation, repair depends upon reconstruction, and reconstruction depends upon the continued preservation of finite repair budgets. The persistence of knowledge is therefore inseparable from the persistence of the maintenance structures that sustain it.
+
+The repair-theoretic program has progressively replaced static epistemic categories with operational and geometric ones. Knowledge is no longer understood as a collection of propositions but as the sustained maintenance of distinctions within finite repair economies. Truth is not evaluated independently of the observer but within dynamically evolving admissibility manifolds supported by finite repair budgets. Persistence is achieved not through immutable structures but through continual redistribution and reconstruction of maintenance capacity. The conservation principles developed across this series therefore suggest a unified mathematical framework in which cognition, institutions, biological evolution, scientific practice, and artificial intelligence are all governed by the same geometry of finite repair.
+
+Rather than viewing ambiguity as a defect awaiting elimination, this framework identifies it as an unavoidable consequence of finite existence. Every observer inhabits a world of constrained maintenance in which precision, stability, and understanding are purchased through continual allocation of limited repair resources. The geometry of those allocations ultimately determines not only what can be known, but what can continue to remain knowable through time.
+
+
+\newpage 
+\section*{Appendices}
+
+\section{Functional Analysis of the Repair Budget}
+
+This appendix develops the repair budget as a variational functional on distinction space and establishes the mathematical framework underlying the conservation results proved in the main text.
+
+Let
+
+\[
+(\Rest(\mathcal R),\mu)
+\]
+be a measured admissibility manifold equipped with finite measure
+
+\[
+\mu(\Rest(\mathcal R))<\infty.
+\]
+The repair allocation field is a measurable function
+
+\[
+\phi:\Rest(\mathcal R)\rightarrow\mathbb R_{\ge0},
+\]
+where
+
+\[
+\phi(d)
+\]
+denotes the repair investment assigned to distinction d.
+
+The total repair budget is therefore
+
+\[
+\Phi[\phi]
+\int_{\Rest(\mathcal R)}
+\phi(d),
+d\mu(d).
+\]
+Throughout this appendix we identify
+
+\[
+\phi(d)=C_R(d),
+\]
+recovering the formulation introduced in the main text.
+
+
+A.1 The Admissible Function Space
+
+Define
+
+\[
+\mathcal V
+L^2(\Rest(\mathcal R),\mu)
+\]
+equipped with inner product
+
+\[
+\langle f,g\rangle
+\int
+f(d)g(d),
+d\mu(d).
+\]
+
+Repair allocations satisfy
+
+\[
+\phi\in\mathcal V,
+\qquad
+\phi(d)\ge0.
+\]
+The admissible subset is
+
+\[
+\mathcal V_\Phi
+\left{
+\phi\in\mathcal V:
+\Phi[\phi]
+\Phi_{\mathrm{tot}}
+\right}.
+\]
+
+Thus admissible repair allocations form an affine hyperplane inside the Hilbert space of repair fields.
+
+
+A.2 First Variation
+
+Let
+
+\[
+\phi_\varepsilon
+\phi+\varepsilon\eta,
+\]
+where
+
+\[
+\eta\in\mathcal V.
+\]
+Then
+
+\[
+\delta\Phi
+\left.
+\frac{d}{d\varepsilon}
+\Phi[\phi_\varepsilon]
+\right|_{\varepsilon=0}
+\int
+\eta(d),
+d\mu(d).
+\]
+
+Conservation requires
+
+\[
+\delta\Phi=0,
+\]
+so every admissible perturbation satisfies
+
+\[
+\boxed{
+\int
+\eta(d),
+d\mu(d)=0.
+}
+\]
+The tangent space therefore consists precisely of zero-integral perturbations.
+
+A.3 Second Variation
+
+Since
+
+\[
+\Phi
+\]
+is linear,
+
+\[
+\delta^2\Phi=0.
+\]
+Curvature therefore cannot arise from the budget itself.
+
+Instead curvature originates from the interaction term.
+
+Define
+
+\[
+\mathcal I[\phi]
+\frac12
+\iint
+I(d,d')
+\phi(d)
+\phi(d')
+,d\mu(d),d\mu(d').
+\]
+
+The complete functional becomes
+
+\[
+\mathcal F[\phi]
+\mathcal A[\phi]
++
+\lambda\Phi[\phi]
++
+\mu\mathcal I[\phi].
+\]
+
+The Hessian is
+
+\[
+H(d,d')
+\mu I(d,d').
+\]
+
+Thus all nontrivial geometry originates from repair interference.
+
+
+A.4 Euler–Lagrange Equation
+
+Extremizing
+
+\[
+\mathcal F
+\]
+under
+
+\[
+\Phi=\Phi_{\mathrm{tot}}
+\]
+gives
+
+\[
+\delta
+\left(
+\mathcal F
+\alpha\Phi
+\right)
+0. 
+\]
+Hence
+
+\[
+\frac{\delta\mathcal A}{\delta\phi}
++
+\mu
+\int
+I(d,d')
+\phi(d')
+,d\mu(d')
+\alpha.
+\]
+This nonlinear integral equation determines equilibrium repair allocations.
+
+
+A.5 Convexity
+
+Suppose
+
+\[
+I(d,d')
+\]
+is positive semidefinite.
+
+Then
+
+\[
+\mathcal F
+\]
+is convex.
+
+Therefore
+
+\[
+\boxed{
+\text{repair equilibrium is unique.}
+}
+\]
+If
+
+\[
+I
+\]
+possesses negative eigenvalues,
+
+multiple local minima may exist, producing competing maintenance configurations.
+
+These correspond to alternative stable paradigms, institutional organizations, or learned representations.
+
+
+A.6 Existence
+
+Assume
+
+\[
+I
+\]
+is Hilbert–Schmidt,
+
+\[
+I\in
+L^2
+(\Rest(\mathcal R)^2).
+\]
+Then
+
+\[
+\mathcal I
+\]
+is compact.
+
+The direct method of the calculus of variations gives existence of a minimizing repair allocation.
+
+
+A.7 Stability
+
+Linearizing around an equilibrium
+
+\[
+\phi_*
+\]
+gives
+
+\[
+\dot\eta
+- 
+H\eta.
+\]
+Solutions satisfy
+
+\[
+\eta(t)
+e^{-Ht}\eta_0.
+\]
+Hence
+
+all positive eigenvalues produce exponential restoration,
+
+zero eigenvalues produce neutral repair modes,
+
+and negative eigenvalues correspond to unstable maintenance directions requiring higher-order reconstruction.
+
+
+A.8 Conservation Law
+
+The admissible flow
+
+\[
+\phi(t)
+\]
+satisfies
+
+\[
+\int
+\dot\phi
+,d\mu
+0. 
+\]
+Therefore
+
+\[
+\boxed{
+\frac{d\Phi}{dt}=0.
+}
+\]
+This establishes the repair-budget conservation theorem in continuous form.
+
+
+A.9 Geometric Interpretation
+
+The manifold
+
+\[
+\mathcal V_\Phi
+\]
+is a codimension-one submanifold of repair allocation space.
+
+Repair dynamics evolve entirely within this manifold.
+
+Curvature arises exclusively through the interference operator.
+
+The geometry of finite observers is therefore not Euclidean but interaction-induced.
+
+Every trajectory followed by learning, attention, institutional adaptation, or biological evolution is constrained to remain on a constant-budget manifold until irreversible deformation changes
+
+\[
+\Phi_{\mathrm{tot}}.
+\]
+This appendix therefore establishes the functional-analytic foundation upon which the remainder of the mathematical development is built.
+
+\section{Variational Derivation of the Redistribution Theorem}
+
+The Redistribution Theorem established in the main text states that local increases in distinction sharpness necessarily induce compensating changes throughout the remaining distinction space whenever the total repair budget is fixed. This appendix derives that result from constrained variational principles and identifies the precise mathematical conditions under which repair-budget conservation holds.
+
+Let
+
+\[
+M=\Rest(\mathcal R)
+\]
+denote the admissibility manifold equipped with measure
+
+\[
+\mu.
+\]
+The repair allocation field is
+
+\[
+\phi:M\rightarrow\mathbb R_{\ge0},
+\]
+with
+
+\[
+\phi(d)=C_R(d).
+\]
+The repair budget functional is
+
+\[
+\Phi[\phi]
+\int_M
+\phi(d),
+d\mu(d).
+\]
+The ambiguity functional is
+
+\[
+\mathcal A[\phi]
+\int_M
+a(\phi(d))
+,d\mu(d),
+\]
+where
+
+\[
+a'(\phi)<0
+\]
+throughout the admissible domain.
+
+The repair interference functional is
+
+\[
+\mathcal I[\phi]
+\frac12
+\iint_M
+I(d,d')
+\phi(d)\phi(d')
+,d\mu(d),d\mu(d').
+\]
+
+The complete repair functional is therefore
+
+\[
+\mathcal F[\phi]
+\mathcal A[\phi]
++
+\lambda\Phi[\phi]
++
+\mu\mathcal I[\phi].
+\]
+
+The observer seeks stationary repair allocations satisfying
+
+\[
+\delta\mathcal F=0
+\]
+subject to the conservation constraint
+
+\[
+\Phi=\Phi_{\mathrm{tot}}.
+\]
+
+B.1 Constrained Variation
+
+Introduce the augmented functional
+
+\[
+\mathcal J
+\mathcal F
+\alpha
+\left(
+\Phi-\Phi_{\mathrm{tot}}
+\right),
+\]
+where
+
+\[
+\alpha
+\]
+is a Lagrange multiplier.
+
+Its first variation is
+
+\[
+\delta\mathcal J
+\delta\mathcal A
++
+\lambda\delta\Phi
++
+\mu\delta\mathcal I
+\alpha\delta\Phi.
+\]
+Since
+
+\[
+\delta\Phi
+\int_M
+\eta(d)
+,d\mu(d),
+\]
+
+stationarity requires
+
+\[
+\delta\mathcal A
++
+\mu\delta\mathcal I
++
+(\lambda-\alpha)\delta\Phi
+0. 
+\]
+For arbitrary perturbations,
+
+\[
+\frac{\delta\mathcal A}{\delta\phi}
++
+\mu
+\int
+I(d,d')
+\phi(d')
+,d\mu(d')
+\alpha-\lambda.
+\]
+This is the equilibrium equation governing repair allocation.
+
+
+B.2 Local Perturbation
+
+Suppose repair investment is increased near
+
+\[
+d_0.
+\]
+Represent the perturbation by
+
+\[
+\eta(d)
+\delta(d-d_0)
+\rho(d),
+\]
+where
+
+\[
+\rho
+\]
+redistributes the removed repair budget.
+
+Budget conservation requires
+
+\[
+\int
+\rho(d)
+,d\mu(d)
+1. 
+\]
+Hence every localized increase necessarily induces a global redistribution field.
+
+This establishes mathematically that repair investment cannot remain localized under finite conservation.
+
+
+B.3 Green Function Formulation
+
+Linearizing around equilibrium gives
+
+\[
+H\eta=f,
+\]
+where
+
+\[
+H
+a''(\phi)
++
+\mu I
+\]
+is the repair Hessian.
+
+Let
+
+\[
+G
+H^{-1}
+\]
+denote the corresponding Green operator.
+
+Then
+
+\[
+\eta
+Gf.
+\]
+Thus the influence of sharpening one distinction propagates throughout the entire admissibility manifold according to
+
+\[
+G(d,d').
+\]
+Repair redistribution is therefore generally nonlocal.
+
+
+B.4 Proof of the Redistribution Theorem
+
+Suppose
+
+\[
+\delta\phi(d_0)>0.
+\]
+Because
+
+\[
+\delta\Phi=0,
+\]
+one has
+
+\[
+\int
+\delta\phi
+,d\mu
+0. 
+\]
+Hence
+
+\[
+\delta\phi
+\]
+cannot remain positive everywhere.
+
+There must exist a measurable subset
+
+\[
+U
+\subset
+M
+\]
+such that
+
+\[
+\delta\phi(d)<0
+\]
+for
+
+\[
+d\in U.
+\]
+Therefore every increase in distinction sharpness necessarily produces reduced repair investment somewhere else.
+
+This proves the redistribution theorem independently of the particular form of
+
+\[
+I.
+\]
+The interference operator determines where redistribution occurs, not whether it occurs.
+
+
+B.5 Spectral Representation
+
+Suppose
+
+\[
+H
+v_k
+\lambda_k
+v_k.
+\]
+Expand
+
+\[
+\eta
+\sum_k
+c_kv_k.
+\]
+Then
+
+\[
+c_k
+\frac{\langle f,v_k\rangle}
+{\lambda_k}.
+\]
+Every redistribution therefore decomposes uniquely into principal repair modes.
+
+Large eigenvalues suppress redistribution.
+
+Small eigenvalues amplify long-range propagation.
+
+The repair spectrum therefore determines the characteristic scales over which ambiguity migrates.
+
+
+B.6 Continuous Redistribution Equation
+
+Taking the limit of infinitesimal learning updates yields
+
+\[
+\frac{\partial\phi}{\partial t}
+- 
+\nabla_\phi
+\mathcal F
++
+\alpha.
+\]
+Since
+
+\[
+\alpha
+\]
+maintains
+
+\[
+\Phi
+\Phi_{\mathrm{tot}},
+\]
+the dynamics satisfy
+
+\[
+\frac{d\Phi}{dt}=0.
+\]
+Repair allocation therefore follows constrained gradient flow on the constant-budget manifold.
+
+
+B.7 Conservation of Evaluability
+
+Let
+
+\[
+E(d)
+\frac{\Phi(d)}
+{\Phi_{\min}(d)}.
+\]
+Then
+
+\[
+\delta E
+\frac{\delta\Phi}
+{\Phi_{\min}}
+\frac{\Phi
+\delta\Phi_{\min}}
+{\Phi_{\min}^2}.
+\]
+If
+
+\[
+\Phi_{\min}
+\]
+remains fixed,
+
+\[
+\int
+\delta E
+,d\mu
+0. 
+\]
+Hence evaluability itself redistributes under conservative repair dynamics.
+
+The observer does not create additional evaluability.
+
+It reallocates evaluability across distinction space.
+
+
+B.8 Geometric Corollary
+
+Every admissible perturbation is tangent to the constant-budget manifold,
+
+\[
+T_\phi
+\mathcal V_\Phi.
+\]
+The normal direction is generated by
+
+\[
+\nabla\Phi.
+\]
+Consequently,
+
+learning,
+
+attention,
+
+institutional reform,
+
+scientific specialization,
+
+and biological adaptation
+
+are all constrained tangent flows.
+
+Only irreversible degradation permits trajectories to leave the constant-budget manifold.
+
+This appendix therefore provides the variational derivation of the Redistribution Theorem and establishes repair-budget conservation as a constrained optimization principle governing all finite observers.
+
+\section{Lagrange Multipliers and Finite Repair Constraints}
+
+The repair budget functional introduced in the main text contains the coefficients
+
+\[
+\lambda
+\quad\text{and}\quad
+\mu,
+\]
+which weight repair cost and repair interference relative to ambiguity. Throughout the body of the paper these quantities were interpreted as Lagrange multipliers associated with finite repair constraints. The purpose of this appendix is to derive these coefficients explicitly from constrained optimization rather than introducing them phenomenologically.
+
+The central idea is that an observer does not optimize ambiguity, repair cost, or interference independently. Instead, it seeks an allocation of finite repair resources satisfying several simultaneous operational constraints. The repair budget functional therefore arises naturally from a constrained variational problem.
+
+
+C.1 The Primal Optimization Problem
+
+Let
+
+\[
+M=\Rest(\mathcal R)
+\]
+denote the admissible distinction manifold.
+
+Suppose the observer seeks to minimize total operational ambiguity,
+
+\[
+\mathcal A[\phi]
+\int_M
+a(\phi(d))
+,d\mu(d),
+\]
+subject to finite repair capacity,
+
+\[
+\Phi[\phi]
+\Phi_{\mathrm{tot}},
+\]
+and fixed total interference,
+
+\[
+\mathcal I[\phi]
+I_{\mathrm{tot}}.
+\]
+The optimization problem is
+
+\[
+\min_{\phi}
+;
+\mathcal A[\phi]
+\]
+subject to
+
+\[
+\Phi=\Phi_{\mathrm{tot}},
+\]
+\[
+\mathcal I
+I_{\mathrm{tot}}.
+\]
+
+C.2 Lagrangian
+
+Introduce multipliers
+
+\[
+\lambda,
+\mu.
+\]
+The constrained functional becomes
+
+\[
+\mathcal L
+\mathcal A
++
+\lambda
+\left(
+\Phi-
+\Phi_{\mathrm{tot}}
+\right)
++
+\mu
+\left(
+\mathcal I-
+I_{\mathrm{tot}}
+\right).
+\]
+Since the constants disappear under variation,
+
+\[
+\mathcal L
+\mathcal A
++
+\lambda\Phi
++
+\mu\mathcal I.
+\]
+Thus the repair budget functional introduced in the main text is simply the Lagrangian of the constrained maintenance problem.
+
+
+C.3 Euler Equation
+
+Taking the first variation gives
+
+\[
+\delta\mathcal L
+0. 
+\]
+Hence
+
+\[
+\frac{\delta\mathcal A}
+{\delta\phi}
++
+\lambda
++
+\mu
+\int
+I(d,d')
+\phi(d')
+,d\mu(d')
+0. 
+\]
+This nonlinear integral equation determines every equilibrium repair allocation.
+
+Notice that
+
+\[
+\lambda
+\]
+appears as a spatially constant field.
+
+Its operational interpretation is immediate.
+
+
+C.4 Interpretation of \lambda
+
+Differentiate
+
+\[
+\mathcal L
+\]
+with respect to
+
+\[
+\Phi_{\mathrm{tot}}.
+\]
+One obtains
+
+\[
+\lambda
+- 
+\frac{\partial
+\mathcal A_{\min}}
+{\partial
+\Phi_{\mathrm{tot}}}.
+\]
+Therefore
+
+\[
+\boxed{
+\lambda
+\text{marginal reduction in ambiguity produced by one additional unit of repair capacity.}
+}
+\]
+
+If
+
+\[
+|\lambda|
+\]
+is large,
+
+small increases in repair budget dramatically reduce ambiguity.
+
+If
+
+\[
+|\lambda|
+\]
+is small,
+
+the observer has reached diminishing returns.
+
+Additional repair investment produces relatively little increase in distinction sharpness.
+
+
+C.5 Interpretation of \mu
+
+Similarly,
+
+\[
+\mu
+- 
+\frac{\partial
+\mathcal A_{\min}}
+{\partial
+I_{\mathrm{tot}}}.
+\]
+Thus
+
+\[
+\boxed{
+\mu
+\text{marginal ambiguity cost of increasing repair interference.}
+}
+\]
+Large positive values indicate strongly coupled repair geometries.
+
+Values near zero correspond to nearly independent distinction spaces.
+
+Negative values correspond to globally cooperative maintenance architectures.
+
+
+C.6 Dual Optimization
+
+The dual functional is
+
+\[
+D(\lambda,\mu)
+\inf_\phi
+\mathcal L(\phi,\lambda,\mu).
+\]
+The dual problem is
+
+\[
+\max_{\lambda,\mu}
+D(\lambda,\mu).
+\]
+Hence
+
+repair-budget conservation possesses both
+
+a primal interpretation
+
+(allocation of repair),
+
+and
+
+a dual interpretation
+
+(valuation of repair resources).
+
+This mirrors convex optimization throughout mathematical physics.
+
+
+C.7 Karush–Kuhn–Tucker Conditions
+
+When repair allocations satisfy positivity,
+
+\[
+\phi(d)\ge0,
+\]
+the optimization obeys the KKT conditions,
+
+\[
+\lambda
+\ge0,
+\]
+\[
+\phi(d)\ge0,
+\]
+\[
+\lambda
+\left(
+\Phi-
+\Phi_{\mathrm{tot}}
+\right)
+0. 
+\]
+These conditions determine when repair constraints become active.
+
+Inactive constraints correspond to surplus repair capacity.
+
+Active constraints correspond precisely to observers operating at the boundary of admissibility.
+
+
+C.8 Shadow Prices
+
+The dual interpretation gives an economic meaning to repair.
+
+Each distinction possesses an associated shadow price,
+
+\[
+p(d)
+\frac{\delta\mathcal L}
+{\delta\phi(d)}.
+\]
+This quantity measures the increase in global ambiguity produced by removing an infinitesimal amount of repair investment from that distinction.
+
+Repair allocation therefore becomes mathematically identical to optimal resource allocation in constrained economies.
+
+The distinction space behaves as a maintenance market whose currency is repair capacity.
+
+
+C.9 Scale Invariance
+
+Suppose
+
+\[
+\phi
+\rightarrow
+\alpha\phi.
+\]
+Then
+
+\[
+\Phi
+\rightarrow
+\alpha\Phi.
+\]
+If simultaneously
+
+\[
+\lambda
+\rightarrow
+\frac{\lambda}{\alpha},
+\]
+the repair equations remain invariant.
+
+Thus
+
+only relative repair investment matters.
+
+Absolute scale is operationally irrelevant.
+
+This establishes a gauge-like invariance of repair allocation under uniform budget rescaling.
+
+
+C.10 Relation to Earlier Open Problems
+
+Several questions posed in earlier papers are now resolved.
+
+The coefficients
+
+\[
+\lambda
+\quad\text{and}\quad
+\mu
+\]
+are not arbitrary phenomenological constants.
+
+They emerge uniquely as shadow prices of finite repair constraints.
+
+Graded admissibility follows from active versus inactive constraints.
+
+Joint evaluability becomes feasibility within the constrained optimization problem.
+
+Maintenance geometry arises from the Hessian of the repair Lagrangian.
+
+The repair-theoretic hierarchy therefore requires no additional axioms beyond constrained variational optimization over finite repair capacity.
+
+This appendix completes the mathematical interpretation of the repair budget functional by showing that its coefficients arise necessarily from finite-resource optimization rather than empirical parameter fitting. The conservation law developed throughout the paper is therefore a direct consequence of variational principles governing the allocation of repair resources by finite observers.
+
+\section{Differential Geometry of Distinction Space}
+
+The preceding appendices established repair-budget conservation as a constrained variational principle acting on the admissibility manifold. The present appendix develops the differential geometry induced by that variational structure. Rather than treating distinctions as isolated objects, we regard them as points of a smooth manifold whose geometry is determined entirely by repair allocation. Distances, geodesics, curvature, and parallel transport therefore acquire direct operational interpretations.
+
+Throughout this appendix let
+
+\[
+M=\Rest(\mathcal R)
+\]
+be an n-dimensional smooth manifold of admissible distinctions.
+
+Each point
+
+\[
+d\in M
+\]
+represents an operationally stable distinction maintained by the observer.
+
+The repair allocation field
+
+\[
+\phi:M\rightarrow\mathbb R
+\]
+defines the local repair investment.
+
+The repair functional
+
+\[
+\mathcal F[\phi]
+\mathcal A
++
+\lambda\Phi
++
+\mu\mathcal I
+\]
+induces the intrinsic geometry.
+
+D. 1 The Repair Metric
+
+The natural metric is obtained from the second variation of the repair functional.
+
+Define
+
+\[
+g_{ij}
+\frac{\partial^2\mathcal F}
+{\partial x^i\partial x^j},
+\]
+where
+
+\[
+x^i
+\]
+are local coordinates on distinction space.
+
+Explicitly,
+
+\[
+g_{ij}
+\frac{\partial^2\mathcal A}
+{\partial x^i\partial x^j}
++
+\mu
+\frac{\partial^2\mathcal I}
+{\partial x^i\partial x^j}.
+\]
+The linear repair budget contributes no curvature,
+
+since
+
+\[
+\frac{\partial^2\Phi}
+{\partial x^i\partial x^j}
+0. 
+\]
+Thus
+
+\[
+\boxed{
+\text{repair interference is the unique source of intrinsic curvature.}
+}
+\]
+
+D.2 Arc Length
+
+For a repair trajectory
+
+\[
+\gamma(t),
+\]
+the repair length is
+
+\[
+L(\gamma)
+\int
+\sqrt{
+g_{ij}
+\dot x^i
+\dot x^j
+}
+,dt.
+\]
+Operationally,
+
+this is the minimum repair expenditure required to transform one distinction into another while remaining within the admissible manifold.
+
+Large distances correspond to extensive reorganization of repair operators.
+
+Small distances correspond to incremental conceptual refinement.
+
+
+D.3 Geodesics
+
+Critical points of
+
+\[
+L
+\]
+satisfy
+
+\[
+\frac{d^2x^k}{dt^2}
++
+\Gamma^k_{ij}
+\frac{dx^i}{dt}
+\frac{dx^j}{dt}
+0,
+\]
+where
+
+\[
+\Gamma^k_{ij}
+\frac12
+g^{k\ell}
+(
+\partial_i g_{j\ell}
++
+\partial_j g_{i\ell}
+\partial_\ell g_{ij}
+)
+\]
+are the Christoffel symbols.
+
+Repair geodesics therefore describe maintenance trajectories requiring minimum total repair expenditure.
+
+Learning follows a geodesic only in the absence of external forcing.
+
+
+D.4 Parallel Transport
+
+Suppose
+
+\[
+V(t)
+\]
+is a repair operator transported along
+
+\[
+\gamma.
+\]
+Parallel transport satisfies
+
+\[
+\nabla_{\dot\gamma}
+V
+0. 
+\]
+Operationally,
+
+parallel transport preserves repair strategy while moving through distinction space.
+
+Failure of parallel transport measures conceptual drift.
+
+
+D.5 Curvature Tensor
+
+The Riemann tensor is
+
+\[
+R^i{}_{jkl}
+\partial_k
+\Gamma^i_{jl}
+\partial_l
+\Gamma^i_{jk}
++
+\Gamma^i_{mk}
+\Gamma^m_{jl}
+\Gamma^i_{ml}
+\Gamma^m_{jk}.
+\]
+Curvature measures the failure of repair transport to commute.
+
+Positive curvature indicates tightly coupled distinctions.
+
+Negative curvature indicates repair pathways diverging exponentially.
+
+Flat regions correspond to nearly independent maintenance.
+
+
+D.6 Ricci Curvature
+
+Contracting gives
+
+\[
+R_{ij}
+R^k{}_{ikj}.
+\]
+The Ricci scalar is
+
+\[
+R
+g^{ij}
+R_{ij}.
+\]
+Large positive Ricci curvature corresponds to highly constrained repair economies.
+
+Negative curvature indicates repair expansion,
+
+where numerous independent maintenance strategies coexist.
+
+
+D.7 Sectional Curvature
+
+For tangent vectors
+
+\[
+u,v,
+\]
+the sectional curvature is
+
+\[
+K(u,v)
+\frac{
+\langle
+R(u,v)v,
+u
+\rangle
+}
+{
+|u|^2|v|^2
+\langle u,v\rangle^2
+}.
+\]
+Operationally,
+
+this measures how rapidly ambiguity redistributes when two distinctions are simultaneously sharpened.
+
+Positive curvature produces competition.
+
+Negative curvature produces synergy.
+
+
+D.8 Repair Curvature and Learning
+
+Suppose gradient flow satisfies
+
+\[
+\dot x
+- 
+\nabla
+\mathcal F.
+\]
+Then nearby trajectories satisfy the Jacobi equation,
+
+\[
+\frac{D^2J}{dt^2}
++
+R(J,\dot\gamma)\dot\gamma
+0. 
+\]
+Consequently,
+
+curvature determines learning stability.
+
+Positive curvature focuses neighboring repair trajectories.
+
+Negative curvature causes rapidly diverging maintenance strategies.
+
+
+D.9 Boundary Geometry
+
+The admissibility boundary
+
+\[
+\partial
+\Rest(\mathcal R)
+\]
+is defined by
+
+\[
+\Phi(d)
+\Phi_{\min}(d).
+\]
+Its outward normal is
+
+\[
+n
+\frac{
+\nabla\Phi
+}
+{
+|\nabla\Phi|
+}.
+\]
+
+The second fundamental form is
+
+\[
+B(X,Y)
+\langle
+\nabla_Xn,
+Y
+\rangle.
+\]
+
+Large boundary curvature indicates distinctions that become unevaluable under extremely small perturbations.
+
+Flat boundary regions remain operationally robust.
+
+
+D.10 Ricci Flow of Repair Geometry
+
+Suppose maintenance evolves continuously.
+
+Then the metric itself changes,
+
+\[
+\frac{\partial g_{ij}}
+{\partial t}
+- 
+
+2R_{ij}
++
+S_{ij},
+\]
+
+where
+
+\[
+S_{ij}
+\]
+represents repair investment generated by learning or reconstruction.
+
+Without new repair,
+
+positive curvature regions gradually collapse.
+
+Learning acts as a source term opposing geometric contraction.
+
+
+D.11 Curvature Theorem
+
+Theorem.
+
+If
+
+\[
+I(d,d')
+0
+\]
+
+throughout the admissibility manifold,
+
+then
+
+\[
+R^i{}_{jkl}
+0. 
+
+\]
+
+Hence repair space is globally flat.
+
+Proof.
+
+Vanishing interference implies
+
+\[
+g_{ij}
+\partial_i\partial_j
+\mathcal A,
+\]
+
+which is constant whenever ambiguity is separable.
+
+Therefore
+
+all Christoffel symbols vanish,
+
+and consequently
+
+the Riemann tensor is identically zero.
+
+\square
+
+Thus
+
+interaction alone produces repair curvature.
+
+Independent distinctions generate Euclidean repair geometry.
+
+
+D.12 Interpretation
+
+The geometry developed here shows that distinction space is not merely a semantic manifold.
+
+Its metric records repair expenditure.
+
+Its geodesics describe minimum-maintenance conceptual change.
+
+Its curvature measures operational dependence among distinctions.
+
+Its boundary determines evaluability.
+
+Learning, institutional evolution, scientific change, and biological adaptation therefore become geometric trajectories constrained by the repair metric induced by finite maintenance resources.
+
+This appendix establishes the differential-geometric foundation upon which the spectral theory of repair interference developed in the following appendix naturally rests.
+
+\section{Spectral Theory of Repair Interference}
+
+The previous appendix showed that repair interference generates the intrinsic curvature of distinction space. Local geometry, however, reveals only the behavior of infinitesimal neighborhoods. Many of the phenomena discussed throughout this paper—including conceptual revolutions, catastrophic forgetting, institutional fragmentation, and large-scale ambiguity redistribution—are fundamentally global. Their analysis requires the spectral theory of the repair interference operator.
+
+Throughout this appendix let
+
+\[
+M=\Rest(\mathcal R)
+\]
+denote the admissibility manifold, and let
+
+\[
+I:M\times M\rightarrow\mathbb R
+\]
+be the repair interference kernel.
+
+The associated integral operator is
+
+\[
+(\mathcal I f)(d)
+\int_M
+I(d,d')
+f(d')
+,d\mu(d').
+\]
+
+The eigenstructure of this operator determines the natural modes through which repair budgets propagate across distinction space.
+
+
+E.1 Self-Adjointness
+
+Assume
+
+\[
+I(d,d')
+I(d',d).
+\]
+
+Then
+
+\[
+\mathcal I
+\]
+is self-adjoint on
+
+\[
+L^2(M).
+\]
+Indeed,
+
+\[
+\langle
+f,
+\mathcal Ig
+\rangle
+\langle
+\mathcal If,
+g
+\rangle.
+\]
+
+Consequently,
+
+the spectral theorem applies.
+
+There exists an orthonormal basis
+
+\[
+{
+v_k
+}_{k=1}^{\infty}
+\]
+satisfying
+
+\[
+\mathcal Iv_k
+\lambda_kv_k.
+\]
+
+Every repair allocation therefore admits the expansion
+
+\[
+\phi
+\sum_{k=1}^{\infty}
+c_kv_k.
+\]
+
+
+E.2 Spectral Decomposition
+
+The interference kernel possesses the Mercer representation
+
+\[
+I(d,d')
+\sum_{k=1}^{\infty}
+\lambda_k
+v_k(d)
+v_k(d').
+\]
+
+Thus
+
+repair interference is completely determined by its principal repair modes.
+
+Learning,
+
+institutional adaptation,
+
+scientific specialization,
+
+and biological evolution
+
+all act by modifying the coefficients
+
+\[
+c_k.
+\]
+
+E.3 Positive and Negative Modes
+
+Unlike covariance operators,
+
+repair interference is generally indefinite.
+
+Hence
+
+positive,
+
+zero,
+
+and negative eigenvalues all occur.
+
+Positive eigenvalues correspond to competitive maintenance.
+
+Increasing repair investment along these modes raises repair costs elsewhere.
+
+Negative eigenvalues correspond to cooperative maintenance.
+
+Investment along these modes reduces global repair expenditure.
+
+Zero eigenvalues correspond to neutral directions.
+
+Repair can be redistributed along these modes without changing first-order maintenance costs.
+
+
+E.4 Spectral Energy
+
+Define the repair spectral energy
+
+\[
+E_k
+\lambda_kc_k^2.
+\]
+
+The total interference becomes
+
+\[
+\mathcal I
+\sum_k
+E_k.
+\]
+
+Large positive energy indicates concentration of repair resources into strongly competitive modes.
+
+Negative spectral energy indicates global repair synergies generated through abstraction or conceptual unification.
+
+
+E.5 Laplacian Formulation
+
+Define the weighted repair graph
+
+\[
+G=(V,E)
+\]
+whose vertices are admissible distinctions and whose edge weights are
+
+\[
+w_{ij}
+-I(d_i,d_j).
+\]
+
+The degree matrix is
+
+\[
+D
+\operatorname{diag}
+\left(
+\sum_jw_{ij}
+\right).
+\]
+
+The repair Laplacian is
+
+\[
+L
+D-W.
+\]
+
+This operator governs diffusion of repair budgets over distinction space.
+
+
+E.6 Algebraic Connectivity
+
+Let
+
+\[
+0
+\lambda_1
+<
+\lambda_2
+<
+\cdots.
+\]
+
+The quantity
+
+\[
+\lambda_2
+\]
+is the repair connectivity.
+
+Small values imply
+
+repair fragmentation.
+
+Large values imply
+
+globally integrated maintenance.
+
+The critical limit
+
+\[
+\lambda_2
+\rightarrow0
+\]
+marks the onset of maintenance collapse.
+
+This resolves the spectral-maintenance conjecture proposed in The Geometry of Reconstruction.
+
+
+E.7 Perturbation Theory
+
+Suppose the interference kernel changes by
+
+\[
+I
+\rightarrow
+I+\varepsilon J.
+\]
+Then first-order eigenvalue shifts satisfy
+
+\[
+\delta\lambda_k
+\langle
+v_k,
+Jv_k
+\rangle.
+\]
+
+Consequently,
+
+small institutional reforms,
+
+curriculum revisions,
+
+or architectural modifications
+
+produce predictable changes in global repair geometry.
+
+
+E.8 Spectral Redistribution
+
+Suppose repair investment changes by
+
+\[
+\delta\phi.
+\]
+Expanding into eigenmodes,
+
+\[
+\delta\phi
+\sum_k
+a_kv_k.
+\]
+
+The repair budget becomes
+
+\[
+\delta\mathcal I
+\sum_k
+\lambda_ka_k^2.
+\]
+
+Every redistribution therefore decomposes into independent spectral channels.
+
+No interaction occurs between orthogonal repair modes.
+
+
+E.9 Cheeger-Type Inequality
+
+Define the repair conductance
+
+\[
+h(M)
+\inf_S
+\frac{
+\operatorname{Cut}(S,S^c)
+}
+{
+\min
+(
+\operatorname{Vol}(S),
+\operatorname{Vol}(S^c)
+)
+}.
+\]
+
+Then
+
+\[
+\frac{\lambda_2}{2}
+\le
+h(M)
+\le
+\sqrt{2\lambda_2}.
+\]
+Thus
+
+small spectral gaps imply
+
+poor repair connectivity.
+
+Repair bottlenecks therefore become detectable before operational failure occurs.
+
+
+E.10 Spectral Entropy
+
+Normalize
+
+\[
+p_k
+\frac{
+|\lambda_k|
+}
+{
+\sum_j
+|\lambda_j|
+}.
+\]
+
+Define
+
+\[
+S_{\mathrm{spec}}
+- 
+
+\sum_k
+p_k
+\log p_k.
+\]
+
+High spectral entropy corresponds to broadly distributed repair investment.
+
+Low entropy indicates concentration into a few dominant maintenance modes.
+
+Scientific specialization,
+
+institutional centralization,
+
+and expert cognition
+
+all tend to reduce spectral entropy.
+
+
+E.11 Stability Criterion
+
+Theorem.
+
+Suppose
+
+\[
+\lambda_k>0
+\]
+for every nontrivial repair mode.
+
+Then
+
+the repair equilibrium is linearly stable.
+
+Proof.
+
+Linearization gives
+
+\[
+\dot c_k
+- 
+
+\lambda_kc_k.
+\]
+
+Hence
+
+\[
+c_k(t)
+c_k(0)
+e^{-\lambda_kt}.
+\]
+
+Every perturbation decays exponentially.
+
+Therefore
+
+the equilibrium is asymptotically stable.
+
+\square
+
+Negative eigenvalues instead produce exponentially growing maintenance instabilities requiring reconstruction.
+
+
+E.12 Spectral Phase Transitions
+
+Suppose a parameter
+
+\[
+\alpha
+\]
+continuously modifies repair geometry.
+
+If
+
+\[
+\lambda_k(\alpha)
+0
+\]
+
+for some
+
+\[
+\alpha_c,
+\]
+then
+
+the repair manifold undergoes a bifurcation.
+
+New maintenance modes appear,
+
+existing modes disappear,
+
+or admissibility boundaries reorganize discontinuously.
+
+Scientific revolutions,
+
+institutional crises,
+
+and catastrophic forgetting
+
+may therefore be interpreted as spectral phase transitions.
+
+
+E.13 Interpretation
+
+The spectral decomposition reveals that ambiguity redistribution is fundamentally modal rather than local.
+
+Repair investment propagates through global eigenmodes determined by the interference operator.
+
+Curvature describes infinitesimal geometry,
+
+while spectra describe large-scale organization.
+
+Together they provide complementary mathematical descriptions of the repair economy.
+
+The next appendix develops the consequences of this geometry for graded admissibility, proving stability theorems governing the boundary between evaluable and unevaluable distinctions.
+
+\section{Graded Admissibility and Stability Margins}
+
+One of the principal open problems identified in Admissibility Before Truth concerned the possibility of replacing binary admissibility with a graded theory reflecting the varying operational stability of different distinctions. The repair budget formalism developed in the present paper provides precisely such a generalization. Rather than classifying distinctions simply as admissible or inadmissible, we characterize them by their distance from the repair boundary. This appendix develops the resulting theory of graded admissibility and establishes its principal stability theorems.
+
+Throughout, let
+
+\[
+M=\Rest(\mathcal R)
+\]
+denote the admissibility manifold equipped with repair allocation
+
+\[
+\phi(d)=\Phi(d).
+\]
+The minimum repair investment required for restoration is
+
+\[
+\Phi_{\min}(d).
+\]
+
+F.1 The Evaluability Field
+
+Define the evaluability field
+
+\[
+E:M\rightarrow\mathbb R
+\]
+by
+
+\[
+E(d)
+\frac{\Phi(d)}
+{\Phi_{\min}(d)}.
+\]
+
+Unlike the binary admissibility relation introduced previously,
+
+\[
+E
+\]
+is continuous whenever
+
+\[
+\Phi
+\]
+and
+
+\[
+\Phi_{\min}
+\]
+are continuous.
+
+The admissibility manifold is therefore represented as the superlevel set
+
+\[
+M
+{
+d:
+E(d)\ge1
+}.
+\]
+
+
+F.2 Stability Margin
+
+The operational distance from failure is
+
+\[
+S(d)
+E(d)-1.
+\]
+
+Thus
+
+\[
+S>0
+\]
+indicates surplus repair capacity,
+
+\[
+S=0
+\]
+defines the admissibility boundary,
+
+and
+
+\[
+S<0
+\]
+indicates operational failure.
+
+The quantity
+
+\[
+S
+\]
+plays the role of a stability margin analogous to those used in control theory.
+
+
+F.3 Local Sensitivity
+
+Differentiate
+
+\[
+E.
+\]
+One obtains
+
+\[
+\nabla E
+\frac{
+\nabla\Phi
+}
+{
+\Phi_{\min}
+}
+
+\frac{
+\Phi
+\nabla\Phi_{\min}
+}
+{
+\Phi_{\min}^2
+}.
+\]
+
+Large gradients indicate distinctions whose evaluability changes rapidly under small redistributions of repair investment.
+
+Flat regions correspond to robust conceptual neighborhoods.
+
+
+F.4 Hessian
+
+The Hessian is
+
+\[
+H_E
+\nabla^2E.
+\]
+
+Positive eigenvalues indicate locally stable repair basins.
+
+Negative eigenvalues indicate unstable directions approaching the admissibility boundary.
+
+Degenerate eigenvalues correspond to neutral repair directions.
+
+
+F.5 Boundary Regularity
+
+Suppose
+
+\[
+\Phi
+\]
+and
+
+\[
+\Phi_{\min}
+\]
+are
+
+\[
+C^2.
+\]
+Then
+
+the implicit function theorem implies
+
+\[
+\partial M
+{
+E=1
+}
+\]
+
+is a smooth hypersurface whenever
+
+\[
+\nabla E
+\neq0.
+\]
+Hence
+
+the admissibility boundary is generically smooth.
+
+Singularities occur only where repair gradients vanish.
+
+
+F.6 Monotonicity
+
+Theorem.
+
+Suppose
+
+\[
+\delta\Phi(d)\ge0
+\]
+while
+
+\[
+\Phi_{\min}
+\]
+remains fixed.
+
+Then
+
+\[
+\delta E(d)\ge0.
+\]
+Thus
+
+increasing repair investment cannot reduce local evaluability.
+
+Proof.
+
+Differentiate
+
+\[
+E
+\frac{\Phi}{\Phi_{\min}}.
+\]
+
+Since
+
+\[
+\Phi_{\min}>0,
+\]
+one obtains
+
+\[
+\delta E
+\frac{\delta\Phi}
+{\Phi_{\min}}
+\ge0.
+\]
+
+\square
+
+
+F.7 Global Constraint
+
+Although
+
+\[
+E(d)
+\]
+may increase locally,
+
+budget conservation implies
+
+\[
+\int_M
+\delta\Phi
+,d\mu
+0. 
+
+\]
+
+Hence
+
+\[
+\int_M
+\Phi_{\min}
+\delta E
+,d\mu
+0. 
+
+\]
+
+Therefore
+
+positive changes in evaluability necessarily require negative changes elsewhere.
+
+Graded admissibility satisfies the Redistribution Theorem.
+
+
+F.8 Bifurcation
+
+Suppose
+
+\[
+E(d,\alpha)
+\]
+depends continuously upon parameter
+
+\[
+\alpha.
+\]
+Whenever
+
+\[
+E(d,\alpha_c)=1,
+\]
+the distinction crosses the admissibility boundary.
+
+If additionally
+
+\[
+\frac{\partial E}{\partial\alpha}
+\neq0,
+\]
+the transition is transversal.
+
+Such bifurcations correspond to
+
+learning,
+
+forgetting,
+
+institutional reform,
+
+or scientific paradigm change.
+
+
+F.9 Relation to Three-Valued Semantics
+
+The logical values introduced previously become
+
+\[
+\mathcal T(d)
+\begin{cases}
+1,&E>1,;\text{true};\[0.3em]
+0,&E>1,;\text{false};\[0.3em]
+\perp,&E<1.
+\end{cases}
+\]
+Notice that
+
+truth and falsity remain possible only inside the admissibility manifold.
+
+The value
+
+\[
+\perp
+\]
+is not primitive.
+
+It is generated geometrically by insufficient repair investment.
+
+Thus
+
+the logical semantics of Admissibility Before Truth become consequences of repair geometry.
+
+
+F.10 Repair Potential
+
+Define
+
+\[
+P(d)
+\Phi(d)-\Phi_{\min}(d).
+\]
+
+Positive potential represents surplus repair capacity.
+
+Negative potential represents repair debt.
+
+The repair potential satisfies
+
+\[
+E
+1
++
+\frac{P}
+{\Phi_{\min}}.
+\]
+
+Repair potential therefore linearizes admissibility near the boundary.
+
+
+F.11 Robustness Radius
+
+Suppose perturbations satisfy
+
+\[
+|\delta\Phi|
+<
+r.
+\]
+Define the robustness radius
+
+\[
+r(d)
+\inf
+{
+|\delta\Phi|:
+E+\delta E=1
+}.
+\]
+
+Large
+
+\[
+r(d)
+\]
+indicates highly stable distinctions.
+
+Small
+
+\[
+r(d)
+\]
+indicates concepts close to operational collapse.
+
+This provides a quantitative measure of conceptual robustness.
+
+
+F.12 Mean Evaluability
+
+The average evaluability is
+
+\[
+\bar E
+\frac1{\mu(M)}
+\int_M
+E(d)
+,d\mu(d).
+\]
+
+Budget conservation implies
+
+\[
+\bar E
+\]
+cannot increase without either
+
+expanding the repair budget
+
+or
+
+reducing
+
+\[
+\Phi_{\min}.
+\]
+Observers therefore cannot globally improve evaluability through redistribution alone.
+
+
+F.13 Stability Theorem
+
+Theorem.
+
+Suppose
+
+\[
+\Phi_{\min}
+\]
+is bounded away from zero,
+
+and
+
+repair dynamics preserve
+
+\[
+\Phi_{\mathrm{tot}}.
+\]
+Then
+
+the admissibility boundary moves continuously under every continuous repair flow.
+
+Proof.
+
+The repair allocation remains continuous by the constrained evolution equations.
+
+Since
+
+\[
+E
+\Phi/\Phi_{\min},
+\]
+
+the implicit function theorem guarantees continuous deformation of
+
+\[
+E=1.
+\]
+Hence
+
+the admissibility manifold evolves continuously.
+
+\square
+
+
+F.14 Interpretation
+
+Graded admissibility completes the mathematical program initiated in Admissibility Before Truth.
+
+Admissibility is no longer a binary logical predicate but a continuous geometric field generated by finite repair allocation.
+
+Truth remains restricted to the admissible manifold,
+
+yet the manifold itself acquires internal structure,
+
+stability margins,
+
+robustness radii,
+
+repair potentials,
+
+and continuous deformation under learning.
+
+The next appendix extends this geometric viewpoint from distinction space to history space, developing a Riemannian geometry of reconstruction trajectories and maintenance evolution.
+
+\section{Metrics and Geodesics on History Space}
+
+The Geometry of Reconstruction introduced histories as operational structures capable of regenerating repair operators. In the main body of that paper, histories were treated primarily as discrete objects: a history either reconstructed a repair operator or it did not. The present paper replaces that binary viewpoint with a continuous geometry induced by repair-budget allocation. Histories are now points on a smooth manifold whose distances measure the repair expenditure required to transform one maintenance strategy into another.
+
+Throughout this appendix let
+
+\[
+\Hist
+\]
+denote the history manifold.
+
+Each point
+
+\[
+h\in\Hist
+\]
+represents an operational reconstruction pathway.
+
+The reconstruction map is
+
+\[
+W:\Hist
+\rightarrow
+\mathcal R.
+\]
+Repair allocation induces a metric upon
+
+\[
+\Hist
+\]
+through the pullback of the repair metric developed in Appendix D.
+
+
+G.1 Pullback Metric
+
+Let
+
+\[
+g_R
+\]
+denote the metric on repair space.
+
+The induced metric on history space is
+
+\[
+g_H
+W^*g_R.
+\]
+
+In coordinates,
+
+\[
+(g_H)_{ij}
+\frac{\partial W^\alpha}
+{\partial h^i}
+\frac{\partial W^\beta}
+{\partial h^j}
+(g_R)_{\alpha\beta}.
+\]
+
+Thus
+
+two histories are close precisely when they reconstruct nearby repair operators with similar maintenance expenditure.
+
+
+G.2 History Length
+
+For a reconstruction trajectory
+
+\[
+h(t),
+\]
+define
+
+\[
+L(h)
+\int
+\sqrt{
+(g_H)_{ij}
+\dot h^i
+\dot h^j
+}
+,dt.
+\]
+
+Operationally,
+
+this is the cumulative repair investment required to transform one historical maintenance strategy into another.
+
+Short trajectories correspond to incremental revisions.
+
+Long trajectories correspond to conceptual revolutions.
+
+
+G.3 Geodesic Histories
+
+Critical points satisfy
+
+\[
+\frac{d^2h^k}{dt^2}
++
+\Gamma^k_{ij}
+\dot h^i
+\dot h^j
+0,
+\]
+
+where
+
+\[
+\Gamma
+\]
+is computed from
+
+\[
+g_H.
+\]
+Geodesic histories therefore represent minimum-maintenance transitions between reconstruction strategies.
+
+Educational evolution,
+
+scientific refinement,
+
+and technological improvement frequently approximate such geodesics.
+
+
+G.4 Existence
+
+Suppose
+
+\[
+(\Hist,g_H)
+\]
+is complete.
+
+Then the Hopf–Rinow theorem implies
+
+every pair of histories is joined by at least one minimizing geodesic.
+
+Consequently,
+
+minimum-repair historical transformations always exist whenever reconstruction space is geodesically complete.
+
+
+G.5 Geodesic Uniqueness
+
+If
+
+\[
+K\le0
+\]
+throughout
+
+\[
+\Hist,
+\]
+where
+
+\[
+K
+\]
+is sectional curvature,
+
+then minimizing geodesics are unique.
+
+Positive curvature permits multiple optimal reconstruction pathways.
+
+This corresponds operationally to distinct educational traditions,
+
+alternative scientific methodologies,
+
+or independent institutional histories reaching the same repair repertoire.
+
+
+G.6 Jacobi Fields
+
+Nearby reconstruction trajectories satisfy
+
+\[
+\frac{D^2J}{dt^2}
++
+R(J,\dot h)\dot h
+0. 
+
+\]
+
+The growth of
+
+\[
+J
+\]
+measures sensitivity to historical perturbation.
+
+Rapidly growing Jacobi fields indicate unstable reconstruction pathways.
+
+Contracting fields correspond to robust historical convergence.
+
+
+G.7 History Curvature
+
+The Riemann tensor
+
+\[
+R_H
+\]
+measures noncommutativity of reconstruction.
+
+Positive curvature implies
+
+small historical differences become operationally important.
+
+Negative curvature implies
+
+independent histories rapidly diverge into distinct repair repertoires.
+
+Flat history space indicates reconstruction largely independent of historical ordering.
+
+
+G.8 Reconstruction Energy
+
+Define
+
+\[
+E_H
+\frac12
+(g_H)_{ij}
+\dot h^i
+\dot h^j.
+\]
+
+This quantity measures instantaneous repair expenditure along historical evolution.
+
+The geodesic equation conserves
+
+\[
+E_H
+\]
+whenever repair dynamics remain autonomous.
+
+
+G.9 History Action
+
+Define the reconstruction action
+
+\[
+\mathcal S_H
+\int
+E_H
+,dt.
+\]
+
+Stationary histories satisfy
+
+\[
+\delta
+\mathcal S_H
+0. 
+
+\]
+
+Hence
+
+historical evolution minimizes cumulative repair expenditure under fixed endpoints.
+
+This extends the least-action principle from repair space to reconstruction space.
+
+
+G.10 Effective Reconstruction Distance
+
+Earlier work measured redundancy by counting histories.
+
+The repair metric instead defines
+
+\[
+d_H(h_1,h_2)
+\inf_\gamma
+L(\gamma).
+\]
+
+Redundancy now depends upon geometric separation.
+
+Many nearly identical histories contribute little additional robustness.
+
+Few widely separated histories contribute substantial resilience.
+
+
+G.11 Reconstruction Volume
+
+Let
+
+\[
+W^{-1}(r)
+\]
+be the collection of histories reconstructing repair operator
+
+\[
+r.
+\]
+Its repair volume is
+
+\[
+V(r)
+\int_{W^{-1}(r)}
+\sqrt{\det g_H}
+,dh.
+\]
+
+This replaces simple cardinality by geometric measure.
+
+The effective redundancy introduced in the main text becomes
+
+\[
+\operatorname{Red}_{\mathrm{eff}}
+V(r).
+\]
+
+
+G.12 Geodesic Convexity
+
+Suppose
+
+\[
+S
+\subset
+\Hist
+\]
+contains every minimizing geodesic joining its points.
+
+Then
+
+\[
+S
+\]
+is geodesically convex.
+
+Repair operators reconstructed by histories inside such regions remain stable under continuous historical variation.
+
+Loss of geodesic convexity signals fragmentation of maintenance structure.
+
+
+G.13 Historical Parallel Transport
+
+Repair operators may be transported along reconstruction trajectories.
+
+Parallel transport satisfies
+
+\[
+\nabla_{\dot h}R
+0. 
+
+\]
+
+Operationally,
+
+this describes preserving repair strategy while historical implementation changes.
+
+Deviation from parallel transport measures methodological drift.
+
+
+G.14 Reconstruction Stability
+
+Theorem.
+
+Suppose
+
+\[
+W
+\]
+is smooth,
+
+and
+
+\[
+g_R
+\]
+is positive definite.
+
+Then
+
+the pullback metric
+
+\[
+g_H
+\]
+is positive semidefinite.
+
+It becomes positive definite precisely when
+
+\[
+W
+\]
+is locally injective.
+
+Proof.
+
+By construction,
+
+\[
+g_H
+W^*g_R.
+\]
+
+Pullbacks preserve positive semidefiniteness.
+
+Degeneracy occurs exactly when
+
+\[
+\ker DW
+\neq0.
+\]
+Thus histories become indistinguishable whenever infinitesimal historical variations reconstruct identical repair operators.
+
+\square
+
+
+G.15 Interpretation
+
+History is therefore not merely an ordered collection of events.
+
+It possesses a measurable geometry generated by repair expenditure.
+
+Distances quantify operational change,
+
+geodesics determine minimum-maintenance evolution,
+
+curvature measures historical sensitivity,
+
+and reconstruction volume determines resilience.
+
+The geometry developed here resolves the principal open questions of The Geometry of Reconstruction by replacing combinatorial descriptions of history with a continuous Riemannian framework.
+
+The following appendix extends these ideas further by developing a quantitative theory of effective reconstruction redundancy and proving robustness theorems relating maintenance volume to resistance against perturbation.
+
+\section{Effective Reconstruction Redundancy}
+
+One of the principal motivations of The Geometry of Reconstruction was the observation that persistence depends not only upon the existence of repair operators but also upon the existence of multiple histories capable of regenerating them. There, redundancy was measured by simply counting reconstruction pathways. Such a definition captures the intuition that multiple histories improve resilience, but it fails to distinguish between genuinely independent maintenance pathways and histories that differ only superficially. The present appendix replaces this combinatorial notion with a geometric theory of effective redundancy derived from repair-budget geometry.
+
+Let
+
+\[
+W:\Hist\rightarrow\mathcal R
+\]
+be the reconstruction map introduced previously.
+
+For a repair operator
+
+\[
+r\in\mathcal R,
+\]
+define its reconstruction fiber
+
+\[
+\mathcal H_r
+W^{-1}(r).
+\]
+
+The redundancy of
+
+\[
+r
+\]
+depends upon the geometry of this fiber rather than merely its cardinality.
+
+
+H.1 Reconstruction Volume
+
+Let
+
+\[
+g_H
+\]
+be the history-space metric developed in Appendix G.
+
+The effective reconstruction volume is
+
+\[
+V(r)
+\int_{\mathcal H_r}
+\sqrt{\det g_H}
+,dh.
+\]
+
+Unlike simple counting,
+
+this quantity incorporates the operational separation between reconstruction pathways.
+
+Histories contribute redundancy only insofar as they occupy distinct regions of history space.
+
+
+H.2 Redundancy Density
+
+Define the redundancy density
+
+\[
+\rho_R(h)
+\sqrt{\det g_H}.
+\]
+
+Regions where
+
+\[
+\rho_R
+\]
+is large contain many operationally distinct reconstruction pathways.
+
+Regions of low density indicate highly constrained maintenance.
+
+The total redundancy satisfies
+
+\[
+V(r)
+\int_{\mathcal H_r}
+\rho_R
+,dh.
+\]
+
+
+H.3 Independence
+
+Two histories
+
+\[
+h_i,
+h_j
+\]
+are repair-independent whenever
+
+\[
+I(h_i,h_j)
+0. 
+
+\]
+
+More generally,
+
+define the normalized dependence coefficient
+
+\[
+\kappa(h_i,h_j)
+\frac{
+I(h_i,h_j)
+}
+{
+\sqrt{
+I(h_i,h_i)
+I(h_j,h_j)
+}
+}.
+\]
+
+Then
+
+\[
+|\kappa|
+\le1.
+\]
+Histories become effectively independent as
+
+\[
+\kappa
+\rightarrow0.
+\]
+Redundancy therefore depends upon independence rather than multiplicity.
+
+
+H.4 Effective Dimension
+
+Let
+
+\[
+\lambda_1,\ldots,\lambda_n
+\]
+be the eigenvalues of the covariance operator on
+
+\[
+\mathcal H_r.
+\]
+Define
+
+\[
+D_{\mathrm{eff}}
+\frac{
+(\sum_i\lambda_i)^2
+}
+{
+\sum_i\lambda_i^2
+}.
+\]
+
+This quantity measures the effective dimensionality of reconstruction space.
+
+Large
+
+\[
+D_{\mathrm{eff}}
+\]
+indicates numerous independent maintenance directions.
+
+Small values indicate highly concentrated repair organization.
+
+
+H.5 Reconstruction Entropy
+
+Normalize
+
+\[
+p_i
+\frac{\lambda_i}
+{\sum_j\lambda_j}.
+\]
+
+Define
+
+\[
+S_R
+- 
+
+\sum_i
+p_i
+\log p_i.
+\]
+
+Reconstruction entropy measures the distribution of redundancy across history space.
+
+High entropy corresponds to broadly distributed maintenance.
+
+Low entropy indicates dependence upon a few dominant reconstruction pathways.
+
+
+H.6 Perturbation Robustness
+
+Suppose perturbations remove subset
+
+\[
+U
+\subset
+\mathcal H_r.
+\]
+The surviving redundancy is
+
+\[
+V_{\mathrm{surv}}
+V(r)
+
+V(U).
+\]
+
+Define robustness by
+
+\[
+R
+\frac{
+V_{\mathrm{surv}}
+}
+{
+V(r)
+}.
+\]
+
+Thus
+
+\[
+R=1
+\]
+indicates no effective loss,
+
+while
+
+\[
+R=0
+\]
+corresponds to complete reconstructive collapse.
+
+
+H.7 Minimal Reconstruction Cut
+
+Define
+
+\[
+C_{\min}
+\inf
+{
+V(U):
+W^{-1}(r)\setminus U
+\text{ disconnects}
+}.
+\]
+
+This quantity measures the minimum repair-budget volume whose removal destroys reconstruction continuity.
+
+It plays the role of a geometric cut-set analogous to network reliability theory.
+
+
+H.8 Redundancy Flow
+
+Suppose reconstruction evolves with time.
+
+The redundancy volume satisfies
+
+\[
+\frac{dV}{dt}
+\int_{\mathcal H_r}
+\nabla\cdot J_R
+,dh,
+\]
+
+where
+
+\[
+J_R
+\]
+is the redundancy current.
+
+Positive divergence creates new independent reconstruction pathways.
+
+Negative divergence represents historical consolidation.
+
+
+H.9 Conservation Law
+
+If reconstruction is conservative,
+
+\[
+\nabla\cdot J_R
+0,
+\]
+
+then
+
+\[
+\frac{dV}{dt}
+0. 
+
+\]
+
+Thus
+
+effective redundancy is preserved under purely redistributive maintenance dynamics.
+
+Only irreversible degradation changes total reconstruction volume.
+
+
+H.10 Reconstruction Curvature
+
+The Ricci scalar
+
+\[
+R_H
+\]
+introduced previously determines redundancy concentration.
+
+Positive curvature compresses reconstruction pathways,
+
+reducing effective redundancy.
+
+Negative curvature spreads histories apart,
+
+increasing resilience.
+
+Consequently,
+
+curvature and redundancy are dual descriptions of maintenance organization.
+
+
+H.11 Concentration Inequality
+
+Suppose
+
+\[
+D_{\mathrm{eff}}
+<
+k.
+\]
+Then
+
+\[
+V(r)
+\le
+Ck^{n/2},
+\]
+for constant
+
+\[
+C
+\]
+depending only upon local geometry.
+
+Hence
+
+low effective dimension bounds maximum redundancy.
+
+Highly constrained maintenance systems cannot possess arbitrarily large resilience.
+
+
+H.12 Stability Theorem
+
+Theorem.
+
+Suppose
+
+\[
+V(r)>0,
+\]
+and
+
+the reconstruction metric remains positive definite.
+
+Then
+
+every sufficiently small perturbation of history preserves at least one reconstruction pathway.
+
+Proof.
+
+Positive reconstruction volume implies
+
+the fiber contains an open neighborhood.
+
+Continuity of
+
+\[
+W
+\]
+guarantees that sufficiently small perturbations remain inside that neighborhood.
+
+Hence
+
+reconstruction remains possible.
+
+\square
+
+
+H.13 Catastrophic Collapse
+
+If
+
+\[
+V(r)
+\rightarrow0,
+\]
+the reconstruction fiber contracts to a singular point.
+
+At this limit,
+
+every perturbation destroys reconstruction.
+
+Catastrophic forgetting,
+
+institutional collapse,
+
+loss of endangered languages,
+
+and extinction of technical traditions
+
+are all represented by the geometric collapse of reconstruction volume.
+
+
+H.14 Interpretation
+
+Effective redundancy is therefore a geometric property rather than a combinatorial one.
+
+Resilience depends not upon the number of historical pathways but upon the volume of independent reconstruction space available to regenerate repair operators.
+
+This resolves the central redundancy problem posed in The Geometry of Reconstruction. Counting histories is replaced by measuring reconstruction geometry.
+
+The next appendix introduces time explicitly, developing coupled differential equations governing the evolution of repair budgets, admissibility manifolds, reconstruction geometry, and maintenance hierarchies under continuous learning, adaptation, and environmental change.
+
+\section{Dynamic Repair Flows and Coupled Evolution Equations}
+
+The preceding appendices developed the static geometry of repair budgets, admissibility manifolds, history space, and reconstruction redundancy. Real repair systems, however, are inherently dynamic. Observers continually acquire new distinctions, abandon obsolete ones, reorganize maintenance priorities, and adapt to changing environments. The purpose of this appendix is to formulate the differential equations governing these coupled evolutionary processes.
+
+The central idea is that repair allocation, admissibility, reconstruction, and environmental interaction are not independent dynamical systems. They evolve simultaneously under a common conservation law constrained by finite repair capacity.
+
+Throughout this appendix let
+
+\[
+M_t=\Rest(\mathcal R_t)
+\]
+denote the time-dependent admissibility manifold,
+
+\[
+\phi(d,t)
+\]
+the repair allocation field,
+
+and
+
+\[
+W_t:\Hist_t\rightarrow\mathcal R_t
+\]
+the evolving reconstruction operator.
+
+
+I.1 Dynamic Repair Allocation
+
+Repair investment evolves according to
+
+\[
+\frac{\partial\phi}{\partial t}
+F(\phi)
++
+L(\phi)
++
+R(\phi)
+
+D(\phi),
+\]
+
+where
+
+\[
+F
+\]
+represents environmental forcing,
+
+\[
+L
+\]
+learning,
+
+\[
+R
+\]
+reconstruction,
+
+and
+
+\[
+D
+\]
+irreversible degradation.
+
+When
+
+\[
+D=0,
+\]
+repair evolution remains conservative.
+
+
+I.2 Budget Conservation
+
+Integrating over the admissibility manifold gives
+
+\[
+\frac{d\Phi}{dt}
+\int_M
+\frac{\partial\phi}{\partial t}
+,d\mu.
+\]
+
+Conservative repair dynamics satisfy
+
+\[
+\boxed{
+\frac{d\Phi}{dt}=0.
+}
+\]
+Only degradation changes total repair capacity.
+
+
+I.3 Dynamic Admissibility
+
+The admissibility manifold evolves according to
+
+\[
+M_t
+{
+d:
+\phi(d,t)
+\ge
+\Phi_{\min}(d,t)
+}.
+\]
+
+Differentiating the boundary equation gives
+
+\[
+\frac{\partial\phi}{\partial t}
+\frac{\partial\Phi_{\min}}{\partial t}
+\]
+
+along
+
+\[
+\partial M_t.
+\]
+Boundary motion is therefore determined by the competition between changing repair investment and changing restoration requirements.
+
+
+I.4 Coupled Reconstruction Dynamics
+
+The reconstruction operator evolves according to
+
+\[
+\frac{\partial W}{\partial t}
+\mathcal G(W,\phi,H),
+\]
+
+where
+
+\[
+H
+\]
+denotes accumulated history.
+
+Thus
+
+new histories alter repair operators,
+
+while repair operators simultaneously influence future histories.
+
+
+I.5 History Evolution
+
+Histories accumulate according to
+
+\[
+\frac{\partial H}{\partial t}
+\Psi(H,W,\phi).
+\]
+
+This equation closes the reconstruction loop.
+
+Repair generates histories,
+
+histories regenerate repair,
+
+repair reorganizes admissibility,
+
+and admissibility determines future repair allocation.
+
+
+I.6 Environmental Coupling
+
+Suppose
+
+\[
+E(t)
+\]
+represents environmental forcing.
+
+Repair responds through
+
+\[
+\frac{\partial\phi}{\partial t}
+- 
+
+\nabla_\phi
+\mathcal F
++
+B(E).
+\]
+
+The operator
+
+\[
+B
+\]
+maps environmental change into repair-budget redistribution.
+
+Stable environments produce nearly stationary repair flows.
+
+Rapid environmental change drives continual maintenance reorganization.
+
+
+I.7 Learning Equation
+
+Gradient learning satisfies
+
+\[
+\frac{\partial\phi}{\partial t}
+- 
+
+\nabla_\phi
+\mathcal F.
+\]
+
+Because
+
+\[
+\Phi
+\]
+is constrained,
+
+projection onto the tangent space gives
+
+\[
+\frac{\partial\phi}{\partial t}
+- 
+
+P_T
+\nabla_\phi
+\mathcal F.
+\]
+
+Thus
+
+learning follows constrained gradient descent on the constant-budget manifold.
+
+
+I.8 Reconstruction Feedback
+
+The repair threshold
+
+\[
+\Phi_{\min}
+\]
+depends upon reconstruction quality.
+
+Model
+
+\[
+\Phi_{\min}
+Q(W).
+\]
+
+Hence
+
+\[
+\frac{\partial\Phi_{\min}}{\partial t}
+DQ(W)
+\frac{\partial W}{\partial t}.
+\]
+
+Improved reconstruction lowers maintenance requirements.
+
+Poor reconstruction increases them.
+
+
+I.9 Lyapunov Function
+
+Define
+
+\[
+V
+\mathcal F.
+\]
+
+Along repair dynamics,
+
+\[
+\frac{dV}{dt}
+- 
+
+|
+P_T
+\nabla
+\mathcal F
+|^2
+\le0.
+\]
+
+Therefore
+
+repair dynamics monotonically decrease the repair functional.
+
+Equilibria correspond precisely to stationary points of
+
+\[
+\mathcal F.
+\]
+
+I.10 Attractors
+
+Stationary repair allocations satisfy
+
+\[
+\nabla
+\mathcal F
+0. 
+
+\]
+
+Stable equilibria become repair attractors.
+
+Different attractors correspond to
+
+distinct scientific paradigms,
+
+alternative institutional organizations,
+
+or competing learned representations.
+
+Repair evolution therefore possesses multiple stable organizational regimes.
+
+
+I.11 Bifurcation
+
+Suppose parameter
+
+\[
+\alpha
+\]
+controls environmental complexity.
+
+Equilibria satisfy
+
+\[
+F(\phi,\alpha)=0.
+\]
+Whenever
+
+\[
+\det
+DF
+0,
+\]
+repair organization undergoes bifurcation.
+
+New maintenance strategies emerge,
+
+existing ones disappear,
+
+or reconstruction pathways reorganize abruptly.
+
+
+I.12 Hysteresis
+
+Suppose
+
+repair organization follows branch
+
+\[
+A.
+\]
+Changing
+
+\[
+\alpha
+\]
+may shift the system to branch
+
+\[
+B.
+\]
+Returning
+
+\[
+\alpha
+\]
+to its previous value need not recover
+
+\[
+A.
+\]
+Thus
+
+repair geometry naturally predicts hysteresis.
+
+Educational traditions,
+
+scientific paradigms,
+
+and institutional cultures therefore exhibit path dependence.
+
+
+I.13 Coupled Evolution System
+
+Collecting the preceding equations gives
+
+\[
+\begin{aligned}
+\dot\phi
+&=
+F+L+R-D,\
+\dot W
+&=
+\mathcal G(W,\phi,H),\
+\dot H
+&=
+\Psi(H,W,\phi),\
+\dot M
+&=
+\mathcal B(\phi,\Phi_{\min}),\
+\dot\Phi
+&=
+-\Sigma_\Phi.
+\end{aligned}
+\]
+This coupled system governs the simultaneous evolution of repair,
+
+reconstruction,
+
+history,
+
+admissibility,
+
+and repair budgets.
+
+
+I.14 Time-Scale Separation
+
+Many systems evolve on multiple temporal scales.
+
+Write
+
+\[
+t_f
+\ll
+t_r
+\ll
+t_h,
+\]
+where
+
+\[
+t_f
+\]
+corresponds to fast repair,
+
+\[
+t_r
+\]
+to reconstruction,
+
+and
+
+\[
+t_h
+\]
+to historical evolution.
+
+Singular perturbation theory implies
+
+fast repair reaches quasi-equilibrium before significant historical change occurs.
+
+Thus
+
+maintenance hierarchies naturally exhibit nested temporal organization.
+
+
+I.15 Global Stability Theorem
+
+Theorem.
+
+Suppose
+
+\[
+\mathcal F
+\]
+is bounded below,
+
+and
+
+its Hessian is positive definite on the tangent bundle of the constant-budget manifold.
+
+Then
+
+every repair trajectory converges to a stationary equilibrium.
+
+Proof.
+
+Since
+
+\[
+V=\mathcal F
+\]
+is Lyapunov,
+
+\[
+\frac{dV}{dt}\le0.
+\]
+The positive-definite Hessian excludes nontrivial limit cycles.
+
+LaSalle's invariance principle therefore implies convergence to the stationary set.
+
+\square
+
+
+I.16 Interpretation
+
+Repair geometry is therefore not merely a static optimization problem.
+
+It defines a coupled dynamical system governing the co-evolution of repair allocation,
+
+admissibility,
+
+reconstruction,
+
+history,
+
+and environmental interaction.
+
+Learning,
+
+scientific development,
+
+institutional evolution,
+
+biological adaptation,
+
+and continual machine learning all become trajectories generated by this single repair flow.
+
+The following appendix places these dynamics within a broader variational framework by developing a repair-theoretic analogue of Noether's theorem and identifying the continuous symmetries underlying repair-budget conservation.
+
+\section{A Noether Theorem for Repair Geometry}
+
+One of the final open problems posed in the main text was whether repair-budget conservation is merely a consequence of finite accounting or whether it arises from a deeper symmetry principle analogous to those appearing throughout modern mathematical physics. The purpose of this appendix is to formulate such a principle precisely. Although the mathematical setting differs substantially from classical mechanics, the underlying idea is identical: conserved repair quantities arise from continuous symmetries of the repair action.
+
+The result developed here is necessarily more abstract than the corresponding physical theorem because repair geometry is defined on admissibility manifolds rather than spacetime. Nevertheless, the same variational structure appears naturally once repair allocation is regarded as a field evolving through distinction space.
+
+Throughout this appendix let
+
+\[
+M=\Rest(\mathcal R)
+\]
+denote the admissibility manifold and let
+
+\[
+\phi(d,t)
+\]
+be the repair allocation field.
+
+
+J.1 Repair Action
+
+Define the repair Lagrangian density
+
+\[
+\mathcal L
+\mathcal L
+(
+\phi,
+\nabla\phi,
+I,
+A
+).
+\]
+The repair action is
+
+\[
+\mathcal S
+\int
+\mathcal L
+(\phi,\nabla\phi)
+,d\mu,dt.
+\]
+Stationary repair trajectories satisfy
+
+\[
+\delta\mathcal S
+0. 
+\]
+The Euler–Lagrange equations become
+
+\[
+\frac{\partial\mathcal L}
+{\partial\phi}
+\nabla_i
+\left(
+\frac{\partial\mathcal L}
+{\partial(\nabla_i\phi)}
+\right)
+0. 
+\]
+These equations generate optimal repair flows.
+
+
+J.2 Continuous Repair Symmetries
+
+Suppose
+
+\[
+\Gamma_\varepsilon
+\]
+is a one-parameter family of repair transformations satisfying
+
+\[
+\Gamma_0
+\mathrm{id}.
+\]
+The infinitesimal generator is
+
+\[
+X
+\left.
+\frac{d\Gamma_\varepsilon}
+{d\varepsilon}
+\right|_{\varepsilon=0}.
+\]
+The repair action possesses symmetry whenever
+
+\[
+\delta_X
+\mathcal S
+0. 
+\]
+
+J.3 Budget Translation Symmetry
+
+The principal symmetry of repair geometry is redistribution.
+
+Suppose
+
+\[
+\phi
+\rightarrow
+\phi+\varepsilon\eta,
+\]
+where
+
+\[
+\int_M
+\eta
+,d\mu
+0. 
+\]
+Such perturbations preserve
+
+\[
+\Phi_{\mathrm{tot}}.
+\]
+Hence
+
+they generate the tangent bundle of the constant-budget manifold.
+
+Budget-preserving redistributions therefore form the fundamental continuous symmetry of repair geometry.
+
+
+J.4 Conserved Repair Current
+
+Applying Noether's construction gives the repair current
+
+\[
+J^i
+\frac{\partial\mathcal L}
+{\partial(\nabla_i\phi)}
+\eta.
+\]
+The Euler–Lagrange equations imply
+
+\[
+\nabla_iJ^i
+0. 
+\]
+Thus
+
+repair redistribution satisfies a local conservation law.
+
+Globally,
+
+\[
+\int_{\partial M}
+J\cdot n
+,dS
+0. 
+\]
+Repair flows therefore neither create nor destroy maintenance capacity inside conservative systems.
+
+
+J.5 Conservation of Repair Budget
+
+Integrating the repair current over the admissibility manifold yields
+
+\[
+Q
+\int_M
+J^0
+,d\mu.
+\]
+Because
+
+\[
+\nabla_iJ^i=0,
+\]
+one obtains
+
+\[
+\boxed{
+\frac{dQ}{dt}=0.
+}
+\]
+Identifying
+
+\[
+Q
+\Phi_{\mathrm{tot}},
+\]
+
+recovers the Redistribution Theorem as a Noether invariant.
+
+Repair-budget conservation therefore follows from redistribution symmetry.
+
+
+J.6 Gauge Freedom
+
+Uniform repair rescaling,
+
+\[
+\phi
+\rightarrow
+\phi+c,
+\]
+does not alter relative repair allocation provided
+
+the total budget constraint is simultaneously adjusted.
+
+The physically meaningful quantities are therefore
+
+repair gradients,
+
+not absolute repair levels.
+
+This gauge-like freedom parallels the role of scalar potentials in field theory.
+
+
+J.7 Broken Symmetry
+
+Suppose degradation introduces
+
+\[
+D(\phi).
+\]
+Then
+
+\[
+\nabla_iJ^i
+-D.
+\]
+
+Current conservation fails.
+
+Consequently,
+
+\[
+\frac{d\Phi_{\mathrm{tot}}}{dt}
+- 
+
+\Sigma_\Phi.
+\]
+
+Irreversible repair loss therefore corresponds precisely to symmetry breaking.
+
+Aging,
+
+institutional decay,
+
+extinction,
+
+and catastrophic forgetting
+
+are manifestations of broken repair symmetry.
+
+
+J.8 Multiple Conserved Quantities
+
+Different repair symmetries generate distinct conserved quantities.
+
+Uniform redistribution conserves total repair budget.
+
+Rotational symmetry within repair eigenspaces conserves spectral repair energy.
+
+History-space translation conserves reconstruction volume.
+
+Scale symmetry conserves normalized repair allocation.
+
+Thus
+
+repair geometry possesses an entire hierarchy of conservation laws.
+
+
+J.9 Canonical Momentum
+
+Define the repair momentum
+
+\[
+\pi
+\frac{\partial\mathcal L}
+{\partial\dot\phi}.
+\]
+
+The Hamiltonian becomes
+
+\[
+H
+\pi\dot\phi
+
+\mathcal L.
+\]
+
+Hamilton's equations are
+
+\[
+\dot\phi
+\frac{\partial H}
+{\partial\pi},
+\]
+
+\[
+\dot\pi
+- 
+
+\frac{\partial H}
+{\partial\phi}.
+\]
+
+Repair geometry therefore admits both Lagrangian and Hamiltonian formulations.
+
+
+J.10 Symplectic Structure
+
+The canonical two-form is
+
+\[
+\omega
+d\pi
+\wedge
+d\phi.
+\]
+
+Conservative repair evolution satisfies
+
+\[
+\mathcal L_X
+\omega
+0. 
+
+\]
+
+Hence
+
+repair flow preserves symplectic volume.
+
+Maintenance evolution is therefore incompressible in repair phase space.
+
+
+J.11 Momentum Map
+
+Let
+
+\[
+G
+\]
+be the symmetry group of repair redistributions.
+
+Its momentum map
+
+\[
+\mathbf J
+:
+T^M
+\rightarrow
+\mathfrak g^
+\]
+associates every repair state with its conserved repair charge.
+
+The repair budget is the simplest example of such a momentum map.
+
+Higher-order maintenance hierarchies correspond to additional conserved charges.
+
+
+J.12 Generalized Noether Theorem
+
+Theorem.
+
+Let
+
+\[
+\mathcal S
+\]
+be invariant under a continuous one-parameter family of repair transformations.
+
+Then
+
+there exists a conserved repair current satisfying
+
+\[
+\nabla_iJ^i
+0. 
+
+\]
+
+Proof.
+
+The proof follows the standard variational argument.
+
+Invariance of
+
+\[
+\mathcal S
+\]
+under infinitesimal transformation
+
+\[
+\Gamma_\varepsilon
+\]
+implies
+
+\[
+\delta_X
+\mathcal S
+0. 
+
+\]
+
+Integration by parts combined with the Euler–Lagrange equations yields
+
+\[
+\nabla_iJ^i
+0. 
+
+\]
+
+\square
+
+
+J.13 Interpretation
+
+This theorem establishes the conceptual origin of repair-budget conservation.
+
+Finite observers do not conserve repair resources by arbitrary assumption.
+
+They do so because admissible maintenance trajectories possess an underlying redistribution symmetry.
+
+The Redistribution Theorem developed in the body of the paper is therefore the repair-theoretic analogue of conservation laws throughout analytical mechanics.
+
+Just as energy conservation reflects temporal symmetry,
+
+repair-budget conservation reflects invariance under admissible reallocations of finite maintenance capacity.
+
+The final mathematical appendix applies this variational framework directly to machine learning, deriving backpropagation, continual learning, attention mechanisms, and catastrophic forgetting as consequences of constrained repair optimization rather than as isolated algorithmic constructions.
+
+\section{Machine Learning as Constrained Repair Geometry}
+
+One of the central claims of this paper is that the mathematics of finite repair budgets is not merely analogous to machine learning but provides a more primitive operational description from which many familiar learning algorithms arise naturally. Earlier papers showed that backpropagation is the differentiable realization of second-order reconstruction through a hierarchy of repair operators. The present appendix extends that interpretation by showing that optimization, continual learning, attention, catastrophic forgetting, and regularization all emerge from constrained repair-budget dynamics.
+
+Throughout this appendix let
+
+\[
+f_\theta
+:
+X
+\rightarrow
+Y
+\]
+denote a neural network parameterized by
+
+\[
+\theta\in\mathbb R^n.
+\]
+Rather than viewing
+
+\[
+\theta
+\]
+as merely a vector of numerical weights, repair theory interprets it as a finite repair allocation distributed across a hierarchy of distinctions.
+
+
+K.1 Parameter Space as Repair Space
+
+Associate every parameter
+
+\[
+\theta_i
+\]
+with repair investment
+
+\[
+\phi_i.
+\]
+The total repair budget becomes
+
+\[
+\Phi(\theta)
+\sum_{i=1}^{n}
+\phi_i.
+\]
+
+If computational resources remain fixed,
+
+\[
+\Phi(\theta)
+\Phi_{\mathrm{tot}}.
+\]
+
+Learning therefore occurs on a constant-budget manifold inside parameter space.
+
+
+K.2 Loss as Repair Functional
+
+Suppose the prediction loss is
+
+\[
+L(\theta).
+\]
+Repair theory replaces it with
+
+\[
+\mathcal F(\theta)
+L(\theta)
++
+\lambda\Phi(\theta)
++
+\mu\mathcal I(\theta),
+\]
+
+where
+
+\[
+\mathcal I
+\]
+measures repair interference among learned distinctions.
+
+Optimization therefore minimizes prediction error while simultaneously respecting finite maintenance constraints.
+
+
+K.3 Constrained Gradient Descent
+
+The optimization problem is
+
+\[
+\min_\theta
+\mathcal F(\theta)
+\]
+subject to
+
+\[
+\Phi
+\Phi_{\mathrm{tot}}.
+\]
+
+Projected gradient descent becomes
+
+\[
+\dot\theta
+- 
+
+P_T
+\nabla_\theta
+\mathcal F.
+\]
+
+The projection
+
+\[
+P_T
+\]
+removes the component normal to the constant-budget manifold.
+
+Thus
+
+ordinary learning is interpreted as conservative redistribution of repair investment.
+
+
+K.4 Capacity Constraints
+
+Suppose one task requires increased repair investment.
+
+Budget conservation implies
+
+\[
+\sum_i
+\delta\phi_i
+0. 
+
+\]
+
+Hence
+
+greater representational precision in one region necessarily reduces available repair resources elsewhere.
+
+The classical bias–variance trade-off becomes a special case of repair-budget redistribution.
+
+
+K.5 Backpropagation
+
+Let
+
+\[
+L
+L(y,\hat y).
+\]
+
+The chain rule gives
+
+\[
+\frac{\partial L}
+{\partial\theta}
+\frac{\partial L}
+{\partial x_n}
+\cdots
+\frac{\partial x_1}
+{\partial\theta}.
+\]
+
+Repair theory interprets these derivatives differently.
+
+Each Jacobian represents the sensitivity of one repair operator to reconstruction performed at the next higher level.
+
+Backpropagation therefore computes
+
+the gradient of reconstruction expenditure,
+
+not merely the derivative of prediction error.
+
+Calculus provides the coordinate representation.
+
+The operational object remains hierarchical repair.
+
+
+K.6 Continual Learning
+
+Suppose task
+
+\[
+T_2
+\]
+is learned after
+
+\[
+T_1.
+\]
+Budget conservation gives
+
+\[
+\delta\Phi_{T_1}
++
+\delta\Phi_{T_2}
+0. 
+
+\]
+
+Unless new repair capacity is introduced,
+
+learning
+
+\[
+T_2
+\]
+necessarily redistributes repair investment supporting
+
+\[
+T_1.
+\]
+Catastrophic forgetting therefore becomes inevitable unless reconstruction pathways are preserved.
+
+
+K.7 Elastic Weight Consolidation
+
+Elastic Weight Consolidation introduces penalty
+
+\[
+\Omega
+\sum_i
+F_i
+(\theta_i-\theta_i^*)^2.
+\]
+
+Repair theory interprets
+
+\[
+F_i
+\]
+as local repair curvature.
+
+Large Fisher information identifies parameters supporting highly valuable repair operators.
+
+Regularization therefore preserves repair investment rather than numerical weights.
+
+
+K.8 Replay
+
+Experience replay augments optimization by revisiting previous histories.
+
+Operationally,
+
+replay reconstructs repair pathways before they collapse.
+
+It therefore increases effective reconstruction redundancy,
+
+exactly as predicted by Appendix H.
+
+Replay is not memory rehearsal.
+
+It is active maintenance of repair geometry.
+
+
+K.9 Attention
+
+Attention weights
+
+\[
+a_i
+\]
+satisfy
+
+\[
+\sum_i
+a_i
+1. 
+
+\]
+
+This normalization is mathematically identical to repair-budget conservation.
+
+Attention therefore performs temporary redistribution of repair investment rather than increasing computational capacity.
+
+Sharp attention corresponds to concentrated repair allocation.
+
+Diffuse attention corresponds to distributed maintenance.
+
+
+K.10 Transformers
+
+Suppose token representations satisfy
+
+\[
+z_i
+\sum_j
+a_{ij}
+v_j.
+\]
+
+Repair interpretation:
+
+the attention matrix
+
+\[
+A=(a_{ij})
+\]
+is a dynamic repair-allocation operator.
+
+Rather than representing relevance,
+
+attention specifies how finite repair capacity is distributed across distinctions during inference.
+
+
+K.11 Catastrophic Forgetting
+
+Let
+
+\[
+V(r)
+\]
+be reconstruction volume.
+
+Forgetting corresponds to
+
+\[
+\frac{dV}{dt}
+<
+0.
+\]
+When
+
+\[
+V(r)
+\rightarrow0,
+\]
+the repair pathway disappears.
+
+The learned distinction becomes operationally irrecoverable.
+
+Thus
+
+catastrophic forgetting is geometric collapse of reconstruction volume.
+
+
+K.12 Generalization
+
+Suppose unseen inputs remain inside the admissibility manifold.
+
+Then
+
+repair operators continue functioning,
+
+and generalization succeeds.
+
+Out-of-distribution failure occurs when
+
+\[
+x
+\notin
+\Rest(\mathcal R).
+\]
+This recovers the Domain Restriction Theorem developed in Admissibility Before Truth.
+
+OOD failure is therefore geometric inadmissibility,
+
+not statistical anomaly.
+
+
+K.13 Representation Collapse
+
+Suppose many distinctions map to identical latent representations.
+
+Repair volume contracts,
+
+effective redundancy decreases,
+
+and interference increases.
+
+Representation collapse therefore corresponds to
+
+positive Ricci curvature in repair geometry.
+
+Regularization opposes this geometric contraction.
+
+
+K.14 Information Bottlenecks
+
+Compression seeks
+
+\[
+\min
+I(X;Z)
+\]
+while preserving
+
+\[
+I(Z;Y).
+\]
+Repair theory instead minimizes
+
+total maintenance expenditure
+
+subject to preservation of admissible distinctions.
+
+Information bottlenecks therefore become special cases of repair-budget optimization.
+
+
+K.15 Learning Phase Transitions
+
+Suppose
+
+repair interference possesses eigenvalue
+
+\[
+\lambda_k(\alpha).
+\]
+When
+
+\[
+\lambda_k
+0,
+\]
+
+the optimization landscape changes topology.
+
+Sudden improvements in learning,
+
+feature emergence,
+
+grokking,
+
+and representational reorganization
+
+may all be interpreted as spectral bifurcations of repair geometry.
+
+
+K.16 Universality Theorem
+
+Theorem.
+
+Suppose a learning algorithm performs constrained optimization over finite representational resources.
+
+Then
+
+there exists a repair-budget functional
+
+\[
+\mathcal F
+\]
+whose stationary points coincide with the algorithm's equilibrium solutions.
+
+Proof.
+
+Finite representational resources define a compact feasible region.
+
+By the Karush–Kuhn–Tucker theorem,
+
+every constrained optimum admits a Lagrangian representation.
+
+Identifying the resource constraint with finite repair allocation yields
+
+\[
+\mathcal F
+L
++
+\lambda\Phi
++
+\mu\mathcal I.
+\]
+
+Hence every such learning algorithm is equivalent to constrained repair optimization.
+
+\square
+
+
+K.17 Interpretation
+
+Machine learning therefore appears as one particular realization of a far more general maintenance geometry.
+
+Gradient descent becomes repair redistribution.
+
+Backpropagation becomes reverse reconstruction.
+
+Attention becomes temporary repair allocation.
+
+Replay preserves reconstruction volume.
+
+Regularization stabilizes repair curvature.
+
+Continual learning maintains higher-order repair.
+
+Catastrophic forgetting is geometric collapse.
+
+Out-of-distribution failure is inadmissibility.
+
+These are not independent algorithmic phenomena but different manifestations of a single variational principle governing finite repair systems.
+
+The remaining appendix extends this same mathematical framework to biological organization, showing that cellular repair, development, heredity, and evolution occupy successive levels of one recursive repair hierarchy governed by identical conservation principles.
+
+\section{Multiscale Biological Repair and Evolutionary Maintenance}
+
+Throughout this series, repair has been developed as an abstract operational concept independent of any particular physical substrate. Biology provides perhaps its most striking realization. Living systems do not merely preserve structures; they preserve the mechanisms responsible for preserving those structures, and evolution preserves the mechanisms responsible for preserving those mechanisms. Biological organization therefore exhibits exactly the recursive maintenance hierarchy developed throughout the repair-theoretic program. The purpose of this appendix is to formulate that hierarchy mathematically and to show that development, physiology, heredity, and evolution arise as successive levels of constrained repair-budget dynamics.
+
+Let
+
+\[
+\mathcal B_0
+\]
+denote the cellular repair level,
+
+\[
+\mathcal B_1
+\]
+the organism,
+
+\[
+\mathcal B_2
+\]
+the population,
+
+and
+
+\[
+\mathcal B_3
+\]
+the evolutionary lineage.
+
+Each level possesses its own repair budget,
+
+repair operators,
+
+and admissibility manifold.
+
+
+L.1 Nested Repair Hierarchies
+
+For every level
+
+\[
+k,
+\]
+define
+
+\[
+(\Phi_k,\mathcal R_k,\Rest(\mathcal R_k)).
+\]
+These satisfy the recursive reconstruction relation
+
+\[
+\mathcal R_{k+1}
+W_k(\Hist_k),
+\]
+
+where
+
+\[
+W_k
+\]
+is the reconstruction operator generated by the lower level.
+
+Thus
+
+cells reconstruct tissues,
+
+tissues reconstruct organisms,
+
+organisms reconstruct populations,
+
+and populations reconstruct evolutionary repair strategies.
+
+
+L.2 Multiscale Repair Budget
+
+The total biological repair budget is
+
+\[
+\Phi_{\mathrm{bio}}
+\sum_{k=0}^{N}
+w_k
+\Phi_k,
+\]
+
+where
+
+\[
+w_k>0
+\]
+weights the contribution of each organizational level.
+
+Different biological systems correspond to different repair-budget distributions across scales.
+
+
+L.3 Cross-Scale Coupling
+
+Repair budgets interact through coupling matrix
+
+\[
+C_{ij}.
+\]
+The coupled dynamics satisfy
+
+\[
+\frac{d\Phi_i}{dt}
+F_i
++
+\sum_j
+C_{ij}
+\Phi_j.
+\]
+
+Positive couplings produce cooperative maintenance.
+
+Negative couplings generate repair competition across scales.
+
+Immune activation,
+
+for example,
+
+may improve cellular maintenance while reducing reproductive investment.
+
+
+L.4 Development
+
+Development corresponds to repair-budget redistribution within a fixed genome.
+
+Let
+
+\[
+\Phi(x,t)
+\]
+be developmental repair allocation.
+
+Then
+
+\[
+\frac{\partial\Phi}{\partial t}
+- 
+
+\nabla
+\mathcal F
++
+S(x,t),
+\]
+
+where
+
+\[
+S
+\]
+represents morphogenetic signaling.
+
+Development therefore becomes constrained repair optimization over space and time.
+
+
+L.5 Homeostasis
+
+Homeostasis corresponds to maintenance equilibrium,
+
+\[
+\frac{d\Phi}{dt}
+0. 
+
+\]
+
+Small perturbations satisfy
+
+\[
+\delta\Phi
+- 
+
+H^{-1}
+\delta F,
+\]
+
+where
+
+\[
+H
+\]
+is the repair Hessian.
+
+Robust organisms possess well-conditioned repair Hessians.
+
+Fragile organisms possess nearly singular maintenance geometry.
+
+
+L.6 Aging
+
+Introduce irreversible repair loss,
+
+\[
+\Sigma_\Phi>0.
+\]
+Then
+
+\[
+\frac{d\Phi}{dt}
+- 
+
+\Sigma_\Phi.
+\]
+
+Consequently,
+
+the admissibility manifold contracts,
+
+repair margins decrease,
+
+and reconstruction redundancy gradually collapses.
+
+Aging therefore becomes progressive deformation of repair geometry rather than mere accumulation of molecular damage.
+
+
+L.7 Immune Systems
+
+The immune repertoire forms a repair operator,
+
+\[
+\mathcal R_{\mathrm{immune}}.
+\]
+Antigen exposure enlarges this repertoire through reconstruction.
+
+Memory cells preserve reconstruction pathways.
+
+Vaccination therefore creates additional reconstruction redundancy without requiring continual pathogen exposure.
+
+Immune memory becomes second-order repair.
+
+
+L.8 Heredity
+
+DNA is commonly viewed as information storage.
+
+Repair theory gives a different interpretation.
+
+Let
+
+\[
+G
+\]
+denote the genome.
+
+Then
+
+\[
+G
+\longrightarrow
+\mathcal R_{\mathrm{development}}
+\longrightarrow
+\Rest(\mathcal R).
+\]
+The genome does not merely encode structures.
+
+It reconstructs repair operators capable of regenerating those structures.
+
+Inheritance is therefore maintenance transfer rather than information transfer alone.
+
+
+L.9 Evolution
+
+Evolution acts upon repair budgets across generations.
+
+Suppose
+
+\[
+\Phi_n
+\]
+is the repair allocation of generation
+
+\[
+n.
+\]
+Then
+
+\[
+\Phi_{n+1}
+\Phi_n
++
+\Delta\Phi_n,
+\]
+
+where
+
+\[
+\Delta\Phi_n
+\]
+results from mutation,
+
+selection,
+
+developmental bias,
+
+and environmental forcing.
+
+Evolution is therefore a repair flow on the manifold of biological maintenance strategies.
+
+
+L.10 Fitness
+
+Classically,
+
+fitness measures reproductive success.
+
+Repair theory defines effective fitness by
+
+\[
+F
+\alpha
+\Phi
++
+\beta
+V
+
+\gamma
+\Sigma_\Phi,
+\]
+
+where
+
+\[
+V
+\]
+is reconstruction redundancy.
+
+Successful organisms maximize long-term repair sustainability rather than immediate reproduction alone.
+
+
+L.11 Canalization
+
+Developmental canalization corresponds to positive curvature in repair geometry.
+
+Nearby developmental trajectories converge,
+
+making phenotype robust against perturbation.
+
+Negative curvature instead produces developmental plasticity.
+
+The geometry developed in Appendix D therefore provides a natural mathematical description of developmental robustness.
+
+
+L.12 Evolvability
+
+Define the repair Jacobian
+
+\[
+J
+\frac{\partial\Phi}
+{\partial G}.
+\]
+
+Large singular values indicate genetic changes capable of generating substantial repair reorganization.
+
+Small singular values correspond to genetically rigid systems.
+
+Evolvability therefore measures the sensitivity of repair geometry to genomic perturbation.
+
+
+L.13 Extinction
+
+Suppose
+
+\[
+\Phi_{\mathrm{bio}}
+\rightarrow0.
+\]
+Then
+
+every admissibility manifold collapses,
+
+reconstruction becomes impossible,
+
+and repair operators disappear.
+
+Extinction therefore represents complete geometric collapse of biological maintenance rather than merely disappearance of organisms.
+
+
+L.14 Multiscale Stability Theorem
+
+Theorem.
+
+Suppose every repair level possesses a Lyapunov function
+
+\[
+V_k,
+\]
+and all coupling matrices satisfy
+
+\[
+C+C^{\mathrm T}
+\le0.
+\]
+Then
+
+the coupled biological repair hierarchy is globally stable.
+
+Proof.
+
+Define
+
+\[
+V
+\sum_k
+w_kV_k.
+\]
+
+Differentiation gives
+
+\[
+\frac{dV}{dt}
+\le0
+\]
+because the symmetric coupling matrix is negative semidefinite.
+
+LaSalle's invariance principle implies convergence toward the multiscale repair equilibrium.
+
+\square
+
+
+L.15 Interpretation
+
+Biological organization therefore appears as a nested hierarchy of repair economies linked by reconstruction across scales.
+
+Cellular repair,
+
+development,
+
+physiology,
+
+immune memory,
+
+genetic inheritance,
+
+population dynamics,
+
+and evolution
+
+all satisfy the same constrained variational principles developed throughout this paper.
+
+The apparent diversity of biological processes reflects differences in substrate rather than differences in underlying mathematical organization.
+
+Repair-budget conservation provides a common language connecting molecular biology, developmental dynamics, physiology, ecology, and evolution within a single recursive geometry of maintenance.
+
+With this appendix the mathematical development of the repair-budget framework is complete. The final appendix collects rigorous proofs of the principal theorems presented throughout the paper, establishing the formal foundations underlying the conservation laws, stability results, spectral decompositions, and coupled evolution equations developed across the preceding chapters.
+
+\newpage
+
+\begin{thebibliography}{99}
+
+\bibitem{Amari2016}
+Amari, S.-I. (2016).
+\textit{Information Geometry and Its Applications}.
+Springer.
+
+\bibitem{Arnold1989}
+Arnold, V. I. (1989).
+\textit{Mathematical Methods of Classical Mechanics}.
+2nd ed.
+Springer.
+
+\bibitem{Ashby1956}
+Ashby, W. R. (1956).
+\textit{An Introduction to Cybernetics}.
+Chapman \& Hall.
+
+\bibitem{Bertsekas1999}
+Bertsekas, D. P. (1999).
+\textit{Nonlinear Programming}.
+2nd ed.
+Athena Scientific.
+
+\bibitem{Bishop2006}
+Bishop, C. M. (2006).
+\textit{Pattern Recognition and Machine Learning}.
+Springer.
+
+\bibitem{Boyd2004}
+Boyd, S., \& Vandenberghe, L. (2004).
+\textit{Convex Optimization}.
+Cambridge University Press.
+
+\bibitem{CoverThomas2006}
+Cover, T. M., \& Thomas, J. A. (2006).
+\textit{Elements of Information Theory}.
+2nd ed.
+Wiley.
+
+\bibitem{DoCarmo1992}
+do Carmo, M. P. (1992).
+\textit{Riemannian Geometry}.
+Birkhäuser.
+
+\bibitem{Friston2010}
+Friston, K. (2010).
+The free-energy principle: A unified brain theory?
+\textit{Nature Reviews Neuroscience},
+11(2), 127--138.
+
+\bibitem{Gallier2020}
+Gallier, J., \& Quaintance, J. (2020).
+\textit{Differential Geometry and Lie Groups}.
+Springer.
+
+\bibitem{Goodfellow2016}
+Goodfellow, I.,
+Bengio, Y.,
+\& Courville, A. (2016).
+\textit{Deep Learning}.
+MIT Press.
+
+\bibitem{Hairer2006}
+Hairer, E.,
+Lubich, C.,
+\& Wanner, G. (2006).
+\textit{Geometric Numerical Integration}.
+2nd ed.
+Springer.
+
+\bibitem{Helmke1994}
+Helmke, U.,
+\& Moore, J. B. (1994).
+\textit{Optimization and Dynamical Systems}.
+Springer.
+
+\bibitem{HornJohnson2013}
+Horn, R. A.,
+\& Johnson, C. R. (2013).
+\textit{Matrix Analysis}.
+2nd ed.
+Cambridge University Press.
+
+\bibitem{JordanSmith2008}
+Jordan, D. W.,
+\& Smith, P. (2008).
+\textit{Nonlinear Ordinary Differential Equations}.
+4th ed.
+Oxford University Press.
+
+\bibitem{Kato1995}
+Kato, T. (1995).
+\textit{Perturbation Theory for Linear Operators}.
+Springer.
+
+\bibitem{Khalil2002}
+Khalil, H. K. (2002).
+\textit{Nonlinear Systems}.
+3rd ed.
+Prentice Hall.
+
+\bibitem{Kuhn1962}
+Kuhn, T. S. (1962).
+\textit{The Structure of Scientific Revolutions}.
+University of Chicago Press.
+
+\bibitem{Lee2018}
+Lee, J. M. (2018).
+\textit{Introduction to Riemannian Manifolds}.
+2nd ed.
+Springer.
+
+\bibitem{LuenbergerYe2016}
+Luenberger, D. G.,
+\& Ye, Y. (2016).
+\textit{Linear and Nonlinear Programming}.
+4th ed.
+Springer.
+
+\bibitem{MacLane1998}
+Mac Lane, S. (1998).
+\textit{Categories for the Working Mathematician}.
+2nd ed.
+Springer.
+
+\bibitem{Meadows2008}
+Meadows, D. H. (2008).
+\textit{Thinking in Systems}.
+Chelsea Green.
+
+\bibitem{Milnor1963}
+Milnor, J. (1963).
+\textit{Morse Theory}.
+Princeton University Press.
+
+\bibitem{NocedalWright2006}
+Nocedal, J.,
+\& Wright, S. J. (2006).
+\textit{Numerical Optimization}.
+2nd ed.
+Springer.
+
+\bibitem{Rockafellar1970}
+Rockafellar, R. T. (1970).
+\textit{Convex Analysis}.
+Princeton University Press.
+
+\bibitem{Sontag1998}
+Sontag, E. D. (1998).
+\textit{Mathematical Control Theory}.
+2nd ed.
+Springer.
+
+\bibitem{StewartSun1990}
+Stewart, G. W.,
+\& Sun, J.-G. (1990).
+\textit{Matrix Perturbation Theory}.
+Academic Press.
+
+\bibitem{Strang2019}
+Strang, G. (2019).
+\textit{Linear Algebra and Learning from Data}.
+Wellesley-Cambridge Press.
+
+\bibitem{Villani2009}
+Villani, C. (2009).
+\textit{Optimal Transport: Old and New}.
+Springer.
+
+\bibitem{Zeidler1986}
+Zeidler, E. (1986).
+\textit{Nonlinear Functional Analysis and Its Applications I}.
+Springer.
+
+\end{thebibliography}
+
+\end{document}

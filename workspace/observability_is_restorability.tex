@@ -1,0 +1,1650 @@
+% ============================================================
+%  Observability Is Restorability
+%  Restorable Distinctions and the Geometry of Perceptual Access
+% ============================================================
+%  Engine: LuaLaTeX
+%  Font:   TeX Gyre Pagella
+% ============================================================
+
+\documentclass[12pt, oneside]{article}
+
+% ── Fonts & encoding ────────────────────────────────────────
+\usepackage{fontspec}
+\setmainfont{TeX Gyre Pagella}
+\usepackage{unicode-math}
+\setmathfont{TeX Gyre Pagella Math}
+
+% ── Layout ──────────────────────────────────────────────────
+\usepackage[
+  top=1.25in, bottom=1.25in,
+  left=1.35in, right=1.35in
+]{geometry}
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parskip}{0.55em}
+\setlength{\parindent}{1.4em}
+
+% ── Mathematics ─────────────────────────────────────────────
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{mathtools}
+
+% Theorem environments
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\theoremstyle{definition}
+\newtheorem{axiom}[theorem]{Axiom}
+
+% ── Notation shorthands ─────────────────────────────────────
+\DeclareMathOperator{\Obs}{Obs}
+\DeclareMathOperator{\Rest}{Rest}
+\DeclareMathOperator{\Reach}{Reach}
+\DeclareMathOperator{\spec}{spec}
+\newcommand{\ObsStab}{\mathrm{Obs}_{\mathrm{stab}}}
+\newcommand{\Restf}{\Rest_{f}}
+\newcommand{\Reston}{\Rest_{\omega}}
+\newcommand{\CR}{C_{\!R}}
+\newcommand{\IntMat}{\mathbf{I}}
+\newcommand{\AO}{\mathcal{A}_O}
+\newcommand{\DO}{\mathcal{D}_O}
+\newcommand{\RO}{\mathcal{R}_O}
+\newcommand{\bA}{\partial\mathcal{A}}
+\newcommand{\Xsub}{X_S}
+\newcommand{\Psub}{\mathcal{P}}
+\newcommand{\Dsub}{\mathcal{D}}
+
+% ── Section & title styling ─────────────────────────────────
+\usepackage{titlesec}
+\titleformat{\section}{\normalfont\large\bfseries}{{\thesection}.}{0.6em}{}
+\titleformat{\subsection}{\normalfont\normalsize\bfseries}{{\thesubsection}.}{0.5em}{}
+
+% ── Hyperref (load last) ────────────────────────────────────
+\usepackage[
+  colorlinks=true,
+  linkcolor=black,
+  citecolor=black,
+  urlcolor=black
+]{hyperref}
+
+% ============================================================
+\begin{document}
+
+% ── Title block ─────────────────────────────────────────────
+\begin{center}
+  {\LARGE\bfseries Observability Is Restorability}\\[0.9em]
+  {\large Restorable Distinctions and the Geometry of Perceptual Access}\\[1.5em]
+  {\normalsize Flyxion}\\[0.3em]
+  {\small\itshape Independent Researcher}\\[1.6em]
+  {\small\today}
+\end{center}
+
+\vspace{0.5em}
+
+% ── Abstract ────────────────────────────────────────────────
+\begin{abstract}
+\noindent
+Standard theories of observation treat the observer as a receiver:
+a system that acquires, records, or represents information from an
+external world.
+This paper proposes an alternative foundation.
+A distinction that cannot be restored after perturbation is
+operationally indistinguishable from a distinction that never existed.
+Observation therefore depends not on reception but on
+\emph{restorability}.
+We introduce a pre-theoretic notion of \emph{stable observability}
+and prove that it coincides exactly with finite-cost restorability
+under admissible perturbation---making the title thesis a theorem
+rather than a definition.
+An observer is then defined as a repair process whose distinction
+space is induced by its repair repertoire, and the algebra of repair
+spaces is developed: monotonicity, repair equivalence, subadditivity,
+the interference functional, the repair pseudometric, and the
+Reachability--Restorability inclusion.
+The boundary of the observer-relative admissibility manifold $\AO$
+is characterised as the divergence locus of minimal repair cost
+$\CR$---the Repair Boundary Theorem, grounded in a lemma on lower
+semi-continuity of repair cost.
+Applications are developed for blindsight and perceptual filling-in,
+quantum measurement as repair-or-collapse, and institutional observers.
+The framework unifies distinction theory, the admissibility program,
+and repair-theoretic accounts of memory and understanding into a
+single foundational identification.
+\end{abstract}
+
+\vspace{1em}
+\hrule
+\vspace{1.6em}
+
+% ============================================================
+\section{Observation as a Problem}
+\label{sec:intro}
+% ============================================================
+
+Standard theories of observation begin with reception.
+An observer receives signals, records measurements, forms
+representations, or updates beliefs~\cite{Marr1982,Shannon1948}.
+In every case observation is treated as the acquisition of information
+from an external world.
+The observer is essentially passive: a container into which the world
+deposits its impressions~\cite{Gibson1979}.
+
+This paper begins from a different premise.
+A distinction that cannot be restored after perturbation is
+operationally indistinguishable from a distinction that never existed.
+Observation therefore depends not on reception but on restorability.
+What an observer can observe is precisely what it can restore.
+
+We propose that observability and restorability are equivalent notions.
+An observer is not fundamentally a receiver of information but a
+repair process acting on a substrate of distinctions.
+Perception, memory, measurement, and scientific inquiry become special
+cases of distinction restoration under perturbation.
+
+The central identification is:
+\begin{equation}
+  \Obs(O) \;=\; \Rest(O),
+  \label{eq:main-id}
+\end{equation}
+where $\Obs(O)$ is the set of distinctions observable by $O$ and
+$\Rest(O)$ is the set of distinctions restorable by $O$.
+Everything else in this paper is a consequence of taking
+\eqref{eq:main-id} seriously.
+
+The argument proceeds as follows.
+Section~\ref{sec:substrate} establishes the mathematical substrate:
+state spaces, perturbations, and distinctions.
+Section~\ref{sec:repair} defines repair operators, repair paths, and
+repair cost.
+Section~\ref{sec:restorable} introduces restorable distinctions.
+Section~\ref{sec:observer} re-defines the observer as a repair process
+whose distinction space is induced by its repair repertoire.
+Section~\ref{sec:worlds} studies shared perceptual worlds as
+intersections of repair repertoires.
+Section~\ref{sec:stable} introduces the pre-theoretic notion of
+stable observability and proves that it coincides with restorability,
+making \eqref{eq:main-id} a theorem rather than a stipulation.
+Section~\ref{sec:structure} develops the internal algebra of repair
+spaces: monotonicity, equivalence, subadditivity, the interference
+functional, the repair metric, and the reachability--restorability
+inclusion.
+Section~\ref{sec:boundary} states and proves the Repair Boundary
+Theorem, supported by a lemma on lower semi-continuity of repair cost.
+Sections~\ref{sec:blindsight}--\ref{sec:institutions} develop
+applications.
+Section~\ref{sec:conclusion} draws consequences and identifies open
+problems.
+
+
+% ============================================================
+\section{Substrates, Perturbations, and Distinctions}
+\label{sec:substrate}
+% ============================================================
+
+\begin{definition}[Substrate]
+  A \emph{substrate} is a triple $S = (\Xsub, \Psub, \Dsub)$ where:
+  \begin{itemize}
+    \item $\Xsub$ is a topological space of \emph{states};
+    \item $\Psub$ is a semigroup of \emph{perturbation operators}
+      $p : \Xsub \to \Xsub$ acting continuously on $\Xsub$, closed
+      under composition, with identity $\mathrm{id} \in \Psub$;
+    \item $\Dsub \subseteq \Xsub \times \Xsub$ is a symmetric,
+      irreflexive \emph{distinction relation}: $(x,y) \in \Dsub$
+      means states $x$ and $y$ are discriminable.
+  \end{itemize}
+\end{definition}
+
+Throughout this paper we impose two standing axioms on every substrate.
+
+\begin{axiom}[Locally compact Hausdorff substrate]
+  The state space $\Xsub$ is a locally compact Hausdorff topological
+  space.
+  \label{ax:lch}
+\end{axiom}
+
+\begin{axiom}[Closed distinction relation]
+  The distinction relation $\Dsub$ is closed in the product topology
+  on $\Xsub \times \Xsub$.
+  \label{ax:closed-d}
+\end{axiom}
+
+Axiom~\ref{ax:lch} provides the compactness and separation needed for
+convergence arguments throughout.
+Axiom~\ref{ax:closed-d} ensures that limit states of sequences of
+discriminable pairs remain discriminable: if $(x_n, y_n) \in \Dsub$
+and $(x_n, y_n) \to (x, y)$, then $(x, y) \in \Dsub$.
+Without this, the refinement step in Theorem~\ref{thm:stable-obs} can
+fail.
+Both axioms hold in all concrete examples considered in this paper.
+
+\begin{remark}
+  The distinction relation $\Dsub$ need not be transitive and should
+  not in general be an equivalence.
+  Discrimination is a local, pair-wise affair.
+  Two states may be mutually discriminable from a third without being
+  mutually discriminable from each other.
+\end{remark}
+
+\begin{definition}[Admissible perturbation]
+  A perturbation $p \in \Psub$ is \emph{admissible relative to
+  distinction $d = (x,y)$} if $p$ maps at least one of $x, y$ to a
+  state from which $d$ might fail to hold\,---\,formally, if
+  $(p(x), y) \notin \Dsub$ or $(x, p(y)) \notin \Dsub$.
+  The set of admissible perturbations for $d$ is denoted $\Psub_d$.
+\end{definition}
+
+\begin{definition}[Distinction survival]
+  Distinction $d = (x,y)$ \emph{survives perturbation} $p$ if
+  $(p(x), p(y)) \in \Dsub$.
+  Otherwise $p$ \emph{erases} $d$.
+\end{definition}
+
+The central concern of this paper is what happens after erasure.
+
+
+% ============================================================
+\section{Repair Operators and Repair Cost}
+\label{sec:repair}
+% ============================================================
+
+\begin{definition}[Repair action]
+  Given a substrate $S$, a \emph{repair action} is a continuous map
+  $r : \Xsub \to \Xsub$ belonging to a designated set
+  $\mathcal{R} \subseteq C(\Xsub, \Xsub)$ of available interventions,
+  where $C(\Xsub, \Xsub)$ carries the compact-open topology.
+  The set $\mathcal{R}$ is the \emph{repair repertoire} of the process
+  under consideration.
+  The study of controllable interventions on state spaces is treated
+  systematically in~\cite{Sontag1998,Kalman1960,Bellman1957}.
+\end{definition}
+
+\begin{axiom}[Compact repair repertoire]
+  The repair repertoire $\mathcal{R}$ is a sequentially compact subset
+  of $C(\Xsub, \Xsub)$ under the compact-open topology.
+  Consequently $\mathcal{R}^n$, the product space of repair paths of
+  fixed length $n$, is compact by Tychonoff's theorem.
+  \label{ax:compact-r}
+\end{axiom}
+
+\begin{definition}[Repair path]
+  A \emph{repair path} for distinction $d = (x_0, y_0)$ after
+  perturbation $p$ is a finite sequence of repair actions
+  $\gamma = (r_1, r_2, \ldots, r_n)$ such that, writing
+  $x_k = r_k(x_{k-1})$ and $y_k = r_k(y_{k-1})$, we have
+  $(x_n, y_n) \in \Dsub$.
+  The set of all repair paths of length at most $N$ is denoted
+  $\Gamma_d^{p,N}$; the union $\Gamma_d^p = \bigcup_{N \geq 1}
+  \Gamma_d^{p,N}$.
+\end{definition}
+
+\begin{definition}[Repair cost]
+  Let $c : \Xsub \to \mathbb{R}_{\geq 0}$ be a lower semi-continuous
+  \emph{local cost density} representing the resource expenditure per
+  unit state occupancy.
+  Typical interpretations include metabolic energy ($c(x) =$ ATP
+  consumption rate), computational effort ($c(x) =$ clock cycles per
+  step), or temporal cost ($c(x) = 1$ uniformly).
+  The cost of a repair path $\gamma = (r_1, \ldots, r_n)$ is the
+  \emph{discrete path sum}
+  \[
+    \mathrm{cost}(\gamma, x_0)
+    \;=\;
+    \sum_{k=1}^{n} c\!\left(x_{k-1}\right),
+  \]
+  where $x_k = r_k(x_{k-1})$.
+  When repair actions are parameterised as continuous flows
+  $r_k = \Phi_{t_k}$ for $t_k > 0$, this sum extends naturally to
+  the line integral $\int_\gamma c\, \mathrm{d}s$; both formulations
+  are used below according to context.
+\end{definition}
+
+\begin{definition}[Minimal repair cost]
+  The \emph{minimal repair cost} of distinction $d$ after perturbation
+  $p$, relative to repair repertoire $\mathcal{R}$, is
+  \[
+    \CR(d, p)
+    \;=\;
+    \inf_{\gamma \in \Gamma_d^p}
+    \mathrm{cost}(\gamma, p(x_0)),
+  \]
+  setting $\CR(d,p) = +\infty$ when $\Gamma_d^p = \emptyset$.
+\end{definition}
+
+\begin{definition}[Worst-case and probabilistic repair cost]
+  The \emph{worst-case repair cost} of distinction $d$ is
+  \[
+    \CR(d)
+    \;=\;
+    \sup_{p \in \Psub_d}\, \CR(d, p).
+  \]
+  This is the operationally severe notion: a single catastrophic
+  perturbation with $\CR(d,p) = +\infty$ renders $d$ non-restorable
+  in the absolute sense.
+
+  For biological and institutional observers, a softer notion is
+  often more appropriate.
+  Given a probability measure $\mu$ on $\Psub_d$, the
+  \emph{probabilistic repair cost} is
+  \[
+    \CR^\mu(d)
+    \;=\;
+    \int_{\Psub_d} \CR(d, p)\, \mathrm{d}\mu(p).
+  \]
+  Absolute restorability $\Rest_\infty(\mathcal{R})$ uses $\CR$;
+  probabilistic restorability $\Rest_\mu(\mathcal{R})$ uses
+  $\CR^\mu$.
+  The former is the object of this paper unless otherwise stated.
+\end{definition}
+
+
+% ============================================================
+\section{Restorable Distinctions}
+\label{sec:restorable}
+% ============================================================
+
+\begin{definition}[Restorability]
+  A distinction $d \in \Dsub$ is \emph{restorable by repair repertoire
+  $\mathcal{R}$} if $\CR(d) < +\infty$\,---\,that is, if every
+  admissible perturbation admits a finite-cost repair path.
+  This is \emph{finite-step restorability}; the set is
+  \[
+    \Restf(\mathcal{R})
+    \;=\;
+    \bigl\{
+      d \in \Dsub \;\big|\; \CR(d) < +\infty
+    \bigr\}.
+  \]
+\end{definition}
+
+The finite-step condition requires a repair path of bounded length.
+A weaker but mathematically significant notion permits repair in the
+limit of infinitely many steps.
+
+\begin{definition}[Limit restorability]
+  A distinction $d \in \Dsub$ is \emph{limit-restorable by
+  $\mathcal{R}$} if for every admissible perturbation $p \in \Psub_d$
+  and every $\varepsilon > 0$ there exists a (possibly infinite)
+  sequence of repair actions $(r_1, r_2, \ldots)$ such that the
+  partial orbit $(x_k, y_k)$ satisfies
+  \[
+    \inf_{(u,v) \in \Dsub}
+    \bigl[\|x_k - u\| + \|y_k - v\|\bigr]
+    \;\to\; 0
+    \quad\text{as } k \to \infty,
+  \]
+  with $\sum_{k=1}^\infty c(x_{k-1}) < +\infty$.
+  The set of limit-restorable distinctions is $\Reston(\mathcal{R})$.
+\end{definition}
+
+\begin{proposition}[Inclusion of restorability classes]
+  $\Restf(\mathcal{R}) \subseteq \Reston(\mathcal{R})$.
+  The inclusion is in general strict.
+  \label{prop:class-inclusion}
+\end{proposition}
+
+\begin{proof}
+  Any finite repair path is a finite sequence; the partial orbit
+  reaches $\Dsub$ in finitely many steps, so the infimum condition
+  holds in the limit.
+  Strictness: consider a substrate in which every perturbation of $d$
+  can be countered by successively halving the remaining distance to
+  $\Dsub$, with costs $1/2^k$; the total cost $\sum 1/2^k = 1$ is
+  finite, but no single finite path lands in the closed set $\Dsub$
+  unless the limit state is taken.
+  Under Axiom~\ref{ax:closed-d} the limit is in $\Dsub$, confirming
+  limit-restorability; but if no path of fixed finite length suffices,
+  the distinction is in $\Reston \setminus \Restf$.
+\end{proof}
+
+\begin{remark}
+  The two classes separate different physical regimes.
+  Biological repair (neural recovery, wound healing) and mathematical
+  proof search aspire to $\Restf$: a bounded sequence of discrete
+  interventions must suffice.
+  Iterative scientific refinement, asymptotic stabilisation of
+  institutions, and language reconstruction may be modelled more
+  faithfully by $\Reston$: convergence is guaranteed but no finite
+  stopping point is specified.
+  Courts occupy an intermediate position, tolerating appellate
+  iteration but demanding termination.
+  The Stable Observability Theorem (Theorem~\ref{thm:stable-obs}) is
+  a theorem about $\Restf$; a parallel theorem for $\Reston$ under
+  weaker topological assumptions is an open problem
+  (Problem~1 in Section~\ref{sec:conclusion}).
+\end{remark}
+
+Throughout Sections~\ref{sec:observer}--\ref{sec:boundary},
+$\Rest(\mathcal{R})$ denotes $\Restf(\mathcal{R})$ unless otherwise
+stated.
+
+\begin{proposition}[Restorability is closed under finite composition]
+  If $d_1, d_2 \in \Rest(\mathcal{R})$ and the restoration of $d_2$
+  does not interfere with the restored state of $d_1$ (formally: the
+  repair paths commute on the relevant component of $\Xsub$), then
+  the compound distinction $d_1 \wedge d_2$ is also in
+  $\Rest(\mathcal{R})$.
+  \label{prop:closure}
+\end{proposition}
+
+\begin{proof}
+  % SKELETON: concatenate repair paths; bound cost by sum.
+  Let $\gamma_1 \in \Gamma_{d_1}^p$ and $\gamma_2 \in \Gamma_{d_2}^p$
+  be finite-cost repair paths.
+  Under the commutativity assumption, $\gamma_1 \cdot \gamma_2$
+  (concatenation) restores both distinctions with cost at most
+  $\mathrm{cost}(\gamma_1) + \mathrm{cost}(\gamma_2) < +\infty$.
+\end{proof}
+
+\begin{remark}
+  The commutativity assumption in Proposition~\ref{prop:closure} is
+  non-trivial and fails in general.
+  Section~\ref{sec:blindsight} exhibits cases where restoring one
+  distinction actively interferes with another,
+  producing \emph{repair conflict}.
+\end{remark}
+
+
+% ============================================================
+\section{Observers as Repair Processes}
+\label{sec:observer}
+% ============================================================
+
+The standard move is to define an observer as a pair $(O, \DO)$ of a
+process and a set of distinctions it tracks~\cite{Ashby1956,ConantAshby1970}.
+We invert this dependency.
+
+\begin{definition}[Observer]
+  An \emph{observer} is a repair process $O = (S, \mathcal{R}_O)$
+  consisting of a substrate $S$ and a repair repertoire
+  $\mathcal{R}_O$.
+  The \emph{observation space} of $O$ is the induced set
+  \[
+    \DO \;=\; \Rest(\mathcal{R}_O).
+  \]
+\end{definition}
+
+The distinction space is not given in advance and then repaired.
+It is the repair repertoire that determines which distinctions exist
+for this observer.
+An observer with a larger repertoire inhabits a richer distinction
+space, not because it receives more information but because it can
+restore more.
+
+\begin{definition}[Observability]
+  A distinction $d$ is \emph{observable by $O$} if and only if
+  $d \in \Rest(\mathcal{R}_O)$.
+  In symbols:
+  \[
+    \Obs(O) \;=\; \Rest(\mathcal{R}_O) \;=\; \DO.
+  \]
+\end{definition}
+
+This is the formal content of \eqref{eq:main-id}.
+Observability just is restorability.
+
+
+% ============================================================
+\section{Perceptual Worlds and Observer Agreement}
+\label{sec:worlds}
+% ============================================================
+
+\begin{definition}[Shared perceptual world]
+  Two observers $O_1$ and $O_2$ \emph{share a perceptual world} to
+  the extent that their observation spaces overlap:
+  \[
+    W(O_1, O_2)
+    \;=\;
+    \Obs(O_1) \cap \Obs(O_2)
+    \;=\;
+    \Rest(\mathcal{R}_{O_1}) \cap \Rest(\mathcal{R}_{O_2}).
+  \]
+\end{definition}
+
+\begin{theorem}[Shared perception is shared repair]
+  Two observers share a perceptual world if and only if they share
+  repair capacity over that world:
+  \[
+    W(O_1, O_2)
+    \;=\;
+    \Rest(\mathcal{R}_{O_1}) \cap \Rest(\mathcal{R}_{O_2}).
+  \]
+  In particular, two observers with disjoint repair repertoires
+  inhabit disjoint perceptual worlds even when embedded in the same
+  physical substrate.
+  \label{thm:shared-world}
+\end{theorem}
+
+\begin{proof}
+  Immediate from Definition~\ref{sec:observer} and the definition of
+  $W(O_1, O_2)$.
+\end{proof}
+
+\begin{corollary}[Observer agreement]
+  Two observers \emph{agree} on distinction $d$ if and only if
+  $d \in W(O_1, O_2)$, i.e., both can restore $d$ after any
+  admissible perturbation.
+  Agreement on signals is neither necessary nor sufficient;
+  what matters is agreement on repairability.
+\end{corollary}
+
+\begin{example}[Species-relative perception]
+  A bat and a human occupy the same physical environment.
+  Their repair repertoires differ substantially in the echoic
+  dimension.
+  Theorem~\ref{thm:shared-world} predicts that the
+  spatial distinctions available to the bat via echolocation are
+  not observable by the human, not because the signals are absent but
+  because the human lacks repair operators acting on that channel.
+\end{example}
+
+
+% ============================================================
+\section{Stable Observability}
+\label{sec:stable}
+% ============================================================
+
+The identification $\Obs(O) = \Rest(O)$ as stated in
+Section~\ref{sec:observer} is definitional: observability was
+\emph{defined} as restorability.
+A genuine theorem requires a pre-theoretic notion of observability
+that is independent of the repair apparatus, so that the equivalence
+can be established rather than assumed.
+
+We supply one now.
+
+\begin{definition}[Stable observability]
+  Fix an observer $O = (S, \mathcal{R}_O)$ and a threshold
+  $\varepsilon > 0$.
+  A distinction $d = (x, y)$ is \emph{stably observable by $O$} if
+  for every $\delta > 0$ and every admissible perturbation
+  $p \in \Psub_d$, there exists a finite sequence of repair actions
+  $(r_1, \ldots, r_n) \in \mathcal{R}_O^*$ such that the resulting
+  states $(x', y')$ satisfy
+  \[
+    \inf_{(u,v) \in \Dsub} \bigl[\,
+      \|x' - u\| + \|y' - v\|
+    \,\bigr] < \delta,
+  \]
+  and the total cost of the sequence is bounded independently of
+  $\delta$.
+  The set of stably observable distinctions is denoted
+  $\ObsStab(O)$.
+\end{definition}
+
+Informally: $d$ is stably observable if, no matter how it is
+perturbed, $O$ can return to a state of discrimination within finite
+cost.
+The definition is pre-theoretic in the sense that it makes no
+reference to repair paths as formal objects; it speaks only of the
+capacity to discriminate after perturbation.
+
+\begin{theorem}[Stable Observability Theorem]
+  Under Axioms~\ref{ax:lch}, \ref{ax:closed-d}, and~\ref{ax:compact-r},
+  and assuming $c : \Xsub \to \mathbb{R}_{\geq 0}$ is lower
+  semi-continuous,
+  \[
+    \ObsStab(O) \;=\; \Rest(\mathcal{R}_O).
+  \]
+  \label{thm:stable-obs}
+\end{theorem}
+
+\begin{proof}
+  $(\supseteq)$\;
+  Suppose $d \in \Rest(\mathcal{R}_O)$.
+  Then $\CR(d) < +\infty$, so every admissible perturbation
+  admits a finite-cost repair path $\gamma^* \in \Gamma_d^p$ that
+  lands in $\Dsub$.
+  The discrimination condition in the definition of stable
+  observability is satisfied with $\delta = 0$ (strictly inside
+  $\Dsub$), and the cost bound $C = \CR(d)$ is independent of
+  $\delta$.
+  Thus $d \in \ObsStab(O)$.
+
+  $(\subseteq)$\;
+  Suppose $d = (x_0, y_0) \in \ObsStab(O)$.
+  Fix an admissible perturbation $p \in \Psub_d$.
+  By stable observability, for each $m \geq 1$ there exists a finite
+  repair sequence $\gamma_m = (r_{1,m}, \ldots, r_{n_m, m})$ of
+  total cost $\mathrm{cost}(\gamma_m) \leq C_p < +\infty$ (with $C_p$
+  independent of $m$) such that the terminal states
+  $(x'_m, y'_m)$ satisfy
+  \[
+    \inf_{(u,v) \in \Dsub}
+    \bigl[\|x'_m - u\| + \|y'_m - v\|\bigr]
+    < \tfrac{1}{m}.
+  \]
+
+  \textbf{Bounding the path length.}\;
+  Since $c$ is lower semi-continuous and positive, and $\Xsub$ is
+  locally compact, there exists a lower bound $c_0 > 0$ on any compact
+  neighbourhood of the orbit.
+  Each repair step contributes at least $c_0$ to the cost, so
+  $n_m \leq C_p / c_0 =: N$ uniformly in $m$.
+  We may therefore assume all paths have the same length $n \leq N$
+  (padding with the identity if needed).
+
+  \textbf{Extracting a convergent subsequence.}\;
+  By Axiom~\ref{ax:compact-r}, $\mathcal{R}_O$ is sequentially compact
+  under the compact-open topology, so $\mathcal{R}_O^n$ is compact by
+  Tychonoff.
+  The sequence of tuples $(\gamma_m)_{m \geq 1}$ in $\mathcal{R}_O^n$
+  admits a convergent subsequence
+  $(\gamma_{m_j}) \to \gamma^* = (r_1^*, \ldots, r_n^*)$.
+  By joint continuity of evaluation in the compact-open topology on
+  locally compact Hausdorff spaces (Axiom~\ref{ax:lch}), the terminal
+  states converge:
+  $(x'_{m_j}, y'_{m_j}) \to (x'^*, y'^*)$.
+
+  \textbf{Landing in $\Dsub$.}\;
+  For each $j$, the terminal states satisfy
+  $\inf_{(u,v) \in \Dsub}[\|x'_{m_j} - u\| + \|y'_{m_j} - v\|]
+  < 1/{m_j}$,
+  so $(x'_{m_j}, y'_{m_j})$ is within $1/{m_j}$ of $\Dsub$.
+  In the limit, $(x'^*, y'^*) \in \overline{\Dsub} = \Dsub$ by
+  Axiom~\ref{ax:closed-d}.
+  Therefore $\gamma^* \in \Gamma_d^p$ is a valid repair path.
+
+  \textbf{Cost bound.}\;
+  The total cost functional
+  $\mathrm{cost}(\gamma, x) = \sum_{k=1}^n c(x_{k-1})$ is a finite
+  sum of lower semi-continuous functions under the compact-open
+  topology and is therefore lower semi-continuous itself.
+  Thus
+  \[
+    \mathrm{cost}(\gamma^*) \;\leq\; \liminf_{j} \mathrm{cost}(\gamma_{m_j})
+    \;\leq\; C_p \;<\; +\infty.
+  \]
+  Since this holds for every admissible perturbation $p$,
+  $\CR(d) \leq C_p < +\infty$, so $d \in \Rest(\mathcal{R}_O)$.
+\end{proof}
+
+\begin{remark}
+  Theorem~\ref{thm:stable-obs} is the paper's load-bearing result.
+  It establishes that the title thesis---observability is
+  restorability---is not a definitional convenience but a substantive
+  claim: the pre-theoretic capacity to maintain discrimination under
+  perturbation is exactly captured by the formal notion of finite-cost
+  repair.
+  Every subsequent theorem is a consequence of taking this equivalence
+  seriously.
+\end{remark}
+
+
+% ============================================================
+\section{The Algebra of Repair Spaces}
+\label{sec:structure}
+% ============================================================
+
+We now develop the internal mathematics of repair spaces before
+connecting them to the admissibility manifold.
+The results of this section do not depend on
+Theorem~\ref{thm:stable-obs} and hold for any repair repertoire.
+
+\subsection{Monotonicity}
+
+\begin{theorem}[Repair Monotonicity]
+  Let $\mathcal{R}_1 \subseteq \mathcal{R}_2$ be repair repertoires
+  acting on the same substrate $S$.
+  Then
+  \[
+    \Rest(\mathcal{R}_1)
+    \;\subseteq\;
+    \Rest(\mathcal{R}_2).
+  \]
+  \label{thm:monotonicity}
+\end{theorem}
+
+\begin{proof}
+  If $d \in \Rest(\mathcal{R}_1)$, every admissible perturbation
+  of $d$ admits a finite-cost repair path composed entirely of
+  elements of $\mathcal{R}_1$.
+  Since $\mathcal{R}_1 \subseteq \mathcal{R}_2$, every such path is
+  available in $\mathcal{R}_2$, so $\CR[\mathcal{R}_2](d) \leq
+  \CR[\mathcal{R}_1](d) < +\infty$.
+  Thus $d \in \Rest(\mathcal{R}_2)$.
+\end{proof}
+
+\begin{corollary}[Learning enlarges worlds]
+  Whenever $\mathcal{R}_{O_1} \subseteq \mathcal{R}_{O_2}$,
+  \[
+    \Obs(O_1) \;\subseteq\; \Obs(O_2).
+  \]
+  Acquiring new repair operators strictly enlarges the set of
+  observable distinctions.
+  This gives a precise sense in which learning enlarges the world an
+  observer inhabits: not by receiving more signals, but by gaining
+  more repair capacity.
+\end{corollary}
+
+\subsection{Observer Equivalence}
+
+\begin{definition}[Repair equivalence]
+  Observers $O_1$ and $O_2$ are \emph{repair-equivalent},
+  written $O_1 \sim_R O_2$, if
+  $\Rest(\mathcal{R}_{O_1}) = \Rest(\mathcal{R}_{O_2})$.
+\end{definition}
+
+\begin{theorem}[Repair Equivalence Theorem]
+  Repair-equivalent observers are observationally indistinguishable:
+  $O_1 \sim_R O_2$ implies $\Obs(O_1) = \Obs(O_2)$.
+  \label{thm:equivalence}
+\end{theorem}
+
+\begin{proof}
+  Immediate from the identification $\Obs(O) = \Rest(\mathcal{R}_O)$.
+\end{proof}
+
+\begin{remark}
+  Theorem~\ref{thm:equivalence} is a repair-theoretic analogue of
+  bisimulation in process calculi.
+  Two observers may have entirely different internal architectures
+  and yet be observationally equivalent if their repair repertoires
+  generate the same restorable set.
+  This suggests that the natural equivalence class for observer
+  identity is repair capacity, not physical constitution---a
+  conclusion consonant with the autopoietic account of
+  identity~\cite{MaturanaVarela1980,VarelaThompsonRosch1991} but
+  grounded here in the repair structure rather than in biological
+  self-production.
+\end{remark}
+
+\subsection{Subadditivity and the Interference Functional}
+
+\begin{theorem}[Subadditivity of Repair Cost]
+  Suppose distinctions $d_1$ and $d_2$ admit commuting repair paths
+  (as in Proposition~\ref{prop:closure}).
+  Then
+  \[
+    \CR(d_1 \wedge d_2)
+    \;\leq\;
+    \CR(d_1) + \CR(d_2).
+  \]
+  \label{thm:subadditive}
+\end{theorem}
+
+\begin{proof}
+  Let $\gamma_1^* \in \Gamma_{d_1}^p$ and $\gamma_2^* \in
+  \Gamma_{d_2}^p$ be minimal repair paths for each distinction
+  separately.
+  Under commutativity, the concatenation
+  $\gamma_1^* \cdot \gamma_2^*$ is a valid repair path for
+  $d_1 \wedge d_2$ with cost at most
+  $\mathrm{cost}(\gamma_1^*) + \mathrm{cost}(\gamma_2^*)$.
+  Taking infima on each side yields the stated inequality.
+\end{proof}
+
+\begin{definition}[Repair interference functional]
+  For distinctions $d_1, d_2 \in \Rest(\mathcal{R})$, define
+  \[
+    I(d_1, d_2)
+    \;=\;
+    \CR(d_1 \wedge d_2) - \CR(d_1) - \CR(d_2).
+  \]
+  \label{def:interference}
+\end{definition}
+
+By Theorem~\ref{thm:subadditive}, $I(d_1, d_2) \leq 0$ when repair
+paths commute.
+Three regimes are distinguished:
+
+\begin{itemize}
+  \item $I(d_1, d_2) > 0$: \emph{repair conflict}.
+    Restoring both distinctions jointly costs more than restoring
+    each separately.
+    This is the formal signature of perceptual trade-offs:
+    attending to one distinction impedes maintenance of another.
+
+  \item $I(d_1, d_2) = 0$: \emph{repair independence}.
+    The distinctions are orthogonal in repair space.
+
+  \item $I(d_1, d_2) < 0$: \emph{repair synergy}.
+    Joint restoration is cheaper than independent restoration.
+    This captures perceptual binding: some distinctions are
+    more efficiently maintained together than apart, which
+    may underlie Gestalt grouping effects and multi-modal
+    perceptual integration.
+\end{itemize}
+
+When the restorable distinction space is finite or countable,
+the pairwise values $I(d_i, d_j)$ assemble into a matrix.
+
+\begin{definition}[Interference matrix]
+  Let $\{d_1, \ldots, d_n\} \subseteq \Rest(\mathcal{R})$ be a finite
+  collection of distinctions.
+  The \emph{interference matrix} is
+  \[
+    \IntMat \;=\; \bigl(I(d_i, d_j)\bigr)_{i,j=1}^n \;\in\; \mathbb{R}^{n \times n}.
+  \]
+  \label{def:int-matrix}
+\end{definition}
+
+\begin{proposition}[Spectral interpretation of the interference matrix]
+  $\IntMat$ is symmetric.
+  Its spectrum $\spec(\IntMat)$ carries the following interpretation:
+  \begin{enumerate}
+    \item \emph{Large positive eigenvalues}: the corresponding
+      eigenvectors identify \emph{repair bottleneck clusters}---groups
+      of distinctions that mutually impede each other's restoration.
+      These correspond to attentional capacity limits in biological
+      observers and bandwidth constraints in institutional ones.
+    \item \emph{Large negative eigenvalues}: the eigenvectors identify
+      \emph{synergistic bundles}---groups of distinctions that are
+      substantially cheaper to restore jointly.
+      These correspond to Gestalt perceptual groupings, co-regulated
+      gene networks, and inter-dependent institutional procedures.
+    \item \emph{Near-zero eigenvalues}: the associated distinctions are
+      approximately independent in repair space---neither conflicting
+      nor synergistic.
+  \end{enumerate}
+  The Frobenius norm $\|\IntMat\|_F$ quantifies the total interaction
+  strength; $\|\IntMat\|_F = 0$ iff all distinctions in the collection
+  are repair-independent.
+  \label{prop:spectrum}
+\end{proposition}
+
+\begin{proof}
+  Symmetry: $I(d_i, d_j) = I(d_j, d_i)$ since $d_i \wedge d_j =
+  d_j \wedge d_i$ and $\CR$ is a function of the distinction alone.
+  The spectral interpretations follow from standard spectral geometry:
+  the quadratic form $v^\top \IntMat v$ for a unit vector $v$
+  represents the weighted interference over the combination
+  $\sum_i v_i d_i$, with positive values indicating net conflict and
+  negative values indicating net synergy.
+\end{proof}
+
+\begin{remark}
+  The interference matrix has the algebraic structure of a signed
+  Gram matrix over the distinction space, and its spectral theory
+  connects the repair framework to random matrix theory and
+  the theory of signed networks.
+  For an observer with a large restorable distinction space, the
+  density of states of $\IntMat$ describes the global interaction
+  structure of perception.
+  A repair bottleneck corresponds to a rank-one positive perturbation
+  of $\IntMat$; the eigenvalue gap around zero measures how close
+  the observer is to a globally synergistic or globally conflicted
+  regime.
+  Ray~Barman et al.~\cite{RayBarman2026} demonstrate empirically that
+  interference among competing memories---rather than temporal decay
+  alone---drives power-law forgetting in high-dimensional retrieval
+  systems, and that vulnerability to interference is governed by
+  \emph{effective} rather than nominal dimensionality.
+  The interference matrix provides a formal object in which these
+  empirical phenomena have a natural home: the effective dimensionality
+  of a retrieval space corresponds to the rank of $\IntMat$, and the
+  concentration of variance into few dimensions corresponds to a
+  low-rank positive-semidefinite structure with a small number of
+  large positive eigenvalues.
+\end{remark}
+
+\subsection{The Repair Pseudometric}
+
+\begin{definition}[Repair pseudometric]
+  For distinctions $d_i, d_j \in \Rest(\mathcal{R})$, define
+  \[
+    d_R(d_i, d_j)
+    \;=\;
+    \inf_{\gamma : d_i \leadsto d_j}
+    \int_{\gamma} c(x)\, \mathrm{d}s,
+  \]
+  where the infimum is taken over all repair trajectories in
+  $\Xsub$ that transform the substrate state associated with
+  $d_i$ into one from which $d_j$ is restorable.
+  The construction is formally analogous to the Kantorovich--Wasserstein
+  distance on probability measures~\cite{Villani2009}, with repair
+  trajectories playing the role of transport plans.
+\end{definition}
+
+\begin{proposition}[Repair pseudometric properties]
+  The function $d_R$ satisfies:
+  \begin{enumerate}
+    \item $d_R(d_i, d_i) = 0$ for all $d_i$;
+    \item $d_R(d_i, d_k) \leq d_R(d_i, d_j) + d_R(d_j, d_k)$
+      (triangle inequality, by path concatenation);
+    \item If repair trajectories are reversible and $c$ is symmetric
+      under reversal, then $d_R(d_i, d_j) = d_R(d_j, d_i)$ and
+      $d_R$ is a genuine metric on $\Rest(\mathcal{R})$.
+  \end{enumerate}
+  \label{prop:metric}
+\end{proposition}
+
+\begin{remark}
+  Irreversible perturbations---cell death, archive destruction,
+  data erasure---produce cases where $d_R(d_i, d_j) \neq d_R(d_j, d_i)$.
+  The asymmetric pseudometric is therefore the primary object; the
+  metric is a special case arising under reversibility.
+  The directed structure of irreversible repair spaces may connect to
+  the time-asymmetric picture developed in the RSVP framework.
+\end{remark}
+
+\subsection{Reachability and Restorability}
+
+The following theorem is the formal weld between the repair-observer
+framework and the admissibility program.
+
+\begin{theorem}[Reachability--Restorability Inclusion]
+  Let $\AO$ be the observer-relative admissibility manifold
+  (Definition of Section~\ref{sec:boundary}) and let
+  $\Reach(\AO)$ denote the set of distinctions reachable
+  within $\AO$ under the dynamics of $S$.
+  Then
+  \[
+    \Rest(\mathcal{R}_O)
+    \;\subseteq\;
+    \Reach(\AO).
+  \]
+  Every observable distinction lies within the observer's reachable
+  admissibility region.
+  \label{thm:reach-rest}
+\end{theorem}
+
+\begin{proof}
+  Suppose $d \in \Rest(\mathcal{R}_O)$.
+  Then $\CR(d) < +\infty$, so there exists a finite-cost repair path
+  $\gamma$ that restores $d$ from any admissible perturbation.
+  This path lies within $\Xsub$ and terminates in a state where $d$
+  is discriminable.
+  By definition, the set of states from which $d$ remains restorable
+  is contained in $\AO$ (since those states are precisely those from
+  which the observer can maintain its distinctions).
+  The path $\gamma$ therefore connects the perturbed state to a point
+  in $\AO$, establishing that $d$ is reachable within $\AO$.
+\end{proof}
+
+\begin{remark}
+  The inclusion $\Rest(\mathcal{R}_O) \subseteq \Reach(\AO)$ is in
+  general strict.
+  Equality would require that every distinction reachable within the
+  admissibility manifold is also restorable by the repair repertoire,
+  which fails when the manifold contains states that are geometrically
+  accessible but dynamically blocked.
+  Whether equality holds under compactness and convexity assumptions
+  is an open question (Problem~5 in Section~\ref{sec:conclusion}).
+\end{remark}
+
+\subsection{Control--Geometry Duality}
+
+The Reachability--Restorability Inclusion reveals a structural duality
+running through the entire framework.
+On one side stands the \emph{control} perspective: the repair
+repertoire $\mathcal{R}_O$ generates a dynamics on $\Xsub$, and
+questions of repair are questions of controllability.
+On the other side stands the \emph{geometry} perspective: the restorable
+distinction space $\Rest(\mathcal{R}_O)$ inherits a metric structure
+from repair cost, and questions of observation are questions of
+geometry.
+
+\begin{definition}[Control structure and induced geometry]
+  The \emph{control structure} of an observer is the triple
+  $\mathfrak{C}(\mathcal{R}_O) = (\Xsub, \mathcal{R}_O, c)$:
+  a state space, a set of admissible interventions, and a cost
+  density.
+  The \emph{induced geometry} is the pair
+  $\mathfrak{G}(\Rest(\mathcal{R}_O)) = (\Rest(\mathcal{R}_O), d_R)$:
+  the restorable distinction space equipped with the repair
+  pseudometric.
+\end{definition}
+
+The duality takes the form of a correspondence:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{l@{\quad$\longleftrightarrow$\quad}l}
+  Reachability in $\mathfrak{C}$ & Existence of a repair trajectory \\
+  Restorability in $\mathfrak{G}$ & Finite cost of a repair trajectory \\
+  Admissibility boundary $\bA_O$ & Divergence locus of $\CR$ \\
+  Local controllability & Open geodesic balls in $d_R$ \\
+  Topological controllability & Dense repair orbits in $\Rest(\mathcal{R}_O)$ \\
+\end{tabular}
+\end{center}
+
+\begin{theorem}[Control--Geometry Collapse]
+  Let $\Xsub \subseteq \mathbb{R}^m$ be compact and convex and let
+  the repair repertoire $\mathcal{R}_O$ consist of continuous maps
+  forming a locally state-controllable system on the interior of
+  $\AO$.
+  Then
+  \[
+    \Rest(\mathcal{R}_O) \;=\; \Reach(\AO).
+  \]
+  \label{thm:cg-collapse}
+\end{theorem}
+
+\begin{proof}
+  $(\subseteq)$\; Theorem~\ref{thm:reach-rest}.
+
+  $(\supseteq)$\;
+  Suppose $d \in \Reach(\AO)$.
+  By local state-controllability, the reachable set from any interior
+  point of $\AO$ is open.
+  Any continuous path in $\AO$ from the perturbed state to a state
+  where $d$ is discriminable can therefore be covered by finitely many
+  open controllable neighbourhoods (by compactness of $\AO$).
+  Each neighbourhood transition is realised by a finite sequence of
+  repair operators in $\mathcal{R}_O$.
+  The composite path has total cost bounded by $N \cdot M$ where
+  $N$ is the number of transitions and $M = \max_{x \in \Xsub} c(x)
+  < +\infty$ (since $c$ is lower semi-continuous on a compact space).
+  Thus $\CR(d) \leq N \cdot M < +\infty$, so $d \in \Rest(\mathcal{R}_O)$.
+\end{proof}
+
+\begin{remark}
+  Theorem~\ref{thm:cg-collapse} is a resolution of Problem~5 under
+  explicit hypotheses.
+  The control-theoretic condition (local state-controllability) is the
+  precise content of the intuition that ``every geometrically accessible
+  state is dynamically reachable.''
+  When $\mathcal{R}_O$ generates a dense subgroup of the homeomorphism
+  group of $\Xsub$, controllability holds automatically and the
+  equality follows.
+  The Repair Boundary Theorem is then a corollary of the duality:
+  the boundary $\bA_O$ is simultaneously the set of states from which
+  the geometry runs out (repair cost diverges) and the set of states
+  from which the control system can no longer steer.
+\end{remark}
+
+
+
+
+We characterise the boundary of the observer-relative admissibility
+manifold in terms of diverging repair cost.
+Theorem~\ref{thm:reach-rest} established that every restorable
+distinction lies within the reachable admissibility region;
+the Repair Boundary Theorem pinpoints where that region ends.
+It requires a preparatory lemma.
+
+\begin{lemma}[Lower semi-continuity of repair cost]
+  Let $\Xsub$ be locally compact (Axiom~\ref{ax:lch}), let the local
+  cost density $c : \Xsub \to \mathbb{R}_{\geq 0}$ be lower
+  semi-continuous~\cite{RockafellarWets1998}, and let the admissible
+  repair paths form a family closed under uniform limits on compact
+  intervals.
+  Then the minimal repair cost
+  \[
+    \CR(d, x)
+    \;=\;
+    \inf_{\gamma \in \Gamma_d(x)}
+    \int_{\gamma} c\, \mathrm{d}s
+  \]
+  is lower semi-continuous in $x$.
+  \label{lem:lsc}
+\end{lemma}
+
+\begin{proof}
+  Let $(x_n)$ be a sequence in $\Xsub$ converging to $x$.
+  We show $\liminf_{n \to \infty} \CR(d, x_n) \geq \CR(d, x)$.
+
+  For each $n$, let $\gamma_n \in \Gamma_d(x_n)$ be a near-optimal
+  repair path with
+  $\mathrm{cost}(\gamma_n) \leq \CR(d, x_n) + 1/n$.
+  Restricting to a compact neighbourhood $K$ of $x$ and using
+  local compactness, the paths $(\gamma_n)$ are equibounded in cost.
+  By the assumed closure under uniform limits on compact intervals,
+  a subsequence $(\gamma_{n_k})$ converges uniformly to a limit path
+  $\gamma^* \in \Gamma_d(x)$.
+
+  By lower semi-continuity of $c$ and Fatou's lemma applied to the
+  path integrals,
+  \[
+    \int_{\gamma^*} c\, \mathrm{d}s
+    \;\leq\;
+    \liminf_{k \to \infty}
+    \int_{\gamma_{n_k}} c\, \mathrm{d}s
+    \;\leq\;
+    \liminf_{n \to \infty} \CR(d, x_n).
+  \]
+  Since $\gamma^* \in \Gamma_d(x)$, we have
+  $\CR(d, x) \leq \int_{\gamma^*} c\, \mathrm{d}s$,
+  completing the proof.
+\end{proof}
+
+\begin{definition}[Observer-relative admissibility manifold]
+  Let $O = (S, \mathcal{R}_O)$ be an observer.
+  The \emph{observer-relative admissibility manifold} $\AO$ is the
+  closure of the set of states from which all distinctions in $\DO$
+  remain restorable:
+  \[
+    \AO
+    \;=\;
+    \overline{\bigl\{
+      x \in \Xsub
+      \;\big|\;
+      \forall\, d \in \DO,\;
+      \CR(d) < +\infty \text{ from } x
+    \bigr\}}.
+  \]
+\end{definition}
+
+\begin{theorem}[Repair Boundary Theorem]
+  A state $x$ lies on the boundary of the observer-relative
+  admissibility manifold if and only if the minimal repair cost of at
+  least one distinction in $\DO$ diverges as the system approaches $x$:
+  \[
+    x \in \bA_O
+    \quad\Longleftrightarrow\quad
+    \exists\, d \in \DO : \CR(d) \to +\infty
+    \text{ as the system state approaches } x.
+  \]
+  \label{thm:repair-boundary}
+\end{theorem}
+
+\begin{proof}
+  $(\Rightarrow)$\; Suppose $x \in \bA_O$.
+  Then $x$ is a limit point of $\AO$ and also of its complement.
+  In any neighbourhood $U \ni x$ there exist states from which some
+  distinction $d \in \DO$ is not finitely restorable.
+  By Lemma~\ref{lem:lsc}, $\CR(d, \cdot)$ is lower semi-continuous;
+  hence $\CR(d)$ must become unbounded along any sequence approaching
+  $x$ from outside $\AO$, establishing $\CR(d) \to +\infty$.
+
+  $(\Leftarrow)$\; If $\CR(d) \to +\infty$ as the state approaches
+  $x$, then in any neighbourhood of $x$ there are states from which
+  $d$ is not finitely restorable.
+  Hence $x \notin \mathrm{int}(\AO)$, so $x \in \bA_O$.
+\end{proof}
+
+\begin{remark}
+  Theorem~\ref{thm:repair-boundary} identifies the admissibility
+  boundary not as an externally imposed constraint but as an emergent
+  consequence of the repair structure.
+  The boundary is where the observer's world ends, in the precise sense
+  that no further repair is possible.
+\end{remark}
+
+\begin{corollary}[Admissibility as repair capacity]
+  The interior of $\AO$ is exactly the set of states from which the
+  observer can maintain all its distinctions under all admissible
+  perturbations.
+  Moving toward $\bA_O$ is operationally equivalent to losing
+  observational capacity.
+\end{corollary}
+
+
+% ============================================================
+\section{Blindsight and Perceptual Filling-In}
+\label{sec:blindsight}
+% ============================================================
+
+The repair-observer framework generates a clean account of
+\emph{blindsight}: the phenomenon in which subjects with cortical
+damage respond discriminatively to visual stimuli they cannot
+consciously report~\cite{Weiskrantz1986}.
+The division of visual processing into action-guiding and
+perception-reporting streams~\cite{MilnerGoodale2006} maps directly
+onto the sub-report/report-level restorability split defined below.
+
+In the standard receptive model, blindsight is paradoxical: how can
+information be used if it is not received at the reporting level?
+
+Under the repair model the paradox dissolves.
+Let the observer $O$ decompose into repair sub-processes operating at
+different substrate levels: $O = O_{\mathrm{sub}} \cup O_{\mathrm{rep}}$,
+where $O_{\mathrm{sub}}$ acts below the reporting interface and
+$O_{\mathrm{rep}}$ acts at the interface itself.
+
+\begin{definition}[Sub-report restorability]
+  A distinction $d$ is \emph{sub-report restorable} if
+  $d \in \Rest(\mathcal{R}_{O_{\mathrm{sub}}})$ but
+  $d \notin \Rest(\mathcal{R}_{O_{\mathrm{rep}}})$.
+\end{definition}
+
+Blindsight is then the condition in which the distinction is
+sub-report restorable: the sub-cortical repair process maintains the
+distinction, but the cortical repair process (whose outputs constitute
+verbal report) does not have access to a repair path.
+The subject \emph{observes} in the sub-report sense while failing to
+\emph{observe} in the report sense.
+
+\begin{remark}
+  This account predicts that blindsight subjects should show
+  above-chance performance on forced-choice tasks (sub-report
+  restoration succeeds) while failing to initiate voluntary report
+  (report-level restoration is unavailable).
+  This is the observed pattern.
+\end{remark}
+
+Perceptual filling-in admits a parallel treatment.
+The visual system restores distinctions at the boundary of the blind
+spot not by receiving signals from that region but by extending repair
+trajectories from surrounding states.
+The filled-in percept is a repair product, not a received datum.
+
+
+% ============================================================
+\section{Quantum Measurement as Repair or Collapse}
+\label{sec:quantum}
+% ============================================================
+
+Standard quantum measurement theory distinguishes pre-measurement
+superposition from post-measurement eigenstate.
+The \emph{measurement problem} asks what physical process constitutes
+the collapse.
+
+The repair-observer framework does not solve the measurement problem
+but reframes it productively.
+The present account is complementary to relational quantum
+mechanics~\cite{Rovelli1996}, which treats measurement outcomes as
+relative to observers, and to the decoherence program~\cite{Zurek2003},
+which identifies the mechanism by which classical pointer states
+become stable.
+Under the repair model, decoherence is the process by which the
+apparatus acquires repair operators capable of acting on classical
+pointer distinctions.
+
+Let the substrate $S$ be a quantum system with Hilbert space
+$\mathcal{H}$ and let the distinction relation $\Dsub$ be defined on
+density operators: $(\rho_1, \rho_2) \in \Dsub$ iff
+$\|\rho_1 - \rho_2\|_1 > \varepsilon$ for some threshold
+$\varepsilon > 0$.
+
+A perturbation $p$ that places the system in a superposition
+$|\psi\rangle = \alpha|0\rangle + \beta|1\rangle$
+erases the distinction between $|0\rangle$ and $|1\rangle$ at the
+classical level (neither eigenstate is discriminated from the other
+in $\mathcal{H}$ under $p$).
+
+Measurement is then a repair event: either the apparatus-observer
+$O_{\mathrm{app}}$ possesses a repair operator that drives the state
+to a definite eigenstate (collapse as successful restoration), or it
+does not (the distinction remains unrestorable at the classical
+interface).
+
+\begin{proposition}[Measurement as repair completion]
+  A measurement interaction constitutes observation of distinction
+  $d = (|0\rangle, |1\rangle)$ by apparatus $O_{\mathrm{app}}$ if and
+  only if $O_{\mathrm{app}}$ possesses a repair path that takes the
+  post-perturbation superposition to a state in which $d$ is
+  discriminable at the pointer basis.
+  \label{prop:measurement}
+\end{proposition}
+
+\begin{remark}
+  This connects to the quadratic gravity interface picture developed
+  elsewhere in the Flyxion program: the interface at which quantum
+  distinctions become classically available is the interface at which
+  repair operators acting on the classical substrate can restore those
+  distinctions.
+  Decoherence is the mechanism by which this interface becomes
+  accessible.
+  %% EXPAND: connection to RSVP interface papers.
+\end{remark}
+
+
+% ============================================================
+\section{Institutional Observers}
+\label{sec:institutions}
+% ============================================================
+
+Individual biological observers are a special case.
+The framework is equally applicable to any process with a repair
+repertoire.
+
+\begin{definition}[Institutional observer]
+  An \emph{institutional observer} is an observer
+  $O_{\mathrm{inst}} = (S, \mathcal{R}_{\mathrm{inst}})$ in which the
+  substrate $S$ is a social or informational system and the repair
+  repertoire $\mathcal{R}_{\mathrm{inst}}$ consists of codified
+  institutional procedures.
+\end{definition}
+
+\begin{example}[Legal systems]
+  A court is an institutional observer whose substrate is the space of
+  legally characterised states and whose repair repertoire consists of
+  evidentiary and procedural rules.
+  A distinction $d$ between \emph{legal} and \emph{illegal} conduct is
+  observable by the court if and only if the evidentiary procedures
+  can restore that distinction after the perturbation of competing
+  characterisations.
+
+  When courts collapse or procedures are suspended, the distinction
+  does not become \emph{false}: it becomes \emph{unrestorable}.
+  This is the precise sense in which institutional decay is
+  observational decay.
+\end{example}
+
+\begin{example}[Archives and libraries]
+  An archive restores distinctions across time by maintaining repair
+  paths from present queries to past states.
+  A destroyed archive does not falsify historical distinctions; it
+  removes the repair operators by which those distinctions could be
+  recovered.
+\end{example}
+
+\begin{example}[Scientific laboratories]
+  A laboratory is an institutional observer specialised in maintaining
+  distinctions under repeated, intersubjectively verified perturbation.
+  Scientific progress is the expansion of $\Rest(\mathcal{R}_{\mathrm{lab}})$:
+  the set of distinctions that the collective repair apparatus of
+  science can maintain.
+  A scientific \emph{revolution} (in Kuhn's sense) is a restructuring
+  of $\mathcal{R}_{\mathrm{lab}}$ that changes which distinctions are
+  restorable, often making previously central distinctions
+  unrestorable while opening new regions of restoration.
+  %% EXPAND: connection to Kuhn, paradigm shift as repair-repertoire change.
+\end{example}
+
+\begin{theorem}[Paradigm Shift as Repair-Repertoire Discontinuity]
+  Let $\mathcal{R}_{\mathrm{old}}$ and $\mathcal{R}_{\mathrm{new}}$
+  be two repair repertoires representing a scientific community before
+  and after a paradigm shift.
+  If the shift is \emph{non-trivial}, meaning
+  $\mathcal{R}_{\mathrm{old}} \not\subseteq \mathcal{R}_{\mathrm{new}}$
+  and
+  $\mathcal{R}_{\mathrm{new}} \not\subseteq \mathcal{R}_{\mathrm{old}}$,
+  then the restorable distinction sets are incomparable:
+  \[
+    \Rest(\mathcal{R}_{\mathrm{old}})
+    \;\not\subseteq\;
+    \Rest(\mathcal{R}_{\mathrm{new}})
+    \qquad\text{and}\qquad
+    \Rest(\mathcal{R}_{\mathrm{new}})
+    \;\not\subseteq\;
+    \Rest(\mathcal{R}_{\mathrm{old}}).
+  \]
+  In particular, the symmetric difference
+  \[
+    \Rest(\mathcal{R}_{\mathrm{old}})
+    \;\triangle\;
+    \Rest(\mathcal{R}_{\mathrm{new}})
+    \;\neq\; \emptyset
+  \]
+  contains \emph{lost distinctions}
+  $\Rest(\mathcal{R}_{\mathrm{old}}) \setminus
+  \Rest(\mathcal{R}_{\mathrm{new}})$
+  and \emph{gained distinctions}
+  $\Rest(\mathcal{R}_{\mathrm{new}}) \setminus
+  \Rest(\mathcal{R}_{\mathrm{old}})$.
+  \label{thm:paradigm}
+\end{theorem}
+
+\begin{proof}
+  By contraposition of Theorem~\ref{thm:monotonicity}: if
+  $\mathcal{R}_{\mathrm{old}} \not\subseteq \mathcal{R}_{\mathrm{new}}$,
+  there exists $r \in \mathcal{R}_{\mathrm{old}} \setminus
+  \mathcal{R}_{\mathrm{new}}$.
+  Any distinction $d$ whose only repair paths under admissible
+  perturbations pass through $r$ is in
+  $\Rest(\mathcal{R}_{\mathrm{old}}) \setminus
+  \Rest(\mathcal{R}_{\mathrm{new}})$; such distinctions exist
+  generically when $r$ is not compositionally redundant.
+  The symmetric argument yields gains.
+\end{proof}
+
+\begin{remark}
+  Theorem~\ref{thm:paradigm} formalises Kuhnian incommensurability~\cite{Kuhn1962}
+  as a repair-space statement.
+  Lost distinctions are not \emph{refuted}; they become
+  \emph{unrestorable} in the new paradigm.
+  This is precisely the claim that different paradigms make different
+  kinds of mistakes visible and invisible, not merely different claims
+  about the same visible space.
+  The interference matrix $\IntMat$ of Section~\ref{sec:structure}
+  will in general have a different spectrum under
+  $\mathcal{R}_{\mathrm{old}}$ and $\mathcal{R}_{\mathrm{new}}$,
+  providing a quantitative signature of the shift.
+  This connects the theorem to the distinction-reorganization papers
+  in the broader program.
+\end{remark}
+
+\begin{definition}[Social reality as institutional restorability]
+  An institutional distinction $d$ is \emph{socially real} relative
+  to institutional observer $O_{\mathrm{inst}}$ if and only if
+  $d \in \Rest(\mathcal{R}_{\mathrm{inst}})$.
+  \label{def:social-reality}
+\end{definition}
+
+\begin{proposition}[Institutional collapse shrinks the real]
+  Let $O_{\mathrm{inst}}$ undergo a perturbation that reduces its
+  repair repertoire from $\mathcal{R}$ to $\mathcal{R}' \subsetneq
+  \mathcal{R}$.
+  Then
+  \[
+    \Rest(\mathcal{R}') \;\subseteq\; \Rest(\mathcal{R}),
+  \]
+  and the set of socially real distinctions is (weakly) smaller after
+  the collapse.
+  Distinctions in $\Rest(\mathcal{R}) \setminus \Rest(\mathcal{R}')$
+  do not become false; they become unrestorable.
+  \label{prop:collapse}
+\end{proposition}
+
+\begin{proof}
+  By Theorem~\ref{thm:monotonicity} applied contravariantly:
+  $\mathcal{R}' \subseteq \mathcal{R}$ implies
+  $\Rest(\mathcal{R}') \subseteq \Rest(\mathcal{R})$.
+  Any distinction in the difference set was formerly restorable
+  by procedures no longer available; it is now unrestorable, hence
+  socially unreal by Definition~\ref{def:social-reality}.
+\end{proof}
+
+
+% ============================================================
+\section{Consequences and Open Problems}
+\label{sec:conclusion}
+% ============================================================
+
+Taking $\Obs(O) = \Rest(O)$ seriously reorganises several independent
+lines of inquiry into a single structure.
+
+\medskip\noindent
+\textbf{Memory.}\;
+Memory is not storage of representations but maintenance of repair
+trajectories.
+To remember a distinction is to retain a repair path by which it can
+be restored after perturbation.
+Forgetting is the loss of repair paths, not the erasure of stored
+data.
+This connects to the deformation-of-the-admissibility-manifold account
+of memory loss developed separately in the \emph{Cost of Forgetting}
+program.
+
+\medskip\noindent
+\textbf{Understanding.}\;
+Understanding a distinction is possessing an efficient repair path
+for it.
+Understanding increases with the depth and economy of available repair
+trajectories, not with the volume of information received.
+
+\medskip\noindent
+\textbf{Intelligence.}\;
+Intelligence, under this framework, is repair efficiency: the capacity
+to restore distinctions with minimal cost across the widest possible
+range of perturbations.
+The admissibility manifold of an intelligent system is larger and more
+robustly bounded than that of a less intelligent system.
+
+\medskip\noindent
+\textbf{Science.}\;
+Science is collective repair under intersubjective constraint.
+The objectivity of scientific knowledge consists not in its
+correspondence to an observer-independent world but in its
+intersubjective restorability: the distinctions that science maintains
+are those restorable by the collective repair apparatus, reproducibly,
+across observers.
+
+\medskip
+The following problems remain open.
+
+\begin{enumerate}
+  \item \textbf{Limit restorability theorem.}\;
+    Theorem~\ref{thm:stable-obs} characterises $\Restf(\mathcal{R})$
+    via stable observability.
+    Prove the analogue for $\Reston(\mathcal{R})$ under weaker
+    topological assumptions: does there exist a pre-theoretic notion
+    of \emph{asymptotic observability} that identifies exactly with
+    limit restorability?
+
+  \item \textbf{Interference matrix spectrum.}\;
+    Characterise which symmetric real matrices arise as interference
+    matrices $\IntMat$ of some repair repertoire.
+    What constraints does the repair structure impose on the spectrum?
+    Is there a repair analogue of the Wigner semicircle law for
+    large randomly generated observers?
+
+  \item \textbf{Repair conflict graph.}\;
+    The positive part of $\IntMat$ defines a signed graph on
+    $\Rest(\mathcal{R})$ whose positive-weight cliques are repair
+    bottleneck clusters.
+    Characterise graphs arising from repair repertoires.
+    Relate the clique number to attentional capacity limits in
+    biological observers.
+    The empirical finding that production embedding models concentrate
+    variance into roughly 16 effective dimensions regardless of nominal
+    dimensionality~\cite{RayBarman2026} suggests that biological and
+    artificial retrieval systems may share a characteristic interference
+    graph structure; characterising this structure in repair-theoretic
+    terms is an open problem.
+
+  \item \textbf{Repair basis.}\;
+    Is there a notion of \emph{repair basis} for a distinction space,
+    analogous to a basis for a vector space?
+    A natural candidate: a minimal set $B \subseteq \Rest(\mathcal{R})$
+    such that every element of $\Rest(\mathcal{R})$ is limit-restorable
+    from synergistic combinations of elements of $B$.
+
+  \item \textbf{Repair dynamics and manifold deformation.}\;
+    How does $\AO$ evolve when $\mathcal{R}_O$ is itself perturbed?
+    Is manifold deformation under memory loss (the Cost of Forgetting
+    program) equivalent to repair-repertoire reduction
+    $\mathcal{R} \to \mathcal{R}' \subsetneq \mathcal{R}$?
+    Is the resulting deformation of $\Rest(\mathcal{R})$ under $d_R$
+    an isometric embedding or a metric collapse?
+
+  \item \textbf{Control--Geometry Collapse without compactness.}\;
+    Theorem~\ref{thm:cg-collapse} assumes $\Xsub$ compact and convex.
+    What are the weakest conditions under which
+    $\Rest(\mathcal{R}_O) = \Reach(\AO)$?
+    Characterise the Lie algebra rank conditions on $\mathcal{R}_O$
+    under which the inclusion collapses, and map this onto
+    topological controllability of RSVP field profiles.
+
+  \item \textbf{Interface theorems.}\;
+    Prove a precise connection between the Repair Boundary Theorem
+    (Theorem~\ref{thm:repair-boundary}) and the interface-derivation
+    program in quadratic gravity.
+    Under the duality of Section~\ref{sec:structure}, the
+    quantum-classical interface is the locus where quantum repair
+    operators cease to be available at the classical substrate, i.e.,
+    where $\CR$ diverges for quantum state-preparation distinctions.
+    Make this precise using the Reachability--Restorability framework.
+\end{enumerate}
+
+\medskip
+Observation is not passive reception.
+It is the maintenance of a world under perturbation.
+The world an observer inhabits is exactly as large as its capacity to
+repair.
+
+% ============================================================
+\begin{thebibliography}{99}
+
+\bibitem{Ashby1956}
+Ashby, W.~Ross.
+\newblock \emph{An Introduction to Cybernetics}.
+\newblock Chapman \& Hall, London, 1956.
+
+\bibitem{ConantAshby1970}
+Conant, Roger~C., and W.~Ross Ashby.
+\newblock Every good regulator of a system must be a model of that system.
+\newblock \emph{International Journal of Systems Science}, 1(2):89--97, 1970.
+
+\bibitem{MaturanaVarela1980}
+Maturana, Humberto~R., and Francisco~J. Varela.
+\newblock \emph{Autopoiesis and Cognition: The Realization of the Living}.
+\newblock D.~Reidel, Dordrecht, 1980.
+
+\bibitem{VarelaThompsonRosch1991}
+Varela, Francisco~J., Evan Thompson, and Eleanor Rosch.
+\newblock \emph{The Embodied Mind}.
+\newblock MIT Press, Cambridge, MA, 1991.
+
+\bibitem{Gibson1979}
+Gibson, James~J.
+\newblock \emph{The Ecological Approach to Visual Perception}.
+\newblock Houghton Mifflin, Boston, 1979.
+
+\bibitem{Marr1982}
+Marr, David.
+\newblock \emph{Vision}.
+\newblock W.~H. Freeman, San Francisco, 1982.
+
+\bibitem{Weiskrantz1986}
+Weiskrantz, Lawrence.
+\newblock \emph{Blindsight: A Case Study and Implications}.
+\newblock Oxford University Press, Oxford, 1986.
+
+\bibitem{MilnerGoodale2006}
+Milner, A.~David, and Melvyn~A. Goodale.
+\newblock \emph{The Visual Brain in Action}.
+\newblock Oxford University Press, Oxford, 2nd edition, 2006.
+
+\bibitem{Kuhn1962}
+Kuhn, Thomas~S.
+\newblock \emph{The Structure of Scientific Revolutions}.
+\newblock University of Chicago Press, Chicago, 1962.
+
+\bibitem{Bellman1957}
+Bellman, Richard.
+\newblock \emph{Dynamic Programming}.
+\newblock Princeton University Press, Princeton, NJ, 1957.
+
+\bibitem{Kalman1960}
+Kalman, Rudolf~E.
+\newblock Contributions to the theory of optimal control.
+\newblock \emph{Boletin de la Sociedad Matem\'atica Mexicana},
+  5:102--119, 1960.
+
+\bibitem{Sontag1998}
+Sontag, Eduardo~D.
+\newblock \emph{Mathematical Control Theory}.
+\newblock Springer, New York, 1998.
+
+\bibitem{Munkres2000}
+Munkres, James~R.
+\newblock \emph{Topology}.
+\newblock Prentice Hall, Upper Saddle River, NJ, 2nd edition, 2000.
+
+\bibitem{RockafellarWets1998}
+Rockafellar, R.~Tyrrell, and Roger~J.-B. Wets.
+\newblock \emph{Variational Analysis}.
+\newblock Springer, Berlin, 1998.
+
+\bibitem{Villani2009}
+Villani, C\'edric.
+\newblock \emph{Optimal Transport: Old and New}.
+\newblock Springer, Berlin, 2009.
+
+\bibitem{Shannon1948}
+Shannon, Claude~E.
+\newblock A mathematical theory of communication.
+\newblock \emph{Bell System Technical Journal}, 27(3):379--423, 1948.
+
+\bibitem{Rovelli1996}
+Rovelli, Carlo.
+\newblock Relational quantum mechanics.
+\newblock \emph{International Journal of Theoretical Physics},
+  35(8):1637--1678, 1996.
+
+\bibitem{Zurek2003}
+Zurek, Wojciech~H.
+\newblock Decoherence, einselection, and the quantum origins of the classical.
+\newblock \emph{Reviews of Modern Physics}, 75(3):715--775, 2003.
+
+\bibitem{RayBarman2026}
+Ray~Barman, Sambartha, Andrey Starenky, Sophia Bodnar, Nikhil Narasimhan,
+  and Ashwin Gopinath.
+\newblock The geometry of forgetting.
+\newblock \emph{arXiv}:2604.06222, 2026.
+
+\end{thebibliography}
+
+\end{document}
