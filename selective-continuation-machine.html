@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Selective Continuation Machine</title>
+<style>
+  :root{
+    --bg:#0b0d10;
+    --panel:#12161c;
+    --ink:#e8e2cf;
+    --muted:#8e948f;
+    --line:#343a3f;
+    --accent:#e2c96f;
+    --good:#9fcf9f;
+    --bad:#d08e8e;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+  body{
+    background-image:
+      linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
+    background-size:24px 24px;
+  }
+  main{max-width:1180px;margin:auto;padding:42px 20px 70px}
+  header{border-bottom:1px solid var(--line);padding-bottom:22px;margin-bottom:24px}
+  .kicker{color:var(--accent);font-size:.8rem;letter-spacing:.16em;text-transform:uppercase}
+  h1{font-size:clamp(2.1rem,6vw,5rem);line-height:.92;margin:.3em 0 .2em;letter-spacing:-.07em}
+  .lede{max-width:760px;color:var(--muted);line-height:1.65}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .panel{background:rgba(18,22,28,.91);border:1px solid var(--line);padding:18px;box-shadow:0 14px 40px rgba(0,0,0,.25)}
+  .panel h2{font-size:.88rem;color:var(--accent);font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin:0 0 15px}
+  .state{font-size:2.3rem;letter-spacing:-.06em;margin:8px 0 18px}
+  .tokens{display:flex;gap:8px;flex-wrap:wrap;min-height:38px}
+  .token{border:1px solid var(--line);padding:7px 10px;background:#0d1014;font-size:.83rem}
+  .operative{border-color:var(--good);color:var(--good)}
+  .rejected{border-color:var(--bad);color:var(--bad)}
+  .history{max-height:390px;overflow:auto;padding-right:4px}
+  .event{padding:11px 0;border-top:1px dashed var(--line);font-size:.85rem;line-height:1.5}
+  .event:first-child{border-top:0}
+  .event small{display:block;color:var(--muted);margin-bottom:3px}
+  .controls{margin-top:18px;display:grid;grid-template-columns:1fr auto;gap:9px}
+  input{width:100%;background:#090b0e;border:1px solid var(--line);color:var(--ink);padding:12px 13px;font:inherit;outline:none}
+  input:focus{border-color:var(--accent)}
+  button{background:#161b21;border:1px solid var(--line);color:var(--ink);padding:11px 14px;font:inherit;cursor:pointer}
+  button:hover{border-color:var(--accent);color:var(--accent)}
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .logic{margin-top:18px;border-top:1px solid var(--line);padding-top:17px;color:var(--muted);line-height:1.65;font-size:.88rem}
+  .logic strong{color:var(--ink)}
+  .equation{font-size:clamp(1rem,2.1vw,1.35rem);color:var(--ink);padding:14px 0}
+  footer{margin-top:25px;color:var(--muted);font-size:.76rem}
+  .blink::after{content:"_";animation:b 1s steps(1) infinite;color:var(--accent)}
+  @keyframes b{50%{opacity:0}}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}.controls{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="kicker">Flyxion / conceptual instrument 01</div>
+    <h1>SELECTIVE<br>CONTINUATION</h1>
+    <p class="lede">
+      A history may remember everything without allowing everything to become reality.
+      Proposals enter the documentary record first. Admission is a separate act.
+      Rejection therefore does not erase the past; it only refuses that branch as the next operative state.
+    </p>
+  </header>
+
+  <section class="grid">
+    <div class="panel">
+      <h2>Operative state σ</h2>
+      <div class="state" id="state">∅</div>
+      <div class="tokens" id="operative"></div>
+
+      <div class="controls">
+        <input id="proposal" autocomplete="off" placeholder="propose a continuation…">
+        <button id="record">RECORD</button>
+      </div>
+      <div class="actions">
+        <button id="admit">ADMIT LATEST</button>
+        <button id="refuse">REFUSE LATEST</button>
+        <button id="bind">BIND / NARROW</button>
+        <button id="reset">RESET</button>
+      </div>
+
+      <div class="logic">
+        <strong>Rule:</strong> verification, diagnosis, repair, admissibility and commitment are not synonyms.
+        <div class="equation">record(x) ≠ admit(x) ≠ commit(x)</div>
+        What survives in history can be larger than what survives as reality.
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Append-only history H</h2>
+      <div class="history" id="history">
+        <div class="event">
+          <small>GENESIS</small>
+          History initialized. Nothing has yet been admitted.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid" style="margin-top:18px">
+    <div class="panel">
+      <h2>Current admissible horizon A</h2>
+      <div class="tokens" id="horizon"></div>
+      <div class="logic">
+        The horizon is not “the future.” It is the set of continuations still available after prior constraints.
+        A bind narrows this set without pretending the discarded alternatives never existed.
+      </div>
+    </div>
+    <div class="panel">
+      <h2>Machine interpretation</h2>
+      <div class="logic" style="padding-top:0;border-top:0">
+        <strong>History H</strong> is documentary memory.<br>
+        <strong>State σ</strong> is what the system currently treats as real.<br>
+        <strong>Admissibility A</strong> is what may still continue.<br>
+        <strong>Commitment C</strong> is the explicit operation that changes the operative trajectory.<br><br>
+        The point is not immutability for its own sake. The point is to preserve evidence while keeping continuation selective.
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="blink">history is larger than reality</span>
+  </footer>
+</main>
+
+<script>
+(() => {
+  const proposal = document.querySelector('#proposal');
+  const historyEl = document.querySelector('#history');
+  const operativeEl = document.querySelector('#operative');
+  const horizonEl = document.querySelector('#horizon');
+  const stateEl = document.querySelector('#state');
+
+  let history = [];
+  let operative = [];
+  let horizon = [];
+  let latest = null;
+
+  function stamp(){
+    return new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  }
+
+  function log(kind, text, cls=''){
+    history.push({kind,text,cls,time:stamp()});
+    render();
+  }
+
+  function render(){
+    historyEl.innerHTML = history.length
+      ? history.map(e => `<div class="event ${e.cls}"><small>${e.time} · ${e.kind}</small>${escapeHtml(e.text)}</div>`).join('')
+      : '<div class="event"><small>GENESIS</small>History initialized.</div>';
+
+    operativeEl.innerHTML = operative.length
+      ? operative.map(x => `<span class="token operative">${escapeHtml(x)}</span>`).join('')
+      : '<span class="token">empty</span>';
+
+    horizonEl.innerHTML = horizon.length
+      ? horizon.map(x => `<span class="token">${escapeHtml(x)}</span>`).join('')
+      : '<span class="token">no recorded candidates</span>';
+
+    stateEl.textContent = operative.length ? `σ${operative.length}` : '∅';
+    historyEl.scrollTop = historyEl.scrollHeight;
+  }
+
+  function escapeHtml(s){
+    return s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  }
+
+  document.querySelector('#record').onclick = () => {
+    const value = proposal.value.trim();
+    if(!value) return;
+    latest = value;
+    horizon.push(value);
+    log('RECORDED', `Proposal preserved: ${value}`);
+    proposal.value = '';
+    proposal.focus();
+  };
+
+  document.querySelector('#admit').onclick = () => {
+    if(!latest) return log('NO-OP','Nothing available to admit.');
+    if(!horizon.includes(latest)) return log('NO-OP','Latest proposal is no longer in the admissible horizon.');
+    operative.push(latest);
+    horizon = horizon.filter(x => x !== latest);
+    log('COMMIT', `Admitted into operative continuation: ${latest}`, 'operative');
+    latest = null;
+  };
+
+  document.querySelector('#refuse').onclick = () => {
+    if(!latest) return log('NO-OP','Nothing available to refuse.');
+    horizon = horizon.filter(x => x !== latest);
+    log('REFUSED', `Proposal remains in history but is not admitted: ${latest}`, 'rejected');
+    latest = null;
+  };
+
+  document.querySelector('#bind').onclick = () => {
+    if(horizon.length < 2) return log('NO-OP','Binding is only interesting when multiple alternatives remain.');
+    const kept = horizon.filter((_,i) => i % 2 === 0);
+    const removed = horizon.filter(x => !kept.includes(x));
+    horizon = kept;
+    log('BIND', `Horizon narrowed. Retained ${kept.length}; excluded ${removed.length}. Documentary history unchanged.`);
+  };
+
+  document.querySelector('#reset').onclick = () => {
+    history = [];
+    operative = [];
+    horizon = [];
+    latest = null;
+    log('RESET','Machine returned to genesis state.');
+  };
+
+  proposal.addEventListener('keydown', e => {
+    if(e.key === 'Enter') document.querySelector('#record').click();
+  });
+
+  log('GENESIS','History initialized. Nothing has yet been admitted.');
+})();
+</script>
+</body>
+</html>

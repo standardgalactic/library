@@ -1,303 +1,2172 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Library</title>
-    <!-- SEO Metadata -->
-    <meta name="description" content="A reconstructed satirical play in the spirit of Giordano Bruno.">
-    <meta property="og:title" content="Library - Lost Book">
-    <meta property="og:description" content="A lost work, reimagined with wit and satire.">
-    <meta property="og:image" content="background.png">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://standardgalactic.github.io/library/">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="background.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Font Definitions -->
-    <style>
-        @font-face {
-            font-family: "SGA";
-            src: url("fonts/Sga-Regular.woff2") format("woff2"),
-                 url("fonts/Sga-Regular.woff") format("woff"),
-                 url("fonts/Sga-Regular.ttf") format("truetype");
-        }
-        @font-face {
-            font-family: "CursiveGalactic";
-            src: url("fonts/CursiveGalactic-Regular.ttf") format("truetype");
-        }
-        @font-face {
-            font-family: "Courier";
-            src: url("fonts/NovaMonoStandardGalactic.ttf") format("truetype");
-        }
+<title>Library — Constraint-Historical Research Instrument</title>
 
-        /* Global Styles */
-        body {
-            background-color: white;
-            color: black;
-            font-family: "SGA", sans-serif;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
+<meta
+    name="description"
+    content="An experimental interface for navigating a constraint-historical research corpus."
+>
+<meta property="og:title" content="Library">
+<meta
+    property="og:description"
+    content="Research as trajectories, constraints, histories, and alternative projections."
+>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://standardgalactic.github.io/library/">
 
-        h1 {
-            text-align: center;
-	    font-size: 4rem;
-        }
+<style>
 
-        .content {
-            max-width: 80%;
-            text-align: left;
-            line-height: 1.6;
-            font-size: 1rem;
-            padding: 20px;
-            border: 2px solid black;
-            border-radius: 10px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
+@font-face {
+    font-family: "SGA";
+    src:
+        url("./fonts/Sga-Regular.woff2") format("woff2"),
+        url("./fonts/Sga-Regular.woff") format("woff"),
+        url("./fonts/Sga-Regular.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
 
-        .audio-player {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 20px;
-            padding: 20px;
-            width: 80%;
-            max-width: 600px;
-        }
+@font-face {
+    font-family: "CursiveGalactic";
+    src:
+        url("./fonts/CursiveGalactic-Regular.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
 
-        audio {
-            width: 100%;
-        }
+@font-face {
+    font-family: "NovaMonoGalactic";
+    src:
+        url("./fonts/NovaMonoStandardGalactic.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
 
-        .controls {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
 
-        .controls button, .controls label {
-            background-color: black;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            margin: 5px;
-            font-family: "Courier New", Courier, monospace;
-            font-size: 1rem;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
+/* ============================================================
+   VARIABLES / FONT MODES
+   ============================================================ */
 
-        .controls button:hover {
-            background-color: grey;
-        }
+:root {
+    --bg: #f3f2ed;
+    --fg: #111;
+    --dim: #666;
+    --faint: #aaa;
+    --line: #222;
+    --panel: #e8e7e1;
+    --selected: #111;
+    --selected-fg: #fff;
+    --interface-font: "Courier New", Courier, monospace;
+}
 
-        /* Dark Mode */
-        .dark-mode {
-            background-color: black;
-            color: white;
-        }
+html.font-latin {
+    --interface-font: "Courier New", Courier, monospace;
+}
 
-        .dark-mode .content {
-            border-color: white;
-        }
+html.font-nova {
+    --interface-font: "NovaMonoGalactic", "Courier New", monospace;
+}
 
-        .dark-mode .controls button, .dark-mode .controls label {
-            background-color: white;
-            color: black;
-        }
+html.font-sga {
+    --interface-font: "SGA", sans-serif;
+}
 
-        footer {
-            margin-top: 30px;
-            text-align: center;
-            font-size: 0.9rem;
-        }
+html.font-cursive {
+    --interface-font: "CursiveGalactic", cursive;
+}
 
-        footer a {
-            color: black;
-            text-decoration: none;
-        }
 
-        .dark-mode footer a {
-            color: white;
-        }
-    </style>
+/* ============================================================
+   BASE
+   ============================================================ */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+}
+
+body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--interface-font);
+    font-size: 14px;
+}
+
+button,
+input,
+select,
+textarea {
+    font-family: var(--interface-font);
+    font-size: inherit;
+}
+
+button {
+    background: transparent;
+    color: inherit;
+    border: 1px solid var(--line);
+    padding: .42rem .65rem;
+    cursor: pointer;
+}
+
+button:hover,
+button.active {
+    background: var(--fg);
+    color: var(--bg);
+}
+
+input,
+select {
+    background: var(--bg);
+    color: var(--fg);
+    border: 1px solid var(--line);
+    padding: .42rem .5rem;
+}
+
+a {
+    color: inherit;
+}
+
+
+/* ============================================================
+   SHELL
+   ============================================================ */
+
+#app {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+}
+
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+
+header {
+    border-bottom: 2px solid var(--line);
+    padding: 1rem 1.2rem .8rem;
+}
+
+.header-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+h1 {
+    margin: 0;
+    font-size: clamp(2rem, 6vw, 5rem);
+    line-height: .9;
+    font-weight: normal;
+    letter-spacing: -.08em;
+}
+
+.subtitle {
+    color: var(--dim);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    font-size: .75rem;
+}
+
+.status {
+    margin-top: .8rem;
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    font-size: .72rem;
+    text-transform: uppercase;
+}
+
+.status strong {
+    font-weight: normal;
+    color: var(--dim);
+}
+
+
+/* ============================================================
+   CONTROL DECK
+   ============================================================ */
+
+#controls {
+    padding: .8rem 1.2rem;
+    border-bottom: 1px solid var(--line);
+    display: grid;
+    gap: .75rem;
+}
+
+.control-row {
+    display: flex;
+    align-items: center;
+    gap: .45rem;
+    flex-wrap: wrap;
+}
+
+.control-label {
+    color: var(--dim);
+    min-width: 6rem;
+    font-size: .7rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+#query {
+    min-width: 16rem;
+    flex: 1;
+}
+
+.operator {
+    font-weight: bold;
+}
+
+
+/* ============================================================
+   MAIN
+   ============================================================ */
+
+main {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 360px;
+    min-height: 0;
+}
+
+#field {
+    overflow: auto;
+    padding: .7rem 1.2rem 3rem;
+}
+
+
+/* ============================================================
+   OBJECTS
+   ============================================================ */
+
+.object {
+    display: grid;
+    grid-template-columns:
+        3.2rem
+        minmax(12rem, 2fr)
+        minmax(8rem, 1fr)
+        minmax(7rem, .8fr)
+        minmax(7rem, .8fr);
+
+    gap: .7rem;
+
+    align-items: baseline;
+
+    border-bottom: 1px dotted var(--faint);
+    padding: .55rem .25rem;
+
+    cursor: pointer;
+}
+
+.object:hover {
+    background: var(--panel);
+}
+
+.object.selected {
+    background: var(--selected);
+    color: var(--selected-fg);
+}
+
+.object-index {
+    color: var(--dim);
+    font-size: .7rem;
+}
+
+.object.selected .object-index,
+.object.selected .object-meta {
+    color: inherit;
+}
+
+.object-title {
+    overflow-wrap: anywhere;
+}
+
+.object-meta {
+    color: var(--dim);
+    font-size: .72rem;
+    overflow-wrap: anywhere;
+}
+
+.object-state {
+    text-transform: uppercase;
+    letter-spacing: .05em;
+}
+
+.object.hidden-by-collapse {
+    opacity: .25;
+}
+
+
+/* ============================================================
+   INSPECTOR
+   ============================================================ */
+
+#inspector {
+    border-left: 1px solid var(--line);
+    padding: 1rem;
+    overflow: auto;
+}
+
+.inspector-empty {
+    color: var(--dim);
+}
+
+.inspector-section {
+    border-top: 1px solid var(--line);
+    margin-top: 1rem;
+    padding-top: .75rem;
+}
+
+.inspector-title {
+    font-size: 1.6rem;
+    line-height: 1.05;
+    margin: 0 0 .8rem;
+    overflow-wrap: anywhere;
+}
+
+.keyvalue {
+    display: grid;
+    grid-template-columns: 6rem 1fr;
+    gap: .35rem .7rem;
+    margin: .3rem 0;
+    font-size: .78rem;
+}
+
+.key {
+    color: var(--dim);
+    text-transform: uppercase;
+}
+
+.tags {
+    display: flex;
+    gap: .35rem;
+    flex-wrap: wrap;
+    margin-top: .5rem;
+}
+
+.tag {
+    border: 1px solid var(--line);
+    padding: .18rem .35rem;
+    font-size: .68rem;
+    cursor: pointer;
+}
+
+.tag:hover {
+    background: var(--fg);
+    color: var(--bg);
+}
+
+.relation {
+    padding: .35rem 0;
+    border-bottom: 1px dotted var(--faint);
+    cursor: pointer;
+}
+
+.relation:hover {
+    text-decoration: underline;
+}
+
+.relation-type {
+    color: var(--dim);
+    text-transform: uppercase;
+    font-size: .65rem;
+}
+
+
+/* ============================================================
+   TRACE
+   ============================================================ */
+
+#trace {
+    padding: .55rem 1.2rem;
+    border-top: 1px solid var(--line);
+    font-size: .7rem;
+
+    display: flex;
+    gap: .6rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.trace-step {
+    border: 1px solid var(--faint);
+    padding: .2rem .35rem;
+}
+
+.trace-arrow {
+    color: var(--dim);
+}
+
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media (max-width: 900px) {
+
+    main {
+        grid-template-columns: 1fr;
+    }
+
+    #inspector {
+        border-left: 0;
+        border-top: 2px solid var(--line);
+    }
+
+    .object {
+        grid-template-columns: 2.5rem 1fr;
+    }
+
+    .object-meta {
+        display: none;
+    }
+}
+
+</style>
 </head>
+
+
 <body>
-    <h1>Library</h1>
-    <h2>Enacting Cognitive Landscapes</h2>
 
-    <div class="content">
-        <h3>On Noah's Ark</h3>
-        <p>That makes sense! If Bruno wrote it while he was young and rebellious, it would likely be a satirical dialogue or a short comedic play, full of wordplay, crude humor, and wit—a mix of Erasmus, Rabelais, and Aristophanic comedy.</p>
+<div id="app">
 
-        <h4>A Satirical Play: On the Ark of Noah by Giordano Bruno</h4>
-        <h5>(A Lost Work, Reconstructed in Bruno’s Spirit)</h5>
+<header>
 
-        <h4>Dramatis Personae</h4>
-        <p>ASINUS PRIMUS (First Donkey) – A hardworking but dim-witted donkey.<br>
-        ASINUS SECUNDUS (Second Donkey) – A more cynical, sarcastic donkey.<br>
-        VULPES (The Fox) – The charismatic and scheming leader of the Ark.<br>
-        PORCUS MAIOR (Chief Pig) – A high-ranking bureaucrat of the Ark.<br>
-        ELEPHAS (Elephant) – An arrogant aristocrat on the upper deck.<br>
-        NOAH (Offstage, never seen) – A distant, godlike figure, possibly drunk.</p>
+    <div class="header-line">
 
-        <h4>Scene: The Lower Deck of the Ark</h4>
-        <p>(Dark, damp, and filled with the stench of animal dung. Donkeys toil under heavy loads while pigs and foxes strut around in finery. The sound of waves and occasional thunder is heard.)</p>
+        <div>
+            <h1>LIBRARY</h1>
+            <div class="subtitle">
+                Constraint-Historical Research Instrument
+            </div>
+        </div>
 
-        <h4>ACT I: THE GREAT ASSIGNMENT</h4>
-        <p>ASINUS PRIMUS: (Panting) By the holy oats of Bethlehem, I swear my back is breaking!</p>
-        <p>ASINUS SECUNDUS: That’s what she said.</p>
-        <p>ASINUS PRIMUS: She who?</p>
-        <p>ASINUS SECUNDUS: The mare who carried Noah’s beer barrels last night...</p>
-
-	<p>ASINUS SECUNDUS: The mare who carried Noah’s beer barrels last night. She complained of the same thing.</p>
-
-	<p>ASINUS PRIMUS: (Groans) How is it that the lions and elephants lounge on the upper deck, dining on fruits and figs, while we are down here in filth, carrying their dung?</p>
-
-	<p>ASINUS SECUNDUS: You see, dear brother, it’s a simple matter of divine order: The mighty rule, the clever scheme, and the asses carry the load.</p>
-
-	<p>(Enter VULPES, a sleek and well-groomed fox, wearing a fine cloak made from peacock feathers.)</p>
-
-	<p>VULPES: Ah, my dear hard-working friends! How the sight of your labor fills me with joy and admiration!</p>
-
-	<p>ASINUS PRIMUS: My lord Vulpes, why are we condemned to the lower decks while others live in comfort above?</p>
-
-	<p>VULPES: Condemned? No, my dear long-eared simpletons, you are blessed! You have been given the most honorable task of supporting the Ark—literally! Without you, it would surely sink. Do you wish to see everyone drown?</p>
-
-	<p>ASINUS PRIMUS: Well… no.</p>
-
-	<p>ASINUS SECUNDUS: But what of the lions and elephants? Do they support the Ark?</p>
-
-	<p>VULPES: (Sighs as if explaining to a child) My dear boy, they support it in spirit. It is their noble presence that brings dignity to this great vessel. Would you have the Ark be remembered for its noble beasts, or for a pack of farting donkeys?</p>
-
-	<p>ASINUS SECUNDUS: Well, if they keep eating figs and beans, they will be the ones farting soon enough.</p>
-
-	<p>(PORCUS MAIOR, a fat and pompous pig, waddles in, belching loudly.)</p>
-
-	<p>PORCUS MAIOR: Vulpes, dear friend, have you reminded our loyal donkeys of their divine duty?</p>
-
-	<p>VULPES: But of course! They are most grateful for their sacred burden.</p>
-
-	<p>ASINUS PRIMUS: (Whispers to ASINUS SECUNDUS) What exactly is our divine duty?</p>
-
-	<p>ASINUS SECUNDUS: To carry their divine behinds.</p>
-
-	<p>(Laughter from the donkeys, quickly silenced by a glare from PORCUS MAIOR.)</p>
-
-	<h4>ACT II: THE REVOLT OF THE ASSES</h4>
-	<p>(Later that night, in the filth-ridden quarters of the donkeys, a secret meeting is held.)</p>
-
-	<p>ASINUS PRIMUS: Brothers, we have suffered long enough! The fox and pigs feast while we break our backs! I say we demand equality!</p>
-
-	<p>ASINUS SECUNDUS: A fine idea! And when they refuse, we kick them overboard!</p>
-
-	<p>ASINUS PRIMUS: (Excitedly) Yes! And then we will—wait, what do we do after that?</p>
-
-	<p>ASINUS SECUNDUS: … I hadn’t thought that far.</p>
-
-	<p>(Enter ELEPHAS, stumbling drunk, holding a goblet of wine.)</p>
-
-	<p>ELEPHAS: (Slurring) What… are… you little beasts doing down here? Planning a rebellion?</p>
-
-	<p>ASINUS PRIMUS: (Nervous) No, no! Just… practicing our prayers!</p>
-
-	<p>ELEPHAS: (Laughs) Foolish creatures! The Ark belongs to the strong, and strength is measured in weight! And who weighs more than me? (Falls asleep mid-sentence)</p>
-
-	<p>(The donkeys stare in silence.)</p>
-
-	<p>ASINUS SECUNDUS: Well, that’s one way to throw them overboard.</p>
-
-	<p>(The donkeys laugh and prepare their rebellion.)</p>
-
-	<h4>ACT III: THE FINAL BETRAYAL</h4>
-	<p>(The donkeys storm the upper deck, braying loudly. VULPES and PORCUS MAIOR stand in front of the frightened elite.)</p>
-
-	<p>ASINUS PRIMUS: No more! We demand equal rations, equal rest, and equal… seating arrangements!</p>
-
-	<p>VULPES: (Feigning sadness) Oh, my dear donkeys, you wound me! Have I not always been your friend?</p>
-
-	<p>ASINUS SECUNDUS: (Scoffs) Friend? A friend doesn’t make another friend sleep next to the latrine!</p>
-
-	<p>PORCUS MAIOR: But surely you would not dare to—</p>
-
-	<p>(Suddenly, NOAH’S VOICE booms from the heavens.)</p>
-
-	<p>NOAH (OFFSTAGE): WHO THE HELL LET THE DONKEYS ON THE UPPER DECK?</p>
-
-	<p>(Chaos ensues. The donkeys scatter in panic as the fox and pigs laugh victoriously.)</p>
-
-	<p>VULPES: Oh, dear fools. Did you truly believe the Ark would be ruled by the asses?</p>
-
-	<p>(The donkeys are herded back below deck, their rebellion crushed. The fox and pigs feast once more, raising a toast to divine order.)</p>
-
-	<h4>Epilogue: The Moral of the Story</h4>
-	<p>(As the curtain falls, ASINUS SECUNDUS looks at the audience, sighs, and speaks.)</p>
-
-	<p>ASINUS SECUNDUS:</p>
-	<p>And so the foxes feast, the pigs grow fat,</p>
-	<p>While we, the donkeys, break our backs.</p>
-	<p>For in this world, as all can see,</p>
-	<p>It’s never the ass who holds the key.</p>
-
-	<p>(Blackout. End of play.)</p>
-
-	<p>Final Thoughts</p>
-	<p>This reconstruction captures Bruno’s rebellious humor, love for satire, and critique of religious hierarchy. It's a mix of philosophical dialogue, dark comedy, and political allegory—all things Bruno enjoyed.</p>
-
-	<p>Would you like me to refine it further or add more crude humor and wordplay?</p>
+        <div class="subtitle">
+            standardgalactic / library
+        </div>
 
     </div>
 
-    <div class="audio-player">
-        <audio controls>
-            <source src="lost-book.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>
+    <div class="status">
+
+        <span>
+            <strong>objects</strong>
+            <span id="object-count">0</span>
+        </span>
+
+        <span>
+            <strong>visible</strong>
+            <span id="visible-count">0</span>
+        </span>
+
+        <span>
+            <strong>projection</strong>
+            <span id="projection-name">filesystem</span>
+        </span>
+
+        <span>
+            <strong>constraints</strong>
+            <span id="constraint-count">0</span>
+        </span>
+
+        <span>
+            <strong>manifest</strong>
+            <span id="manifest-state">loading</span>
+        </span>
+
     </div>
 
-    <div class="controls">
-        <button onclick="setFont('SGA')">Standard Galactic</button>
-        <button onclick="setFont('CursiveGalactic')">Cursive Galactic</button>
-        <button onclick="setFont('Courier')">Courier</button>
-	<br>
-        <label>
-            <input type="checkbox" id="darkModeToggle"> Dark Mode
-        </label>
+</header>
+
+
+<section id="controls">
+
+    <div class="control-row">
+
+        <span class="control-label">projection</span>
+
+        <button data-order="filesystem" class="order active">
+            FILESYSTEM
+        </button>
+
+        <button data-order="recent" class="order">
+            RECENT
+        </button>
+
+        <button data-order="oldest" class="order">
+            OLDEST
+        </button>
+
+        <button data-order="title" class="order">
+            TITLE
+        </button>
+
+        <button data-order="random" class="order">
+            RANDOM
+        </button>
+
+        <button data-order="difference" class="order">
+            MAX DIFFERENCE
+        </button>
+
     </div>
 
-    <footer>
-        <p>This project is open source.</p>
-        <p>You can find the source code for this project <a href="https://github.com/standardgalactic/library">here</a>.</p>
-    </footer>
 
-    <script>
-        function setFont(font) {
-            const elements = document.querySelectorAll('.content, footer');
-            if (font === 'Courier') {
-                elements.forEach(el => {
-                    el.style.fontFamily = font;
-                    el.style.fontSize = '75%';
-                });
-            } else {
-                elements.forEach(el => {
-                    el.style.fontFamily = font;
-                    el.style.fontSize = '100%';
-                });
+    <div class="control-row">
+
+        <span class="control-label">operators</span>
+
+        <button id="bind-button" class="operator">
+            BIND
+        </button>
+
+        <button id="refuse-button" class="operator">
+            REFUSE
+        </button>
+
+        <button id="collapse-button" class="operator">
+            COLLAPSE
+        </button>
+
+        <button id="pop-button" class="operator">
+            POP
+        </button>
+
+        <button id="clear-button">
+            RESET
+        </button>
+
+    </div>
+
+
+    <div class="control-row">
+
+        <span class="control-label">predicate</span>
+
+        <select id="predicate-field">
+
+            <option value="all">all fields</option>
+            <option value="title">title</option>
+            <option value="type">type</option>
+            <option value="status">status</option>
+            <option value="tags">tags</option>
+            <option value="trajectory">trajectory</option>
+            <option value="path">path</option>
+
+        </select>
+
+        <input
+            id="query"
+            type="text"
+            autocomplete="off"
+            placeholder="enter predicate..."
+        >
+
+    </div>
+
+
+    <div class="control-row">
+
+        <span class="control-label">script</span>
+
+        <button data-font="latin" class="font-button active">
+            LATIN
+        </button>
+
+        <button data-font="nova" class="font-button">
+            NOVA MONO
+        </button>
+
+        <button data-font="sga" class="font-button">
+            STANDARD GALACTIC
+        </button>
+
+        <button data-font="cursive" class="font-button">
+            CURSIVE GALACTIC
+        </button>
+
+    </div>
+
+</section>
+
+
+<main>
+
+    <section id="field"></section>
+
+    <aside id="inspector">
+
+        <div class="inspector-empty">
+            SELECT AN OBJECT
+            <br><br>
+            An object may be documentary without being operative.
+            Its current visibility is a property of this projection,
+            not a declaration of existence.
+        </div>
+
+    </aside>
+
+</main>
+
+
+<footer id="trace">
+
+    <span>H₀</span>
+
+</footer>
+
+</div>
+
+
+<script>
+
+/* ============================================================
+   STATE
+   ============================================================ */
+
+const state = {
+
+    corpus: [],
+    view: [],
+
+    selected: null,
+
+    order: "filesystem",
+
+    history: [],
+
+    collapseFamilies: new Set(),
+
+    randomSeed: Math.random()
+
+};
+
+
+/* ============================================================
+   DEMONSTRATION CORPUS
+   Used only when library.json does not exist yet.
+   ============================================================ */
+
+const fallbackCorpus = [
+
+    {
+        id: "constraint-before-optimization",
+        title: "Constraint Before Optimization",
+        path: "Constraint Before Optimization.pdf",
+        type: "pdf",
+        status: "active",
+        date: "2026-08-01",
+        trajectory: "constraint",
+        tags: [
+            "constraint",
+            "optimization",
+            "agency"
+        ],
+        relations: [
+            {
+                type: "related",
+                target: "cognition-constraint-history"
+            },
+            {
+                type: "continues",
+                target: "worldline-selection"
             }
+        ]
+    },
+
+    {
+        id: "cognition-constraint-history",
+        title: "Cognition as Constraint-Historical Computation",
+        path: "Cognition as Constraint-Historical Computation.pdf",
+        type: "pdf",
+        status: "active",
+        date: "2026-08-02",
+        trajectory: "constraint",
+        tags: [
+            "cognition",
+            "history",
+            "constraint"
+        ],
+        relations: [
+            {
+                type: "related",
+                target: "constraint-before-optimization"
+            }
+        ]
+    },
+
+    {
+        id: "intelligence-trajectory",
+        title: "Intelligence Is a Trajectory",
+        path: "Intelligence Is a Trajectory.pdf",
+        type: "pdf",
+        status: "active",
+        date: "2026-08-03",
+        trajectory: "trajectory",
+        tags: [
+            "intelligence",
+            "trajectory",
+            "history"
+        ]
+    },
+
+    {
+        id: "worldline-selection",
+        title: "Worldline Selection Under Constraint",
+        path: "Worldline Selection Under Constraint.pdf",
+        type: "pdf",
+        status: "active",
+        date: "2026-08-04",
+        trajectory: "constraint",
+        tags: [
+            "worldline",
+            "selection",
+            "constraint"
+        ],
+        relations: [
+            {
+                type: "derived-from",
+                target: "constraint-before-optimization"
+            }
+        ]
+    },
+
+    {
+        id: "text-substrate",
+        title: "Text as Substrate",
+        path: "Text as Substrate.pdf",
+        type: "pdf",
+        status: "active",
+        date: "2026-07-14",
+        trajectory: "text-substrate",
+        tags: [
+            "text",
+            "substrate",
+            "memory"
+        ]
+    },
+
+    {
+        id: "text-substrate-v1",
+        title: "Text as Substrate — v1",
+        path: "Text as Substrate - v1.pdf",
+        type: "pdf",
+        status: "superseded",
+        date: "2026-07-10",
+        trajectory: "text-substrate",
+        tags: [
+            "text",
+            "substrate",
+            "memory"
+        ],
+        relations: [
+            {
+                type: "precedes",
+                target: "text-substrate"
+            }
+        ]
+    },
+
+    {
+        id: "text-substrate-v2",
+        title: "Text as Substrate — v2",
+        path: "Text as Substrate - v2.pdf",
+        type: "pdf",
+        status: "superseded",
+        date: "2026-07-12",
+        trajectory: "text-substrate",
+        tags: [
+            "text",
+            "substrate",
+            "memory"
+        ],
+        relations: [
+            {
+                type: "precedes",
+                target: "text-substrate"
+            }
+        ]
+    },
+
+    {
+        id: "semantic-ladle",
+        title: "Semantic Ladle Theory",
+        path: "Semantic Ladle Theory.txt",
+        type: "text",
+        status: "documentary",
+        date: "2025-01-01",
+        trajectory: "semantic",
+        tags: [
+            "semantics",
+            "language"
+        ]
+    },
+
+    {
+        id: "dry-popcorn",
+        title: "Dry Popcorn Theory",
+        path: "Dry Popcorn Theory.txt",
+        type: "text",
+        status: "documentary",
+        date: "2025-01-01",
+        trajectory: "misc",
+        tags: [
+            "theory",
+            "experiment"
+        ]
+    },
+
+    {
+        id: "magnetic-fluidic",
+        title: "Magnetic Fluidic Computing",
+        path: "Magnetic Fluidic Computing.pdf",
+        type: "pdf",
+        status: "active",
+        date: "2026-05-01",
+        trajectory: "computing",
+        tags: [
+            "computing",
+            "fluidics",
+            "magnetism"
+        ]
+    }
+
+];
+
+
+/* ============================================================
+   LOAD MANIFEST
+   ============================================================ */
+
+async function loadCorpus() {
+
+    try {
+
+        const response = await fetch(
+            "library.json",
+            {
+                cache: "no-store"
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(
+                "manifest unavailable"
+            );
         }
 
-        // Dark mode toggle
-        document.getElementById('darkModeToggle').addEventListener('change', function() {
-            document.body.classList.toggle('dark-mode');
-        });
-    </script>
+        const data = await response.json();
+
+        state.corpus =
+            Array.isArray(data)
+                ? data
+                : data.objects || [];
+
+        document.getElementById(
+            "manifest-state"
+        ).textContent = "library.json";
+
+    }
+
+    catch (error) {
+
+        state.corpus = fallbackCorpus;
+
+        document.getElementById(
+            "manifest-state"
+        ).textContent = "demonstration";
+
+    }
+
+    normalizeCorpus();
+
+    state.view = [...state.corpus];
+
+    render();
+
+}
+
+
+/* ============================================================
+   NORMALIZATION
+   ============================================================ */
+
+function normalizeCorpus() {
+
+    state.corpus =
+        state.corpus.map(
+            (object, index) => ({
+
+                id:
+                    object.id ||
+                    slugify(
+                        object.path ||
+                        object.title ||
+                        String(index)
+                    ),
+
+                title:
+                    object.title ||
+                    object.path ||
+                    "untitled",
+
+                path:
+                    object.path || "",
+
+                type:
+                    object.type ||
+                    inferType(object.path),
+
+                status:
+                    object.status ||
+                    "documentary",
+
+                date:
+                    object.date || null,
+
+                trajectory:
+                    object.trajectory ||
+                    null,
+
+                tags:
+                    Array.isArray(object.tags)
+                        ? object.tags
+                        : [],
+
+                relations:
+                    Array.isArray(object.relations)
+                        ? object.relations
+                        : []
+
+            })
+        );
+
+}
+
+
+function slugify(value) {
+
+    return String(value)
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "");
+
+}
+
+
+function inferType(path = "") {
+
+    const extension =
+        path
+            .split(".")
+            .pop()
+            .toLowerCase();
+
+    return extension || "object";
+
+}
+
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+
+function render() {
+
+    let objects = [...state.view];
+
+    objects = applyCollapse(objects);
+
+    objects = orderObjects(objects);
+
+    renderField(objects);
+
+    renderStatus(objects);
+
+    renderTrace();
+
+}
+
+
+function renderField(objects) {
+
+    const field =
+        document.getElementById(
+            "field"
+        );
+
+    field.innerHTML = "";
+
+    if (!objects.length) {
+
+        field.innerHTML = `
+            <div style="
+                padding: 3rem 0;
+                color: var(--dim);
+            ">
+                ∅
+                <br><br>
+                NO ADMISSIBLE OBJECTS
+            </div>
+        `;
+
+        return;
+
+    }
+
+    objects.forEach(
+        (object, index) => {
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+            row.className = "object";
+
+            if (
+                state.selected &&
+                state.selected.id === object.id
+            ) {
+                row.classList.add(
+                    "selected"
+                );
+            }
+
+            row.innerHTML = `
+
+                <div class="object-index">
+                    ${String(index + 1).padStart(3, "0")}
+                </div>
+
+                <div class="object-title">
+                    ${escapeHTML(object.title)}
+                </div>
+
+                <div class="object-meta">
+                    ${escapeHTML(object.type)}
+                </div>
+
+                <div class="object-meta object-state">
+                    ${escapeHTML(object.status)}
+                </div>
+
+                <div class="object-meta">
+                    ${escapeHTML(
+                        object.trajectory || "—"
+                    )}
+                </div>
+
+            `;
+
+            row.addEventListener(
+                "click",
+                () => selectObject(
+                    object.id
+                )
+            );
+
+            field.appendChild(row);
+
+        }
+    );
+
+}
+
+
+function renderStatus(objects) {
+
+    document.getElementById(
+        "object-count"
+    ).textContent =
+        state.corpus.length;
+
+    document.getElementById(
+        "visible-count"
+    ).textContent =
+        objects.length;
+
+    document.getElementById(
+        "projection-name"
+    ).textContent =
+        state.order;
+
+    document.getElementById(
+        "constraint-count"
+    ).textContent =
+        state.history.length;
+
+}
+
+
+/* ============================================================
+   SELECTION
+   ============================================================ */
+
+function selectObject(id) {
+
+    const object =
+        state.corpus.find(
+            item => item.id === id
+        );
+
+    if (!object) {
+        return;
+    }
+
+    state.selected = object;
+
+    renderInspector(object);
+
+    render();
+
+}
+
+
+function renderInspector(object) {
+
+    const inspector =
+        document.getElementById(
+            "inspector"
+        );
+
+    const tags =
+        object.tags
+            .map(
+                tag => `
+                    <span
+                        class="tag"
+                        data-tag="${escapeHTML(tag)}"
+                    >
+                        ${escapeHTML(tag)}
+                    </span>
+                `
+            )
+            .join("");
+
+    const relations =
+        object.relations
+            .map(relation => {
+
+                const target =
+                    state.corpus.find(
+                        item =>
+                            item.id ===
+                            relation.target
+                    );
+
+                return `
+                    <div
+                        class="relation"
+                        data-target="${escapeHTML(
+                            relation.target
+                        )}"
+                    >
+                        <div class="relation-type">
+                            ${escapeHTML(
+                                relation.type
+                            )}
+                        </div>
+
+                        ${
+                            target
+                                ? escapeHTML(
+                                    target.title
+                                )
+                                : escapeHTML(
+                                    relation.target
+                                )
+                        }
+                    </div>
+                `;
+
+            })
+            .join("");
+
+    inspector.innerHTML = `
+
+        <h2 class="inspector-title">
+            ${escapeHTML(object.title)}
+        </h2>
+
+        <div class="keyvalue">
+
+            <div class="key">type</div>
+            <div>${escapeHTML(object.type)}</div>
+
+            <div class="key">status</div>
+            <div>${escapeHTML(object.status)}</div>
+
+            <div class="key">date</div>
+            <div>${escapeHTML(object.date || "unknown")}</div>
+
+            <div class="key">trajectory</div>
+            <div>${escapeHTML(object.trajectory || "unbound")}</div>
+
+            <div class="key">path</div>
+            <div>${escapeHTML(object.path)}</div>
+
+        </div>
+
+        <div class="inspector-section">
+
+            <div class="key">
+                conceptual coordinates
+            </div>
+
+            <div class="tags">
+                ${tags || "—"}
+            </div>
+
+        </div>
+
+        <div class="inspector-section">
+
+            <div class="key">
+                relations
+            </div>
+
+            ${
+                relations ||
+                `<div style="margin-top:.5rem;color:var(--dim)">
+                    no explicit relations
+                </div>`
+            }
+
+        </div>
+
+        <div class="inspector-section">
+
+            ${
+                object.path
+                    ? `
+                        <a
+                            href="${encodeURI(object.path)}"
+                            target="_blank"
+                            rel="noopener"
+                        >
+                            OPEN OBJECT →
+                        </a>
+                    `
+                    : ""
+            }
+
+        </div>
+
+    `;
+
+
+    inspector
+        .querySelectorAll(".tag")
+        .forEach(
+            element => {
+
+                element.addEventListener(
+                    "click",
+                    () => {
+
+                        document.getElementById(
+                            "predicate-field"
+                        ).value = "tags";
+
+                        document.getElementById(
+                            "query"
+                        ).value =
+                            element.dataset.tag;
+
+                    }
+                );
+
+            }
+        );
+
+
+    inspector
+        .querySelectorAll(".relation")
+        .forEach(
+            element => {
+
+                element.addEventListener(
+                    "click",
+                    () => {
+
+                        selectObject(
+                            element.dataset.target
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+}
+
+
+/* ============================================================
+   SPHEREPOP OPERATORS
+   ============================================================ */
+
+function bind() {
+
+    const predicate =
+        readPredicate();
+
+    if (!predicate.query) {
+        return;
+    }
+
+    state.history.push({
+        operator: "BIND",
+        field: predicate.field,
+        query: predicate.query,
+        previous: [...state.view]
+    });
+
+    state.view =
+        state.view.filter(
+            object =>
+                matchesPredicate(
+                    object,
+                    predicate
+                )
+        );
+
+    render();
+
+}
+
+
+function refuse() {
+
+    const predicate =
+        readPredicate();
+
+    if (!predicate.query) {
+        return;
+    }
+
+    state.history.push({
+        operator: "REFUSE",
+        field: predicate.field,
+        query: predicate.query,
+        previous: [...state.view]
+    });
+
+    state.view =
+        state.view.filter(
+            object =>
+                !matchesPredicate(
+                    object,
+                    predicate
+                )
+        );
+
+    render();
+
+}
+
+
+function collapse() {
+
+    const selected =
+        state.selected;
+
+    if (
+        !selected ||
+        !selected.trajectory
+    ) {
+        return;
+    }
+
+    state.history.push({
+        operator: "COLLAPSE",
+        field: "trajectory",
+        query: selected.trajectory,
+        previous: [...state.view],
+        collapseFamilies:
+            new Set(
+                state.collapseFamilies
+            )
+    });
+
+    state.collapseFamilies.add(
+        selected.trajectory
+    );
+
+    render();
+
+}
+
+
+function pop() {
+
+    const last =
+        state.history.pop();
+
+    if (!last) {
+        return;
+    }
+
+    state.view =
+        last.previous;
+
+    if (last.collapseFamilies) {
+
+        state.collapseFamilies =
+            new Set(
+                last.collapseFamilies
+            );
+
+    }
+
+    render();
+
+}
+
+
+function reset() {
+
+    state.view =
+        [...state.corpus];
+
+    state.history = [];
+
+    state.collapseFamilies.clear();
+
+    render();
+
+}
+
+
+/* ============================================================
+   PREDICATES
+   ============================================================ */
+
+function readPredicate() {
+
+    return {
+
+        field:
+            document.getElementById(
+                "predicate-field"
+            ).value,
+
+        query:
+            document.getElementById(
+                "query"
+            ).value
+                .trim()
+                .toLowerCase()
+
+    };
+
+}
+
+
+function matchesPredicate(
+    object,
+    predicate
+) {
+
+    const query =
+        predicate.query;
+
+    if (
+        predicate.field === "all"
+    ) {
+
+        return [
+            object.title,
+            object.path,
+            object.type,
+            object.status,
+            object.trajectory,
+            ...object.tags
+        ]
+            .filter(Boolean)
+            .some(
+                value =>
+                    String(value)
+                        .toLowerCase()
+                        .includes(query)
+            );
+
+    }
+
+
+    if (
+        predicate.field === "tags"
+    ) {
+
+        return object.tags.some(
+            tag =>
+                tag
+                    .toLowerCase()
+                    .includes(query)
+        );
+
+    }
+
+
+    return String(
+        object[predicate.field] || ""
+    )
+        .toLowerCase()
+        .includes(query);
+
+}
+
+
+/* ============================================================
+   COLLAPSE
+   ============================================================ */
+
+function applyCollapse(objects) {
+
+    if (
+        state.collapseFamilies.size === 0
+    ) {
+        return objects;
+    }
+
+    const representatives =
+        new Map();
+
+    const result = [];
+
+    for (const object of objects) {
+
+        if (
+            !object.trajectory ||
+            !state.collapseFamilies.has(
+                object.trajectory
+            )
+        ) {
+
+            result.push(object);
+
+            continue;
+
+        }
+
+        const current =
+            representatives.get(
+                object.trajectory
+            );
+
+        if (
+            !current ||
+            compareDates(
+                object,
+                current
+            ) < 0
+        ) {
+
+            representatives.set(
+                object.trajectory,
+                object
+            );
+
+        }
+
+    }
+
+    for (
+        const representative
+        of representatives.values()
+    ) {
+        result.push(
+            representative
+        );
+    }
+
+    return result;
+
+}
+
+
+/* ============================================================
+   ORDER / PROJECTION
+   ============================================================ */
+
+function orderObjects(objects) {
+
+    const ordered =
+        [...objects];
+
+    switch (state.order) {
+
+        case "filesystem":
+
+            return ordered.sort(
+                (a, b) =>
+                    a.path.localeCompare(
+                        b.path
+                    )
+            );
+
+
+        case "title":
+
+            return ordered.sort(
+                (a, b) =>
+                    a.title.localeCompare(
+                        b.title
+                    )
+            );
+
+
+        case "recent":
+
+            return ordered.sort(
+                compareDates
+            );
+
+
+        case "oldest":
+
+            return ordered.sort(
+                (a, b) =>
+                    compareDates(b, a)
+            );
+
+
+        case "random":
+
+            return ordered.sort(
+                () =>
+                    Math.random() - .5
+            );
+
+
+        case "difference":
+
+            return maximumDifference(
+                ordered
+            );
+
+
+        default:
+
+            return ordered;
+
+    }
+
+}
+
+
+function compareDates(a, b) {
+
+    const da =
+        a.date
+            ? new Date(a.date).getTime()
+            : 0;
+
+    const db =
+        b.date
+            ? new Date(b.date).getTime()
+            : 0;
+
+    return db - da;
+
+}
+
+
+/*
+    MAXIMUM DIFFERENCE
+
+    This is intentionally simple.
+
+    It greedily chooses the next object with
+    the least tag overlap with the previous one.
+
+    Later this could use embeddings.
+*/
+
+function maximumDifference(objects) {
+
+    if (
+        objects.length < 3
+    ) {
+        return objects;
+    }
+
+    const remaining =
+        [...objects];
+
+    const result = [
+        remaining.shift()
+    ];
+
+    while (
+        remaining.length
+    ) {
+
+        const previous =
+            result[
+                result.length - 1
+            ];
+
+        let bestIndex = 0;
+        let bestDistance = -1;
+
+        remaining.forEach(
+            (candidate, index) => {
+
+                const distance =
+                    conceptualDistance(
+                        previous,
+                        candidate
+                    );
+
+                if (
+                    distance >
+                    bestDistance
+                ) {
+
+                    bestDistance =
+                        distance;
+
+                    bestIndex =
+                        index;
+
+                }
+
+            }
+        );
+
+        result.push(
+            remaining.splice(
+                bestIndex,
+                1
+            )[0]
+        );
+
+    }
+
+    return result;
+
+}
+
+
+function conceptualDistance(a, b) {
+
+    const A =
+        new Set(a.tags);
+
+    const B =
+        new Set(b.tags);
+
+    const union =
+        new Set([
+            ...A,
+            ...B
+        ]);
+
+    if (
+        union.size === 0
+    ) {
+        return 1;
+    }
+
+    let intersection = 0;
+
+    for (
+        const value of A
+    ) {
+
+        if (
+            B.has(value)
+        ) {
+            intersection++;
+        }
+
+    }
+
+    return (
+        1 -
+        intersection /
+        union.size
+    );
+
+}
+
+
+/* ============================================================
+   TRACE
+   ============================================================ */
+
+function renderTrace() {
+
+    const trace =
+        document.getElementById(
+            "trace"
+        );
+
+    trace.innerHTML =
+        `<span>H₀</span>`;
+
+    state.history.forEach(
+        (step, index) => {
+
+            const arrow =
+                document.createElement(
+                    "span"
+                );
+
+            arrow.className =
+                "trace-arrow";
+
+            arrow.textContent =
+                "→";
+
+            trace.appendChild(
+                arrow
+            );
+
+
+            const node =
+                document.createElement(
+                    "span"
+                );
+
+            node.className =
+                "trace-step";
+
+            node.textContent =
+                `${step.operator} ${
+                    step.field
+                }:${step.query}`;
+
+            trace.appendChild(
+                node
+            );
+
+        }
+    );
+
+}
+
+
+/* ============================================================
+   FONT MODES
+   ============================================================ */
+
+const FONT_MODES = {
+    latin: "font-latin",
+    nova: "font-nova",
+    sga: "font-sga",
+    cursive: "font-cursive"
+};
+
+
+function setFont(mode) {
+
+    if (!FONT_MODES[mode]) {
+        mode = "latin";
+    }
+
+    const root =
+        document.documentElement;
+
+    Object
+        .values(FONT_MODES)
+        .forEach(
+            className =>
+                root.classList.remove(
+                    className
+                )
+        );
+
+    root.classList.add(
+        FONT_MODES[mode]
+    );
+
+    document
+        .querySelectorAll(
+            ".font-button"
+        )
+        .forEach(
+            button => {
+
+                button.classList.toggle(
+                    "active",
+                    button.dataset.font === mode
+                );
+
+            }
+        );
+
+    try {
+
+        localStorage.setItem(
+            "library-font",
+            mode
+        );
+
+    }
+    catch (error) {
+
+        // Font selection still works if storage is unavailable.
+
+    }
+
+}
+
+
+function restoreFont() {
+
+    let mode = "latin";
+
+    try {
+
+        const saved =
+            localStorage.getItem(
+                "library-font"
+            );
+
+        if (FONT_MODES[saved]) {
+            mode = saved;
+        }
+
+    }
+    catch (error) {
+
+        // Use Latin when storage is unavailable.
+
+    }
+
+    setFont(mode);
+
+}
+
+
+async function verifyFonts() {
+
+    if (!document.fonts) {
+        return;
+    }
+
+    const fonts = [
+        ["Nova Mono", "NovaMonoGalactic"],
+        ["Standard Galactic", "SGA"],
+        ["Cursive Galactic", "CursiveGalactic"]
+    ];
+
+    for (const [label, family] of fonts) {
+
+        try {
+
+            await document.fonts.load(
+                `16px "${family}"`
+            );
+
+            const loaded =
+                document.fonts.check(
+                    `16px "${family}"`
+                );
+
+            console.log(
+                `[library] ${label}: ${
+                    loaded
+                        ? "loaded"
+                        : "unavailable"
+                }`
+            );
+
+        }
+        catch (error) {
+
+            console.warn(
+                `[library] ${label}: failed`,
+                error
+            );
+
+        }
+
+    }
+
+}
+
+
+/* ============================================================
+   ESCAPE
+   ============================================================ */
+
+function escapeHTML(value) {
+
+    return String(
+        value ?? ""
+    )
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+}
+
+
+/* ============================================================
+   EVENTS
+   ============================================================ */
+
+document
+    .getElementById(
+        "bind-button"
+    )
+    .addEventListener(
+        "click",
+        bind
+    );
+
+
+document
+    .getElementById(
+        "refuse-button"
+    )
+    .addEventListener(
+        "click",
+        refuse
+    );
+
+
+document
+    .getElementById(
+        "collapse-button"
+    )
+    .addEventListener(
+        "click",
+        collapse
+    );
+
+
+document
+    .getElementById(
+        "pop-button"
+    )
+    .addEventListener(
+        "click",
+        pop
+    );
+
+
+document
+    .getElementById(
+        "clear-button"
+    )
+    .addEventListener(
+        "click",
+        reset
+    );
+
+
+document
+    .getElementById(
+        "query"
+    )
+    .addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key === "Enter"
+            ) {
+                bind();
+            }
+
+            if (
+                event.key === "Escape"
+            ) {
+                pop();
+            }
+
+        }
+    );
+
+
+document
+    .querySelectorAll(
+        ".order"
+    )
+    .forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    state.order =
+                        button.dataset.order;
+
+                    document
+                        .querySelectorAll(
+                            ".order"
+                        )
+                        .forEach(
+                            element =>
+                                element.classList.remove(
+                                    "active"
+                                )
+                        );
+
+                    button.classList.add(
+                        "active"
+                    );
+
+                    render();
+
+                }
+            );
+
+        }
+    );
+
+
+document
+    .querySelectorAll(
+        ".font-button"
+    )
+    .forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                () =>
+                    setFont(
+                        button.dataset.font
+                    )
+            );
+
+        }
+    );
+
+
+/* ============================================================
+   START
+   ============================================================ */
+
+restoreFont();
+verifyFonts();
+loadCorpus();
+
+</script>
+
 </body>
 </html>
-

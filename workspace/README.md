@@ -1,8 +1,10 @@
 # Library | Workspace
 
-[The Cost of Knowing](https://standardgalactic.github.io/library/workspace/cost_of_knowing.pdf)
+[From Verification to Commitment](https://standardgalactic.github.io/library/workspace/from-verification-to-commitment.pdf)
 
---- 
+![](verification-infographic.png)
+
+[The Cost of Knowing](https://standardgalactic.github.io/library/workspace/cost_of_knowing.pdf)
 
 [Admissibility Before Truth](https://standardgalactic.github.io/library/workspace/admissibility_before_truth.pdf)
 
@@ -13,4 +15,3 @@
 [Geometry of Witnesses](https://standardgalactic.github.io/library/workspace/geometry_of_witnesses.pdf)
 
 [Conservation of Ambiguity](https://standardgalactic.github.io/library/workspace/conservation_of_ambiguity.pdf) — *Incomplete*
-

@@ -1,5 +1,10 @@
 # Library 
 
+
+[From Verification to Commitment](https://standardgalactic.github.io/library/workspace/from-verification-to-commitment.pdf)
+
+* [Selective Continuation Machine](https://standardgalactic.github.io/library/selective-continuation-machine.html)
+
 [Constraint Regimes](https://standardgalactic.github.io/library/monograph/constraint_regimes.pdf)
 
 [The Topology of Intention](https://standardgalactic.github.io/library/monograph/topology_of_intention.pdf)
