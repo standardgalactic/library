@@ -15,7 +15,7 @@ The repository may contain many representations of the same work:
 or:
 
     A Beautiful Lie.mhtml
-    A Beautiful Lie.txt
+    a-beautiful-lie.txt
 
 The filesystem contains all of these objects, but the public library
 does not need to present every representation as a distinct artifact.
@@ -94,6 +94,7 @@ NEVER_INDEX = {
     # Web/export/archive representations
     ".html",
     ".mhtml",
+    ".mht",
 
     # LaTeX source and build products
     ".tex",
@@ -149,6 +150,8 @@ EXCLUDE_NAMES = {
     "package-lock.json",
     "file-list.txt",
     "file-list(2).txt",
+    "CONTRIBUTING.md",
+    "INDEX.md",
 }
 
 
@@ -242,7 +245,7 @@ def artifact_key(path: Path) -> tuple[str, str]:
 
     Thus:
 
-        A Beautiful Lie.txt
+        a-beautiful-lie.txt
         A Beautiful Lie.pdf
 
     can represent one artifact if they occur together.

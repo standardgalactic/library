@@ -36,30 +36,30 @@ Across domains, the documents develop a consistent set of principles:
 
 ### Technical & Formal Foundations
 
-- **[A Calculus of Commitment Spherepop](A_Calculus_of_Commitment_Spherepop.md)**  
+- **[A Calculus of Commitment Spherepop](a-calculus-of-commitment-spherepop.md)**  
   A technical paper introducing the Spherepop calculus and re-engineering Map-Reduce as event-historical aggregation.
 
-- **[Event Historical Frameworks Briefing](Event_Historical_Frameworks_Briefing.md)**  
+- **[Event Historical Frameworks Briefing](event-historical-frameworks-briefing.md)**  
   A comprehensive briefing synthesizing the full framework across computation, AI, social power, language, and physics.
 
-- **[Event Historical Aggregation MapReduce](Event_Historical_Aggregation_MapReduce.md)**  
+- **[Event Historical Aggregation MapReduce](event-historical-aggregation-mapreduce.md)**  
   A focused essay on Map-Reduce as commitment-building rather than value computation.
 
 ---
 
 ### Meaning, Agency, and AI
 
-- **[Spend Your Freedom](Spend_Your_Freedom.md)**  
+- **[Spend Your Freedom](spend-your-freedom.md)**  
   An essay arguing that agency consists in irreversible commitment, not option preservation.
 
 ---
 
 ### Social Power and Political Economy
 
-- **[Mute Compulsion](Mute_Compulsion.md)**  
+- **[Mute Compulsion](mute-compulsion.md)**  
   A formal theory of social reproduction via structural constraint.
 
-- **[Understanding Mute Compulsion](Understanding_Mute_Compulsion.md)**  
+- **[Understanding Mute Compulsion](understanding-mute-compulsion.md)**  
   An accessible guide to mute compulsion with concrete examples.
 
 ---

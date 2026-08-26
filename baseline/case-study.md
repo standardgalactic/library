@@ -1,3 +1,12 @@
+---
+title: "Case Study: American Sign Language as a Living Model for Semantic Compression"
+author: "unknown"
+date: "2026-03-22"
+tags: ["compression", "media"]
+summary: "In classical information theory, compression is defined as the reduction of statistical redundancy in signals. Traditional codecs such as MP3 (audio) or H.265 (video) approximate raw signals by discarding data below perceptual thresholds. A new paradigm—**semantic..."
+type: "essay"
+---
+
 # Case Study: American Sign Language as a Living Model for Semantic Compression
 
 ---

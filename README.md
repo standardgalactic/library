@@ -1,15 +1,71 @@
-# Library 
+# Library
 
+A public collection of essays, papers, notes, and audio overviews on cognition, physics, commitment, and related theory (RSVP and neighbouring projects).
+
+- **[Index of all entries](INDEX.md)** — title, type, and formats, with links
+- **[Contributing](CONTRIBUTING.md)** — kebab-case names, YAML front matter, where to add files, format policy
+
+## Folder themes
+
+| Folder | Theme |
+| --- | --- |
+| `analysis/` | Articles on AI autonomy, labour automation, and dialogue as semantic field theory |
+| `astrophysics/` | Papers and drafts on cosmic / stellar physics (e.g. solar interiors) |
+| `baseline/` | Semantic compression: media stored as descriptions rather than signals |
+| `codex-singularis/` | Exported conversation archives |
+| `complexity/` | Arguments that complexity does not require intelligence |
+| `computing/` | Thought experiments in computing (magnetic-fluidic computing and related) |
+| `conceptual-spaces/` | Essays on conceptual spaces and RSVP field equations |
+| `current-projects/` | Snapshots of active project notes and overviews |
+| `epistemology/` | Epistemic dynamics, Kantian schematism, astrocyte/memory models |
+| `essay/` | Standalone essays (e.g. the bicameral illusion) |
+| `fonts/` | Typefaces used in figures and PDFs — not essay content |
+| `geology/` | Geological papers and draft cycles |
+| `infrastructure/` | Designed systems: swarm piloting, traffic arbitration, entropic compression |
+| `mimetic-proxy-theory/` | Audio series for Mimetic Proxy Theory |
+| `monograph/` | Monograph on identity, constraint, meaning, and topology of the self |
+| `physics/` | RSVP / geometric physics, TARTAN, and the physics monograph sources |
+| `pipeline/` | In-progress monograph pipeline and curvature drafts |
+| `processing/` | Civilization and coordination as error-correcting / updating processes |
+| `projects/` | Project writeups (e.g. hallucination as geometry, digital gravity) |
+| `protocols/` | Event-historical frameworks: commitment, meaning, mute compulsion |
+| `research/` | Research notes (RSVP architecture, AGI mappings, phenotypic data) |
+| `resources/` | Shared resource papers (e.g. geometric memory) |
+| `semantic-ladle-theory/` | Audio series for Semantic Ladle Theory |
+| `spectral-universality/` | Spectral universality paper and sources |
+| `system/` | System-level papers (viewpoint diversity) |
+| `vault/` | Architecture of exclusion, merit/legibility, Solms–RSVP mappings |
+| `workspace/` | Working notes on verification, commitment, measurement, and related claims |
+| *(repository root)* | Cross-cutting essays and debates that are not tied to one theme |
+
+New material should go in the matching folder. Details are in [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Formats and duplicates
+
+Each work has **one canonical readable copy**: `.txt` or `.md` (prefer `.md` when the document is already Markdown).
+
+| Format | Role |
+| --- | --- |
+| `.txt` / `.md` | Canonical prose, with YAML front matter |
+| `.pdf` | Typeset paper or graphic; keep when it is not just a printout of the text |
+| `.mp3` | Audio overview of the same stem |
+| `.html` | Optional GitHub Pages view of an existing text — not a second essay |
+| `.tex` | Paper source (kebab-case, same stem as the PDF when both exist) |
+| `.mhtml` / `.mht` | **Not kept.** Browser archives were extracted to `.txt` and removed |
+
+If two files are the same work in different wrappers, keep the accessible text. Do not add `.mhtml` beside a `.txt`.
+
+## Featured works
 
 [From Verification to Commitment](https://standardgalactic.github.io/library/workspace/from-verification-to-commitment.pdf)
 
 * [Selective Continuation Machine](https://standardgalactic.github.io/library/selective-continuation-machine.html)
 
-[Constraint Regimes](https://standardgalactic.github.io/library/monograph/constraint_regimes.pdf)
+[Constraint Regimes](https://standardgalactic.github.io/library/monograph/constraint-regimes.pdf)
 
-[The Topology of Intention](https://standardgalactic.github.io/library/monograph/topology_of_intention.pdf)
+[The Topology of Intention](https://standardgalactic.github.io/library/monograph/topology-of-intention.pdf)
 
-[The Binding Invariant](https://standardgalactic.github.io/library/monograph/binding_invariant.pdf)
+[The Binding Invariant](https://standardgalactic.github.io/library/monograph/binding-invariant.pdf)
 
 * [Audio Overview](https://standardgalactic.github.io/library/monograph/)
 
@@ -37,7 +93,7 @@ Enacting cognitive landscapes
 
 # Complexity without Intelligence
 
-[Paper](https://standardgalactic.github.io/library/Complexity%20without%20Intelligence.pdf)
+[Paper](https://standardgalactic.github.io/library/complexity-without-intelligence.pdf)
 
 [Audio Overviews](https://standardgalactic.github.io/library/complexity/)
 
@@ -63,6 +119,7 @@ In that light, Marcus’s insistence on policing the boundary between System 1 a
 
 Aspect Relegation Theory is not revolutionary. It is worse for the pundit class: it is deflationary. It removes the mystique, collapses the false dichotomy, and replaces it with a continuous model of attention, habit, and resolution. Which may explain why it is rarely acknowledged. There is very little left to moralize once intuition stops pretending to be magic and starts admitting it is just yesterday’s reasoning, efficiently forgotten.
 
-[The Myth of Dual Cognition](https://standardgalactic.github.io/library/The%20Myth%20of%20Dual%20Cognition.pdf)
+[The Myth of Dual Cognition](https://standardgalactic.github.io/library/the-myth-of-dual-cognition.pdf)
 
 [Abstraction as Reduction](https://standardgalactic.github.io/alphabet/Abstraction%20as%20Reduction.pdf)
+

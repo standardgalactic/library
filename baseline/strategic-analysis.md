@@ -1,3 +1,12 @@
+---
+title: "Strategic Impact Analysis: The Transition to Description-Primary Media Systems"
+author: "unknown"
+date: "2026-03-22"
+tags: ["compression", "media"]
+summary: "Strategic Impact Analysis: The Transition to Description-Primary Media Systems Digital media is undergoing a fundamental architectural shift: from a **recording-primary ontology** to a **description-primary substrate**. In the classical paradigm, media consists of fixed..."
+type: "essay"
+---
+
 # Strategic Impact Analysis: The Transition to Description-Primary Media Systems
 
 ---

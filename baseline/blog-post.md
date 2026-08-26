@@ -1,3 +1,12 @@
+---
+title: "The End of the File: Why Your Future Is a \"Universal Textual Substrate\""
+author: "unknown"
+date: "2026-03-22"
+tags: ["compression", "media"]
+summary: "For a century, digital media has been structured around the preservation of signals. Audio and video systems treat waveforms and pixel arrays as the fundamental objects of representation, compressing them just enough to pass through bandwidth constraints. A phase transition..."
+type: "essay"
+---
+
 # The End of the File: Why Your Future Is a "Universal Textual Substrate"
 
 ---
