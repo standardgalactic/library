@@ -1,0 +1,424 @@
+---
+title: "Paper Summary: Transfer LearningSaltar al contenido"
+author: "unknown"
+date: "undated"
+tags: ["epistemology", "commitment"]
+summary: "This is a much more interesting paper than a typical \"we improved accuracy by 0.3%\" paper because its primary goal is not higher performance. Instead, it asks: Can we deliberately shape what a neural network learns so that its explanations correspond to concepts humans..."
+type: "summary"
+---
+
+Paper Summary: Transfer LearningSaltar al contenido
+
+Abrir barra lateral
+
+Dijiste:
+
+s41598-026-59076-8.pdf
+PDF
+
+ChatGPT dijo:
+I see you've uploaded the paper "Cross-domain transfer learning strategy enhances interpretability of deep learning model explanations". s41598-026-59076-8
+
+This is a much more interesting paper than a typical "we improved accuracy by 0.3%" paper because its primary goal is not higher performance. Instead, it asks:
+
+Can we deliberately shape what a neural network learns so that its explanations correspond to concepts humans actually use?
+
+The central idea is surprisingly simple.
+
+The authors start from a two-branch ECG classifier in which one branch is supposed to learn rhythm while the other is supposed to learn waveform morphology. In practice, however, both branches learn mixtures of everything, so post-hoc explanation methods highlight regions that are difficult for cardiologists to interpret.
+
+Their solution is to pre-train each branch on a task that isolates its intended concept. One network is first trained only to recognize P waves (morphology), while the other is trained only to estimate RR-interval variability (rhythm). Those learned weights are then partially frozen before fine-tuning on atrial fibrillation detection. s41598-026-59076-8
+
+The interesting result is that classification accuracy changes very little, but the explanations change dramatically. As progressively more layers are frozen, the rhythm branch increasingly places its relevance on the R peaks, while the morphology branch concentrates on P waves and fibrillatory regions. The paper therefore demonstrates that the representation geometry can be intentionally biased toward medically meaningful factors without sacrificing much predictive performance. s41598-026-59076-8
+
+From the perspective of your recent work, this is almost a direct empirical example of your Admissibility Before Truth program.
+
+The network is not merely learning a function x���yx \mapsto yx���y. It is first being restricted to an admissible subdomain of distinctions before being allowed to solve the downstream task. The pre-training tasks act like admissibility constraints that determine which distinctions are allowed to survive optimization. The later classification problem inherits those distinctions rather than discovering them from scratch.
+
+That is remarkably close to your idea that repair or admissibility precedes semantic truth.
+
+I also like that the paper explicitly measures the trade-off between accuracy and what they call domain specificity. Rather than assuming the highest F1 score is always best, they plot performance against how concentrated the explanations become in clinically meaningful regions. That is a small but important move away from metric hacking toward multi-objective optimization. The best model is not simply the most accurate���it is the one occupying a desirable point on the Pareto frontier between prediction and interpretability. s41598-026-59076-8
+
+My main criticism is that the paper still lacks a theory of why these constraints work. It demonstrates that carefully chosen auxiliary tasks produce cleaner explanations, but it treats this almost entirely as an empirical recipe. It never develops a mathematical account of why task decomposition should induce separable internal representations, why freezing preserves them, or when such transfer should fail. In other words, it provides an effective engineering strategy without a broader theory of admissible representation learning.
+
+That missing theory is exactly where frameworks like your repair-theoretic and admissibility-based approaches could contribute. Instead of saying "pre-train on related tasks," one could ask what family of pre-training tasks preserves the admissible distinction geometry required for the downstream problem, and how to characterize that preservation mathematically.
+
+Fuentes
+
+Dijiste:
+
+s41467-026-74536-5.pdf
+PDF
+
+Ok what about in this paper? 
+
+ChatGPT dijo:
+This paper is actually an even cleaner fit for your framework because it is fundamentally about admissibility of identity rather than prediction. s41467-026-74536-5
+
+The problem is this.
+
+Suppose two crystal structures are given. We want a function
+
+I:S���HI : \mathcal{S}\rightarrow\mathcal{H}I:S���H
+that assigns every structure a unique identifier.
+
+The difficulty is that there are transformations which should not change identity:
+
+s���s���s \sim s's���s���
+if they differ only by translation, atom ordering, tiny numerical noise, or equivalent unit-cell representations.
+
+Conversely there are transformations that should change identity because they alter chemically meaningful structure.
+
+The paper is therefore trying to define the admissible quotient
+
+S/���������������\mathcal{S}/\!\!\simS/���
+without explicitly saying so.
+
+In your language, identity is not primitive.
+
+Identity is the equivalence class induced by a repair criterion.
+
+Define a repair operator
+
+R(s,s���)R(s,s')R(s,s���)
+that measures whether one structure can be transformed into another through admissible repairs.
+
+Then
+
+s���As������R(s,s���)=0.s\equiv_A s'
+\Longleftrightarrow
+R(s,s')=0.s���A���s������R(s,s���)=0.
+Everything else is a genuinely different object.
+
+The Graph ID is therefore not fundamentally a hash.
+
+It is an encoding of an admissibility class.
+
+The really interesting part is the compositional sequence.
+
+Instead of saying
+
+"What atoms are my neighbors?"
+
+it recursively asks
+
+"What is the composition of my neighborhood?"
+
+then
+
+"What is the composition of the neighborhood of that neighborhood?"
+
+and so on.
+
+Mathematically,
+
+C0(v)=label(v)C_0(v)=\text{label}(v)C0���(v)=label(v)
+and
+
+Ck+1(v)=F������(Ck(v),{Ck(u):u���N(v)}).C_{k+1}(v)
+=
+F\!\left(
+C_k(v),
+\{
+C_k(u):u\in N(v)
+\}
+\right).Ck+1���(v)=F(Ck���(v),{Ck���(u):u���N(v)}).
+Each iteration enlarges the witness radius.
+
+This is remarkably close to your witness geometry.
+
+The node does not possess an intrinsic identity.
+
+Its identity emerges from progressively larger restorability neighborhoods.
+
+One can define a restoration operator
+
+Rr(v)\mathcal R_r(v)Rr���(v)
+as the information recoverable within graph radius rrr.
+
+Then
+
+R0���R1���R2������\mathcal R_0
+\subset
+\mathcal R_1
+\subset
+\mathcal R_2
+\subset\cdotsR0������R1������R2���������
+The compositional sequence is simply the history
+
+(R0,R1,���,Rr).\left(
+\mathcal R_0,
+\mathcal R_1,
+\ldots,
+\mathcal R_r
+\right).(R0���,R1���,���,Rr���).
+A node is identified not by its immediate neighborhood but by how distinguishability propagates through successive repairs.
+
+The authors even observe that some structures are indistinguishable locally but become distinguishable after enough iterations.
+
+That observation is exactly your Domain Restriction theorem in another form.
+
+There exists a smallest radius
+
+r���r^*r���
+such that
+
+Rr���(s)���Rr���(t).\mathcal R_{r^*}(s)
+\neq
+\mathcal R_{r^*}(t).Rr������(s)���=Rr������(t).
+Before that radius,
+
+Rr(s)=Rr(t),r<r���.\mathcal R_r(s)
+=
+\mathcal R_r(t),
+\qquad
+r<r^*.Rr���(s)=Rr���(t),r<r���.
+So identity is not local.
+
+Identity is the minimum restoration depth required for distinction.
+
+That is a beautiful theorem.
+
+The paper also discovers empirically that roughly
+
+r������2D+1,r^*
+\approx
+2D+1,r������2D+1,
+where DDD is graph diameter. s41467-026-74536-5
+
+Your interpretation would be that admissible identity requires restoration beyond the graph diameter because information must propagate through overlapping witness chains before ambiguity disappears.
+
+The graph diameter is therefore only a lower bound on distinguishability depth.
+
+The discussion of machine learning is perhaps the strongest connection.
+
+They show that duplicated structures leak into both train and test sets, producing artificially high accuracy. Their Graph ID removes these duplicates before evaluation. s41467-026-74536-5
+
+In your framework this is not merely "data leakage."
+
+It is admissibility leakage.
+
+The training and testing sets fail to satisfy
+
+Atrain���Atest=���.A_{\text{train}}
+\cap
+A_{\text{test}}
+=
+\varnothing.Atrain������Atest���=���.
+The test set contains witnesses already admitted during training.
+
+Therefore the reported generalization is not genuine restoration of new distinctions but repeated recognition of existing ones.
+
+I think the deeper theorem suggested by this paper is:
+
+Identity Restoration Theorem. Let RrR_rRr��� denote restoration using witness radius rrr. There exists a finite restoration depth r���r^*r��� such that
+
+Rr���(s)=Rr���(t)���������������s���At,R_{r^*}(s)
+=
+R_{r^*}(t)
+\iff
+s
+\equiv_A
+t,Rr������(s)=Rr������(t)���s���A���t,
+where ���A\equiv_A���A��� is admissible structural identity. For every r<r���r<r^*r<r���, there exist non-identical structures that remain observationally indistinguishable.
+
+That elevates what the paper presents as a practical graph-hashing algorithm into a general theory: identity is the fixed point of progressive restoration, not an intrinsic label. Graph IDs then become compressed witnesses of that restoration process rather than arbitrary hashes. I think that is the mathematical insight the paper is implicitly exploiting but never explicitly formulates.
+
+Fuentes
+
+ChatGPT dijo:Thought for a few seconds
+
+The paper can be worked into a compact repair-theoretic formalism like this.
+
+Let S\mathcal SS be the space of represented chemical structures. A represented structure includes coordinates, cell choice, atom ordering, numerical precision, and chemical labels. But many of these are not chemically meaningful. So the first move is to separate representation from admissible identity.
+
+s���Ss \in \mathcal Ss���S
+is a raw structure, while its chemically admissible identity is an equivalence class
+
+[s]A���S/���A.[s]_A \in \mathcal S/{\sim_A}.[s]A������S/���A���.
+Here
+
+s���Ats \sim_A ts���A���t
+means that sss and ttt differ only by transformations that should not count as structural difference: translation, atom-index permutation, harmless numerical perturbation, equivalent periodic representation, and possibly supercell choice if the reduction option is enabled. The paper���s Graph ID is an attempt to compute a stable representative of this quotient. s41467-026-74536-5
+
+Now define a graph-construction map
+
+G��:S���Graph,G_\alpha : \mathcal S \to \mathsf{Graph},G�����:S���Graph,
+where ��\alpha�� is the chosen bonding or distance rule. This parameter matters because the paper emphasizes that different graph-generation algorithms encode different sensitivities: one rule may treat ��\alpha��-quartz and ��\beta��-quartz as identical, while distance clustering can distinguish them by long-range geometric environments. s41467-026-74536-5
+
+So admissible identity is not absolute. It is relative to a witness regime:
+
+s���A,��t���G��(s)���G��(t)s \sim_{A,\alpha} t
+\Longleftrightarrow
+G_\alpha(s) \cong G_\alpha(t)s���A,�����t���G�����(s)���G�����(t)
+up to the chosen tolerance and reduction rules.
+
+The Graph ID then approximates a computable invariant
+
+GraphID�����(s)=H������(W��(s)),\operatorname{GraphID}_\alpha(s)
+=
+H\!\left(W_\alpha(s)\right),GraphID�����(s)=H(W�����(s)),
+where W��(s)W_\alpha(s)W�����(s) is the full ordered witness string generated from compositional sequences, and HHH is a hash compression. The hash is not the theory. The witness string is the theory.
+
+For each node vvv, define the radius-rrr compositional witness
+
+C0(v)=���(v),C_0(v)=\ell(v),C0���(v)=���(v),
+where ���(v)\ell(v)���(v) is the atomic label, and
+
+Cr+1(v)=(Cr(v),sort���{Cr(u):u���N+(v)}),C_{r+1}(v)
+=
+\Big(C_r(v),\operatorname{sort}\{C_r(u):u\in N^+(v)\}\Big),Cr+1���(v)=(Cr���(v),sort{Cr���(u):u���N+(v)}),
+with N+(v)N^+(v)N+(v) understood in the paper���s directed, non-backtracking, periodic sense. This matters because ordinary Weisfeiler���Lehman propagation lets information bounce back and forth symmetrically, which caused cristobalite and tridymite to collide, while Graph ID���s compositional sequences preserve outward expansion through the periodic structure. s41467-026-74536-5
+
+The structure-level witness is then
+
+Wr(s)=sort���{Cr(v):v���V(G��(s))}.W_r(s)=
+\operatorname{sort}\{C_r(v):v\in V(G_\alpha(s))\}.Wr���(s)=sort{Cr���(v):v���V(G�����(s))}.
+Two structures are indistinguishable at restoration depth rrr when
+
+Wr(s)=Wr(t).W_r(s)=W_r(t).Wr���(s)=Wr���(t).
+They become distinguishable at the first depth
+
+r���(s,t)=min���{r:Wr(s)���Wr(t)}.r^\ast(s,t)
+=
+\min\{r:W_r(s)\neq W_r(t)\}.r���(s,t)=min{r:Wr���(s)���=Wr���(t)}.
+This gives the key theorem suggested by the paper:
+
+s�����A,��t������r��� such that Wr���(s)���Wr���(t).s \not\sim_{A,\alpha} t
+\quad\Rightarrow\quad
+\exists r^\ast \text{ such that } W_{r^\ast}(s)\neq W_{r^\ast}(t).s������A,�����t������r��� such that Wr������(s)���=Wr������(t).
+In plain language, structural identity is the limit of progressive witness expansion. Local neighborhoods may be identical, but larger restoration neighborhoods eventually separate genuinely different structures. This is exactly what happens with cristobalite and tridymite: local coordination is the same, but long-range compositional sequences diverge after enough iterations. s41467-026-74536-5
+
+So the admissibility criterion becomes
+
+s���A,��,rt���Wr(s)=Wr(t).s \sim_{A,\alpha,r} t
+\Longleftrightarrow
+W_r(s)=W_r(t).s���A,��,r���t���Wr���(s)=Wr���(t).
+Increasing rrr sharpens admissibility. Too small an rrr produces false equivalence. Too sensitive a graph rule ��\alpha�� produces false distinction. The paper���s practical problem is therefore the calibration of the pair
+
+(��,r).(\alpha,r).(��,r).
+That is the deeper form of the whole paper:
+
+chemical identity=stable equality under an admissible witness protocol.\text{chemical identity}
+=
+\text{stable equality under an admissible witness protocol}.chemical identity=stable equality under an admissible witness protocol.
+The machine-learning leakage result then becomes almost automatic. A train/test split is admissible only if
+
+GraphID�����(si)���GraphID�����(sj)\operatorname{GraphID}_\alpha(s_i)
+\neq
+\operatorname{GraphID}_\alpha(s_j)GraphID�����(si���)���=GraphID�����(sj���)
+for every training structure sis_isi��� and test structure sjs_jsj���, unless the task intentionally permits duplicate identities. Otherwise the test set contains previously admitted witnesses, so performance is inflated. The paper shows this directly: leaked test structures have much lower error than genuinely unseen structures. s41467-026-74536-5
+
+So the final theorem-like statement is:
+
+Graph ID is a compressed certificate of admissible structural identity.\boxed{
+\text{Graph ID is a compressed certificate of admissible structural identity.}
+}Graph ID is a compressed certificate of admissible structural identity.���
+It is not just a database trick. It is a repair operator for material records: it removes representational noise, collapses equivalent encodings, preserves meaningful distinctions, and prevents false novelty in downstream computation.
+
+Fuentes
+
+Dijiste:So do you think I could put these examples in the paper conservation of ambiguity? 
+
+ChatGPT dijo:Yes, I think they fit, but I would be selective about how you use them.
+
+The central claim of Conservation of Ambiguity is not that ambiguity always exists. It is that ambiguity cannot simply disappear; it can only be relocated, resolved by additional constraints, or hidden by projection. These papers are useful because they provide concrete computational examples of exactly that phenomenon.
+
+The ECG paper is probably the stronger fit. The ambiguity is between multiple internal explanations that all produce the same classification. A classifier trained only for accuracy admits many equivalent internal decompositions. Pre-training and freezing do not create new information; they inject additional admissibility constraints that force the ambiguity to collapse onto clinically meaningful factors. In other words, the ambiguity has not vanished���it has been resolved by supplying extra witness information. That is a direct illustration of conservation of ambiguity.
+
+The Graph ID paper illustrates a different aspect. Cristobalite and tridymite are locally ambiguous: every small neighborhood looks essentially the same. Only after propagating information through larger compositional sequences does the ambiguity disappear. Nothing magical happens at the sixth or seventh iteration. Each iteration contributes another witness until there is finally enough information to distinguish the structures. Again, ambiguity is not destroyed; it is progressively consumed by additional structural evidence. s41467-026-74536-5
+
+I would even formulate a general conservation law.
+
+Let
+
+Ar(s,t)A_r(s,t)Ar���(s,t)
+be the ambiguity remaining between two objects after witness radius rrr. Then
+
+Ar+1(s,t)���Ar(s,t),A_{r+1}(s,t)\le A_r(s,t),Ar+1���(s,t)���Ar���(s,t),
+because additional witnesses cannot increase ambiguity under a monotone witness system.
+
+The ambiguity removed at step rrr is
+
+��Ar=Ar���Ar+1.\Delta A_r
+=
+A_r-A_{r+1}.��Ar���=Ar������Ar+1���.
+That reduction is not free. It requires an increase in admissible witness information,
+
+��Wr.\Delta W_r.��Wr���.
+A conservation statement is then
+
+��Ar=��(��Wr),\Delta A_r
+=
+\Phi(\Delta W_r),��Ar���=��(��Wr���),
+for some monotone function ��\Phi��. In words: every reduction in ambiguity corresponds to an increase in admissible distinguishing information.
+
+This formulation unifies several examples:
+
+In logic, adding axioms reduces semantic ambiguity.
+
+In machine learning, adding labels or auxiliary tasks reduces representational ambiguity.
+
+In Graph ID, increasing compositional-sequence depth reduces structural ambiguity.
+
+In your repair framework, additional repair witnesses reduce uncertainty about admissibility.
+
+I would avoid presenting these papers as "proofs" of the theorem. They are engineering papers solving practical problems. What they provide are empirical instantiations of the conservation principle. They show that practitioners repeatedly encounter the same phenomenon: whenever ambiguity is reduced, they must introduce additional structure, constraints, or observations. That is precisely the kind of cross-domain evidence that strengthens a theoretical essay without claiming more than the papers themselves establish.
+
+Fuentes
+
+Dijiste:So maybe the one on crystallography would be better in the geometry of witnesses paper? 
+
+ChatGPT dijo:I actually think it's a substantially better fit there.
+
+The Graph ID paper is fundamentally about what counts as a sufficient witness for identity. The ambiguity is resolved by expanding the witness geometry until the structure becomes uniquely determined. That is almost exactly the question that Geometry of Witnesses is asking.
+
+The flow would be something like this:
+
+You first develop the abstract theory that every object is known only through a witness operator
+
+Wr:X���Wr,W_r : X \rightarrow \mathcal W_r,Wr���:X���Wr���,
+where rrr indexes witness depth.
+
+You then prove that there exists a critical witness depth
+
+r���=inf���{r:Wr(x)���Wr(y)},r^\star
+=
+\inf\{r : W_r(x)\neq W_r(y)\},r���=inf{r:Wr���(x)���=Wr���(y)},
+for any distinguishable pair x,yx,yx,y.
+
+Only after that theorem do you introduce Graph ID as an empirical example.
+
+You can then explain:
+
+In crystallography, local neighborhoods frequently fail to distinguish structures. Cristobalite and tridymite possess identical local coordination environments, yet differ globally. The compositional-sequence algorithm progressively enlarges the witness neighborhood until a critical depth is reached at which the structures become distinguishable. The algorithm therefore computes not merely a hash but a finite witness sufficient for identity. s41467-026-74536-5
+
+That paragraph fits Geometry of Witnesses almost perfectly.
+
+The ECG paper belongs in a different chapter of the same story.
+
+There the witnesses are not spatial but functional. The network has many possible internal witnesses for atrial fibrillation. Transfer learning constrains the admissible witnesses to rhythm and morphology before downstream classification. So the paper becomes an example of witness selection, whereas Graph ID is an example of witness expansion.
+
+Those are different operations:
+
+Graph ID: increase witness depth until identity is determined.
+
+ECG transfer learning: restrict the witness family until explanation becomes admissible.
+
+Conservation of Ambiguity: prove that if witness depth or witness quality is held fixed, ambiguity cannot disappear; it can only be redistributed.
+
+That gives you a very clean separation of papers.
+
+I would probably organize them like this:
+
+The Geometry of Witnesses develops witness operators, witness depth, restoration radius, critical witness depth, and uses Graph ID as one of its principal empirical examples because it literally computes larger and larger witnesses until identity emerges.
+
+Conservation of Ambiguity then cites the Graph ID paper only briefly, perhaps in a paragraph, as evidence that removing ambiguity required additional witness information. Its main empirical example would instead be the ECG paper, because it demonstrates that ambiguity in explanation is reduced only by adding admissibility constraints through pretraining and freezing.
+
+That division lets each paper use the same literature, but for different theoretical purposes rather than repeating the same argument.
+
+Fuentes
+
+Instant��nea
+
+ChatGPT puede cometer errores. Se debe comprobar la informaci��n importante

@@ -1,3 +1,12 @@
+---
+title: "Technical Proposal: The Universal Textual Intermediate Representation (TIR) Standard for Multimodal Generative Media"
+author: "unknown"
+date: "2026-03-22"
+tags: ["compression", "media"]
+summary: "Technical Proposal: The Universal Textual Intermediate Representation (TIR) Standard for Multimodal Generative Media The Global Generative Standards Consortium (GGSC) proposes a transition from signal-based codecs to a semantic compression architecture. Traditional systems..."
+type: "essay"
+---
+
 # Technical Proposal: The Universal Textual Intermediate Representation (TIR) Standard for Multimodal Generative Media
 
 ---

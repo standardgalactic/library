@@ -1,3 +1,12 @@
+---
+title: "Beyond the Pixel: A Student’s Guide to Semantic Compression vs. Signal Approximation"
+author: "unknown"
+date: "2026-03-22"
+tags: ["compression", "media"]
+summary: "Beyond the Pixel: A Student’s Guide to Semantic Compression vs. Signal Approximation The evolution of data compression has reached a turning point. Traditional codecs operate by approximating signals—treating waveforms and pixel arrays as the primary objects of..."
+type: "essay"
+---
+
 # Beyond the Pixel: A Student’s Guide to Semantic Compression vs. Signal Approximation
 
 ---

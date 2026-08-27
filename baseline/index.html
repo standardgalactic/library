@@ -1,347 +1,347 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Text as Substrate</title>
-
-<style>
-
-body{
-margin:0;
-background:#000;
-color:#7cff7c;
-font-family:monospace;
-display:flex;
-flex-direction:column;
-align-items:center;
-text-align:center;
-padding:20px;
-}
-
-canvas{
-width:340px;
-height:340px;
-background:#000;
-border-radius:50%;
-margin-bottom:20px;
-box-shadow:0 0 10px #00ff0030,0 0 40px #00ff0010 inset;
-}
-
-.controls{
-display:flex;
-flex-wrap:wrap;
-gap:10px;
-justify-content:center;
-margin-bottom:12px;
-}
-
-button, select{
-background:#001400;
-border:1px solid #00ff00;
-color:#7cff7c;
-padding:8px 14px;
-font-size:.8em;
-cursor:pointer;
-}
-
-button:hover, select:hover{
-background:#002200;
-}
-
-.timer{
-min-width:80px;
-font-size:1.1em;
-}
-
-.captions{
-max-width:720px;
-min-height:2.4em;
-border:1px solid #00ff0030;
-background:#001000;
-padding:10px;
-margin-top:10px;
-}
-
-.link{
-margin-top:14px;
-font-size:.9em;
-opacity:.8;
-}
-
-.link a{
-color:#7cff7c;
-text-decoration:none;
-border-bottom:1px solid #00ff00;
-}
-
-</style>
-</head>
-
-<body>
-
-<h2>Text as Substrate</h2>
-
-<canvas id="scope"></canvas>
-
-<div class="controls">
-
-<!-- Track selector -->
-<select id="trackSelect">
-<option value="0">Text as Substrate</option>
-<option value="1">End of Video Recording</option>
-</select>
-
-<button id="toggle">Play</button>
-
-<select id="speed">
-<option value="0.8">0.8×</option>
-<option value="0.9">0.9×</option>
-<option value="1" selected>1×</option>
-<option value="1.1">1.1×</option>
-<option value="1.2">1.2×</option>
-</select>
-
-<button id="loop">Loop Off</button>
-
-<div class="timer" id="timer">--:--</div>
-
-</div>
-
-<div id="captions" class="captions"></div>
-
-<div class="link">
-<a href="https://standardgalactic.github.io/library/Text%20as%20Substrate.pdf" target="_blank">
-Read the full essay
-</a>
-</div>
-
-<audio id="audio"></audio>
-
-<script>
-
-/* ===== Playlist ===== */
-
-const playlist = [
-{
-audio: "Text_as_Substrate.mp3",
-vtt: "Text_as_Substrate.vtt"
-},
-{
-audio: "The_End_of_the_Video_Recording.mp3",
-vtt: "The_End_of_the_Video_Recording.vtt"
-}
-]
-
-let currentIndex = 0
-
-/* ===== Elements ===== */
-
-const canvas=document.getElementById("scope")
-const ctx=canvas.getContext("2d")
-
-const audio=document.getElementById("audio")
-const captions=document.getElementById("captions")
-
-const toggle=document.getElementById("toggle")
-const loop=document.getElementById("loop")
-const timer=document.getElementById("timer")
-const speed=document.getElementById("speed")
-const trackSelect=document.getElementById("trackSelect")
-
-/* ===== Canvas ===== */
-
-const dpr=window.devicePixelRatio||1
-canvas.width=340*dpr
-canvas.height=340*dpr
-ctx.setTransform(dpr,0,0,dpr,0,0)
-
-/* ===== Audio Engine ===== */
-
-let audioCtx
-let analyser
-let buffer
-
-function initAudio(){
-
-if(audioCtx) return
-
-audioCtx=new(window.AudioContext||window.webkitAudioContext)()
-
-analyser=audioCtx.createAnalyser()
-analyser.fftSize=2048
-
-const src=audioCtx.createMediaElementSource(audio)
-
-src.connect(analyser)
-analyser.connect(audioCtx.destination)
-
-buffer=new Uint8Array(analyser.fftSize)
-
-}
-
-/* ===== Load Track ===== */
-
-function loadTrack(i){
-
-currentIndex = i
-trackSelect.value = i
-
-const t = playlist[i]
-
-audio.pause()
-
-audio.src = t.audio
-
-audio.innerHTML = `<track kind="captions" src="${t.vtt}" srclang="en" default>`
-
-captions.textContent = ""
-
-audio.load()
-
-audio.addEventListener("loadedmetadata", attachTrack, { once:true })
-
-}
-
-/* ===== Subtitles ===== */
-
-function attachTrack(){
-
-const track = audio.textTracks[0]
-if(!track) return
-
-track.mode = "hidden"
-
-track.oncuechange = ()=>{
-const cue = track.activeCues[0]
-captions.textContent = cue ? cue.text : ""
-}
-
-}
-
-/* ===== Auto Advance ===== */
-
-audio.addEventListener("ended", ()=>{
-
-if(audio.loop) return
-
-if(currentIndex < playlist.length - 1){
-loadTrack(currentIndex + 1)
-audio.play()
-}else{
-toggle.textContent="Play"
-}
-
-})
-
-/* ===== Timer ===== */
-
-function formatTime(sec){
-const m=Math.floor(sec/60)
-const s=Math.floor(sec%60)
-return`${m.toString().padStart(2,"0")}:${s.toString().padStart(2,"0")}`
-}
-
-function updateTimer(){
-if(audio.duration && isFinite(audio.duration)){
-timer.textContent=formatTime(audio.duration-audio.currentTime)
-}
-requestAnimationFrame(updateTimer)
-}
-
-updateTimer()
-
-/* ===== Controls ===== */
-
-toggle.onclick=()=>{
-
-initAudio()
-
-if(audio.paused){
-audioCtx.resume().then(()=>audio.play())
-toggle.textContent="Pause"
-}else{
-audio.pause()
-toggle.textContent="Play"
-}
-
-}
-
-loop.onclick=()=>{
-audio.loop=!audio.loop
-loop.textContent=audio.loop?"Loop On":"Loop Off"
-}
-
-speed.onchange=()=>{
-audio.playbackRate=parseFloat(speed.value)
-}
-
-/* ===== Track Selector ===== */
-
-trackSelect.onchange=(e)=>{
-loadTrack(parseInt(e.target.value))
-}
-
-/* ===== Oscilloscope ===== */
-
-let rot=0
-
-function draw(){
-
-if(analyser){
-
-analyser.getByteTimeDomainData(buffer)
-
-ctx.fillStyle="rgba(0,0,0,0.12)"
-ctx.fillRect(0,0,340,340)
-
-ctx.beginPath()
-
-for(let i=0;i<buffer.length-1;i++){
-
-const x=(buffer[i]-128)/128*150
-const y=(buffer[(i+buffer.length/2)%buffer.length]-128)/128*150
-
-const cos=Math.cos(rot)
-const sin=Math.sin(rot)
-
-const xr=x*cos-y*sin
-const yr=x*sin+y*cos
-
-const px=170+xr
-const py=170+yr
-
-if(i===0) ctx.moveTo(px,py)
-else ctx.lineTo(px,py)
-
-}
-
-ctx.strokeStyle="#00ff66"
-ctx.lineWidth=1.5
-ctx.stroke()
-
-rot+=0.002
-
-}
-
-requestAnimationFrame(draw)
-
-}
-
-draw()
-
-/* ===== Init ===== */
-
-loadTrack(0)
-
-/* ===== Errors ===== */
-
-audio.addEventListener("error",()=>{
-timer.textContent="ERR"
-captions.textContent="Audio failed to load."
-})
-
-</script>
-
-</body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Text as Substrate</title>
+
+<style>
+
+body{
+margin:0;
+background:#000;
+color:#7cff7c;
+font-family:monospace;
+display:flex;
+flex-direction:column;
+align-items:center;
+text-align:center;
+padding:20px;
+}
+
+canvas{
+width:340px;
+height:340px;
+background:#000;
+border-radius:50%;
+margin-bottom:20px;
+box-shadow:0 0 10px #00ff0030,0 0 40px #00ff0010 inset;
+}
+
+.controls{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+justify-content:center;
+margin-bottom:12px;
+}
+
+button, select{
+background:#001400;
+border:1px solid #00ff00;
+color:#7cff7c;
+padding:8px 14px;
+font-size:.8em;
+cursor:pointer;
+}
+
+button:hover, select:hover{
+background:#002200;
+}
+
+.timer{
+min-width:80px;
+font-size:1.1em;
+}
+
+.captions{
+max-width:720px;
+min-height:2.4em;
+border:1px solid #00ff0030;
+background:#001000;
+padding:10px;
+margin-top:10px;
+}
+
+.link{
+margin-top:14px;
+font-size:.9em;
+opacity:.8;
+}
+
+.link a{
+color:#7cff7c;
+text-decoration:none;
+border-bottom:1px solid #00ff00;
+}
+
+</style>
+</head>
+
+<body>
+
+<h2>Text as Substrate</h2>
+
+<canvas id="scope"></canvas>
+
+<div class="controls">
+
+<!-- Track selector -->
+<select id="trackSelect">
+<option value="0">Text as Substrate</option>
+<option value="1">End of Video Recording</option>
+</select>
+
+<button id="toggle">Play</button>
+
+<select id="speed">
+<option value="0.8">0.8×</option>
+<option value="0.9">0.9×</option>
+<option value="1" selected>1×</option>
+<option value="1.1">1.1×</option>
+<option value="1.2">1.2×</option>
+</select>
+
+<button id="loop">Loop Off</button>
+
+<div class="timer" id="timer">--:--</div>
+
+</div>
+
+<div id="captions" class="captions"></div>
+
+<div class="link">
+<a href="https://standardgalactic.github.io/library/text-as-substrate.pdf" target="_blank">
+Read the full essay
+</a>
+</div>
+
+<audio id="audio"></audio>
+
+<script>
+
+/* ===== Playlist ===== */
+
+const playlist = [
+{
+audio: "text-as-substrate.mp3",
+vtt: "text-as-substrate.vtt"
+},
+{
+audio: "the-end-of-the-video-recording.mp3",
+vtt: "the-end-of-the-video-recording.vtt"
+}
+]
+
+let currentIndex = 0
+
+/* ===== Elements ===== */
+
+const canvas=document.getElementById("scope")
+const ctx=canvas.getContext("2d")
+
+const audio=document.getElementById("audio")
+const captions=document.getElementById("captions")
+
+const toggle=document.getElementById("toggle")
+const loop=document.getElementById("loop")
+const timer=document.getElementById("timer")
+const speed=document.getElementById("speed")
+const trackSelect=document.getElementById("trackSelect")
+
+/* ===== Canvas ===== */
+
+const dpr=window.devicePixelRatio||1
+canvas.width=340*dpr
+canvas.height=340*dpr
+ctx.setTransform(dpr,0,0,dpr,0,0)
+
+/* ===== Audio Engine ===== */
+
+let audioCtx
+let analyser
+let buffer
+
+function initAudio(){
+
+if(audioCtx) return
+
+audioCtx=new(window.AudioContext||window.webkitAudioContext)()
+
+analyser=audioCtx.createAnalyser()
+analyser.fftSize=2048
+
+const src=audioCtx.createMediaElementSource(audio)
+
+src.connect(analyser)
+analyser.connect(audioCtx.destination)
+
+buffer=new Uint8Array(analyser.fftSize)
+
+}
+
+/* ===== Load Track ===== */
+
+function loadTrack(i){
+
+currentIndex = i
+trackSelect.value = i
+
+const t = playlist[i]
+
+audio.pause()
+
+audio.src = t.audio
+
+audio.innerHTML = `<track kind="captions" src="${t.vtt}" srclang="en" default>`
+
+captions.textContent = ""
+
+audio.load()
+
+audio.addEventListener("loadedmetadata", attachTrack, { once:true })
+
+}
+
+/* ===== Subtitles ===== */
+
+function attachTrack(){
+
+const track = audio.textTracks[0]
+if(!track) return
+
+track.mode = "hidden"
+
+track.oncuechange = ()=>{
+const cue = track.activeCues[0]
+captions.textContent = cue ? cue.text : ""
+}
+
+}
+
+/* ===== Auto Advance ===== */
+
+audio.addEventListener("ended", ()=>{
+
+if(audio.loop) return
+
+if(currentIndex < playlist.length - 1){
+loadTrack(currentIndex + 1)
+audio.play()
+}else{
+toggle.textContent="Play"
+}
+
+})
+
+/* ===== Timer ===== */
+
+function formatTime(sec){
+const m=Math.floor(sec/60)
+const s=Math.floor(sec%60)
+return`${m.toString().padStart(2,"0")}:${s.toString().padStart(2,"0")}`
+}
+
+function updateTimer(){
+if(audio.duration && isFinite(audio.duration)){
+timer.textContent=formatTime(audio.duration-audio.currentTime)
+}
+requestAnimationFrame(updateTimer)
+}
+
+updateTimer()
+
+/* ===== Controls ===== */
+
+toggle.onclick=()=>{
+
+initAudio()
+
+if(audio.paused){
+audioCtx.resume().then(()=>audio.play())
+toggle.textContent="Pause"
+}else{
+audio.pause()
+toggle.textContent="Play"
+}
+
+}
+
+loop.onclick=()=>{
+audio.loop=!audio.loop
+loop.textContent=audio.loop?"Loop On":"Loop Off"
+}
+
+speed.onchange=()=>{
+audio.playbackRate=parseFloat(speed.value)
+}
+
+/* ===== Track Selector ===== */
+
+trackSelect.onchange=(e)=>{
+loadTrack(parseInt(e.target.value))
+}
+
+/* ===== Oscilloscope ===== */
+
+let rot=0
+
+function draw(){
+
+if(analyser){
+
+analyser.getByteTimeDomainData(buffer)
+
+ctx.fillStyle="rgba(0,0,0,0.12)"
+ctx.fillRect(0,0,340,340)
+
+ctx.beginPath()
+
+for(let i=0;i<buffer.length-1;i++){
+
+const x=(buffer[i]-128)/128*150
+const y=(buffer[(i+buffer.length/2)%buffer.length]-128)/128*150
+
+const cos=Math.cos(rot)
+const sin=Math.sin(rot)
+
+const xr=x*cos-y*sin
+const yr=x*sin+y*cos
+
+const px=170+xr
+const py=170+yr
+
+if(i===0) ctx.moveTo(px,py)
+else ctx.lineTo(px,py)
+
+}
+
+ctx.strokeStyle="#00ff66"
+ctx.lineWidth=1.5
+ctx.stroke()
+
+rot+=0.002
+
+}
+
+requestAnimationFrame(draw)
+
+}
+
+draw()
+
+/* ===== Init ===== */
+
+loadTrack(0)
+
+/* ===== Errors ===== */
+
+audio.addEventListener("error",()=>{
+timer.textContent="ERR"
+captions.textContent="Audio failed to load."
+})
+
+</script>
+
+</body>
 </html>

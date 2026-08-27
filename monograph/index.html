@@ -1,280 +1,280 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lissajous Monitor</title>
-
-<style>
-:root{ --fg:#7cffc4; }
-
-html,body{
-  margin:0;
-  height:100%;
-  background:#000;
-  overflow:hidden;
-  font-family:monospace;
-  color:var(--fg);
-}
-
-canvas{
-  position:fixed;
-  inset:0;
-}
-
-/* CRT */
-body::after{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  background:repeating-linear-gradient(
-    to bottom,
-    rgba(255,255,255,0.05) 0,
-    rgba(255,255,255,0.05) 1px,
-    transparent 2px,
-    transparent 4px
-  );
-  opacity:.15;
-}
-
-/* UI */
-.ui{
-  position:fixed;
-  bottom:20px;
-  left:50%;
-  transform:translateX(-50%);
-  width:min(90vw,520px);
-  text-align:center;
-  box-sizing:border-box;
-}
-
-select,button,input{
-  background:#000;
-  color:var(--fg);
-  border:1px solid var(--fg);
-  padding:6px;
-  font-family:monospace;
-}
-
-select{ max-width:100%; }
-
-#sub{
-  margin-top:8px;
-  min-height:2em;
-  font-size:13px;
-  line-height:1.5;
-  word-wrap:break-word;
-  white-space:pre-wrap;
-  text-align:center;
-  text-shadow:0 0 6px var(--fg);
-  padding:0 8px;
-}
-</style>
-</head>
-
-<body>
-
-<canvas id="c"></canvas>
-
-<div class="ui">
-  <select id="track"></select>
-  <button id="advBtn">ADV</button>
-  <div id="sub"></div>
-</div>
-
-<audio id="audio"></audio>
-
-<script>
-/* TRACKS */
-const TRACKS = [
-  "Why_truth_cannot_survive_the_feed.mp3",
-  "Breaking_the_mold_from_within.mp3",
-  "The_Mathematical_Inevitability_of_Hollow_Virality.mp3",
-  "Your_identity_is_a_dynamic_shape.mp3",
-  "Identity_as_a_Trajectory_of_Constraints.mp3"
-]
-
-const audio = document.getElementById('audio')
-const trackSel = document.getElementById('track')
-const subEl = document.getElementById('sub')
-
-TRACKS.forEach((t,i)=>{
-  const o = document.createElement('option')
-  o.value = i
-  o.textContent = t.replace(".mp3","").replace(/_/g," ")
-  trackSel.appendChild(o)
-})
-
-function getStart(){
-  const p = new URLSearchParams(location.search)
-  const q = p.get("track")
-  if(!q) return 0
-  if(!isNaN(q)) return Math.min(TRACKS.length-1, Math.max(0, Number(q)))
-  const i = TRACKS.findIndex(t=>t.toLowerCase().includes(q.toLowerCase()))
-  return i>=0 ? i : 0
-}
-
-let current = getStart()
-
-function load(i){
-  current = i
-  const file = TRACKS[i]
-
-  audio.src = file
-  audio.load()
-
-  while(audio.firstChild) audio.removeChild(audio.firstChild)
-
-  const tr = document.createElement("track")
-  tr.kind="subtitles"
-  tr.src=file.replace(".mp3",".vtt")
-  tr.default=true
-  audio.appendChild(tr)
-
-  trackSel.value = i
-}
-
-trackSel.onchange = ()=> load(Number(trackSel.value))
-
-audio.addEventListener("ended",()=>{
-  load((current+1)%TRACKS.length)
-  audio.play()
-})
-
-/* AudioContext */
-let ctxA, analyser, buf
-
-function initAudio(){
-  if(ctxA){
-    if(ctxA.state !== "running") ctxA.resume()
-    return
-  }
-
-  ctxA = new (window.AudioContext||window.webkitAudioContext)()
-  analyser = ctxA.createAnalyser()
-  analyser.fftSize = 1024
-  buf = new Uint8Array(analyser.fftSize)
-
-  const src = ctxA.createMediaElementSource(audio)
-  src.connect(analyser)
-  analyser.connect(ctxA.destination)
-}
-
-document.body.onclick = async ()=>{
-  initAudio()
-  audio.paused ? await audio.play() : audio.pause()
-}
-
-/* prevent ADV click from toggling audio */
-document.getElementById("advBtn").onclick = e=>{
-  e.stopPropagation()
-}
-
-/* subtitles */
-audio.ontimeupdate = ()=>{
-  const tt = audio.textTracks && audio.textTracks[0]
-  if(!tt) return
-  tt.mode = "hidden"
-  const cue = tt.activeCues && tt.activeCues[0]
-  subEl.textContent = cue ? cue.text : ''
-}
-
-/* canvas */
-const c = document.getElementById('c')
-const g = c.getContext('2d')
-
-let w,h,cx,cy
-function resize(){
-  w=c.width=innerWidth
-  h=c.height=innerHeight
-  cx=w/2; cy=h/2
-}
-resize()
-addEventListener('resize',resize)
-
-/* rings (pure decoration) */
-let r1=0,r2=0,r3=0
-
-function ring(r,rot,ticks,alpha){
-  g.save()
-  g.translate(cx,cy)
-  g.rotate(rot)
-
-  g.beginPath()
-  g.arc(0,0,r,0,Math.PI*2)
-  g.strokeStyle=`rgba(124,255,196,${alpha})`
-  g.lineWidth=0.8
-  g.stroke()
-
-  for(let i=0;i<ticks;i++){
-    const a=(i/ticks)*Math.PI*2
-    g.beginPath()
-    g.moveTo(Math.cos(a)*(r-4),Math.sin(a)*(r-4))
-    g.lineTo(Math.cos(a)*(r+4),Math.sin(a)*(r+4))
-    g.stroke()
-  }
-
-  g.restore()
-}
-
-/* draw */
-function draw(){
-  g.fillStyle='rgba(0,0,0,0.12)'
-  g.fillRect(0,0,w,h)
-
-  const R = Math.min(w,h)*0.38
-
-  g.save()
-  g.beginPath()
-  g.arc(cx,cy,R,0,Math.PI*2)
-  g.clip()
-
-  if(analyser){
-    analyser.getByteTimeDomainData(buf)
-    const len=buf.length, lag=20
-
-    g.beginPath()
-    for(let i=0;i<len;i++){
-      const a=(buf[i]-128)/128
-      const b=(buf[(i+lag)%len]-128)/128
-      const t=i/len*Math.PI*2
-
-      const x = cx + Math.sin(t*2)*a*R*0.7
-      const y = cy + Math.sin(t*3)*b*R*0.7
-
-      i?g.lineTo(x,y):g.moveTo(x,y)
-    }
-
-    g.strokeStyle='#00ff88'
-    g.shadowColor='#00ff88'
-    g.shadowBlur=12
-    g.stroke()
-    g.shadowBlur=0
-  }
-
-  g.restore()
-
-  g.beginPath()
-  g.arc(cx,cy,R,0,Math.PI*2)
-  g.strokeStyle='rgba(124,255,196,0.7)'
-  g.lineWidth=1.5
-  g.stroke()
-
-  r1+=0.0008
-  r2-=0.0012
-  r3+=0.0018
-
-  ring(R*0.72,r1,32,0.25)
-  ring(R*0.54,r2,24,0.20)
-  ring(R*0.36,r3,16,0.15)
-
-  requestAnimationFrame(draw)
-}
-
-load(current)
-draw()
-</script>
-
-</body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lissajous Monitor</title>
+
+<style>
+:root{ --fg:#7cffc4; }
+
+html,body{
+  margin:0;
+  height:100%;
+  background:#000;
+  overflow:hidden;
+  font-family:monospace;
+  color:var(--fg);
+}
+
+canvas{
+  position:fixed;
+  inset:0;
+}
+
+/* CRT */
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.05) 0,
+    rgba(255,255,255,0.05) 1px,
+    transparent 2px,
+    transparent 4px
+  );
+  opacity:.15;
+}
+
+/* UI */
+.ui{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  width:min(90vw,520px);
+  text-align:center;
+  box-sizing:border-box;
+}
+
+select,button,input{
+  background:#000;
+  color:var(--fg);
+  border:1px solid var(--fg);
+  padding:6px;
+  font-family:monospace;
+}
+
+select{ max-width:100%; }
+
+#sub{
+  margin-top:8px;
+  min-height:2em;
+  font-size:13px;
+  line-height:1.5;
+  word-wrap:break-word;
+  white-space:pre-wrap;
+  text-align:center;
+  text-shadow:0 0 6px var(--fg);
+  padding:0 8px;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="c"></canvas>
+
+<div class="ui">
+  <select id="track"></select>
+  <button id="advBtn">ADV</button>
+  <div id="sub"></div>
+</div>
+
+<audio id="audio"></audio>
+
+<script>
+/* TRACKS */
+const TRACKS = [
+  "why-truth-cannot-survive-the-feed.mp3",
+  "breaking-the-mold-from-within.mp3",
+  "the-mathematical-inevitability-of-hollow-virality.mp3",
+  "your-identity-is-a-dynamic-shape.mp3",
+  "identity-as-a-trajectory-of-constraints.mp3"
+]
+
+const audio = document.getElementById('audio')
+const trackSel = document.getElementById('track')
+const subEl = document.getElementById('sub')
+
+TRACKS.forEach((t,i)=>{
+  const o = document.createElement('option')
+  o.value = i
+  o.textContent = t.replace(".mp3","").replace(/_/g," ")
+  trackSel.appendChild(o)
+})
+
+function getStart(){
+  const p = new URLSearchParams(location.search)
+  const q = p.get("track")
+  if(!q) return 0
+  if(!isNaN(q)) return Math.min(TRACKS.length-1, Math.max(0, Number(q)))
+  const i = TRACKS.findIndex(t=>t.toLowerCase().includes(q.toLowerCase()))
+  return i>=0 ? i : 0
+}
+
+let current = getStart()
+
+function load(i){
+  current = i
+  const file = TRACKS[i]
+
+  audio.src = file
+  audio.load()
+
+  while(audio.firstChild) audio.removeChild(audio.firstChild)
+
+  const tr = document.createElement("track")
+  tr.kind="subtitles"
+  tr.src=file.replace(".mp3",".vtt")
+  tr.default=true
+  audio.appendChild(tr)
+
+  trackSel.value = i
+}
+
+trackSel.onchange = ()=> load(Number(trackSel.value))
+
+audio.addEventListener("ended",()=>{
+  load((current+1)%TRACKS.length)
+  audio.play()
+})
+
+/* AudioContext */
+let ctxA, analyser, buf
+
+function initAudio(){
+  if(ctxA){
+    if(ctxA.state !== "running") ctxA.resume()
+    return
+  }
+
+  ctxA = new (window.AudioContext||window.webkitAudioContext)()
+  analyser = ctxA.createAnalyser()
+  analyser.fftSize = 1024
+  buf = new Uint8Array(analyser.fftSize)
+
+  const src = ctxA.createMediaElementSource(audio)
+  src.connect(analyser)
+  analyser.connect(ctxA.destination)
+}
+
+document.body.onclick = async ()=>{
+  initAudio()
+  audio.paused ? await audio.play() : audio.pause()
+}
+
+/* prevent ADV click from toggling audio */
+document.getElementById("advBtn").onclick = e=>{
+  e.stopPropagation()
+}
+
+/* subtitles */
+audio.ontimeupdate = ()=>{
+  const tt = audio.textTracks && audio.textTracks[0]
+  if(!tt) return
+  tt.mode = "hidden"
+  const cue = tt.activeCues && tt.activeCues[0]
+  subEl.textContent = cue ? cue.text : ''
+}
+
+/* canvas */
+const c = document.getElementById('c')
+const g = c.getContext('2d')
+
+let w,h,cx,cy
+function resize(){
+  w=c.width=innerWidth
+  h=c.height=innerHeight
+  cx=w/2; cy=h/2
+}
+resize()
+addEventListener('resize',resize)
+
+/* rings (pure decoration) */
+let r1=0,r2=0,r3=0
+
+function ring(r,rot,ticks,alpha){
+  g.save()
+  g.translate(cx,cy)
+  g.rotate(rot)
+
+  g.beginPath()
+  g.arc(0,0,r,0,Math.PI*2)
+  g.strokeStyle=`rgba(124,255,196,${alpha})`
+  g.lineWidth=0.8
+  g.stroke()
+
+  for(let i=0;i<ticks;i++){
+    const a=(i/ticks)*Math.PI*2
+    g.beginPath()
+    g.moveTo(Math.cos(a)*(r-4),Math.sin(a)*(r-4))
+    g.lineTo(Math.cos(a)*(r+4),Math.sin(a)*(r+4))
+    g.stroke()
+  }
+
+  g.restore()
+}
+
+/* draw */
+function draw(){
+  g.fillStyle='rgba(0,0,0,0.12)'
+  g.fillRect(0,0,w,h)
+
+  const R = Math.min(w,h)*0.38
+
+  g.save()
+  g.beginPath()
+  g.arc(cx,cy,R,0,Math.PI*2)
+  g.clip()
+
+  if(analyser){
+    analyser.getByteTimeDomainData(buf)
+    const len=buf.length, lag=20
+
+    g.beginPath()
+    for(let i=0;i<len;i++){
+      const a=(buf[i]-128)/128
+      const b=(buf[(i+lag)%len]-128)/128
+      const t=i/len*Math.PI*2
+
+      const x = cx + Math.sin(t*2)*a*R*0.7
+      const y = cy + Math.sin(t*3)*b*R*0.7
+
+      i?g.lineTo(x,y):g.moveTo(x,y)
+    }
+
+    g.strokeStyle='#00ff88'
+    g.shadowColor='#00ff88'
+    g.shadowBlur=12
+    g.stroke()
+    g.shadowBlur=0
+  }
+
+  g.restore()
+
+  g.beginPath()
+  g.arc(cx,cy,R,0,Math.PI*2)
+  g.strokeStyle='rgba(124,255,196,0.7)'
+  g.lineWidth=1.5
+  g.stroke()
+
+  r1+=0.0008
+  r2-=0.0012
+  r3+=0.0018
+
+  ring(R*0.72,r1,32,0.25)
+  ring(R*0.54,r2,24,0.20)
+  ring(R*0.36,r3,16,0.15)
+
+  requestAnimationFrame(draw)
+}
+
+load(current)
+draw()
+</script>
+
+</body>
 </html>
