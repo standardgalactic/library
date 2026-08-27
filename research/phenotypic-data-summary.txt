@@ -1,9 +1,7 @@
 ---
 title: "Phenotypic data summary"
 author: "unknown"
-date: "undated"
 tags: ["research", "RSVP"]
-summary: "Phenotypic data summary Skip to content ChatGPT 5 ChatGPT 5 Share You said: Phenotypic data We collected data on metacarpal measurements (lengths in millimetres) for primate species from the literature. We only included species found in the phylogeny89. We..."
 type: "summary"
 ---
 
@@ -30,13 +28,10 @@ Phenotypic data
 We collected data on metacarpal measurements (lengths in millimetres) for primate species from the literature. We only included species found in the phylogeny89. We preferred compilation estimates (i.e., species-level data) but where specimen level data were included, we took a weighted average across all specimens (weighted, where possible, by number of specimens measured). Where individual specimens were measured by multiple sources, we preferred, arbitrarily, the most recently published source for each specimen. Our final dataset included finger bone measurements spanning 168 primate species, including 8 hominins (Figure S1). A full list of measurements and their sources can be found in the supporting information (Supplementary Data 1). Here, we use the length of the first metacarpal (MC1) and second metacarpal (MC2) as proxies for thumb and finger length respectively to measure relative thumb length and intrinsic hand proportions. However, our results remain qualitatively identical when proximal phalanges are used instead - or if we use any other digit instead of the 2nd digit Supplementary Tables 2-7). Additionally, metacarpals are a robust and reliable indicator of overall digit length in our sample (Supplementary Note 1, Supplementary Figs. 2, 3) and are highly correlated with other bone measurements (Supplementary Fig. 4). We prefer to use bone length over recently proposed kinematic models23 for measuring manipulative ability as these are directly measurable quantities which are likely to face direct selection pressure from the environment, although our conclusions remain robust even when using these metrics (Supplementary Note 2). Whilst we do not have enough data to test associations for the distal or intermediate phalanges it is likely we would find similar associations.
 
 
-
 We then collected brain mass data for these species. Brain masses or volumes were taken from the literature (see supporting information for full list of sources). In some cases - mostly for fossil taxa - we converted endocranial volumes to masses. Whilst endocranial volume is often converted to brain mass using the specific gravity of brain mass (1.036 g/mL)95,96,97, the majority of our extant data sample comes from a paper which uses a conversion of 1 g to 1 cm3 - and does not record which values were volume conversions98. For consistency, therefore, we use this conversion where necessary. The species for which this was done are recorded in the supporting information.
 
 
-
 Tool-use data was taken from a published and comprehensive compilation32. Any species not included in this compilation were assumed to have not been observed using tools. This data is limited to only extant taxa. Whilst hominins would likely have been capable of tool-use to varying degrees, here we rely exclusively on observational data (testing hominins separately as described above). Our final dataset is graphically represented in Fig. 1. All continuously varying traits (brain size, metacarpal length, etc.) were logged before analysis.
-
 
 
 Statistics and reproducibility
@@ -44,23 +39,18 @@ Statistics and reproducibility
 Owing to the non-independence of species-level data attributable to shared ancestry88, we implemented all comparative analyses in a phylogenetic context. We used phylogenetic generalized least squares (PGLS) multivariate regression models implemented within a Bayesian Markov Chain Monte-Carlo (MCMC) framework to test for an association between manual dexterity and cognitive ability. Each analysis was conducted over a sample of 100 trees (see above). All models were run for a total of 1,000,000 iterations after convergence, sampling every 10,000 iterations. A wide uninformative prior was placed on all regression parameters (normal distribution with a mean of 0 and standard deviation of 5). We estimated the strength of phylogenetic signal using lambda99 in all models. All models were repeated multiple times (minimum n = 3) to ensure results were identical across replicates.
 
 
-
 Phylogenetic comparative analysis
 
 Our first set of models (finger-only models, n = 95) tested the relationship between the lengths of MC1 and MC2. To assess the effect of brain size on relative thumb length, we included brain mass as an additional covariate - whilst also still including MC2 as a predictor to measure intrinsic relative thumb length and thus account for size. This model set is referred to as our whole-brain models (n = 95). We repeated both analyses excluding all hominins (n = 89, Supplementary Table 1). All analyses are conducted over all primates as a single group.
 
 
-
 To identify which hominins (if any) were outliers in terms of their intrinsic hand proportions, we conducted a phylogenetic outlier test e.g., see ref. 30 using a phylogenetic imputation procedure31 to predict hominin thumb lengths. This predictive modelling approach simultaneously incorporates the parameters of a regression model as well as the phylogenetic position of each taxon. As with all our analyses, the imputations are calculated using PGLS regression models implemented within a Bayesian MCMC framework. We estimate the thumb length for each hominin given the parameters of each of our regression analyses (finger-only and whole-brain models) calculated across the rest of primates. We then assess whether each hominin species is an outlier using the full distribution of predicted values for thumb length- where the distribution overlaps the true value by less than 5% in more than 95% of trees, it can be considered a phylogenetic outlier.
-
 
 
 To determine whether the relationship between brain size and thumb length is being driven by or affected by tool use, we ran an additional set of models (tool-use models) including the following predictors: MC2, a binary (dummy-coded) variable defining whether each species has been observed to use tools, and an interaction between the two variables. This explicitly tests for a different intercept and slope in the relationship between thumb length and brain size in species that have never been observed using tools compared to those which have. Note that we use three alternative ways of defining tool use, all obtained from the same source32. We additionally ran models excluding species where either only a single individual has been observed using or making tools, or where observations came only from captive animals32. All alternative definitions and exclusions resulted in identical conclusions (Supplementary Note 3).
 
 
-
 To determine whether individual brain regions affected thumb length independently (brain-regions models, n = 49), we included both neocortex volume and cerebellum volume in a single model - along with MC2. Separating the effects of the neocortex and the cerebellum can be complicated owing to their strong correlation. We additionally repeated the model excluding H. sapiens (n = 48, Supplementary Table 1). Here, we included both regions in the same model here since together, the neocortex and cerebellum comprise a 'unit' responsible for the mediation of visuo-motor and sequential action control100. However, we find qualitatively similar results when each of the regions were studied in isolation: without H. sapiens, only the neocortex shows any significant association (Supplementary Table 8).
-
 
 
 For all models, results are summarised across the sample of trees where the model is run separately for each tree. We assess significance of the parameters using two criteria: Firstly, the proportion of the posterior distribution that crosses zero (px); where this proportion ≤ 0.05, we consider a variable to be significantly different from zero. Secondly, the first criterion must be met in at least 95% of topologies for us to consider a variable as significant. For comparison, we summarise parameter estimates using median values - and then to summarise across all trees, we report the range of observed medians.
@@ -278,15 +268,13 @@ You said:
 It was from - Published: 26 August 2025
 
 
-
 # Human dexterity and brains evolved hand in hand
 
-- [Joanna Baker](https://www.nature.com/articles/s42003-025-08686-5#auth-Joanna-Baker-Aff1-Aff2), 
+- [Joanna Baker](https://www.nature.com/articles/s42003-025-08686-5#auth-Joanna-Baker-Aff1-Aff2),
 
-- [Robert A. Barton](https://www.nature.com/articles/s42003-025-08686-5#auth-Robert_A_-Barton-Aff3) & 
+- [Robert A. Barton](https://www.nature.com/articles/s42003-025-08686-5#auth-Robert_A_-Barton-Aff3) &
 
-- [Chris Venditti](https://www.nature.com/articles/s42003-025-08686-5#auth-Chris-Venditti-Aff1) 
-
+- [Chris Venditti](https://www.nature.com/articles/s42003-025-08686-5#auth-Chris-Venditti-Aff1)
 
 
 [*Communications Biology*](https://www.nature.com/commsbio) **volume 8**, Article number: 1257 (2025) [Cite this article](https://www.nature.com/articles/s42003-025-08686-5#citeas)
@@ -650,31 +638,22 @@ You said:
 The ancient networks are actually alive within and around us throughout our lives. What we call 'our mind' is actually a result of our direct connection with this network; without it, minds would not exist. The nature of our origins... our organismal and human forms... are the result of the character of the networks we have largely forgotten and replaced with representations... including language. Long before our species began to speak... our direct experiential relation with these networks was, like water to fish, absolutely essential. It was, for our ancestors, unimaginable that anything could ever obstruct it. The stories of the onset of these obstructions is complex and spans eons of our developmental history.
 
 
-
 But the networks are still active.
-
 
 
 A central feature of this situation is what I will refer to as an uplink node. This is any kind of relation or experience that 'reminds' us of the networks and leads to a place 'above' where we are situated in physical bodies and awareness. The wrist on your hand is a great physical example; the hand 'appears distinct', and yet there's a physical place that leads beyond it into the rest of the body.
 
 
-
 Mountains, oceans, forests, jungles, deserts... trees, insects, creatures of every kind... these are, all of them... ways to recover uplink via true relation. When we are able to 'remember' this, our access is free, open and transentient.
-
 
 
 This essay is a memorial, in a sense, of the lost filial relationships that, in their growing absence, drive us to desperation. But when we begin, or agree together, to remember... we will always find them waiting with intelligences, wisdom... and adoration... far beyond anything we might ordinarily imagine.
 
 
-
-
-
 I am insatiably curious about the nature of living beings, intelligence, language, and the origins of our species.
 
 
-
 As a cognitive activist, my dream is that my work may contribute to our ability to understand the origins of our strange situation as modern humans, and assemble effective replacements for what our modern cultures are but the broken remnants and falsified costumes of.
-
 
 
 # The Door in the Sky
@@ -6424,6 +6403,3 @@ ChatGPT can make mistakes. Check important info. See
 Cookie Preferences
 
 .
-
-
-

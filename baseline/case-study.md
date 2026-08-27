@@ -3,7 +3,6 @@ title: "Case Study: American Sign Language as a Living Model for Semantic Compre
 author: "unknown"
 date: "2026-03-22"
 tags: ["compression", "media"]
-summary: "In classical information theory, compression is defined as the reduction of statistical redundancy in signals. Traditional codecs such as MP3 (audio) or H.265 (video) approximate raw signals by discarding data below perceptual thresholds. A new paradigm—**semantic..."
 type: "essay"
 ---
 
@@ -38,23 +37,23 @@ In ASL, this appears as **handshape classifiers**, which function as parametric 
 
 ### Core Prototype Types
 
-- **Flat Hand (Planar Prototype)**  
+- **Flat Hand (Planar Prototype)**
   Represents flat surfaces (e.g., walls, floors)
 
-- **Curved Hand (Volumetric Prototype)**  
+- **Curved Hand (Volumetric Prototype)**
   Represents graspable volumes or containers
 
-- **Bent-V (Postural Prototype)**  
+- **Bent-V (Postural Prototype)**
   Represents seated or crouched agents
 
 ### Two-Stage Factorization (Initialization)
 
 ASL demonstrates a compositional encoding process:
 
-1. **Structural Parsing**  
+1. **Structural Parsing**
    The classifier defines the general category (e.g., “group”)
 
-2. **Lexical Serialization**  
+2. **Lexical Serialization**
    Initialization (e.g., letter F or O) refines meaning into “family” or “organization”
 
 This corresponds to a factorization of meaning into structural and lexical components.
@@ -85,10 +84,10 @@ ASL communication is not purely local. It requires global coherence across multi
 
 ### Components
 
-- **Manual Signs (Local Sections)**  
+- **Manual Signs (Local Sections)**
   Discrete semantic units
 
-- **Facial Expression / Posture (Global Sections)**  
+- **Facial Expression / Posture (Global Sections)**
   Context-setting constraints
 
 ### Coherence Condition
@@ -152,8 +151,8 @@ Users become participants in interpretation. Descriptions function as editable s
 
 The most efficient way to transmit a world is not to encode its raw signal, but to transmit:
 
-- Shared prototypes  
-- Structured deviations  
-- Global constraints  
+- Shared prototypes
+- Structured deviations
+- Global constraints
 
 ASL is not merely a language—it is a working implementation of semantic compression as a generative system of meaning.

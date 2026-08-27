@@ -3,7 +3,6 @@ title: "Text as Substrate"
 author: "unknown"
 date: "2026-03-22"
 tags: ["compression", "media"]
-summary: "A framework for moving beyond signal-based compression (MP3, H.265) toward **semantic compression**, where media is represented as structured descriptions that can be generatively reconstructed. Traditional media systems treat signals (audio waveforms, pixel arrays) as the..."
 type: "summary"
 ---
 

@@ -1,9 +1,7 @@
 ---
 title: "Planned Obsolescence Ideas"
 author: "unknown"
-date: "undated"
 tags: ["library"]
-summary: "Planned Obsolescence Ideas Planned Obsolescence Ideas Summarize: ���Feburary Paper,2015��� Virtual Reality 3D Scanning Abstract We propose a head-mounted device and accompanying software for 3D scanning of a static scene that provides real-time..."
 type: "essay"
 ---
 
@@ -15,87 +13,87 @@ Planned Obsolescence Ideas
 
 Model: GPT-4
 
-Summarize: ���Feburary Paper,2015��� 
+Summarize: ���Feburary Paper,2015���
 
-Virtual Reality 3D Scanning 
+Virtual Reality 3D Scanning
 
-Abstract 
+Abstract
 
-We propose a head-mounted device and accompanying software for 3D scanning of a static scene 
+We propose a head-mounted device and accompanying software for 3D scanning of a static scene
 
-that provides real-time feedback during scanning. This method allows viewing the current scan 
+that provides real-time feedback during scanning. This method allows viewing the current scan
 
-from multiple angles and viewpoints, while also providing a feeling of presence through a virtual 
+from multiple angles and viewpoints, while also providing a feeling of presence through a virtual
 
-reality interface. Holes and other artifacts can be immediately identif i ed and i xed interactively. 
+reality interface. Holes and other artifacts can be immediately identif i ed and i xed interactively.
 
-Further, the device supports position and rotation tracking which allows for registration of multiple 
+Further, the device supports position and rotation tracking which allows for registration of multiple
 
-scans at interactive speeds. 
+scans at interactive speeds.
 
-1. Methodology 
+1. Methodology
 
-1.1. Live point cloud view 
+1.1. Live point cloud view
 
-The most basic element of the device is a live display of the depth camera feed in a virtual reality 
+The most basic element of the device is a live display of the depth camera feed in a virtual reality
 
-view. The view can be rotated and zoomed in and out of with the mouse. The device runs at very 
+view. The view can be rotated and zoomed in and out of with the mouse. The device runs at very
 
-low latency (achieving about 60 frames per second). 
+low latency (achieving about 60 frames per second).
 
-Figure 1 shows the virtual reality render of a user viewing a live point cloud capture of oneself. In 
+Figure 1 shows the virtual reality render of a user viewing a live point cloud capture of oneself. In
 
-this case the depth camera has been mounted on a table in front of the user simply for the purpose 
+this case the depth camera has been mounted on a table in front of the user simply for the purpose
 
-of the example. The user can move around and see the point cloud update in real-time, while the 
+of the example. The user can move around and see the point cloud update in real-time, while the
 
-movement of the head also moves and re-orients the viewpoint providing immersion. 
+movement of the head also moves and re-orients the viewpoint providing immersion.
 
-1.2. First-person view 
+1.2. First-person view
 
-When the depth camera is mounted on the head-mounted virtual reality display and the point clouds 
+When the depth camera is mounted on the head-mounted virtual reality display and the point clouds
 
-read from it are transformed by the eye transform given by the display, a i rst person view effect is 
+read from it are transformed by the eye transform given by the display, a i rst person view effect is
 
-achieved. This is because during rendering the view transform is used, which is the inverse of the 
+achieved. This is because during rendering the view transform is used, which is the inverse of the
 
-eye transform, having the point cloud data in the space of the depth camera go to identity in camera 
+eye transform, having the point cloud data in the space of the depth camera go to identity in camera
 
-space during rendering. Figure 1: Live point cloud view 
+space during rendering. Figure 1: Live point cloud view
 
-Figure 2: First person view 
+Figure 2: First person view
 
-As before, this view is real-time, and so effectively this becomes a 3D ���see-through��� display 
+As before, this view is real-time, and so effectively this becomes a 3D ���see-through��� display
 
-of the environment in point cloud form. The user can switch between i rst person view and the 
+of the environment in point cloud form. The user can switch between i rst person view and the
 
-third-person mode with mouse control described in the earlier section at any time. The third-person 
+third-person mode with mouse control described in the earlier section at any time. The third-person
 
-mode allows discovering holes easily (since they are often better visible at right angles to the eye 
+mode allows discovering holes easily (since they are often better visible at right angles to the eye
 
-vector), while the i rst person view allows the user to position and orient the head-mounted display 
+vector), while the i rst person view allows the user to position and orient the head-mounted display
 
-for effective scanning in a more intuitive fashion once the holes are found. 
+for effective scanning in a more intuitive fashion once the holes are found.
 
-Figure 2 shows such a i rst person display. The hand of the user can be seen along with the 
+Figure 2 shows such a i rst person display. The hand of the user can be seen along with the
 
-interior of a room in the background. 
+interior of a room in the background.
 
-1.3. Live registration 
+1.3. Live registration
 
-Point cloud registration is the process of placing multiple point cloud captures so that their relative 
+Point cloud registration is the process of placing multiple point cloud captures so that their relative
 
-positions and orientations correspond to the real-world relative positions and orientations of the 
+positions and orientations correspond to the real-world relative positions and orientations of the
 
-surfaces that they capture. With no information on the placement of the camera when the picture 
+surfaces that they capture. With no information on the placement of the camera when the picture
 
-was taken this is a hard problem since the point clouds must be analyzed for possible overlaps. 
+was taken this is a hard problem since the point clouds must be analyzed for possible overlaps.
 
-However, since the depth camera is mounted on a head-mounted device that has its position and 
+However, since the depth camera is mounted on a head-mounted device that has its position and
 
-orientation tracked, we can use this information to place the point cloud captures. This allows 
+orientation tracked, we can use this information to place the point cloud captures. This allows
 
-registration at interactive speeds, provided the location of the camera relative to the location of the 
+registration at interactive speeds, provided the location of the camera relative to the location of the
 
 origin in the head-mounted device frame is properly accounted for.
 
@@ -125,89 +123,89 @@ Overall, the device integrates VR and 3D scanning technology to provide real-tim
 
 1 / 1
 
-2. Implementation 
+2. Implementation
 
-The program was written in C++, using C++11 features such as lambdas. It uses OpenGL for 
+The program was written in C++, using C++11 features such as lambdas. It uses OpenGL for
 
-rendering, SimpleDirectMedia Layer (SDL) to create a window and maintain an OpenGL context, 
+rendering, SimpleDirectMedia Layer (SDL) to create a window and maintain an OpenGL context,
 
-the Oculus Rift SDK to render to the Oculus Rift and read position/rotation tracking data, the 
+the Oculus Rift SDK to render to the Oculus Rift and read position/rotation tracking data, the
 
-OpenGL Mathematics (GLM) library for mathematical structures and operations and the Intel 
+OpenGL Mathematics (GLM) library for mathematical structures and operations and the Intel
 
-Double Springs 4 SDK to read depth images from the Intel Double Springs 4 camera. 
+Double Springs 4 SDK to read depth images from the Intel Double Springs 4 camera.
 
-The implementation is divided into 4 main systems, each represented by a class:Game,VR,DS, 
+The implementation is divided into 4 main systems, each represented by a class:Game,VR,DS,
 
-Scene.Gameruns the main event loop,VRhandles virtual reality rendering,DSreads depth camera 
+Scene.Gameruns the main event loop,VRhandles virtual reality rendering,DSreads depth camera
 
-2 
+2
 
-Figure 3: Live registration of multiple captures 
+Figure 3: Live registration of multiple captures
 
-data andScenemanages scene elements and draws them. 
+data andScenemanages scene elements and draws them.
 
-2.1.Game 
+2.1.Game
 
-Gamemaintains an SDL window with an OpenGL context, listens for events and notif i es event 
+Gamemaintains an SDL window with an OpenGL context, listens for events and notif i es event
 
-handlers, and provides a frames-per-second display. The constructor initializes SDL, creates a 
+handlers, and provides a frames-per-second display. The constructor initializes SDL, creates a
 
-window and an OpenGL context, and the destructor quits SDL. 
+window and an OpenGL context, and the destructor quits SDL.
 
-In its public interface, the most important part ofGameis theGame::update(update, draw) 
+In its public interface, the most important part ofGameis theGame::update(update, draw)
 
-method, which runs the main event loop, taking two functionsupdateanddraw. Theupdate 
+method, which runs the main event loop, taking two functionsupdateanddraw. Theupdate
 
-function is called every loop, and thedrawfunction is called whenever the scene must be re- 
+function is called every loop, and thedrawfunction is called whenever the scene must be re-
 
-rendered. These are separate callbacks to allow updating at a higher frequency than drawing, or to 
+rendered. These are separate callbacks to allow updating at a higher frequency than drawing, or to
 
-allow update even when not drawing, such as when the window is minimized. 
+allow update even when not drawing, such as when the window is minimized.
 
-Other than this,Gameprovides methods to retrieve the SDL window, access command-line 
+Other than this,Gameprovides methods to retrieve the SDL window, access command-line
 
-arguments and quit the program. 
+arguments and quit the program.
 
-2.2.VR 
+2.2.VR
 
-VRis the main interface to the virtual reality display. It uses the Oculus Rift SDK to communicate 
+VRis the main interface to the virtual reality display. It uses the Oculus Rift SDK to communicate
 
-with the Oculus Rift device, and the implementation has been designed so there are no references 
+with the Oculus Rift device, and the implementation has been designed so there are no references
 
-to the Oculus Rift SDK elsewhere in the code and where required the device is communicated 
+to the Oculus Rift SDK elsewhere in the code and where required the device is communicated
 
-with only through theVRclass. The constructor creates an OpenGL framebuffer to render to that is 
+with only through theVRclass. The constructor creates an OpenGL framebuffer to render to that is
 
-shared with the Oculus SDK, resizes and repositions the window to render to the Oculus Rift, and 
+shared with the Oculus SDK, resizes and repositions the window to render to the Oculus Rift, and
 
-enables position and rotation tracking. The destructor deinitializes all of this. 
+enables position and rotation tracking. The destructor deinitializes all of this.
 
-The publicVR::draw(drawer)method draws to the virtual reality display, taking a function 
+The publicVR::draw(drawer)method draws to the virtual reality display, taking a function
 
-drawerthat draws the actual scene as if drawing to a conventional screen. It achieves this by 
+drawerthat draws the actual scene as if drawing to a conventional screen. It achieves this by
 
-callingdrawertwice, once for each eye, each time setting up the projection and view matrices 
+callingdrawertwice, once for each eye, each time setting up the projection and view matrices
 
-according to the eye rendered from. The view matrix is dependent upon the position and rotation 
+according to the eye rendered from. The view matrix is dependent upon the position and rotation
 
-of the head-mounted display and takes into account the displacement of each eye from the center 
+of the head-mounted display and takes into account the displacement of each eye from the center
 
-of the head. To calculate the view matrix it computes the inverse of the matrices returned by 
+of the head. To calculate the view matrix it computes the inverse of the matrices returned by
 
-VR::eye_transforms(). 
+VR::eye_transforms().
 
-The publicVR::eye_transforms()returns two matrices in anstd::array, each representing 
+The publicVR::eye_transforms()returns two matrices in anstd::array, each representing
 
-the camera matrix of an eye. It also supports an optional boolean parametermid. Ifmidis true, it 
+the camera matrix of an eye. It also supports an optional boolean parametermid. Ifmidis true, it
 
-3 
+3
 
-returns the camera matrix of the ���mid��� eye, as if viewing the scene from the center of the head with 
+returns the camera matrix of the ���mid��� eye, as if viewing the scene from the center of the head with
 
-the same eye orientation. 
+the same eye orientation.
 
-2.3.DS 
+2.3.DS
 
 DSis the main interface to the depth camera. It uses the Intel Double Springs 4 SDK
 
@@ -281,93 +279,93 @@ Overall, the software design emphasizes separation of concerns with different co
 
 1 / 1
 
-3. Future Work 
+3. Future Work
 
-3.1. Color capture 
+3.1. Color capture
 
-This would be a simple addition to the existing implementation. The current implementation only 
+This would be a simple addition to the existing implementation. The current implementation only
 
-stores positions of points and not their color. Adding color would provide a more complete rendering 
+stores positions of points and not their color. Adding color would provide a more complete rendering
 
-of the scene captured. The Intel Double Springs 4 camera has a ���third eye��� that takes standard color 
+of the scene captured. The Intel Double Springs 4 camera has a ���third eye��� that takes standard color
 
-images of the scene. It provides an interface to i nd coordiantes in the third image corresponding to 
+images of the scene. It provides an interface to i nd coordiantes in the third image corresponding to
 
-those in depth images. By creating an OpenGL texture with the third image as its data and providing 
+those in depth images. By creating an OpenGL texture with the third image as its data and providing
 
-a UV transform, we can add color to the point cloud in an eff i cient manner. This texture-mapping 
+a UV transform, we can add color to the point cloud in an eff i cient manner. This texture-mapping
 
-based approach would also translate well in case of mesh surface reconstructions from the depth 
+based approach would also translate well in case of mesh surface reconstructions from the depth
 
-image. 
+image.
 
-Adding color capture would involve very minimal effort and could be accomplished within the 
+Adding color capture would involve very minimal effort and could be accomplished within the
 
-span of a couple days and at most one week. 
+span of a couple days and at most one week.
 
-3.2. Evaluate related work 
+3.2. Evaluate related work
 
-This paper has focused more on approach and implementation than related work in the i eld. Some 
+This paper has focused more on approach and implementation than related work in the i eld. Some
 
-of the related work studied includes Kintinuous (which extends the registration features of Kinect 
+of the related work studied includes Kintinuous (which extends the registration features of Kinect
 
-cameras to much larger spaces) and AR-Rift (which displays i rst person video of the real world in 
+cameras to much larger spaces) and AR-Rift (which displays i rst person video of the real world in
 
-Oculus Rift and allows augmented reality interaction). A section with an in-depth evaluation of and 
+Oculus Rift and allows augmented reality interaction). A section with an in-depth evaluation of and
 
-comparison with existing methods would greatly benef i t the paper. 
+comparison with existing methods would greatly benef i t the paper.
 
-4 
+4
 
-3.3. Interactive registration interface 
+3.3. Interactive registration interface
 
-Since the device is able to run at interactive framerates, it is possible to provide an interface to the 
+Since the device is able to run at interactive framerates, it is possible to provide an interface to the
 
-user to pick the individual point clouds to incorporate into the i nal dataset. One possible solution is 
+user to pick the individual point clouds to incorporate into the i nal dataset. One possible solution is
 
-to provide a ���staging area,��� a live view of the current point cloud capture from the depth camera, 
+to provide a ���staging area,��� a live view of the current point cloud capture from the depth camera,
 
-along with the setSof point clouds ���committed��� so far, initially empty. The user can then maneuver 
+along with the setSof point clouds ���committed��� so far, initially empty. The user can then maneuver
 
-the head-mounted display until the desired region is staged, then hit a key to commit it. This adds 
+the head-mounted display until the desired region is staged, then hit a key to commit it. This adds
 
-the currently staged point cloud toS. The software displays all point clouds inS, along with the 
+the currently staged point cloud toS. The software displays all point clouds inS, along with the
 
-staging area in a different color. 
+staging area in a different color.
 
-This way there is no need for an algorithm that decides which points must be kept when 
+This way there is no need for an algorithm that decides which points must be kept when
 
-compressing the point cloud ��� we make use of the presence offered by the virtual reality view. 
+compressing the point cloud ��� we make use of the presence offered by the virtual reality view.
 
-The staging area could also be viewed from multiple angles rather than simply i rst-person, as in 
+The staging area could also be viewed from multiple angles rather than simply i rst-person, as in
 
-section 1.1. 
+section 1.1.
 
-One method of enabling eff i cient rendering ofSis to store each point cloud in it as a separate 
+One method of enabling eff i cient rendering ofSis to store each point cloud in it as a separate
 
-OpenGL vertex buffer object. Each vertex buffer object can then be rendered with a shader that 
+OpenGL vertex buffer object. Each vertex buffer object can then be rendered with a shader that
 
-takes the texture and the eye matrix of the camera in world space when it was captured, using the 
+takes the texture and the eye matrix of the camera in world space when it was captured, using the
 
-texture for color and the matrix to place the points in world space. 
+texture for color and the matrix to place the points in world space.
 
-3.4. Automatic registration algorithms 
+3.4. Automatic registration algorithms
 
-The head-mounted display provides position and orientation information for the camera, but another 
+The head-mounted display provides position and orientation information for the camera, but another
 
-way to locate point clouds relative to each other is to analyze the data, look for overlaps and estimate 
+way to locate point clouds relative to each other is to analyze the data, look for overlaps and estimate
 
-their positions. One library that provides tools for such analysis is Point Cloud Library (PCL). 
+their positions. One library that provides tools for such analysis is Point Cloud Library (PCL).
 
-This can help avoid drift issues arising from inaccurate tracking of the head-mounted display or 
+This can help avoid drift issues arising from inaccurate tracking of the head-mounted display or
 
-of incorrectly measuring the position of the depth camera relative to the origin of the head-mounted 
+of incorrectly measuring the position of the depth camera relative to the origin of the head-mounted
 
-display. Another reason such a technique is desirable is that the head-mounted display can be moved 
+display. Another reason such a technique is desirable is that the head-mounted display can be moved
 
-outside the range of its IR camera and the camera positions estimated by such an algorithm can then 
+outside the range of its IR camera and the camera positions estimated by such an algorithm can then
 
-be used to track it. This could open the way for free capture of multiple rooms of a building, for 
+be used to track it. This could open the way for free capture of multiple rooms of a building, for
 
 example.
 
@@ -399,251 +397,251 @@ In essence, future work revolves around enhancing the device's functionality, im
 
 1 / 1
 
-Summarize: Editorial 
+Summarize: Editorial
 
-The AI writing on the wall 
+The AI writing on the wall
 
-Guidelines are urgently needed for 
+Guidelines are urgently needed for
 
-the use of generative AI tools like 
+the use of generative AI tools like
 
-ChatGPT in scientif i c writing. 
+ChatGPT in scientif i c writing.
 
-W 
+W
 
-e speculated about the start 
+e speculated about the start
 
-of a new chapter in artificial 
+of a new chapter in artificial
 
-writing two and a half years 
+writing two and a half years
 
-ago1, but as ChatGPT has 
+ago1, but as ChatGPT has
 
-been unleashed on the world 
+been unleashed on the world
 
-there is no longer any doubt that AI generative 
+there is no longer any doubt that AI generative
 
-tools are changing the landscape of scientific 
+tools are changing the landscape of scientific
 
-writing. ChatGPT is a variation of GPT-3, the 
+writing. ChatGPT is a variation of GPT-3, the
 
-175-billion parameter large language model 
+175-billion parameter large language model
 
-from OpenAI that was trained on much of the 
+from OpenAI that was trained on much of the
 
-available data on the internet (up to 2021). 
+available data on the internet (up to 2021).
 
-It works as a chatbot interface and is aston- 
+It works as a chatbot interface and is aston-
 
-ishingly good at producing human-level text 
+ishingly good at producing human-level text
 
-upon prompts, in the form of engaging dia- 
+upon prompts, in the form of engaging dia-
 
-logue, language translations, articles, poems, 
+logue, language translations, articles, poems,
 
-essays and much more, in a range of styles 
+essays and much more, in a range of styles
 
-on demand. 
+on demand.
 
-Among many industries affected by Chat- 
+Among many industries affected by Chat-
 
-GPT, scientific publishing is one that needs 
+GPT, scientific publishing is one that needs
 
-to address potential implications soon2. 
+to address potential implications soon2.
 
-The risk of an imminent flood of AI-generated 
+The risk of an imminent flood of AI-generated
 
-papers where the distinction between original 
+papers where the distinction between original
 
-human-written and AI-written or rehashed 
+human-written and AI-written or rehashed
 
-content will be blurred seems real. Scien- 
+content will be blurred seems real. Scien-
 
-tific publishers, including Springer Nature, 
+tific publishers, including Springer Nature,
 
-have in recent years adopted a range of soft- 
+have in recent years adopted a range of soft-
 
-ware tools to fight malpractices including 
+ware tools to fight malpractices including
 
-paper mills, fabricated results, duplicate 
+paper mills, fabricated results, duplicate
 
-submissions and plagiarism. It has become 
+submissions and plagiarism. It has become
 
-an essential, largely underappreciated part 
+an essential, largely underappreciated part
 
-of science publishing to carry out various 
+of science publishing to carry out various
 
-quality checks such as whether authors and 
+quality checks such as whether authors and
 
-affiliations actually exist and whether parts 
+affiliations actually exist and whether parts
 
-of the text have been previously published 
+of the text have been previously published
 
-elsewhere. ChatGPT���s ability to produce large 
+elsewhere. ChatGPT���s ability to produce large
 
-amounts of plausible-sounding content and to 
+amounts of plausible-sounding content and to
 
-rewrite existing text in different styles, mak- 
+rewrite existing text in different styles, mak-
 
-ing plagiarism detection near-impossible, 
+ing plagiarism detection near-impossible,
 
-may stretch the current system to its limits 
+may stretch the current system to its limits
 
-and undermine trust. Efforts are underway to 
+and undermine trust. Efforts are underway to
 
-create apps, such as GPTZero, that can detect 
+create apps, such as GPTZero, that can detect
 
-whether text was generated by ChatGPT. Per- 
+whether text was generated by ChatGPT. Per-
 
-haps such tools will become standard, like the 
+haps such tools will become standard, like the
 
-plagiarism detection services often used in 
+plagiarism detection services often used in
 
-publishing and education. However, language 
+publishing and education. However, language
 
-models will continue to develop and existing 
+models will continue to develop and existing
 
-software to detect misuse may not be able to 
+software to detect misuse may not be able to
 
-catch up in good time. 
+catch up in good time.
 
-There are certainly also promising positive 
+There are certainly also promising positive
 
-applications for generative tools like ChatGPT 
+applications for generative tools like ChatGPT
 
-in scientific writing and publishing. They can 
+in scientific writing and publishing. They can
 
-be used to improve the readability of advanced 
+be used to improve the readability of advanced
 
-drafts in an editing pass, which can help 
+drafts in an editing pass, which can help
 
-non-native speakers, and could be employed 
+non-native speakers, and could be employed
 
-in writing summaries of a scientific text. Some 
+in writing summaries of a scientific text. Some
 
-may find the tool useful for brainstorming, by 
+may find the tool useful for brainstorming, by
 
-bouncing ideas with the chatbot in a conver- 
+bouncing ideas with the chatbot in a conver-
 
-sational way. However, these features should 
+sational way. However, these features should
 
-be used with caution and ChatGPT-edited text 
+be used with caution and ChatGPT-edited text
 
-needs to be carefully checked as the tool can- 
+needs to be carefully checked as the tool can-
 
-not be trusted to get facts right or produce 
+not be trusted to get facts right or produce
 
-reliable references. 
+reliable references.
 
-Another concern in scientific writing is 
+Another concern in scientific writing is
 
-that a user���s prompt may generate text from 
+that a user���s prompt may generate text from
 
-ChatGPT that includes content that the user 
+ChatGPT that includes content that the user
 
-does not understand, but which the user may 
+does not understand, but which the user may
 
-be tempted to incorporate into their writing. 
+be tempted to incorporate into their writing.
 
-Used judiciously, this may be a productive 
+Used judiciously, this may be a productive
 
-way to learn about a topic. A downside is that 
+way to learn about a topic. A downside is that
 
-ChatGPT may normalize a new form of writ- 
+ChatGPT may normalize a new form of writ-
 
-ing in which the human user merely curates 
+ing in which the human user merely curates
 
-large swaths of text by rearranging the output 
+large swaths of text by rearranging the output
 
-from multiple prompts. A related issue is that 
+from multiple prompts. A related issue is that
 
-ChatGPT should not be expected to produce 
+ChatGPT should not be expected to produce
 
-useful new insights or offer original, stimu- 
+useful new insights or offer original, stimu-
 
-lating views; after all, large language models 
+lating views; after all, large language models
 
-produce output by combining existing data 
+produce output by combining existing data
 
-and coming up with what is statistically the 
+and coming up with what is statistically the
 
-average opinion. The model has no real under- 
+average opinion. The model has no real under-
 
-standing of the world, no motivations and no 
+standing of the world, no motivations and no
 
-moral compass. 
+moral compass.
 
-There are also concerns about GPT harbour- 
+There are also concerns about GPT harbour-
 
-ing bias, picked up from the large amounts of 
+ing bias, picked up from the large amounts of
 
-data it has been trained on. Some data cura- 
+data it has been trained on. Some data cura-
 
-tion is in place and toxicity filters are added, 
+tion is in place and toxicity filters are added,
 
-but limitations of large language models with 
+but limitations of large language models with
 
-regard to propagating bias are not clearly 
+regard to propagating bias are not clearly
 
-understood3. In fact, ChatGPT is currently in 
+understood3. In fact, ChatGPT is currently in
 
-a ���research preview��� stage, during which the 
+a ���research preview��� stage, during which the
 
-tool is free to use, so that the world is essen- 
+tool is free to use, so that the world is essen-
 
-tially taking part in a large experiment to learn 
+tially taking part in a large experiment to learn
 
-about the tool���s ���strengths and weaknesses���. 
+about the tool���s ���strengths and weaknesses���.
 
-There is a certain element of exaggeration 
+There is a certain element of exaggeration
 
-in the media and in online discussions regard- 
+in the media and in online discussions regard-
 
-ing the disruptive potential of generative AI 
+ing the disruptive potential of generative AI
 
-tools, but large language models are here to 
+tools, but large language models are here to
 
-stay and will mean change in certain areas, 
+stay and will mean change in certain areas,
 
-such as in education where ChatGPT is redefin- 
+such as in education where ChatGPT is redefin-
 
-ing the practice of essay writing assignments. 
+ing the practice of essay writing assignments.
 
-Recently, ICML, a main machine learning 
+Recently, ICML, a main machine learning
 
-conference, has announced a ban on papers 
+conference, has announced a ban on papers
 
-that contain text entirely written by a large 
+that contain text entirely written by a large
 
-language model, although the organizers add 
+language model, although the organizers add
 
-that the policy may evolve when the impacts 
+that the policy may evolve when the impacts
 
-of large language models on scientific pub- 
+of large language models on scientific pub-
 
-lishing are better understood. New guidelines 
+lishing are better understood. New guidelines
 
-are needed in scientific publishing to resolve 
+are needed in scientific publishing to resolve
 
-legitimate and unwanted applications of 
+legitimate and unwanted applications of
 
-AI-generative tools, and we will be actively 
+AI-generative tools, and we will be actively
 
-involved in discussions about this. 
+involved in discussions about this.
 
-Published online: 20 January 2023 
+Published online: 20 January 2023
 
-References 
+References
 
-1. Nat. Mach. Intell. 2, 419 (2020). 
+1. Nat. Mach. Intell. 2, 419 (2020).
 
-2. Grimaldi, G. & Ehrler, B. ACS Energy Lett. 8, 878���880 
+2. Grimaldi, G. & Ehrler, B. ACS Energy Lett. 8, 878���880
 
-(2023). 
+(2023).
 
-3. Bender, E. M., Gebru, T., McMillan-Major, A., Shmitchell, 
+3. Bender, E. M., Gebru, T., McMillan-Major, A., Shmitchell,
 
-S. in Proceedings of the 2021 ACM Conference on Fairness, 
+S. in Proceedings of the 2021 ACM Conference on Fairness,
 
 Accountability, and Transparency 610���623 (2021).
 
@@ -755,15 +753,15 @@ One could argue that both these articles represent different facets of the ongoi
 
 1 / 1
 
-We propose a head-mounted device and accompanying software for 3D scanning of a static scene 
+We propose a head-mounted device and accompanying software for 3D scanning of a static scene
 
-that provides real-time feedback during scanning. This method allows viewing the current scan 
+that provides real-time feedback during scanning. This method allows viewing the current scan
 
-from multiple angles and viewpoints, while also providing a feeling of presence through a virtual 
+from multiple angles and viewpoints, while also providing a feeling of presence through a virtual
 
-reality interface. Holes and other artifacts can be immediately identif i ed and i xed interactively. 
+reality interface. Holes and other artifacts can be immediately identif i ed and i xed interactively.
 
-Further, the device supports position and rotation tracking which allows for registration of multiple 
+Further, the device supports position and rotation tracking which allows for registration of multiple
 
 scans at interactive speeds.
 
@@ -1050,49 +1048,37 @@ Through this journey, we aspire to shed light on the contours of our 'bitter fut
 Connections with an essay I wrote on this topic: Theory Tesseracted: Understanding the Complexity of the Human Mind through Bayesian Updating and Meta-Minds
 
 
-
 The human mind is an incredibly complex and multifaceted entity that has long fascinated philosophers, psychologists, and neuroscientists alike.
-
 
 
 While many theories have been proposed to explain its workings, the field of cognitive science has increasingly turned to the Bayesian updating model of mind and the concept of meta-minds to provide insight into this intricate system.
 
 
-
 The Bayesian updating model of mind posits that humans continuously update their beliefs based on new information and prior knowledge, adjusting their expectations and making decisions accordingly.
-
 
 
 This model has been used to explain a wide range of cognitive phenomena, from perception and attention to decision-making and learning.
 
 
-
-At the same time, the concept of meta-minds suggests that the human mind has the capacity to reflect on and regulate its own cognitive processes. 
-
+At the same time, the concept of meta-minds suggests that the human mind has the capacity to reflect on and regulate its own cognitive processes.
 
 
 This ability allows individuals to evaluate their own thinking and reasoning, and to adjust their approach as needed to achieve their goals.
 
 
-
 Together, these two concepts offer a powerful framework for understanding the complexity of the human mind.
-
 
 
 By examining how individuals update their beliefs and reflect on their own cognitive processes, we can gain insight into how the mind processes and interprets information, and how it makes decisions and learns from experience.
 
 
-
 In this essay, we will explore the Bayesian updating model of mind and the concept of meta-minds in greater depth, discussing their theoretical underpinnings and the ways in which they have been used to explain various cognitive phenomena
-
 
 
 We will also examine how these concepts can be applied in practical settings, such as in education and decision-making.
 
 
-
-Through this exploration, we hope to gain a deeper understanding of the complexity of the human mind, and the ways in which it processes and interprets the world around us. 
-
+Through this exploration, we hope to gain a deeper understanding of the complexity of the human mind, and the ways in which it processes and interprets the world around us.
 
 
 Ultimately, we believe that this understanding can lead to new insights and innovations in a wide range of fields, from psychology and neuroscience to artificial intelligence and beyond.
@@ -1238,10 +1224,3 @@ ChatGPT may produce inaccurate information about people, places, or facts.
 ChatGPT May 24 Version
 
 ChatGPT
-
-
-
-
-
-
-

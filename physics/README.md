@@ -62,4 +62,3 @@ If you make use of this material, please cite:
   url = {https://standardgalactic.github.io/library/physics/physics-monograph.pdf}
 }
 ```
-

@@ -3,7 +3,6 @@ title: "The End of the File: Why Your Future Is a \"Universal Textual Substrate\
 author: "unknown"
 date: "2026-03-22"
 tags: ["compression", "media"]
-summary: "For a century, digital media has been structured around the preservation of signals. Audio and video systems treat waveforms and pixel arrays as the fundamental objects of representation, compressing them just enough to pass through bandwidth constraints. A phase transition..."
 type: "essay"
 ---
 
@@ -48,18 +47,18 @@ In the semantic paradigm, video is no longer stored as frames.
 
 Instead, it is encoded as a structured description:
 
-- Agents  
-- Actions  
-- Environments  
-- Camera dynamics  
+- Agents
+- Actions
+- Environments
+- Camera dynamics
 
 This transforms video into a **causal archive**.
 
 ### Consequences
 
-- Editing becomes modification of causal structure  
-- Perspective becomes decoupled from recording  
-- Counterfactual queries become possible  
+- Editing becomes modification of causal structure
+- Perspective becomes decoupled from recording
+- Counterfactual queries become possible
 
 We no longer store what happened. We store what can be generated.
 
@@ -71,9 +70,9 @@ American Sign Language (ASL) provides a natural implementation of semantic compr
 
 ### Structural Correspondence
 
-- **Handshape classifiers** → prototype categories  
-- **Facial expressions** → global constraints  
-- **Motion modulation** → semantic gradients  
+- **Handshape classifiers** → prototype categories
+- **Facial expressions** → global constraints
+- **Motion modulation** → semantic gradients
 
 ASL encodes meaning through structured primitives and continuous modulation.
 
@@ -81,9 +80,9 @@ ASL encodes meaning through structured primitives and continuous modulation.
 
 Meaning is constructed from:
 
-- Shared prototypes  
-- Parameterized deviations  
-- Global coherence constraints  
+- Shared prototypes
+- Parameterized deviations
+- Global coherence constraints
 
 ASL demonstrates that semantic compression is not artificial—it is the natural form of efficient communication. :contentReference[oaicite:1]{index=1}
 
@@ -97,13 +96,13 @@ The new constraint is **rendering capacity**.
 
 ### Shift in Constraints
 
-- Transmission cost → near zero  
-- Rendering cost → dependent on compute  
+- Transmission cost → near zero
+- Rendering cost → dependent on compute
 
 This produces **information asymmetry**:
 
-- The same description yields different experiences  
-- Quality depends on local computational power  
+- The same description yields different experiences
+- Quality depends on local computational power
 
 The signal is democratized. The realization is stratified.
 
@@ -115,17 +114,17 @@ The transition introduces a fundamental risk: **semantic drift**.
 
 ### Drift Dynamics
 
-- Models trained on generated outputs converge toward archetypes  
-- Diversity collapses into high-probability representations  
-- Reality is replaced by model expectations  
+- Models trained on generated outputs converge toward archetypes
+- Diversity collapses into high-probability representations
+- Reality is replaced by model expectations
 
 This leads to **epistemic closure**: the system can only represent what it already knows.
 
 ### Consequences
 
-- Loss of real-world variability  
-- Collapse of representational diversity  
-- Difficulty distinguishing reality from generated simulation  
+- Loss of real-world variability
+- Collapse of representational diversity
+- Difficulty distinguishing reality from generated simulation
 
 Authenticity becomes unstable when reconstruction replaces recording.
 
@@ -135,9 +134,9 @@ Authenticity becomes unstable when reconstruction replaces recording.
 
 The transition to a description-primary system transforms media at every level:
 
-- Files become programs  
-- Signals become realizations  
-- Communication becomes generative  
+- Files become programs
+- Signals become realizations
+- Communication becomes generative
 
 Text becomes the substrate of experience—the instruction set that tells machines how to render reality.
 

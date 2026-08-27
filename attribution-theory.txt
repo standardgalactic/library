@@ -1,9 +1,7 @@
 ---
 title: "Attribution Theory"
 author: "Attribution Theory"
-date: "undated"
 tags: ["library"]
-summary: "Attribution Theory ChatGPT 4 You Randy Hall: Honest question: when you say \\"crossover\\" what is being exchanged? A certain few lines of code? A subroutine? Some sort of defined function? Of course I'm familiar with the biological (genetic) concept of crossover,..."
 type: "theory"
 ---
 
@@ -22,31 +20,24 @@ Randy Hall:
 Honest question: when you say "crossover" what is being exchanged? A certain few lines of code? A subroutine? Some sort of defined function? Of course I'm familiar with the biological (genetic) concept of crossover, but how does this happen in computer science?
 
 
-
 Monica Anderson:
 
 GAs all do contain a genome of some sort. Part of the design challenge for the crossover and the goal function is that the practitioner needs to understand the problem well enough to determine which individual is better, but also to be able to determine the parameters that comprise all solutions.
 
 
-
 There really is not a Phenotype in simple GAs. We evaluate the genotype directly using the goal function. This is a pretty radical shortcut ���� but one that is actually starting to get used in wetlab genomics: Labs make grains with better yields without the bother to grow the seeds for a year, because they know what a higher yield DNA genome looks like.
-
 
 
 Suppose you wanted to use GA to optimize shipping cost to design a square cornered box big enough for shipping a bicycle. The genome would contain the X, Y, and Z sizes of the box and those would initially be totally randomized in each individual. The goal function returns zero fitness for every box that cannot fit the bicycle (You would need to put this computation into the goal function) and otherwise returns the length and circumference so that we can compute the shipping cost the traditional way.
 
 
-
 The crossover function might take two parents and use X from one and Y and Z from the other, and sometimes X and Y from one and Z from the other.
-
 
 
 Very rapidly we will note that the best boxes in each generation become smaller and smaller and cheaper to ship. When the Elite is stable, they all have the same X, Y, and Z which is the optimal solution.
 
 
-
 Now imagine a problem with 2000 parameters, some boolean, some numbers, and a goal function that uses every single one of them. This may be expensive, but if it is the only way forward, we'll take it. Well-behaved problems will converge rapidly.
-
 
 
 A typical individual would keep those values in an array and crossover would brutally merge the first part of one parent's array with the rest from the other parent... for one or more randomly chosen switchpoints.
@@ -88,23 +79,18 @@ You
 She also adds:
 
 
-
 I forgot to mention my two favorite pieces of advice when creating a crossover function. First:
-
 
 
 "There has to be SOME chance for the offspring to inherit SOME feature(s) of what made the parent(s) successful".
 
 
-
 I've seen beginners make crossover functions that lose all history from the parents and hence the system degrades to random search.
-
 
 
 Second:
 
 "In order to test that your system works, compare convergence of your full system  with convergence of a version where you replace the crossover function with just creating a new random individual without history from the parents. Now you have a random search system. If it isn't significantly slower than your fully functioning GA ���� you need to go back to the drawing board.
-
 
 
 It will also tell you how much EV can speed things up over linear or random search (which are equivalent).
@@ -132,29 +118,22 @@ You
 Here was Monica's original post:
 
 
-
 Evolutionary Computation is under-appreciated.  Objections include "Evolution takes millennia" and "I don't get the point".
-
 
 
 They are (or should be) very important to people in the AI community because they provide a primitive form of intelligence. Understanding Evolutionary Computation (EC) will make understanding LLMs easier.
 
 
-
 In order to not have to define "AI" again, I will now define a new term SHAG which stands for "SuperHuman Answer Generator".
-
 
 
 A SHAG is a computer based system which can provide answers to questions that the client or programmer that is using the system cannot (or cannot be bothered to) compute an answer to themselves. Or shorter: A SHAG generates answers that humans cannot generate.
 
 
-
 Unsurprisingly, all LLMs are SHAGs. They can generate answers that their programmers could not. Such as understand and reply in Finnish. To many, it is more surprising that all SHAGs (and hence all LLMs) are Holistic.
 
 
-
 Since SHAGs are Holistic we can identify several problems shared by all Holistic systems (discussed in my Red Pill):
-
 
 
 - The answers provided may not be correct
@@ -162,17 +141,13 @@ Since SHAGs are Holistic we can identify several problems shared by all Holistic
 - The answers provided are not known to be optimal, complete, repeatable, parsimonious, explainable, or transparent.
 
 
-
 As evidence, we recognize these problems as endemic to current LLMs.
-
 
 
 But are there SHAGs that are not LLMs? Besides current LLMs (including my own systems), Genetic Algorithms (GA), Genetic Programming (GP), and simulated annealing (SA) are SHAGs. I will mainly discuss GAs in what follows.
 
 
-
 My favorite way of using GAs:
-
 
 
 - Define an individual that defines a solution but has to compete for survival, initialized randomly for diversity.
@@ -186,9 +161,7 @@ My favorite way of using GAs:
 - Define a mutation function that reintroduces more diversity into some individuals.
 
 
-
 Loop until system stops improving, which is detectable by noticing that the elite is not changing. This might take as little as 10 cycles for well behaved problems:
-
 
 
 - Compute fit for each individual using the goal function
@@ -202,41 +175,31 @@ Loop until system stops improving, which is detectable by noticing that the elit
 - Stop a bit below the top (to preserve the "elite" ones)
 
 
-
 Note: Mutation is MUCH LESS important than crossover to the point of being optional. Beginners get this backwards and even textbooks fail to emphasize this enough. If you are not using crossover, then you are just using random search and are discarding the entire point and power of GA.
-
 
 
 In a population of 1000 I might use an elite of 10 and will therefore replace 990 worst individuals with potentially superior offspring each turn through loop.
 
 
-
-We can now deal with the objection that "Evolution takes millennia". It does, in nature, especially if you get only one chance to create offspring per year. But computers do it a bit faster :-) 
-
+We can now deal with the objection that "Evolution takes millennia". It does, in nature, especially if you get only one chance to create offspring per year. But computers do it a bit faster :-)
 
 
 A modern CPU runs at 3GHz --  3E9 cps, which is 3,000,000,000 clock cycles per second.
 
 
-
 Suppose we have a problem where computing the goal function value takes 1000 clock cycles per individual. This is often generous.  A GA with a population of 1000 can therefore run 3,000 generations per second... per thread. If we are in a hurry, we can use multithreading and there are special versions of GA frameworks that can run on a cloud.
-
 
 
 So speed is not the issue. As to the other objection: The point of SHAGs is that they can provide answers problems humans can't solve, including problems without reliable and complete input data, and NP-Hard and NP-Complete problems such as knapsack problems. These are discussed in The Red Pill. If you are in this situation, you need to explore Holistic Methods, and you need to know that a GA may sometimes be an option. A GA may be a million times cheaper than an LLM which becomes important for frequently occurring problems.
 
 
-
 So SHAGs in computers are LLMs and other (future?) AIs, GA, GP, and SA. But the biggest SHAG of all is Darwinian Evolution of Species in Nature. Humans certainly could not make a platypus from scratch. :-| but Evolution did.
-
 
 
 A side note: Holistic Systems including GAs can provide true creativity. I posted about that recently.
 
 
-
 Bottom line advice: In order to understand how LLMs can solve problems we cannot solve ourselves, study GAs.
-
 
 
 For more about Holistic methods, see the Red Pill (link in my FB profile)
@@ -574,7 +537,6 @@ You
 Originally, attribution theory was an area of social psychology introduced by Heider (1958). It explains how people attribute causes to events and how this cognitive perception affects their motivation. Another important contribution from social psychology is the locus of control theory, which is more concerned with individual differences in attributions. A central assumption of both theoretical approaches is the distinction between internal and external loci of causality of good or bad results of behavior. In the 1970s, Bernard Weiner made some important contributions to the attribution theory, adding the dimension of temporal stability vs. instability and later that of responsibility (or controllability), which indicates whether a causal factor of success or failure could be perceived as internal or external to a person.
 
 
-
 Seel, N.M. (2012). Attribution Theory of Motivation. In: Seel, N.M. (eds) Encyclopedia of the Sciences of Learning. Springer, Boston, MA. https://doi.org/10.1007/978-1-4419-1428-6_917
 
 ChatGPT
@@ -686,10 +648,3 @@ ChatGPT can make mistakes. Consider checking important information.
 ?
 
 ChatGPT
-
-
-
-
-
-
-

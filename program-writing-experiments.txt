@@ -1,9 +1,7 @@
 ---
 title: "Program Writing Experiments"
 author: "unknown"
-date: "undated"
 tags: ["library"]
-summary: "Program Writing Experiments Program Writing Experiments What does this code do? import asyncio import inspect import json import logging import os import sys import time import traceback import urllib.parse import uuid import traitlets from..."
 type: "essay"
 ---
 
@@ -34,7 +32,6 @@ import traceback
 import urllib.parse
 
 import uuid
-
 
 
 import traitlets
@@ -72,9 +69,7 @@ from jupyter_client import AsyncKernelClient, AsyncKernelManager, AsyncMultiKern
 from pydantic import parse_obj_as
 
 
-
 from . import routes, run_jupyter
-
 
 
 logger = logging.getLogger(__name__)
@@ -92,47 +87,32 @@ logging.basicConfig(
 )
 
 
-
 os.chdir(os.path.expanduser("~"))
-
 
 
 _MAX_UPLOAD_SIZE = 1024 * 1024 * 1024
 
 _MAX_DOWNLOAD_TIME = 5 * 60.0
 
-_DOWNLOAD_CHUNK_SIZE = 1024 * 1024       
+_DOWNLOAD_CHUNK_SIZE = 1024 * 1024
 
 _MAX_JUPYTER_MESSAGE_SIZE = 10 * 1024 * 1024
 
 _MAX_KERNELS = 20
 
 
-
 app = FastAPI()
-
 
 
 jupyter_config = traitlets.config.get_config()
 
-                                                                      
-
-                                                                   
-
-                       
-
-                                                                      
-
-                                                             
 
 jupyter_config.KernelRestarter.restart_limit = 0
 
 _MULTI_KERNEL_MANAGER = AsyncMultiKernelManager(config=jupyter_config)
 
 
-
 _response_to_callback_from_kernel_futures: Dict[str, asyncio.Future] = {}
-
 
 
 _timeout_at = {}
@@ -194,7 +174,6 @@ _fill_kernel_queue_task = None
 _first_kernel_started = False
 
 
-
 _SELF_IDENTIFY_HEADER_KEY = "x-ace-self-identify"
 
 _SELF_IDENTIFY_HEADER_KEY_BYTES = b"x-ace-self-identify"
@@ -203,11 +182,6 @@ _SELF_IDENTIFY_STR = os.getenv("ACE_SELF_IDENTIFY")
 
 _SELF_IDENTIFY_BYTES = os.getenv("ACE_SELF_IDENTIFY").encode("utf-8")
 
-
-
-
-
-                                                                                         
 
 async def _kill_old_kernels():
 
@@ -228,26 +202,15 @@ async def _kill_old_kernels():
                 await _delete_kernel(kernel_id)
 
 
-
-
-
 async def _fill_kernel_queue():
 
     global _first_kernel_started, _kernel_queue
 
     try:
 
-                                                                         
-
-                                                              
 
         _kernel_queue = asyncio.Queue(maxsize=1)
 
-                                                                                    
-
-                                                                                   
-
-                                          
 
         kernel_id = None
 
@@ -276,11 +239,9 @@ async def _fill_kernel_queue():
                     await _delete_kernel(kernel_id)
 
 
-
             logger.info(f"Create new kernel for pool: Making new kernel")
 
             start_time = time.monotonic()
-
 
 
             kernel_id = await _MULTI_KERNEL_MANAGER.start_kernel()
@@ -298,7 +259,6 @@ async def _fill_kernel_queue():
             del client
 
 
-
             end_time = time.monotonic()
 
             logger.info(
@@ -314,7 +274,6 @@ async def _fill_kernel_queue():
             )
 
 
-
             _first_kernel_started = True
 
             await _kernel_queue.put(kernel_id)
@@ -324,9 +283,6 @@ async def _fill_kernel_queue():
         logger.error(f"Error while filling queue: {e}", exc_info=True)
 
         raise
-
-
-
 
 
 async def _delete_kernel(kernel_id):
@@ -406,19 +362,13 @@ async def startup():
     _fill_kernel_queue_task = asyncio.create_task(_fill_kernel_queue())
 
 
-
-
-
 @app.on_event("shutdown")
 
 async def shutdown():
 
-    _timeout_task.cancel()                
+    _timeout_task.cancel()
 
-    _fill_kernel_queue_task.cancel()                
-
-
-
+    _fill_kernel_queue_task.cancel()
 
 
 async def _SEND_CALLBACK_REQUEST(call: MethodCall):
@@ -426,15 +376,9 @@ async def _SEND_CALLBACK_REQUEST(call: MethodCall):
     raise NotImplementedError()
 
 
-
-
-
 def _is_from_localhost(request: Request) -> bool:
 
     return request.client.host == "127.0.0.1"
-
-
-
 
 
 async def _forward_callback_from_kernel(call: MethodCall, request: Request):
@@ -444,13 +388,11 @@ async def _forward_callback_from_kernel(call: MethodCall, request: Request):
         raise HTTPException(status_code=403, detail="Forbidden")
 
 
-
     logger.info(f"Forwarding callback request from kernel. {call}")
 
     _response_to_callback_from_kernel_futures[call.request_id] = asyncio.Future()
 
     await _SEND_CALLBACK_REQUEST(call)
-
 
 
     response = await _response_to_callback_from_kernel_futures[call.request_id]
@@ -462,13 +404,7 @@ async def _forward_callback_from_kernel(call: MethodCall, request: Request):
     return JSONResponse({"value": response})
 
 
-
-
-
 app.include_router(routes.get_api_router(_forward_callback_from_kernel), prefix="")
-
-
-
 
 
 def _respond_to_callback_from_kernel(response: MethodCallReturnValue):
@@ -476,9 +412,6 @@ def _respond_to_callback_from_kernel(response: MethodCallReturnValue):
     logger.info("Received callback response.")
 
     _response_to_callback_from_kernel_futures[response.request_id].set_result(response.value)
-
-
-
 
 
 @app.get("/check_liveness")
@@ -632,9 +565,6 @@ async def check_startup():
     return JSONResponse(content={"status": "started"})
 
 
-
-
-
 @app.post("/upload")
 
 async def upload(upload_request: str = Form(), file: UploadFile = File()):
@@ -678,13 +608,9 @@ async def upload(upload_request: str = Form(), file: UploadFile = File()):
         raise
 
 
-
     logger.info(f"Upload request complete. {upload_request}")
 
     return JSONResponse(content={})
-
-
-
 
 
 @app.get("/download/{path:path}")
@@ -698,9 +624,7 @@ async def download(path: str):
         raise HTTPException(404, f"File not found: {path}")
 
 
-
     logger.info(f"Download request. {path}")
-
 
 
     def iterfile():
@@ -712,7 +636,6 @@ async def download(path: str):
                 yield chunk
 
 
-
     return StreamingResponse(
 
         iterfile(),
@@ -722,9 +645,6 @@ async def download(path: str):
         media_type="application/octet-stream",
 
     )
-
-
-
 
 
 @app.get("/check_file/{path:path}")
@@ -742,9 +662,6 @@ async def check_file(path: str):
     return CheckFileResponse(exists=exists, size=size, too_large=False)
 
 
-
-
-
 @app.get("/kernel/{kernel_id}")
 
 async def kernel_state(kernel_id: str):
@@ -760,11 +677,7 @@ async def kernel_state(kernel_id: str):
         time_remaining_ms = max(0.0, _timeout_at[kernel_id] - time.monotonic()) * 1000.0
 
 
-
     return GetKernelStateResponse(time_remaining_ms=time_remaining_ms)
-
-
-
 
 
 async def _create_kernel(timeout: float):
@@ -850,9 +763,6 @@ async def create_kernel(create_kernel_request: CreateKernelRequest):
     return CreateKernelResponse(kernel_id=kernel_id)
 
 
-
-
-
 @app.websocket("/channel")
 
 async def channel(websocket: WebSocket):
@@ -862,7 +772,6 @@ async def channel(websocket: WebSocket):
         await websocket.send_text(call.json())
 
 
-
     logger.info("Setting global forward function.")
 
     global _SEND_CALLBACK_REQUEST
@@ -870,28 +779,11 @@ async def channel(websocket: WebSocket):
     _SEND_CALLBACK_REQUEST = send_callback_request
 
 
-
     await websocket.accept(headers=[(_SELF_IDENTIFY_HEADER_KEY_BYTES, _SELF_IDENTIFY_BYTES)])
-
 
 
     clients: Dict[str, AsyncKernelClient] = {}
 
-                                      
-
-                                                               
-
-                                                                             
-
-                                                           
-
-                                                                                
-
-                                         
-
-     
-
-                                                                  
 
     recv_from_api_server = asyncio.create_task(websocket.receive_text())
 
@@ -934,7 +826,6 @@ async def channel(websocket: WebSocket):
                     _respond_to_callback_from_kernel(request)
 
                 elif isinstance(request, MethodCall):
-
 
 
                     async def run(request: UserMachineRequest):
@@ -990,7 +881,6 @@ async def channel(websocket: WebSocket):
                         except Exception as e:
 
                             return (request.request_id, None, e)
-
 
 
                     assert recv_from_jupyter is None
@@ -1057,7 +947,6 @@ async def channel(websocket: WebSocket):
 
                     )
 
-                                                                                         
 
                     del e
 
@@ -1182,7 +1071,6 @@ message = result.json()
                     ).json()
 
 
-
                 await websocket.send_text(message)
 
                 logger.info("Response sent.")
@@ -1206,18 +1094,13 @@ message = result.json()
         return
 
 
-
-
-
 @app.middleware("http")
 
 async def add_self_identify_header(request: Request, call_next):
 
-                                                                                                  
 
     if _is_from_localhost(request):
 
-                                                                                                  
 
         return await call_next(request)
 
@@ -1376,7 +1259,6 @@ veered
 Yeah I found it pretty easy to "jailbreak" too. For example, here is what appears to be the core web server API code.
 
 
-
 I didn't really do anything special to get it. I just started by asking it to list the files in the home directory and went from there.
 
 1 / 1
@@ -1396,13 +1278,10 @@ However, without more context or specific information about the system or applic
 I helped work on this feature, and we're glad you're enjoying looking for the limits!
 
 
-
 There are many misconceptions about the intended boundaries for the sandbox. They're not inside the Python interpreter, and they're not in the model. Neither of those are intended to provide any security boundaries. There's nothing private or sensitive there, including the code we use to operate the service. You're intended to be able to view and execute code. That's what this is. A code execution service. You wouldn't be surprised you can see these things on a VM that AWS gave you.
 
 
-
 As you have discovered, the model is not a very good source of information about its own limitations and capabilities. Many of the model behaviors you've interpreted as security measures are actually unwanted, and we're always working to make the model more flexible. Some of them (like where the model thinks it can read and write) are there to guide it, and discourage it from messing up the machine. Other limitations are mainly there to prevent you from wedging your own machine accidentally (but we know this is still possible if you try hard). Still others are there to prevent you from doing bad things to other people (e.g. the sandbox does not have access to the internet).
-
 
 
 Since the feature is still in development, we have indeed provisioned a generous amount of resources for the sandbox, but there are some external controls that aren't visible to you. When we see excessive abuse, or behavior that impacts other users, we respond appropriately. These limits will change as the service matures
@@ -1945,7 +1824,7 @@ name, location
 
 bpy.ops.mesh.primitive_rock_add(
 
-        location=location, 
+        location=location,
 
         number=random.randint(
 
@@ -2942,14 +2821,3 @@ And please note that Perlin noise is a more complex kind of noise than Gaussian 
 ChatGPT may produce inaccurate information about people, places, or facts.
 
 ChatGPT May 24 Version
-
-
-
-
-
-
-
-
-
-
-

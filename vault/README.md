@@ -1,4 +1,4 @@
-# The Architecture of Exclusion  
+# The Architecture of Exclusion
 
 [Audio Overview - When Humans Become Friction](https://standardgalactic.github.io/library/vault)
 
@@ -95,4 +95,3 @@ We are witnessing a regime transition in which efficiency substitutes for explan
 As the world optimizes for the average, the measurable, and the persistent, we confront a fundamental ontological question:
 
 **In a system that no longer requires our participation, how do we reclaim the right to be human—unquantifiable, contextual, and occasionally redundant?**
-

@@ -1,9 +1,7 @@
 ---
 title: "Enhance Python Multithreading"
 author: "Thread Synchronization"
-date: "undated"
 tags: ["library"]
-summary: "Enhance Python Multithreading ChatGPT 4 You How can I get this code to do something more interesting? thread = [ threading.Thread(target=msg, args=['thread 1']), threading.Thread(target=msg, args=['thread 2']), threading.Thread(target=msg, args=['thread 3']),..."
 type: "essay"
 ---
 
@@ -20,15 +18,12 @@ You
 How can I get this code to do something more interesting?
 
 
-
 import threading
 
 
-
-def msg(msg='None'): 
+def msg(msg='None'):
 
     print(msg)
-
 
 
 thread = [
@@ -42,9 +37,6 @@ thread = [
         threading.Thread(target=msg, args=['thread 4']),
 
         ]
-
-
-
 
 
 if __name__ == '__main__':
@@ -146,7 +138,6 @@ f"Data from
 "
 
 )
-
 
 
 threads = [
@@ -750,11 +741,9 @@ You
 Ok it seemed to work:
 
 
-
 root@localhost:~# python contacts.py
 
 File not found, starting with an empty contact book.
-
 
 
 Contact Book
@@ -774,7 +763,6 @@ Enter name: Frodo
 Enter email: frodo@middle-earth.com
 
 
-
 Contact Book
 
 1. Add Contact
@@ -790,7 +778,6 @@ Enter choice: 2
 Name: Frodo, Email: frodo@middle-earth.com
 
 
-
 Contact Book
 
 1. Add Contact
@@ -802,7 +789,6 @@ Contact Book
 4. Exit
 
 Enter choice: 3
-
 
 
 Contact Book
@@ -846,6 +832,3 @@ ChatGPT can make mistakes. Consider checking important information.
 ?
 
 ChatGPT
-
-
-

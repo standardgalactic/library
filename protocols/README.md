@@ -12,22 +12,22 @@ Rather than treating computation as value transformation, this project treats it
 
 Across domains, the documents develop a consistent set of principles:
 
-- **Event-Historical Semantics**  
+- **Event-Historical Semantics**
   Identity is defined by irreversible event histories, not by current state.
 
-- **Commitment Over Optionality**  
+- **Commitment Over Optionality**
   Agency is the capacity to *spend freedom* by ruling out futures through binding decisions.
 
-- **Constraint-First Meaning**  
+- **Constraint-First Meaning**
   Many symbolic conflicts arise when action-constraining operators are mistaken for descriptive references.
 
-- **Structural Power (Mute Compulsion)**  
+- **Structural Power (Mute Compulsion)**
   Social order is reproduced by aligning survival with compliance, not primarily through persuasion or legitimacy.
 
-- **Refusal as a First-Class Primitive**  
+- **Refusal as a First-Class Primitive**
   True refusal is not preference change but structural exclusion of admissible futures.
 
-- **Controlled Forgetting (Collapse)**  
+- **Controlled Forgetting (Collapse)**
   Abstraction is an explicit, authorized act—not an accidental loss of history.
 
 ---
@@ -36,39 +36,39 @@ Across domains, the documents develop a consistent set of principles:
 
 ### Technical & Formal Foundations
 
-- **[A Calculus of Commitment Spherepop](a-calculus-of-commitment-spherepop.md)**  
+- **[A Calculus of Commitment Spherepop](a-calculus-of-commitment-spherepop.md)**
   A technical paper introducing the Spherepop calculus and re-engineering Map-Reduce as event-historical aggregation.
 
-- **[Event Historical Frameworks Briefing](event-historical-frameworks-briefing.md)**  
+- **[Event Historical Frameworks Briefing](event-historical-frameworks-briefing.md)**
   A comprehensive briefing synthesizing the full framework across computation, AI, social power, language, and physics.
 
-- **[Event Historical Aggregation MapReduce](event-historical-aggregation-mapreduce.md)**  
+- **[Event Historical Aggregation MapReduce](event-historical-aggregation-mapreduce.md)**
   A focused essay on Map-Reduce as commitment-building rather than value computation.
 
 ---
 
 ### Meaning, Agency, and AI
 
-- **[Spend Your Freedom](spend-your-freedom.md)**  
+- **[Spend Your Freedom](spend-your-freedom.md)**
   An essay arguing that agency consists in irreversible commitment, not option preservation.
 
 ---
 
 ### Social Power and Political Economy
 
-- **[Mute Compulsion](mute-compulsion.md)**  
+- **[Mute Compulsion](mute-compulsion.md)**
   A formal theory of social reproduction via structural constraint.
 
-- **[Understanding Mute Compulsion](understanding-mute-compulsion.md)**  
+- **[Understanding Mute Compulsion](understanding-mute-compulsion.md)**
   An accessible guide to mute compulsion with concrete examples.
 
 ---
 
 ## How to Read This Repository
 
-- **Quick Orientation** → *Event Historical Frameworks Briefing*  
-- **Formal / Systems** → *A Calculus of Commitment Spherepop*  
-- **Social Theory** → *Understanding Mute Compulsion*  
+- **Quick Orientation** → *Event Historical Frameworks Briefing*
+- **Formal / Systems** → *A Calculus of Commitment Spherepop*
+- **Social Theory** → *Understanding Mute Compulsion*
 - **Agency & AI** → *Spend Your Freedom*
 
 ---

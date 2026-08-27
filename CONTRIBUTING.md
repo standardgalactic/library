@@ -33,7 +33,6 @@ title: "AI Balance Debate"
 author: "Author Name if known"
 date: "YYYY-MM-DD"
 tags: ["AI", "ethics", "philosophy"]
-summary: "A brief summary of the content..."
 type: "essay"
 ---
 ```

@@ -1,9 +1,7 @@
 ---
 title: "Revolutionizing Open-Source AI"
 author: "unknown"
-date: "undated"
 tags: ["library", "AI"]
-summary: "Revolutionizing Open-Source AI Revolutionizing Open-Source AI Model: Default (GPT-3.5) Summarize: Llama 2: an incredible open LLM Meta is continuing to deliver high-quality research artifacts and not backing down from pressure against open source. NATHAN LAMBERT..."
 type: "essay"
 ---
 
@@ -15,14 +13,12 @@ Revolutionizing Open-Source AI
 
 Model: Default (GPT-3.5)
 
-Summarize: 
-
+Summarize:
 
 
 Llama 2: an incredible open LLM
 
 Meta is continuing to deliver high-quality research artifacts and not backing down from pressure against open source.
-
 
 
 NATHAN LAMBERT
@@ -40,69 +36,52 @@ If this email is cut off, please read on the web!
 In short, Llama 2 is a continuation of the LLaMA1 formula with substantial technical expansions in terms of data quality, training techniques (including novel research artifacts), capabilities evaluation, safety training, and responsible releases. The technical research paper includes substantial details on all of these areas. Big picture, this is a big step for the LLM ecosystem when research sharing is at an all-time low and regulatory capture at an all-time high in AI.
 
 
-
 The base model seems very strong (beyond GPT3) and the fine-tuned chat models seem on the same level as ChatGPT. It is a huge leap forward for open-source, and a huge blow to the closed-source providers, as using this model will offer way more customizability and way lower cost for most companies.
-
 
 
 In summary, here's what you need to know. My list focuses on the model itself and an analysis of what this means is included throughout the blog.
 
 
-
 What is the model: Meta is releasing multiple models (Llama base from 7, 13, 34, 70 billion and a Llama chat variant with the same sizes.) Meta "increased the size of the pretraining corpus by 40%, doubled the context length of the model [to 4k], and adopted grouped-query attention (Ainslie et al., 2023)."
-
 
 
 Capabilities: extensive benchmarking and the first time I'm convinced an open model is on the level of ChatGPT (except in coding).
 
 
-
 Costs: extensive budgets and commitment (e.g. estimate about $ 25 million on preference data if going at market rate), very large team. The table stakes for making a general model are this big.
-
 
 
 Other artifacts: no signs of reward model or dataset release for public reinforcement learning from human feedback (RLHF).
 
 
-
 Meta organization: signs of Meta AI's organizational changes -- this org is seemingly distinct from Yann Lecun and everyone in the original FAIR.
-
 
 
 Code / math / reasoning: Not much discussion of code data in the paper and RLHF process. For instance, StarCoder at 15 billion parameters beats the best model at 40.8 for HumanEval and 49.5 MBPP (Python).
 
 
-
 Multi-turn consistency: New method for multi-turn consistency -- Ghost Attention (GAtt) inspired by Context Distillation. These methods are often hacks to improve model performance until we better understand how to train models to our needs
-
 
 
 Reward models: Uses two reward models to avoid the safety-helpfulness tradeoff identified in Anthropic's work.
 
 
-
 Data controls: A ton of commentary on distribution control (as I've said is key to RLHF). This is very hard to reproduce.
-
 
 
 RLHF process: Uses a two-stage RLHF approach, starting with Rejection Sampling, then doing Rejection Sampling + Proximal Policy Optimization (PPO), Indicates RLHF as extremely important and "superior writing abilities of LLMs... are fundamentally driven by RLHF"
 
 
-
 Generation: A need to tune the temperature parameter depending on the context (e.g. creative tasks need a higher temperature, see Sect. 5 / Fig 21)
-
 
 
 Safety / harm evals: Very, very long safety evals (almost half the paper) and detailed context distillation and RLHF for safety purposes. The results are not perfect and have gaps, but it is a step in the right direction.
 
 
-
 License: The model is available for commercial use unless your product has >= 700 million monthly active users. Requires a form to get access, which will also let you download the model from the HuggingFace hub. (this information is in the download form, ���Llama 2 Community License Agreement���).
 
 
-
 Links: models (����), model access form, paper, announcement / Meta links, code, use guidelines, model card, demo (����).
-
 
 
 This post is very technical because this is a day defined by technical progress. Meta has confirmed a lot of techniques work that their competitors have rumored to use, but not disclosed. As for the social impacts of this model, I will make more predictions later this week or in another post, so please subscribe.
@@ -186,7 +165,6 @@ A family of pretrained and fine-tuned language models in sizes from 7 to 70 bill
 BENJ EDWARDS - 7/18/2023, 5:07 PM
 
 
-
 An AI-generated image of a cybernetic llama.
 
 Enlarge / An AI-generated image of a cybernetic llama.
@@ -196,7 +174,6 @@ Midjourney
 On Tuesday, Meta announced Llama 2, a new source-available family of AI language models notable for its commercial license, which means the models can be integrated into commercial products, unlike its predecessor. They range in size from 7 to 70 billion parameters and reportedly "outperform open source chat models on most benchmarks we tested," according to Meta.
 
 
-
 FURTHER READING
 
 Meta unveils a new large language model that can run on a single GPU [Updated]
@@ -204,9 +181,7 @@ Meta unveils a new large language model that can run on a single GPU [Updated]
 "This is going to change the landscape of the LLM market," tweeted Chief AI Scientist Yann LeCun. "Llama-v2 is available on Microsoft Azure and will be available on AWS, Hugging Face, and other providers."
 
 
-
 According to Meta, its Llama 2 "pretrained" models (the bare-bones models) are trained on 2 trillion tokens and have a context window of 4,096 tokens (fragments of words). The context window determines the length of the content the model can process at once. Meta also says that the Llama 2 fine-tuned models, developed for chat applications similar to ChatGPT, have been trained on "over 1 million human annotations."
-
 
 
 While it can't match OpenAI's GPT-4 in performance, Llama 2 apparently fares well for a source-available model. According to Jim Fan, senior AI scientist at Nvidia, "70B is close to GPT-3.5 on reasoning tasks, but there is a significant gap on coding benchmarks. It's on par or better than PaLM-540B on most benchmarks, but still far behind GPT-4 and PaLM-2-L." More details on Llama 2's performance, benchmarks, and construction can be found in a research paper released by Meta on Tuesday.
@@ -230,13 +205,10 @@ Yann LeCun, Chief AI Scientist, expressed his view that Llama 2 would significan
 In February, Meta released the precursor of Llama 2, LLaMA, as source-available with a non-commercial license. Officially only available to academics with certain credentials, someone soon leaked LLaMA's weights (files containing the parameter values of the trained neural networks) to torrent sites, and they spread widely in the AI community. Soon, fine-tuned variations of LLaMA, such as Alpaca, sprang up, providing the seed of a fast-growing underground LLM development scene.
 
 
-
 Advertisement
 
 
-
 Llama 2 brings this activity more fully out into the open with its allowance for commercial use, although potential licensees with "greater than 700 million monthly active users in the preceding calendar month" must request special permission from Meta to use it, potentially precluding its free use by giants the size of Amazon or Google.
-
 
 
 The power and peril of the open approach
@@ -244,9 +216,7 @@ The power and peril of the open approach
 While open AI models with weights available have proven popular with hobbyists and people seeking uncensored chatbots, they have also proven controversial. Meta is notable for standing alone among the tech giants in supporting major openly-licensed and weights-available foundation models, while those in the closed-source corner include OpenAI, Microsoft, and Google.
 
 
-
 Critics say that open source AI models carry potential risks, such as misuse in synthetic biology or in generating spam or disinformation. It's easy to imagine Llama 2 filling some of these roles, although such uses violate Meta's terms of service. Currently, if someone performs restricted acts with OpenAI's ChatGPT API, access can be revoked. But with the open approach, once the weights are released, there is no taking them back.
-
 
 
 FURTHER READING
@@ -256,17 +226,13 @@ You can now run a GPT-3-level AI model on your laptop, phone, and Raspberry Pi
 However, proponents of an open approach to AI often argue that openly-available AI models encourage transparency (in terms of the training data used to make them), foster economic competition (not limiting the technology to giant companies), encourage free speech (no censorship), and democratize access to AI (without paywall restrictions).
 
 
-
 Perhaps getting ahead of potential criticism for its release, Meta also published a short "Statement of Support for Meta's Open Approach to Today's AI" that reads, "We support an open innovation approach to AI. Responsible and open innovation gives us all a stake in the AI development process, bringing visibility, scrutiny and trust to these technologies. Opening today���s Llama models will let everyone benefit from this technology."
-
 
 
 Advertisement
 
 
-
 As of Tuesday afternoon, the statement has been signed by a list of executives and educators such as Drew Houston (CEO of Dropbox), Matt Bornstein (Partner at Andreessen Horowitz), Julien Chaumond (CTO of Hugging Face), Lex Fridman (research scientist at MIT), and Paul Graham (Founding Partner of Y Combinator).
-
 
 
 FURTHER READING
@@ -276,21 +242,16 @@ FURTHER READING
 Although Llama 2 is openly licensed with weights available, Meta did not disclose the source of the training data used in creating the Llama 2 models, which Mozilla Senior Fellow of Trustworthy AI Abeba Birhane pointed out on Twitter. Lack of training data transparency is still a sticking point for some LLM critics because the training data that teaches these LLMs what they "know" often comes from an unauthorized scrape of the Internet with little regard for privacy or commercial impact. Meta says it "made an effort to remove data from certain sites known to contain a high volume of personal information about private individuals" in the Llama 2 research paper, but it did not list what those sites are.
 
 
-
 Currently, anyone can request access to download Llama 2 by filling out a form on Meta's website.
-
 
 
 Update (July 19, 2023): Some industry observers dispute Meta's characterization of Llama 2 as "open source" software, pointing out that its license does not fully comply with the Open Source Initiative's definition of the term. These critics highlight that Meta's license places usage restrictions on Llama 2, excluding licensees with over 700 million active daily users (mentioned above) and restricting the use of its outputs to improve other LLMs.
 
 
-
 In a tweet responding to Yann LeCun's announcement of Llama 2, the OSI clarified, "The [Llama 2] license only authorizes some commercial uses. The term Open Source has a clear, well-understood meaning that does not allow for restrictions on commercial use." They also highlighted Section 2 of the Llama 2 license, titled "Additional Commercial Terms."
 
 
-
 In light of these clarifications, we have updated this article to use terms such as "source-available," "openly licensed" and "weights available" to more accurately describe Llama 2.
-
 
 
 READER COMMENTS
@@ -302,7 +263,6 @@ WITH
 BENJ EDWARDS
 
 Benj Edwards is an AI and Machine Learning Reporter for Ars Technica. In his free time, he writes and records music, collects vintage computers, and enjoys nature. He lives in Raleigh, NC.
-
 
 
 https://arstechnica.com/information-technology/2023/07/meta-launches-llama-2-an-open-source-ai-model-that-allows-commercial-applications/
@@ -580,10 +540,3 @@ ChatGPT may produce inaccurate information about people, places, or facts.
 ChatGPT May 24 Version
 
 ChatGPT
-
-
-
-
-
-
-

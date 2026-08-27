@@ -3,7 +3,6 @@ title: "Technical Proposal: The Universal Textual Intermediate Representation (T
 author: "unknown"
 date: "2026-03-22"
 tags: ["compression", "media"]
-summary: "Technical Proposal: The Universal Textual Intermediate Representation (TIR) Standard for Multimodal Generative Media The Global Generative Standards Consortium (GGSC) proposes a transition from signal-based codecs to a semantic compression architecture. Traditional systems..."
 type: "essay"
 ---
 
@@ -217,4 +216,3 @@ The TIR Standard establishes a new foundation for digital media:
 This marks the transition from signal preservation to semantic reconstruction.
 
 The boundary between data and program dissolves.
-

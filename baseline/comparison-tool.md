@@ -3,7 +3,6 @@ title: "Beyond the Pixel: A Student’s Guide to Semantic Compression vs. Signal
 author: "unknown"
 date: "2026-03-22"
 tags: ["compression", "media"]
-summary: "Beyond the Pixel: A Student’s Guide to Semantic Compression vs. Signal Approximation The evolution of data compression has reached a turning point. Traditional codecs operate by approximating signals—treating waveforms and pixel arrays as the primary objects of..."
 type: "essay"
 ---
 
@@ -36,9 +35,9 @@ Conventional systems such as MP3 and H.265 operate directly on signal surfaces u
 
 They exploit three forms of redundancy:
 
-1. **Spatial Redundancy** — Similarity between neighboring pixels  
-2. **Temporal Redundancy** — Similarity across frames  
-3. **Statistical Redundancy** — Frequency of recurring patterns  
+1. **Spatial Redundancy** — Similarity between neighboring pixels
+2. **Temporal Redundancy** — Similarity across frames
+3. **Statistical Redundancy** — Frequency of recurring patterns
 
 These methods are **semantically blind**. They cannot distinguish between meaningful structure and noise; both are treated identically.
 
@@ -52,15 +51,15 @@ Semantic compression introduces a **Textual Intermediate Representation (TIR)**.
 
 ### Semantic Encoding Components
 
-- **Prosodic Text (Audio)**  
+- **Prosodic Text (Audio)**
   Encodes words, pitch, timing, and speaker identity
 
-- **Scenario Graph (Video)**  
+- **Scenario Graph (Video)**
   A structured representation consisting of:
-  - Agents  
-  - Actions  
-  - Environments  
-  - Camera Dynamics  
+  - Agents
+  - Actions
+  - Environments
+  - Camera Dynamics
 
 Instead of storing pixels, we transmit descriptions like:
 
@@ -101,19 +100,19 @@ Efficiency arises from relocating information into a shared generative substrate
 H(x) ≈ H_G(X) + I_G(X)
 ```
 
-- `H(x)` — Total information of the signal  
-- `H_G(X)` — Information in the description (TIR)  
-- `I_G(X)` — Information in shared model priors  
+- `H(x)` — Total information of the signal
+- `H_G(X)` — Information in the description (TIR)
+- `I_G(X)` — Information in shared model priors
 
 ### Three Pillars of Efficiency
 
-1. **Shared Priors**  
+1. **Shared Priors**
    Only unpredictable information is transmitted
 
-2. **Shared Parameterization**  
+2. **Shared Parameterization**
    Common structures reuse templates
 
-3. **Local Modification Propagation**  
+3. **Local Modification Propagation**
    Small textual changes produce global signal changes
 
 Example: Changing “day” to “night” automatically updates lighting, shadows, and color tone.

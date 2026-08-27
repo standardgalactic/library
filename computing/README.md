@@ -7,4 +7,3 @@
 * [Graphic Novel](https://standardgalactic.github.io/library/computing/magnetic-comic.pdf)
 
 * [Audio Overview](https://standardgalactic.github.io/library/computing/)
-

@@ -590,4 +590,3 @@ Archives not listed as essays: `codex-singularis/` (exported conversations) and 
 - [Why AI Permission Is Not Authority](workspace/why-ai-permission-is-not-authority.txt) — **audio** — `.mp3, .txt`
 - [Why Forgetting Physically Warps Your Reality](workspace/why-forgetting-physically-warps-your-reality.mp3) — **audio** — `.mp3`
 - [Why Metrics Destroy What They Measure](workspace/why-metrics-destroy-what-they-measure.mp3) — **audio** — `.mp3`
-
