@@ -1,0 +1,359 @@
+\documentclass[11pt]{article}
+\usepackage{fontspec}
+\setmainfont{TeX Gyre Pagella}
+\usepackage{amsmath,amssymb}
+\usepackage[margin=1in]{geometry}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  columns=fullflexible,
+  frame=single,
+  backgroundcolor=\color{gray!5}
+}
+
+\title{Gravity as Entropic Descent: The RSVP Plenum, Coherent Polarization, Symbolic Provenance, and the Magnetization Bridge}
+\author{Flyxion \\ \small Independent Researcher}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Entropic approaches to gravity treat gravitation as a macroscopic consequence of thermodynamic or statistical structure rather than as a fundamental interaction on the same footing as electromagnetism. This essay distinguishes three established routes through that landscape, Jacobson's derivation of the Einstein equations from local horizon thermodynamics, Verlinde's entropic-force construction and its extension to apparent dark matter, and apparent-horizon derivations of the Friedmann equations, and develops the distinct RSVP proposal, in which entropy is assigned not to a boundary but to a volume-filling scalar-vector-entropy plenum whose relaxation produces effective gravitational dynamics. It surveys the program's variational, cosmological, propagation, and structure-formation branches; interprets horizon entropy through an admissibility volume; and states plainly that RSVP's entropy-density, torsion-vorticity, and reconstruction-obstruction treatments of dark-matter phenomenology remain plural rather than unified. Three further threads, developed independently within the same research program, are drawn in and connected explicitly to the gravitational proposal rather than left as separate case studies: a treatment of coupled-oscillator synchronization establishing how coherent macroscopic order can arise from local coupling without erasing individual history, which motivates and disciplines the magnetization bridge proposed here; a treatment of symbolic deferral, drawn from symbolic algebra and a genesis-envelope architecture for deterministic replay, which supplies the provenance discipline the program's simulation infrastructure needs; and a treatment of replayable history under feedback, which resolves directly whether a magnetization order parameter that feeds back into local plenum dynamics threatens the reconstructibility of that dynamics' own history. Throughout, formal results are separated from phenomenological proposals and open questions, and no inference from thermodynamic emergence to the local engineering of gravity is assumed.
+\end{abstract}
+
+\section{Introduction}
+\label{sec:introduction}
+
+Several of the deepest results connecting gravitation to thermodynamics, black-hole mechanics, Hawking radiation, the Unruh effect, and horizon entropy, hold together well enough to motivate a serious question: whether gravitation is better understood as an emergent statistical regularity than as a fundamental interaction. The most influential approaches do not, however, all make the same claim. Jacobson derives the Einstein field equations from a local thermodynamic consistency condition~\cite{jacobson1995}. Verlinde presents gravitational force as entropic and later proposes an elastic response of de Sitter entropy as an account of apparent dark matter~\cite{verlinde2011,verlinde2016}. Padmanabhan, Cai, Kim, and others recover cosmological evolution equations from apparent-horizon thermodynamics~\cite{padmanabhan2010,caikim2005}. These approaches assign entropy to a horizon or boundary and derive gravitational dynamics by imposing consistency there.
+
+The Relativistic Scalar-Vector Plenum (RSVP) framework takes a different route to a related destination. It assigns a scalar field, a vector field, and an entropy field directly to every point of a volume-filling plenum. Gravitation is then understood as the coherent macroscopic consequence of local relaxation within that plenum, rather than as an entropic force applied to matter from a distinguished screen. The difference is not merely verbal: horizon thermodynamics constrains dynamics at a boundary, whereas RSVP proposes local bulk degrees of freedom and must supply equations for their evolution.
+
+This essay proceeds in five stages rather than two. It first establishes the wider entropic-gravity landscape and an admissibility-based interpretation of its entropy, then situates RSVP within that landscape without treating the similarities as derivations. It then draws in three further threads that were developed elsewhere in the same research program and connects each explicitly to the gravitational proposal rather than leaving it as a separate case study: coupled-oscillator synchronization, which supplies the mechanism and the disciplining limits for treating gravitation as a coherent macroscopic orientation; symbolic deferral and provenance architecture, which supplies the discipline the program's growing simulation infrastructure needs if its results are to be independently reproducible; and replayable history under feedback, which resolves directly a question the magnetization proposal itself raises, namely whether an order parameter that is fed back into local dynamics threatens the reconstructibility of the history that produced it. RSVP is, throughout, treated as a family of connected proposals at unequal levels of development rather than a single completed theory.
+
+\section{Three Thermodynamic Routes to Gravitation}
+\label{sec:landscape}
+
+\subsection{Local causal horizons and the Einstein equations}
+\label{subsec:jacobson}
+
+Jacobson's 1995 argument is the clearest demonstration that the Einstein equation can be read as a thermodynamic equation of state. At each spacetime event one considers a local causal horizon, approximated by a Rindler horizon for an accelerated observer. The energy flux through that horizon supplies $\delta Q$, the observer assigns it an Unruh temperature $T$, and horizon entropy is taken to be proportional to area. Requiring the Clausius relation
+\[
+\delta Q = T\,dS
+\]
+to hold for every local causal horizon yields the Einstein equation, with the cosmological constant entering as an integration constant.
+
+The force of the result lies in its economy. It does not identify the microscopic degrees of freedom responsible for horizon entropy, but shows that, given the local entropy-area relation and equilibrium thermodynamics, the spacetime field equation follows as a consistency condition. This is a substantial structural result, although its assumptions remain physical postulates rather than a microscopic derivation. It establishes that a coherent route from horizon thermodynamics to general relativity exists; it does not by itself establish that all gravitational phenomena are entropic forces or that the underlying degrees of freedom have been identified.
+
+\subsection{Entropic force and apparent dark matter}
+\label{subsec:verlinde}
+
+Verlinde's construction makes a stronger interpretive move. A displacement relative to a holographic screen changes the entropy attributed to the screen, and an effective force follows from
+\[
+F = T\frac{\partial S}{\partial x}.
+\]
+Together with equipartition and a holographic relation between screen area and information, this construction reproduces Newton's second law and the inverse-square gravitational law. Unlike Jacobson's argument, it aims not only to obtain a field equation from thermodynamic consistency but to interpret gravitational attraction itself as an entropic force.
+
+The later de Sitter extension applies this reasoning to galactic phenomenology. The entropy associated with de Sitter space is treated as a medium whose response to baryonic matter supplies an additional effective gravitational contribution at low accelerations. This produces a baryonic-mass-velocity scaling related to the baryonic Tully-Fisher relation and has been confronted with galaxy rotation-curve data. Its galactic predictions are therefore more exposed to observation than a purely interpretive reformulation. Yet the proposal remains less developed for relativistic lensing, galaxy clusters, the cosmic microwave background, and the full cosmological history than the standard cold-dark-matter framework. Its assumptions about the nonequilibrium response of de Sitter entropy also require justification independent of the fits they produce.
+
+\subsection{Apparent-horizon thermodynamics and cosmology}
+\label{subsec:friedmann}
+
+A third route applies thermodynamic relations to the apparent horizon of a Friedmann-Lema\^{\i}tre-Robertson-Walker spacetime. In treatments associated with Padmanabhan, Cai, Kim, and others, the first law at the apparent horizon, together with an entropy-area relation, recovers the Friedmann equations. Replacing the strict area law with a corrected entropy functional correspondingly modifies the cosmological equations, providing a systematic way to translate proposed microscopic corrections into altered large-scale dynamics.
+
+These results reinforce a limited but important conclusion. Horizon thermodynamics is a recurring structural route to gravitational and cosmological equations. They do not show that every entropy-based model is equivalent, nor do they supply a unique microscopic ontology. They instead define the comparative standard that a bulk theory such as RSVP must meet: it should explain when its volume dynamics reproduce the same boundary consistency relations and where they predict departures.
+
+\section{Admissibility as an Interpretation of Gravitational Entropy}
+\label{sec:admissibility}
+
+The preceding derivations depend upon an entropy assigned to a boundary, but generally do not require a final account of the microscopic objects being counted. An admissibility-based reading makes this interpretive neutrality explicit. Let $\mathcal{A}(B)$ be the set of internal configurations compatible with observed boundary data $B$ and with the dynamical, causal, and consistency constraints of the theory. One may then write schematically
+\[
+S(B) \sim \log \operatorname{Vol}\!\bigl(\mathcal{A}(B)\bigr).
+\]
+Entropy here measures the size of a constraint-satisfying state space. The boundary does not need to be imagined as a material surface tiled by already identified microscopic bits; it indexes which internal distinctions remain admissible from the exterior description.
+
+This interpretation does not alter the Jacobson or apparent-horizon derivations, because their operative assumptions concern the entropy-area relation and thermodynamic consistency, not a unique microscopic realization. It instead postpones an identification that current theory does not yet warrant. The admissible configurations might ultimately be represented by a Hilbert space, string microstates, spin networks, or some different substrate. The thermodynamic derivations remain informative because their validity is conditional on the measure and scaling of the admissible set, not on advance knowledge of its constituents.
+
+Admissibility also furnishes a conceptual link to RSVP. A local plenum state need not be treated as an unconstrained microstate. It can be treated as a local section whose permissibility depends on neighboring fields, conservation laws, and global extension conditions. Entropic descent then becomes relaxation toward regions of greater admissible volume. This is a proposed synthesis, not an automatic consequence of horizon thermodynamics: a measure on the admissible state space and a derivation connecting its gradient to the RSVP equations are still required.
+
+\section{The RSVP Plenum and Entropic Descent}
+\label{sec:plenum}
+
+The underlying RSVP ontology is a coupled field
+\[
+\Psi = (\Phi,\mathbf{v},S),
+\]
+where $\Phi$ is a scalar density or potential, $\mathbf{v}$ is a transport or negentropic-flow field, and $S$ is an entropy field defined throughout the volume. Gravitation is not introduced as an attractive force between bodies. It is derived in the more developed branch of the theory, or represented phenomenologically in less developed branches, as motion induced when an inhomogeneous plenum relaxes toward equilibrium.
+
+A recurring compact expression for the effective gravitational field is
+\[
+\mathbf{G}_{\mathrm{RSVP}}=-\nabla S+\xi\,\nabla\Phi,
+\]
+with the schematic weak-field identifications
+\[
+\Phi_{\mathrm{eff}}\approx-\delta S,
+\qquad
+\nabla^2\Phi_{\mathrm{eff}}=4\pi G_N\rho.
+\]
+The intended claim is that Newtonian behavior appears as a limiting regime of coupled $\Phi$-$\mathbf{v}$-$S$ relaxation. This descent is intrinsic to a bulk field rather than imposed by an external screen. RSVP therefore resembles entropic gravity in treating gravitation as emergent relaxation, but differs from screen-based accounts in locating its proposed degrees of freedom throughout the plenum.
+
+That relocation creates both an opportunity and an obligation. A volume theory can in principle represent local transport, vorticity, entropy production, and nonequilibrium history more directly than equilibrium horizon thermodynamics. At the same time, it must demonstrate how those bulk variables recover the tested relativistic and thermodynamic limits rather than relying on the general success of entropic reasoning as evidence for its particular field content.
+
+\section{Coherent Polarization Without Collapse: The Synchronization Substrate}
+\label{sec:synchronization}
+
+The remainder of this essay depends repeatedly on a single mechanism, developed independently in work on coupled-oscillator synchronization~\cite{kuramoto1984,strogatz2000,acebron2005}, for how a population of locally coupled elements can acquire macroscopic coherence without any element's private history being erased or absorbed into a global state. Stating that mechanism precisely here does two things at once: it supplies the actual content behind the otherwise loose phrase coherent polarization used informally elsewhere in this program, and it gives the magnetization bridge of Section~\ref{sec:bridge} a disciplined mechanism to appeal to rather than a bare analogy.
+
+Let each element $i$ carry a persistent internal state $x_i(t)$ that is never directly observed or modified by any other element, together with an exposed coordinate $\theta_i(t)$, a phase, orientation, or boundary signal, through which coupling acts:
+\[
+\dot{\theta}_i = \omega_i + K\sum_j A_{ij}\sin(\theta_j - \theta_i).
+\]
+The population acquires a macroscopic order parameter
+\[
+Re^{i\Psi} = \frac{1}{N}\sum_{i=1}^{N} e^{i\theta_i},
+\]
+where $R$ measures the degree of coherence and $\Psi$ gives the population's collective orientation. No element broadcasts, or receives, a description of the full global state; each element responds to its neighbors, and $Re^{i\Psi}$ is an observation computed from the resulting pattern of exposed coordinates rather than a state any element holds. Coherence of this kind is weaker, and correspondingly more useful, than identity: a population can converge on a shared orientation while every element's private state $x_i$, and the specific coupling history that produced its current $\theta_i$, remain distinct and, in principle, recoverable. Partial coherence is the generic case rather than the exception; domains and chimera states, in which coherent and incoherent regions coexist within a single coupled network, are well documented in both physical and mechanical oscillator systems~\cite{panaggio2015}.
+
+This mechanism is what licenses using a ferromagnetic analogy for a plenum's macroscopic ordering at all, and it comes with an explicit limit that must be stated alongside it. Ferromagnetic order is spontaneous symmetry breaking: many microscopic orientations are available, and local interaction selects a macroscopic one without requiring every constituent to hold an identical complete state. That structural fact licenses treating plenum polarization as belonging to the same broad class of phenomena as magnetic ordering. It does not license identifying gravitation with literal electromagnetism, or extending the analogy to claim that gravity and magnetism are the same interaction at cosmological scale. Electromagnetic fields do gravitate, because they carry energy and momentum, and general relativity's weak-field limit admits a mathematical analogy, gravitomagnetism, associated with moving mass and frame dragging; but ordinary magnetism remains an electromagnetic phenomenon, while general relativity describes gravitation as spacetime geometry, and the two are not currently understood as a single interaction~\cite{einsteinonline}. A formal metaphor of universal ferromagnetism applied to cosmological alignment remains available as metaphor, but a genuine physical theory built on it would still need to specify what plays the role of microscopic spin, what interaction aligns those spins, what plays the role of temperature, what symmetry is broken, what observable corresponds to magnetization, and how the resulting predictions differ from general relativity together with conventional dark matter. The magnetization bridge of Section~\ref{sec:bridge} is offered precisely as an attempt to specify these, rather than to assume the metaphor has already done so.
+
+\section{The Variational Formulation}
+\label{sec:variational}
+
+The strongest formal branch derives the plenum dynamics from an action principle. It develops Euler-Lagrange equations for the coupled fields and a Hamiltonian and Dirac-bracket treatment for the constrained system. A characteristic constraint relates the divergence of the flow field to the scalar and entropy sectors,
+\[
+\nabla\cdot\mathbf{v}\approx\alpha_\Phi\Phi+\alpha_S S.
+\]
+The modified gravitational equation is written schematically as
+\[
+G_{\mu\nu}+\Theta_{\mu\nu}=8\pi G\,T_{\mu\nu},
+\]
+where $\Theta_{\mu\nu}$ collects entropy-gradient and entropy-flux contributions, including terms of the general form $\nabla_\mu S\nabla_\nu\Phi$ and $J^S_\mu J^S_\nu$. These contributions vanish in the stipulated general-relativistic limit and contribute where the plenum carries nontrivial entropy gradients or fluxes.
+
+The corresponding weak-field equation takes the form
+\[
+\nabla^2\Phi_{\mathrm{grav}}
+=4\pi G\bigl(\rho_{\mathrm{matter}}+\rho_{\mathrm{entropy}}\bigr).
+\]
+Within the mathematical model, the derivation of the equations and constraint structure from the stated action is the formal result. Interpreting $\rho_{\mathrm{entropy}}$ as a physically realized density with a specified microscopic origin is a further phenomenological claim. Likewise, the proposal that Jacobson's thermodynamic argument should arise as a boundary or equilibrium limit of the bulk theory is a target for derivation, not something guaranteed merely because both descriptions employ entropy.
+
+\section{Cosmology, Propagation, and Structure Formation}
+\label{sec:cosmology}
+
+\subsection{From brick to sponge}
+
+One branch of RSVP describes cosmic evolution as a transition from a dense and comparatively homogeneous configuration, a ``brick,'' to a porous structured configuration, a ``sponge.'' Entropy redistribution, scalar permeability, and vector flow replace uniform metric expansion as the principal explanatory vocabulary. Structure formation is thereby presented as a large-scale instance of the same relaxation dynamics invoked for gravitation. Correlations between cosmic voids and features of the cosmic microwave background are proposed as observational targets.
+
+At present this is a qualitative cosmological reframing rather than a completed competitor to standard structure-formation calculations. To become quantitatively comparable, it would need an explicit background solution, a perturbation theory, a mapping from plenum variables to observables, and direct comparison with the acoustic spectrum, lensing, nucleosynthesis, and large-scale survey statistics.
+
+\subsection{Propagation through entropy gradients}
+
+A second branch extends entropic descent to light propagation. Accumulated traversal through entropy gradients is proposed to contribute to, or in a stronger version replace, cosmological redshift:
+\[
+1+z=\exp\!\left(\int_\gamma \alpha\,dS\right),
+\]
+where the integral is evaluated along a photon path $\gamma$. The same branch proposes an effective cosmological contribution
+\[
+\Lambda_{\mathrm{eff}}
+\sim \frac{1}{c^2}\frac{d^2S}{dV^2},
+\]
+relating accelerated expansion to the curvature of entropy with respect to volume rather than to a bare cosmological constant.
+
+These relations are phenomenological ans\"atze. They become physical predictions only after $S$, $\alpha$, and the path dependence are defined covariantly and derived from the variational dynamics. In particular, a propagation account must reproduce wavelength-independent redshift where observed, the time-dilation of distant transients, and the consistency among luminosity, angular-diameter, and redshift distances.
+
+\subsection{Morphogenesis and circulation}
+
+A more mechanistic proposal describes entropy gradients as directing material toward regions of reduced effective resistance to flow. Cooling hydrogen is hypothesized to form statistically clustered, approximately Voronoi-like structure; asymmetric inflow along this network supplies angular momentum to collapsing regions; and energy is transported through what the research program calls \emph{lamphrodyne circulation}. This vocabulary is internal to the RSVP program rather than standard terminology in entropic-gravity research.
+
+This account supplies a proposed path from microscopic gradients to macroscopic morphology, but it has not yet been derived from the variational equations in Section~\ref{sec:variational}. Its claims about tessellation, angular-momentum distributions, and circulation should therefore be treated as simulation hypotheses and compared directly with hydrodynamic cosmological baselines.
+
+\section{Dark-Matter Phenomenology: Plural, Not Yet Unified}
+\label{sec:darkmatter}
+
+RSVP currently contains several candidate mechanisms for effects conventionally attributed to dark matter. The first adds $\rho_{\mathrm{entropy}}$ to the Poisson source, as in Section~\ref{sec:variational}. The second modifies the effective geometry through Cartan torsion sourced by plenum vorticity, with flattened rotation curves arising from a geometric rather than an additional-source mechanism. The third interprets anomalies as reconstruction failures: locally admissible geometric sections fail to extend into a single globally coherent mode, so inference based on a globally reconstructible geometry attributes the residual to unseen matter.
+
+The admissibility reading of Section~\ref{sec:admissibility} clarifies the third proposal but does not establish its equivalence to the other two. An entropy-density source, a torsion-vorticity correction, and a global extension obstruction are mathematically different objects. They may turn out to be alternative variables for one effective mechanism, distinct limiting regimes, or incompatible hypotheses. No existing derivation shows that they yield the same lensing map, rotation curve, cluster dynamics, or cosmological perturbations.
+
+Verlinde's apparent-dark-matter proposal provides a useful external comparison. Both programs aim to obtain an additional gravitational response from the gravitational or informational sector without a new particle species. Verlinde ties that response to de Sitter entropy and baryonic displacement; RSVP distributes entropy and flow through the bulk. Agreement on motivation does not imply agreement on force laws. A discriminating numerical program should therefore compare all candidate mechanisms against the same baryonic inputs and observables rather than treating a successful fit by one as confirmation of the others.
+
+\section{Symbolic Deferral and the Provenance of Simulated States}
+\label{sec:provenance}
+
+The variational, cosmological, and dark-matter branches above all eventually rest on numerical simulation of the coupled $(\Phi,\mathbf{v},S)$ system, described in Section~\ref{sec:simulation}. A separate line of work in the same research program, developed around symbolic algebra and deterministic replay rather than around gravitation, supplies a discipline this simulation infrastructure needs if its results are to mean what they claim to mean, and it is worth importing explicitly rather than leaving implicit.
+
+Symbolic algebra systems represent a calculation such as $(x+1)^2$ not as a number and not as an opaque procedure, but as an inspectable expression that can be transformed, expanded, or substituted into before any numerical commitment collapses it into a concrete value; substitution postpones commitment, and the deferred structure can be manipulated in ways that an already-evaluated number cannot. A general-purpose systems language reconstructs the same discipline by representing a calculation as data, typically an enumerated expression tree, rather than executing it immediately, allowing separate interpreter functions to evaluate, simplify, serialize, hash, or display the same structure. The relevant analogy for RSVP is direct: at any point before a specific numerical realization is demanded, the coarse-grained order parameter $m(x,t)$ introduced in Section~\ref{sec:bridge}, and the effective potential $\Phi_{\mathrm{grav}}$ derived from it, are exactly this kind of deferred, inspectable structure, a description of a relaxation process rather than a single collapsed number, and treating them that way, rather than committing prematurely to one candidate reduction, keeps the several proposals of Section~\ref{sec:darkmatter} genuinely comparable rather than accidentally conflated.
+
+A companion discipline concerns reproducibility rather than representation. A canonical event history, encoded once into an envelope whose canonical bytes produce a stable digest, can seed a deterministic computational structure, including its initial parameters, and can serve as the parent identifier for a first computed state. A signature over the digest and the initial state records who authorized the binding between the envelope and the derived structure, a claim distinct from the digest's claim that the same envelope deterministically generates the same initial state. As the system evolves, a single mutable snapshot of its current state is not sufficient: if each update overwrites the last, the file remembers the accumulated effect of the system's history but forgets how that effect was acquired. The more disciplined design hash-chains successive states to the canonical event history that produced them,
+\[
+G_{t+1} = H\bigl(G_t \,\|\, H(W_{t+1}) \,\|\, H(E_{t+1})\bigr),
+\]
+so that a canonical event history and an evolving computed disposition remain two parallel, non-equivalent records rather than one collapsed into the other. Achieving this requires the same numerical discipline that distinguishes fixed-point from floating-point arithmetic: ordinary floating-point simulation can diverge across hardware and compiler versions, because floating-point addition is not associative and floating-point reductions depend on iteration order and platform-specific rounding, so a simulation whose results are meant to be independently reproducible needs a fixed numerical format, an exact rounding rule, and a canonical update order specified alongside the physics, not left to whichever numerical library happens to be linked.
+
+This is not a decorative addition to the RSVP program; it is the standard the simulation infrastructure of Section~\ref{sec:simulation} needs to meet before a claim that a given simulator run demonstrates rotation-curve agreement, or Voronoi-like clustering, or a specific critical point in the brick-to-sponge transition, can be checked by an independent party rather than taken on trust. A companion discipline concerns how the resulting states are rendered and compared visually. Where a simulated configuration is displayed, whether as a brick-to-sponge visualization or as a rendered plenum-polarization field, the display convention itself, shape, form, categorical color, adjacency to neighboring elements, and inherited background or environment palette, should be recorded as a typed attribute of the rendering rather than folded informally into the canonical numerical state, so that two independent renderings of the same canonical simulation output can be compared, or regenerated under a different display convention, without ambiguity about which differences are physical and which are merely stylistic.
+
+\section{Simulation Infrastructure}
+\label{sec:simulation}
+
+The program includes an interactive simulator for coupled $(\Phi,\mathbf{v},S)$ dynamics with diffusion, advection, vorticity, divergence, and entropy-production terms; a notebook implementation for exploratory work; a proposed GPU tensor implementation for larger lattices; simpler lattice systems for qualitative checks; and planned three-dimensional studies of the brick-to-sponge transition. This infrastructure is scientifically important because the analytic proposals above interact in ways that verbal comparison alone cannot resolve, and the provenance discipline of Section~\ref{sec:provenance} is what would let a claimed result from any one of these tools be checked independently rather than accepted on the strength of the tool's own report.
+
+The five-layer Ising synchronization model belongs beside this infrastructure rather than inside the continuum RSVP theory. Its layers represent a finite axial index coupled to collapsed spacetime layers. Its observables include magnetization, cross-layer synchronization, and a Lempel-Ziv complexity readout normalized against live sorted and shuffled references. The model demonstrates how local coupling can yield macroscopic order without any local element encoding the global configuration, exactly the mechanism formalized in Section~\ref{sec:synchronization}. Prior to the proposal in Section~\ref{sec:bridge}, however, its magnetization was an order parameter and explanatory analogy, not a physical carrier of gravitation.
+
+\section{The Magnetization Bridge}
+\label{sec:bridge}
+
+The new proposal is to make the shared local-to-global structure of Section~\ref{sec:synchronization} explicit by defining a collective order parameter from local plenum states and using it as an intermediate variable:
+\[
+(\Phi_i,\mathbf{v}_i,S_i)
+\longrightarrow m(x,t)
+\longrightarrow\Phi_{\mathrm{grav}}(x,t).
+\]
+Here $m(x,t)$ is a collective polarization field obtained by coarse-graining local plenum configurations, and $\Phi_{\mathrm{grav}}$ is the effective potential. Candidate reductions include
+\[
+m_v(x,t)=\bigl\langle\mathbf{v}\bigr\rangle_{\ell},
+\qquad
+m_S(x,t)=\bigl\langle\nabla S\bigr\rangle_{\ell},
+\]
+where $\langle\cdot\rangle_\ell$ denotes coarse-graining over scale $\ell$. These candidates are not interchangeable: $m_v$ is vectorial and sensitive to transport orientation, while $m_S$ tracks coherent entropy descent. A defensible bridge must specify the transformation properties, units, coarse-graining scale, and coupling functional rather than choose between them by metaphor, and, per Section~\ref{sec:provenance}, should be treated as a deferred symbolic quantity, not committed to a single reduction until the comparison against data in Section~\ref{sec:criteria} forces a choice.
+
+The Ising model contributes a universality hypothesis, not an electromagnetic ontology, exactly as stated in Section~\ref{sec:synchronization}. Local couplings may produce spontaneous ordering described by the statistical mechanics of an Ising-like or related universality class without the constituents being magnetic moments or interacting electromagnetically. The terms \emph{plenum polarization} and \emph{entropic alignment} are therefore preferable for the proposed physical variable. Ferromagnetism names the mathematical source of the analogy, not the underlying interaction.
+
+One possible effective coupling is
+\[
+\nabla^2\Phi_{\mathrm{grav}}
+=4\pi G\rho_{\mathrm{matter}}+\lambda\,\mathcal{I}[m],
+\]
+where $\mathcal{I}[m]$ is a scalar invariant constructed from the order parameter, such as $|m|^2$, $\nabla\cdot m$, or a nonlocal reconstruction functional. The form cannot be chosen arbitrarily: it must follow from the RSVP action or from a controlled coarse-graining of its equations. If $\lambda\mathcal{I}[m]=4\pi G\rho_{\mathrm{entropy}}$ in the long-wavelength limit, the bridge would explain rather than merely accompany the entropy-density correction.
+
+\section{From Bridge to Theory}
+\label{sec:criteria}
+
+Treating plenum order as a physical mechanism requires the ingredients summarized in Table~\ref{tab:bridge}. The table deliberately distinguishes objects already available in the program from identifications that remain conjectural.
+
+\begin{table}[ht]
+\centering
+\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.43\textwidth} >{\raggedright\arraybackslash}p{0.49\textwidth}}
+\toprule
+\textbf{Required ingredient} & \textbf{Current status} \\
+\midrule
+Microscopic variables & Local plenum elements $(\Phi_i,\mathbf{v}_i,S_i)$ are available, but the reduced degree of freedom acting as a ``spin'' is not uniquely identified. \\
+Interaction functional & Couplings occur in the RSVP Lagrangian, but an effective Ising, vector-spin, or other universality-class Hamiltonian has not been derived. \\
+Symmetry and its breaking & Orientational ordering is plausible; the relevant symmetry group and broken phase remain to be demonstrated. \\
+Control parameter and transition & A brick-to-sponge transition is hypothesized, but no critical point has been derived or tied to cosmic epoch, entropy density, or another measurable quantity. \\
+Observable order parameter & $m(x,t)$ is proposed here; its definition, normalization, and map to observables remain open. \\
+Gravitational limit & A modified Poisson equation exists in the RSVP program, but it has not been recovered as the long-wavelength limit of the synchronization model. \\
+\bottomrule
+\end{tabular}
+\caption{Conditions required to promote the magnetization bridge from analogy to effective theory.}
+\label{tab:bridge}
+\end{table}
+
+Three derivations are especially important. First, the modified Poisson equation must emerge from the coarse-grained order-parameter dynamics rather than be paired with it after the fact. Second, the static solutions for $m$ must generate definite rotation, lensing, and cluster predictions under common boundary conditions. Third, the Ising model's temperature-like control parameter must be identified with a physical plenum quantity rather than retained as a tunable simulation parameter.
+
+Until then, the defensible claim is not that gravity is magnetism. It is that gravitational geometry may be the effective macroscopic description of an ordered plenum; that a statistical universality class might characterize the onset of this order; and that an explicit order parameter could connect local relaxation to a gravitational potential. Whether dark-matter phenomenology is sourced directly by this order, indirectly through entropy density, or instead by torsion or reconstruction obstruction remains undecided.
+
+\section{Dynamics of the Order Parameter}
+\label{sec:dynamics}
+
+The bridge immediately raises the question of what governs $m$. A purely relaxational, time-dependent Ginzburg-Landau equation would take the schematic form
+\[
+\partial_t m=-\Gamma\frac{\delta\mathcal{F}}{\delta m}+\eta,
+\]
+where $\mathcal{F}[m]$ is a coarse-grained free-energy functional and $\eta$ represents fluctuations. This is the closest match to simple entropy-driven equilibration, but by itself it is diffusive and does not supply a relativistic causal propagation law.
+
+A Landau-Lifshitz-type equation would add precession about an effective field and would be appropriate only if plenum orientation carries intrinsic rotational dynamics. A hyperbolic equation, for example
+\[
+\tau\,\partial_t^2m+\partial_t m
+=-\Gamma\frac{\delta\mathcal{F}}{\delta m},
+\]
+would permit finite-speed propagation while retaining relaxation. The correct choice should not be selected by resemblance to ordinary magnetic media. It should be derived by defining $m$ as a coarse-graining of $(\Phi,\mathbf{v},S)$ and reducing the RSVP equations while preserving their constraints and characteristic speeds.
+
+This is the point on which the disciplined form of the magnetization proposal turns. If the reduction yields an effective action, its symmetry, kinetic term, damping, and coupling to matter become calculable. If no consistent reduction exists, magnetization remains a useful visualization of coherence but not a bridge variable in the physical theory.
+
+\section{Replayable History Under Feedback}
+\label{sec:replay}
+
+Once $m(x,t)$ is allowed to feed back into local plenum dynamics through $\Phi_{\mathrm{grav}}$, as the bridge of Section~\ref{sec:bridge} requires, a question arises that is independent of whether the bridge turns out to be physically correct: does this feedback threaten the reconstructibility of the plenum's own simulated history. If every local element's future evolution depends on a global quantity to which every other element contributed, it is natural to worry that the resulting trajectories can no longer be separated, or that a simulator could, in principle, overwrite its own past state to keep its running output consistent with a given target rather than genuinely computing that output from initial conditions forward.
+
+The worry rests on conflating two different things feedback can do to a recorded history. Causal modification, in which a local element's future trajectory depends on the past values of $m$ that its own past states helped to produce, is simply what a coupled dynamical system is, and it poses no threat to reconstructibility provided the dependency is itself recorded. Retroactive erasure, in which a past local state is altered, or an update is applied without recording the inputs that produced it, so that the current simulated state can no longer be checked against a full causal chain, is the actual failure mode, and it is a property of how a simulator is built rather than a consequence forced by the presence of feedback.
+
+The Kuramoto model of Section~\ref{sec:synchronization} already demonstrates the discipline that avoids the failure. Each exposed coordinate $\theta_i(t+\Delta t)$ depends on the coupling received, which is causal modification and is recorded as part of the update; each private state $x_i(t)$ is never directly overwritten by another element's exposed coordinate, only updated according to its own rule taking recorded exposed values as input; and the order parameter $Re^{i\Psi}$ is computed from the exposed coordinates after the fact rather than injected back into them as an imperative. Applied directly to the RSVP simulator, the corresponding discipline requires that each local plenum element's update be a recorded function of its own prior state together with whichever coarse-grained $m$ value it actually received at that timestep, that $m(x,t)$ itself be computed from the elements' states as a read operation rather than written into them, and that every such coupling event, its timestep, its participating region, and the specific $m$ value applied, be logged as part of the canonical event history discussed in Section~\ref{sec:provenance} rather than only the resulting aggregate state being retained.
+
+Given a complete record of this kind, the objection that feedback makes replay circular, that reproducing a trajectory would require reproducing the very interactions that depended on it, dissolves: replayability does not require independence from interaction, only that the full record of local updates and coupling events be sufficient to reconstruct every element's trajectory deterministically from its initial condition forward. This is the same distinction, applied here to a numerical simulation rather than to a social or symbolic system, between a system whose evolving state is a function of its own recorded history and one whose evolving state is used to rewrite that history to appear more consistent than it was. A simulator that logs coupling events in this way can support exactly the kind of independent verification that Section~\ref{sec:provenance} argues the program's dark-matter and structure-formation claims require; a simulator that only retains its current aggregate state cannot be checked in this way even in principle, regardless of how carefully its underlying physics is specified.
+
+\section{What Emergence Does Not License}
+\label{sec:limits}
+
+Neither horizon thermodynamics nor RSVP's proposed bulk relaxation licenses the inference that gravity can be shielded, cancelled, or reversed locally in the manner of an electromagnetic field. A thermodynamic derivation explains why macroscopic equations follow from collective constraints. It does not imply that a small apparatus can control the underlying state space, alter an entropy-area relation, or create arbitrary gradients in the relevant order parameter.
+
+RSVP differs from screen-based entropic gravity by positing local fields, so it cannot be said that no local value exists. Yet local field content alone does not establish local controllability. Any engineering claim would require a specified coupling between accessible matter and $(\Phi,\mathbf{v},S)$ or $m$, an energy budget, causal dynamics, conservation laws, and predicted collateral effects. The explanatory bridge from thermodynamics to gravitation and the intervention bridge from laboratory controls to plenum variables are separate theoretical tasks.
+
+This distinction also protects the magnetization analogy from a common mistake. Ordinary magnets are manipulable because their microscopic moments couple electromagnetically to applied fields. An RSVP order parameter belonging to a similar universality class would not inherit that coupling. Universality preserves certain long-distance scaling properties; it does not preserve the material identity or laboratory controls of the systems within the class.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+Entropic gravity is a landscape of related but nonidentical arguments. Jacobson's construction shows that the Einstein equation can arise as a local thermodynamic equation of state under stated horizon assumptions. Apparent-horizon methods extend a similar consistency structure to Friedmann cosmology. Verlinde's program makes the stronger claim that gravitational attraction is entropic and proposes a quantitatively testable account of apparent dark matter, but its relativistic and cosmological completion remains incomplete. An admissibility-based reading preserves the operative thermodynamic relations while interpreting entropy as the measure of a constraint-satisfying state space rather than prematurely identifying literal boundary microstates.
+
+RSVP relocates the proposal from a boundary to a volume-filling scalar-vector-entropy plenum. Its variational formulation supplies the program's clearest formal core; its cosmological, propagation, and morphogenetic branches remain phenomenological extensions requiring derivation and comparison with standard observables. Its entropy-density, torsion-vorticity, and reconstruction-obstruction accounts of dark-matter phenomenology are candidates, not interchangeable descriptions already known to agree.
+
+The three further threads drawn in here strengthen the program without changing its evidentiary status. The synchronization mechanism of Section~\ref{sec:synchronization} gives coherent polarization an actual formal content and states the limit past which the ferromagnetic analogy stops licensing inferences. The provenance discipline of Section~\ref{sec:provenance} gives the growing simulation infrastructure a standard, borrowed from work on symbolic deferral and deterministic replay, that its results would need to meet before a claimed rotation-curve fit or structure-formation statistic could be checked independently. The replayability argument of Section~\ref{sec:replay} answers directly, rather than by assumption, the question the magnetization bridge itself raises about whether feedback undermines reconstructibility, and shows that it does not, provided the same recording discipline already demonstrated in the synchronization model is carried into the simulator itself.
+
+The magnetization bridge gives the five-layer synchronization experiment a possible non-metaphorical role by inserting a coarse-grained order parameter between local plenum dynamics and the effective gravitational potential. That proposal becomes a theory only if the order parameter, its symmetry, its dynamics, its physical control parameter, and its gravitational coupling can be derived from the RSVP action and tested against common data. The present conclusion is therefore precise but limited: gravitation may be modeled as the coherent macroscopic orientation of locally situated relaxation dynamics, individually recorded and in principle replayable, while neither thermodynamic emergence nor statistical universality identifies gravity with electromagnetism or establishes a means of locally engineering it.
+
+\begin{thebibliography}{9}
+
+\bibitem{jacobson1995}
+T. Jacobson, ``Thermodynamics of Spacetime: The Einstein Equation of State,''
+\textit{Physical Review Letters} \textbf{75}, 1260 (1995).
+
+\bibitem{verlinde2011}
+E. Verlinde, ``On the Origin of Gravity and the Laws of Newton,''
+\textit{Journal of High Energy Physics} \textbf{2011}, 29 (2011).
+
+\bibitem{verlinde2016}
+E. Verlinde, ``Emergent Gravity and the Dark Universe,''
+\textit{SciPost Physics} \textbf{2}, 016 (2017), arXiv:1611.02269.
+
+\bibitem{padmanabhan2010}
+T. Padmanabhan, ``Equipartition of Energy in the Horizon Degrees of Freedom and the Emergence of Gravity,''
+\textit{Modern Physics Letters A} \textbf{25}, 1129 (2010).
+
+\bibitem{caikim2005}
+R.-G. Cai and S. P. Kim, ``First Law of Thermodynamics and Friedmann Equations of Friedmann-Robertson-Walker Universe,''
+\textit{Journal of High Energy Physics} \textbf{2005}, 050 (2005).
+
+\bibitem{mcgaugh2016}
+S. S. McGaugh, F. Lelli, and J. M. Schombert, ``Radial Acceleration Relation in Rotationally Supported Galaxies,''
+\textit{Physical Review Letters} \textbf{117}, 201101 (2016).
+
+\bibitem{kuramoto1984}
+Y. Kuramoto, \textit{Chemical Oscillations, Waves, and Turbulence}
+(Springer, Berlin, 1984).
+
+\bibitem{strogatz2000}
+S. H. Strogatz, ``From Kuramoto to Crawford: Exploring the Onset of Synchronization in Populations of Coupled Oscillators,''
+\textit{Physica D} \textbf{143}, 1 (2000).
+
+\bibitem{acebron2005}
+J. A. Acebr\'{o}n, L. L. Bonilla, C. J. P\'{e}rez Vicente, F. Ritort, and R. Spigler,
+``The Kuramoto Model: A Simple Paradigm for Synchronization Phenomena,''
+\textit{Reviews of Modern Physics} \textbf{77}, 137 (2005).
+
+\bibitem{panaggio2015}
+M. J. Panaggio and D. M. Abrams, ``Chimera States: Coexistence of Coherence and Incoherence in Networks of Coupled Oscillators,''
+\textit{Nonlinearity} \textbf{28}, R67 (2015).
+
+\bibitem{einsteinonline}
+Einstein Online, ``Gravity as Curved Spacetime,''
+Max Planck Institute for Gravitational Physics, \url{https://www.einstein-online.info}.
+
+\end{thebibliography}
+
+\end{document}
