@@ -1,5 +1,17 @@
 # Library
 
+## Reuse and licensing
+
+Flyxion's original contributions are offered under the
+[Holographic Commons Dedication](LICENSE), which requires no attribution,
+payment, or retention of its text and disclaims warranties and liability
+to the fullest extent permitted by law. It includes unconditional fallback
+permissions and permission for holographic and steganographic transformations.
+Third-party material retains its own terms; see
+[licensing boundaries and the preliminary inventory](THIRD-PARTY-NOTICES.md).
+Earlier Apache-2.0 permissions remain available where applicable, with the
+former text preserved in [LICENSE-APACHE-2.0](LICENSE-APACHE-2.0).
+
 A public collection of essays, papers, notes, and audio overviews on cognition, physics, commitment, and related theory (RSVP and neighbouring projects).
 
 - **[Index of all entries](INDEX.md)** — title, type, and formats, with links

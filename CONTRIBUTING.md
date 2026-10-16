@@ -1,5 +1,13 @@
 # Contributing to the library
 
+## Rights and provenance
+
+Identify the license or dedication you expressly authorize for your original
+contribution and retain notices and sources for third-party material.
+Submission alone does not waive your rights or adopt the Holographic Commons
+Dedication. See [licensing boundaries](THIRD-PARTY-NOTICES.md); maintainers
+should resolve licensing scope before merging a contribution.
+
 This repository is a themed collection of essays, papers, notes, and audio overviews. Follow these rules so files stay searchable and scripts keep working.
 
 ## File naming
