@@ -1,30 +1,10 @@
 # Library
-
-## Reuse and licensing
-
-Flyxion's original contributions are offered under the
-[Holographic Commons Dedication](LICENSE), which requires no attribution,
-payment, or retention of its text and disclaims warranties and liability
-to the fullest extent permitted by law. It includes unconditional fallback
-permissions and permission for holographic and steganographic transformations.
-Third-party material retains its own terms; see
-[licensing boundaries and the preliminary inventory](THIRD-PARTY-NOTICES.md).
-Earlier Apache-2.0 permissions remain available where applicable, with the
-former text preserved in [LICENSE-APACHE-2.0](LICENSE-APACHE-2.0).
-
-A public collection of essays, papers, notes, and audio overviews on cognition, physics, commitment, and related theory (RSVP and neighbouring projects).
-
-- **[Index of all entries](INDEX.md)** — title, type, and formats, with links
-- **[Contributing](CONTRIBUTING.md)** — kebab-case names, YAML front matter, where to add files, format policy
-
-## Folder themes
-
+<!--
 | Folder | Theme |
 | --- | --- |
 | `analysis/` | Articles on AI autonomy, labour automation, and dialogue as semantic field theory |
 | `astrophysics/` | Papers and drafts on cosmic / stellar physics (e.g. solar interiors) |
 | `baseline/` | Semantic compression: media stored as descriptions rather than signals |
-| `codex-singularis/` | Exported conversation archives |
 | `complexity/` | Arguments that complexity does not require intelligence |
 | `computing/` | Thought experiments in computing (magnetic-fluidic computing and related) |
 | `conceptual-spaces/` | Essays on conceptual spaces and RSVP field equations |
@@ -48,26 +28,7 @@ A public collection of essays, papers, notes, and audio overviews on cognition, 
 | `system/` | System-level papers (viewpoint diversity) |
 | `vault/` | Architecture of exclusion, merit/legibility, Solms–RSVP mappings |
 | `workspace/` | Working notes on verification, commitment, measurement, and related claims |
-| *(repository root)* | Cross-cutting essays and debates that are not tied to one theme |
-
-New material should go in the matching folder. Details are in [CONTRIBUTING.md](CONTRIBUTING.md).
-
-## Formats and duplicates
-
-Each work has **one canonical readable copy**: `.txt` or `.md` (prefer `.md` when the document is already Markdown).
-
-| Format | Role |
-| --- | --- |
-| `.txt` / `.md` | Canonical prose, with YAML front matter |
-| `.pdf` | Typeset paper or graphic; keep when it is not just a printout of the text |
-| `.mp3` | Audio overview of the same stem |
-| `.html` | Optional GitHub Pages view of an existing text — not a second essay |
-| `.tex` | Paper source (kebab-case, same stem as the PDF when both exist) |
-| `.mhtml` / `.mht` | **Not kept.** Browser archives were extracted to `.txt` and removed |
-
-If two files are the same work in different wrappers, keep the accessible text. Do not add `.mhtml` beside a `.txt`.
-
-## Featured works
+-->
 
 [From Verification to Commitment](https://standardgalactic.github.io/library/workspace/from-verification-to-commitment.pdf)
 
@@ -99,8 +60,6 @@ Enacting cognitive landscapes
 
 # Functional Reduction and the End of Justification
 
-[More Info](https://github.com/standardgalactic/library/blob/main/vault/README.md)
-
 [Audio Overview - When Humans Become Friction](https://standardgalactic.github.io/library/vault/)
 
 # Complexity without Intelligence
@@ -109,9 +68,11 @@ Enacting cognitive landscapes
 
 [Audio Overviews](https://standardgalactic.github.io/library/complexity/)
 
----
+<!--
 
 # The Myth of Dual Cognition
+
+[The Myth of Dual Cognition](https://standardgalactic.github.io/library/the-myth-of-dual-cognition.pdf)
 
 There is a recurring ritual in contemporary AI commentary in which Gary Marcus solemnly informs the public that large language models lack “System 2 reasoning,” while occasionally conceding that they may possess something like “System 1 pattern recognition.” This gesture is meant to sound diagnostically precise. In fact, it rests on a conceptual error so basic that it threatens to collapse the entire critique into theater.
 
@@ -130,7 +91,4 @@ Ironically, this reframing dissolves both hype and dismissal. It denies that pre
 In that light, Marcus’s insistence on policing the boundary between System 1 and System 2 begins to resemble arguing over whether compiled code is “really” computation. The distinction survives only as long as one refuses to look at the compilation process.
 
 Aspect Relegation Theory is not revolutionary. It is worse for the pundit class: it is deflationary. It removes the mystique, collapses the false dichotomy, and replaces it with a continuous model of attention, habit, and resolution. Which may explain why it is rarely acknowledged. There is very little left to moralize once intuition stops pretending to be magic and starts admitting it is just yesterday’s reasoning, efficiently forgotten.
-
-[The Myth of Dual Cognition](https://standardgalactic.github.io/library/the-myth-of-dual-cognition.pdf)
-
-[Abstraction as Reduction](https://standardgalactic.github.io/alphabet/Abstraction%20as%20Reduction.pdf)
+-->
