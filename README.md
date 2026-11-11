@@ -1,4 +1,12 @@
 # Library
+
+[Relegated Structure](https://standardgalactic.github.io/library/relegated-structure.pdf)
+
+* [Why System 1 and 2 Don't Exist](https://standardgalactic.github.io/library/relegated-structure-oscilloscope.html)
+<!--
+[The Myth of Dual Cognition](https://standardgalactic.github.io/library/the-myth-of-dual-cognition.pdf)
+-->
+
 <!--
 | Folder | Theme |
 | --- | --- |
@@ -15,7 +23,7 @@
 | `geology/` | Geological papers and draft cycles |
 | `infrastructure/` | Designed systems: swarm piloting, traffic arbitration, entropic compression |
 | `mimetic-proxy-theory/` | Audio series for Mimetic Proxy Theory |
-| `monograph/` | Monograph on identity, constraint, meaning, and topology of the self |
+Why_System_1_and_2_Don_t_Exist.mp3
 | `physics/` | RSVP / geometric physics, TARTAN, and the physics monograph sources |
 | `pipeline/` | In-progress monograph pipeline and curvature drafts |
 | `processing/` | Civilization and coordination as error-correcting / updating processes |
@@ -29,7 +37,6 @@
 | `vault/` | Architecture of exclusion, merit/legibility, Solms–RSVP mappings |
 | `workspace/` | Working notes on verification, commitment, measurement, and related claims |
 -->
-
 [From Verification to Commitment](https://standardgalactic.github.io/library/workspace/from-verification-to-commitment.pdf)
 
 * [Selective Continuation Machine](https://standardgalactic.github.io/library/selective-continuation-machine.html)
@@ -72,7 +79,6 @@ Enacting cognitive landscapes
 
 # The Myth of Dual Cognition
 
-[The Myth of Dual Cognition](https://standardgalactic.github.io/library/the-myth-of-dual-cognition.pdf)
 
 There is a recurring ritual in contemporary AI commentary in which Gary Marcus solemnly informs the public that large language models lack “System 2 reasoning,” while occasionally conceding that they may possess something like “System 1 pattern recognition.” This gesture is meant to sound diagnostically precise. In fact, it rests on a conceptual error so basic that it threatens to collapse the entire critique into theater.
 
