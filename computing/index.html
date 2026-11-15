@@ -1,494 +1,465 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Magnetic Fluidic Computing</title>
-
-<style>
-*{box-sizing:border-box}
-
-html,body{
-  margin:0;width:100%;height:100%;overflow:hidden;
-  background:#000;color:#7cff7c;font-family:monospace;
-  touch-action:manipulation;
-}
-
-body{
-  display:flex;align-items:center;justify-content:center;
-  flex-direction:column;cursor:pointer;
-}
-
-body::before{
-  content:"";position:fixed;inset:0;pointer-events:none;z-index:500;
-  background:repeating-linear-gradient(to bottom,
-    rgba(255,255,255,.03) 0px,
-    rgba(255,255,255,.03) 1px,
-    transparent 2px,
-    transparent 5px);
-  opacity:.13;
-}
-
-.title{
-  position:fixed;top:18px;width:94vw;text-align:center;
-  font-size:14px;letter-spacing:.18em;text-transform:uppercase;
-  color:#00ff88;text-shadow:0 0 10px #00ff66;z-index:100;
-}
-
-.status{
-  position:fixed;top:52px;opacity:.45;font-size:10px;
-  letter-spacing:.14em;z-index:120;
-}
-
-canvas{
-  width:min(380px,78vw);height:min(380px,78vw);
-  border-radius:50%;border:3px solid rgba(0,255,120,.46);
-  background:#000;
-  box-shadow:0 0 55px rgba(0,255,120,.16) inset,
-             0 0 22px rgba(0,255,0,.55);
-  z-index:40;
-}
-
-.subs{
-  position:fixed;bottom:44px;width:min(620px,92vw);
-  min-height:2.5em;padding:8px 12px;text-align:center;
-  font-size:14px;line-height:1.45;color:#aaffaa;
-  text-shadow:0 0 6px #00ff66;background:rgba(0,20,0,.36);
-  border:1px solid rgba(0,255,0,.22);border-radius:6px;
-  pointer-events:none;z-index:80;
-}
-
-.essay{
-  position:fixed;bottom:10px;width:min(620px,92vw);
-  text-align:center;color:#7cffc4;text-decoration:none;
-  font-size:11px;letter-spacing:.08em;opacity:.72;z-index:90;
-}
-
-.essay:hover{opacity:1}
-
-@media(max-width:700px){
-  .title{top:14px;font-size:11px}
-  .status{top:46px;font-size:9px}
-  .subs{bottom:42px;font-size:13px}
-  .essay{font-size:10px}
-}
-</style>
-</head>
-
-<body>
-
-<div class="title" id="title">Magnetic Fluidic Computing</div>
-<div class="status">TOUCH / CLICK ANYWHERE TO PLAY OR PAUSE</div>
-<canvas id="viz"></canvas>
-<div id="subs" class="subs"></div>
-
-<a class="essay"
-   href="https://standardgalactic.github.io/library/computing/magnetic-fluidic-computing.pdf"
-   target="_blank"
-   onclick="event.stopPropagation()">
-  Magnetic Fluidic Computing
-</a>
-
-<audio id="audio" preload="auto"></audio>
-
-<script>
-const track = {
-  file:"the-architecture-of-magnetic-fluidic-computing.mp3",
-  vtt:"the-architecture-of-magnetic-fluidic-computing.vtt",
-  title:"Magnetic Fluidic Computing"
-};
-
-const audio = document.getElementById("audio");
-const subs = document.getElementById("subs");
-
-let audioCtx;
-let analyser;
-let data;
-
-function initAudio(){
-  if(audioCtx) return;
-
-  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  analyser = audioCtx.createAnalyser();
-  analyser.fftSize = 2048;
-  analyser.smoothingTimeConstant = .88;
-
-  data = new Uint8Array(analyser.frequencyBinCount);
-
-  const source = audioCtx.createMediaElementSource(audio);
-  source.connect(analyser);
-  analyser.connect(audioCtx.destination);
-}
-
-async function loadTrack(){
-  audio.src = track.file;
-  audio.load();
-  await loadVTT(track.vtt);
-}
-
-document.body.onclick = async ()=>{
-  initAudio();
-
-  if(audioCtx.state === "suspended")
-    await audioCtx.resume();
-
-  if(audio.paused)
-    await audio.play();
-  else
-    audio.pause();
-};
-
-/* subtitles */
-
-let cues = [];
-
-async function loadVTT(url){
-  cues = [];
-  subs.textContent = "";
-
-  try{
-    const res = await fetch(url);
-    if(!res.ok){
-      console.warn("Missing VTT:",url);
-      return;
-    }
-
-    cues = parseVTT(await res.text());
-  }catch(e){
-    console.warn("VTT load failed:",e);
-  }
-}
-
-function parseVTT(text){
-  const blocks = text.replace(/\r/g,"").split(/\n{2,}/);
-  const out = [];
-
-  for(const block of blocks){
-    const lines = block.trim().split("\n");
-    const ts = lines.find(line=>line.includes("-->"));
-    if(!ts) continue;
-
-    const tsIndex = lines.indexOf(ts);
-    const [start,end] = ts.split("-->").map(x=>x.trim());
-
-    out.push({
-      start:parseTime(start),
-      end:parseTime(end),
-      text:lines.slice(tsIndex+1).join(" ")
-    });
-  }
-
-  return out;
-}
-
-function parseTime(t){
-  t = t.split(" ")[0].replace(",",".");
-  const p = t.split(":");
-
-  if(p.length === 3)
-    return (+p[0])*3600 + (+p[1])*60 + parseFloat(p[2]);
-
-  return (+p[0])*60 + parseFloat(p[1]);
-}
-
-audio.ontimeupdate = ()=>{
-  const t = audio.currentTime;
-  const cue = cues.find(c=>t>=c.start && t<c.end+.2);
-  subs.textContent = cue ? cue.text : "";
-};
-
-/* visualizer */
-
-const canvas = document.getElementById("viz");
-const ctx = canvas.getContext("2d");
-
-const W = 440;
-const H = 440;
-const cx = W/2;
-const cy = H/2;
-const R = W*.39;
-
-canvas.width = W;
-canvas.height = H;
-
-let frame = 0;
-let bass = 0;
-let mid = 0;
-let high = 0;
-
-function updateEnergy(){
-  if(!analyser) return;
-
-  analyser.getByteFrequencyData(data);
-
-  let b=0,m=0,h=0;
-
-  for(let i=0;i<36;i++) b += data[i];
-  for(let i=36;i<160;i++) m += data[i];
-  for(let i=160;i<data.length;i++) h += data[i];
-
-  b /= 36*255;
-  m /= 124*255;
-  h /= (data.length-160)*255;
-
-  bass += (b-bass)*.08;
-  mid += (m-mid)*.06;
-  high += (h-high)*.05;
-}
-
-function clearPortal(){
-  ctx.fillStyle = "rgba(0,5,0,.10)";
-  ctx.fillRect(0,0,W,H);
-
-  ctx.save();
-  ctx.beginPath();
-  ctx.arc(cx,cy,R,0,Math.PI*2);
-  ctx.clip();
-
-  const g = ctx.createRadialGradient(cx,cy,0,cx,cy,R);
-  g.addColorStop(0,"rgba(0,32,12,.25)");
-  g.addColorStop(.72,"rgba(0,8,0,.44)");
-  g.addColorStop(1,"rgba(0,0,0,.94)");
-
-  ctx.fillStyle = g;
-  ctx.fillRect(0,0,W,H);
-
-  drawStars();
-
-  ctx.restore();
-
-  ctx.beginPath();
-  ctx.arc(cx,cy,R,0,Math.PI*2);
-  ctx.strokeStyle = "rgba(124,255,196,.35)";
-  ctx.lineWidth = 3;
-  ctx.shadowBlur = 12;
-  ctx.shadowColor = "#00ff66";
-  ctx.stroke();
-  ctx.shadowBlur = 0;
-}
-
-function drawStars(){
-  ctx.fillStyle = "rgba(180,255,210,.15)";
-
-  for(let i=0;i<28;i++){
-    const x = ((Math.sin(i*91.7)*43758.5453)%1+1)%1;
-    const y = ((Math.sin(i*47.3+2)*19341.13)%1+1)%1;
-    const px = x*W;
-    const py = y*H;
-    const dx = px-cx;
-    const dy = py-cy;
-
-    if(dx*dx+dy*dy < R*R)
-      ctx.fillRect(px,py,1.5,1.5);
-  }
-}
-
-function drawFluidics(){
-  ctx.save();
-  ctx.beginPath();
-  ctx.arc(cx,cy,R,0,Math.PI*2);
-  ctx.clip();
-
-  drawFieldLines();
-  drawMagneticChannels();
-  drawMagneticWells();
-  drawFluidDroplets();
-  drawWaveCurrent();
-
-  ctx.restore();
-}
-
-function drawFieldLines(){
-  for(let k=0;k<18;k++){
-    ctx.beginPath();
-
-    const r = R*(.12+k*.045);
-
-    for(let a=0;a<=Math.PI*2+.05;a+=.05){
-      const flux =
-        Math.sin(a*6 + frame*.012 + k) *
-        (4 + high*18);
-
-      const x = cx + Math.cos(a)*(r+flux);
-      const y = cy + Math.sin(a)*(r-flux*.25);
-
-      if(a===0) ctx.moveTo(x,y);
-      else ctx.lineTo(x,y);
-    }
-
-    ctx.strokeStyle = `rgba(124,255,196,${.015+k*.006})`;
-    ctx.lineWidth = 2;
-    ctx.stroke();
-  }
-}
-
-function drawMagneticChannels(){
-  const wells = getWells();
-
-  for(let i=0;i<wells.length;i++){
-    for(let j=i+1;j<wells.length;j++){
-      const a = wells[i];
-      const b = wells[j];
-
-      ctx.beginPath();
-      ctx.moveTo(a.x,a.y);
-
-      const mx =
-        (a.x+b.x)/2 +
-        Math.sin(frame*.012+i+j)*R*.10;
-
-      const my =
-        (a.y+b.y)/2 +
-        Math.cos(frame*.010+i-j)*R*.10;
-
-      ctx.quadraticCurveTo(mx,my,b.x,b.y);
-
-      ctx.strokeStyle = `rgba(124,255,196,${.035+mid*.06})`;
-      ctx.lineWidth = 5;
-      ctx.lineCap = "round";
-      ctx.shadowBlur = 10;
-      ctx.shadowColor = "#00ff88";
-      ctx.stroke();
-      ctx.shadowBlur = 0;
-    }
-  }
-}
-
-function getWells(){
-  const base = [
-    [-.55,-.35],
-    [.48,-.25],
-    [-.22,.45],
-    [.32,.35],
-    [0,0]
-  ];
-
-  return base.map((w,i)=>({
-    x:cx + w[0]*R + Math.sin(frame*.006+i)*4,
-    y:cy + w[1]*R + Math.cos(frame*.007+i)*4
-  }));
-}
-
-function drawMagneticWells(){
-  const wells = getWells();
-
-  wells.forEach((w,i)=>{
-    const pulse =
-      1 +
-      Math.sin(frame*.03+i)*.12 +
-      bass*.35;
-
-    ctx.beginPath();
-    ctx.arc(
-      w.x,
-      w.y,
-      (10+mid*8)*pulse,
-      0,
-      Math.PI*2
-    );
-
-    ctx.fillStyle = "rgba(190,255,220,.92)";
-    ctx.shadowBlur = 18;
-    ctx.shadowColor = "#00ff88";
-    ctx.fill();
-
-    ctx.beginPath();
-    ctx.arc(
-      w.x,
-      w.y,
-      28+high*20,
-      0,
-      Math.PI*2
-    );
-
-    ctx.strokeStyle = "rgba(124,255,196,.18)";
-    ctx.lineWidth = 3;
-    ctx.stroke();
-    ctx.shadowBlur = 0;
-  });
-}
-
-function drawFluidDroplets(){
-  for(let i=0;i<72;i++){
-    const t = (frame*.002 + i*.031)%1;
-
-    const x =
-      cx +
-      Math.sin(t*6+i)*R*.55 +
-      Math.sin(frame*.011+i)*mid*10;
-
-    const y =
-      cy +
-      Math.cos(t*5+i*.7)*R*.45 +
-      Math.cos(frame*.009+i)*high*8;
-
-    const dx = x-cx;
-    const dy = y-cy;
-
-    if(dx*dx+dy*dy > R*R) continue;
-
-    ctx.beginPath();
-    ctx.arc(
-      x,
-      y,
-      2.2 + bass*6,
-      0,
-      Math.PI*2
-    );
-
-    ctx.fillStyle = "rgba(170,255,210,.62)";
-    ctx.shadowBlur = 8;
-    ctx.shadowColor = "#00ff88";
-    ctx.fill();
-    ctx.shadowBlur = 0;
-  }
-}
-
-function drawWaveCurrent(){
-  if(!analyser) return;
-
-  analyser.getByteTimeDomainData(data);
-
-  ctx.beginPath();
-
-  for(let i=0;i<data.length;i+=4){
-    const v = (data[i]-128)/128;
-    const a = i/data.length*Math.PI*2;
-
-    const r =
-      R*.32 +
-      v*R*.16 +
-      Math.sin(a*5+frame*.018)*mid*8;
-
-    const x = cx + Math.cos(a+frame*.004)*r;
-    const y = cy + Math.sin(a+frame*.004)*r;
-
-    if(i===0) ctx.moveTo(x,y);
-    else ctx.lineTo(x,y);
-  }
-
-  ctx.closePath();
-
-  ctx.strokeStyle = "rgba(124,255,196,.82)";
-  ctx.lineWidth = 5;
-  ctx.lineCap = "round";
-  ctx.shadowBlur = 18;
-  ctx.shadowColor = "#00ff66";
-  ctx.stroke();
-  ctx.shadowBlur = 0;
-}
-
-function draw(){
-  frame++;
-  updateEnergy();
-  clearPortal();
-  drawFluidics();
-  requestAnimationFrame(draw);
-}
-
-loadTrack();
-draw();
-</script>
-
-</body>
-</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Magnetic Fluidic Computing</title>
+
+<style>
+*{box-sizing:border-box}
+
+html,body{
+  margin:0;width:100%;height:100%;overflow:hidden;
+  background:#000;color:#7cff7c;font-family:monospace;
+  touch-action:manipulation;
+}
+
+body{
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;cursor:pointer;
+}
+
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:500;
+  background:repeating-linear-gradient(to bottom,
+    rgba(255,255,255,.03) 0px,
+    rgba(255,255,255,.03) 1px,
+    transparent 2px,
+    transparent 5px);
+  opacity:.13;
+}
+
+.title{
+  position:fixed;top:18px;width:94vw;text-align:center;
+  font-size:14px;letter-spacing:.18em;text-transform:uppercase;
+  color:#00ff88;text-shadow:0 0 10px #00ff66;z-index:100;
+}
+
+.status{
+  position:fixed;top:52px;opacity:.45;font-size:10px;
+  letter-spacing:.14em;z-index:120;
+}
+
+canvas{
+  width:min(380px,78vw);height:min(380px,78vw);
+  border-radius:50%;border:3px solid rgba(0,255,120,.46);
+  background:#000;
+  box-shadow:0 0 55px rgba(0,255,120,.16) inset,
+             0 0 22px rgba(0,255,0,.55);
+  z-index:40;
+}
+
+.subs{
+  position:fixed;bottom:44px;width:min(620px,92vw);
+  min-height:2.5em;padding:8px 12px;text-align:center;
+  font-size:14px;line-height:1.45;color:#aaffaa;
+  text-shadow:0 0 6px #00ff66;background:rgba(0,20,0,.36);
+  border:1px solid rgba(0,255,0,.22);border-radius:6px;
+  pointer-events:none;z-index:80;
+}
+
+.essay{
+  position:fixed;bottom:10px;width:min(620px,92vw);
+  text-align:center;color:#7cffc4;text-decoration:none;
+  font-size:11px;letter-spacing:.08em;opacity:.72;z-index:90;
+}
+
+.essay:hover{opacity:1}
+
+@media(max-width:700px){
+  .title{top:14px;font-size:11px}
+  .status{top:46px;font-size:9px}
+  .subs{bottom:42px;font-size:13px}
+  .essay{font-size:10px}
+}
+
+/* Flow layout keeps controls and subtitles accessible on small screens. */
+html,body{height:auto;min-height:100%;overflow:auto}body{min-height:100dvh;cursor:default;padding:24px 12px;gap:12px;touch-action:auto}
+.title,.status,.subs,.essay{position:static;width:min(620px,94vw)}
+.title{margin:0 0 6px;line-height:1.5}.status{text-align:center;min-height:1.4em;order:5}.subs{min-height:4.5em;order:4;pointer-events:auto}.essay{order:6;line-height:1.5}
+canvas{width:min(380px,78vw,48dvh);height:auto;aspect-ratio:1;order:2}
+.controls{order:3;display:flex;align-items:center;gap:10px;width:min(440px,94vw);margin-top:8px}button{font:inherit;color:#a5e7a0;background:#071007;border:1px solid #49634a;padding:8px 10px;cursor:pointer;min-width:64px}input[type=range]{flex:1;min-width:0;accent-color:#a5e7a0;cursor:pointer;touch-action:pan-y}#clock{font-size:11px;white-space:nowrap;color:#8db78d}input:disabled{opacity:.4}
+.controls{flex-wrap:wrap}.controls input[type=range]{flex:1 1 100%;order:3;height:24px;margin:0;touch-action:none}.controls #clock{margin-left:auto}
+</style>
+</head>
+
+<body>
+
+<div class="title" id="title">Magnetic Fluidic Computing</div>
+<div class="status" id="status" role="status">STANDBY</div>
+<canvas id="viz" aria-label="Audio-responsive magnetic fluidic visualization"></canvas>
+<div class="controls"><button id="play" type="button" title="Play or pause (Space)" aria-keyshortcuts="Space">PLAY</button><input id="seek" type="range" min="0" max="1000" step="1" value="0" disabled aria-label="Seek through recording" title="Drag to seek"><span id="clock">0:00 / 0:00</span></div>
+<div id="subs" class="subs"></div>
+
+<a class="essay"
+   href="https://standardgalactic.github.io/library/computing/magnetic-fluidic-computing.pdf"
+   target="_blank"
+   rel="noopener noreferrer">
+  Magnetic Fluidic Computing
+</a>
+
+<audio id="audio" preload="metadata" src="Computing_with_Circulating_Fluid_Pods.mp3"></audio>
+
+<script>
+'use strict';
+const audio=document.getElementById('audio'),play=document.getElementById('play'),seek=document.getElementById('seek'),clock=document.getElementById('clock'),caption=document.getElementById('subs'),status=document.getElementById('status'),canvas=document.getElementById('viz');
+
+let audioCtx,analyser,wave,drag=false,pending=null,seekTimer,blobURL=null,cues=[],subtitleState='LOADING SUBTITLES',lastCaption=null;
+let blobPromise=null,switching=false,knownDuration=0,serial=0,supportsRange=null;
+const MP3='Computing_with_Circulating_Fluid_Pods.mp3';
+function init(){if(audioCtx)return;audioCtx=new (window.AudioContext||window.webkitAudioContext)();analyser=audioCtx.createAnalyser();analyser.fftSize=2048;wave=new Float32Array(analyser.fftSize);data=new Uint8Array(analyser.frequencyBinCount);timeData=new Uint8Array(analyser.fftSize);analyser.smoothingTimeConstant=.88;const source=audioCtx.createMediaElementSource(audio);source.connect(analyser);analyser.connect(audioCtx.destination);}
+function fmt(t){if(!Number.isFinite(t))return '0:00';t=Math.max(0,Math.floor(t));return Math.floor(t/60)+':'+String(t%60).padStart(2,'0');}
+function duration(){return Number.isFinite(audio.duration)&&audio.duration>0?audio.duration:knownDuration;}
+function valid(){return duration()>0;}
+function position(){return drag?Number(seek.value):pending?.target??audio.currentTime;}
+function sync(){const d=duration();seek.disabled=!d;if(d){seek.max=d;seek.step='0.01';if(!drag)seek.value=position();}clock.textContent=fmt(position())+' / '+fmt(d);}
+function report(s){status.textContent=s;}
+function prepareBlob(){if(!blobPromise){blobPromise=fetch(MP3).then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.blob();}).then(b=>b.type==='audio/mpeg'?b:new Blob([b],{type:'audio/mpeg'})).catch(e=>{blobPromise=null;throw e;});}return blobPromise;}
+async function togglePlayback(){try{init();await audioCtx.resume();if(audio.paused){if(audio.ended)audio.currentTime=0;await audio.play();}else audio.pause();}catch(e){report('PLAYBACK ERROR');console.error(e);}}
+play.addEventListener('click',togglePlayback);
+document.addEventListener('keydown',e=>{
+  if(e.code!=='Space' && e.key!==' ')return;
+  if(e.altKey||e.ctrlKey||e.metaKey||e.shiftKey)return;
+  const target=e.target;
+  if(target instanceof HTMLElement && (target.isContentEditable||target.closest('textarea,select,a,input:not([type="range"]),button:not(#play)')))return;
+  e.preventDefault();
+  if(!e.repeat)togglePlayback();
+});
+audio.addEventListener('play',()=>{play.textContent='PAUSE';if(!switching)report(subtitleState);});audio.addEventListener('pause',()=>{play.textContent='PLAY';});audio.addEventListener('ended',()=>{play.textContent='PLAY';});audio.addEventListener('error',()=>{if(!switching)report('AUDIO FILE UNAVAILABLE');});
+for(const e of ['loadedmetadata','durationchange','timeupdate'])audio.addEventListener(e,()=>{if(Number.isFinite(audio.duration)&&audio.duration>0)knownDuration=audio.duration;sync();});
+/* Seeking. Servers without HTTP range support cannot jump inside a streamed
+   MP3, so the browser restarts it from zero. A cheap range probe detects this
+   at load. In that case the whole file is downloaded in the background, and a
+   seek swaps playback to the in-memory copy at the requested position. */
+async function probe(){
+  try{
+    const r=await fetch(MP3,{headers:{Range:'bytes=0-1'}});
+    supportsRange=r.status===206;
+    if(r.body)r.body.cancel().catch(()=>{});
+  }catch(e){supportsRange=null;}
+  if(supportsRange===false)prepareBlob().catch(e=>console.error(e));
+}
+async function swapAndSeek(){
+  if(switching)return;
+  switching=true;clearTimeout(seekTimer);
+  const resume=!audio.paused;
+  if(resume)audio.pause();
+  report('BUFFERING AUDIO FOR SEEKING');
+  try{
+    if(!blobURL){
+      const blob=await prepareBlob();
+      blobURL=URL.createObjectURL(blob);
+      await new Promise((resolve,reject)=>{const timer=setTimeout(()=>finish(Error('Metadata timeout')),15000);function finish(e){clearTimeout(timer);audio.removeEventListener('loadedmetadata',ok);audio.removeEventListener('error',bad);e?reject(e):resolve();}function ok(){finish();}function bad(){finish(Error('Blob audio error'));}audio.addEventListener('loadedmetadata',ok);audio.addEventListener('error',bad);audio.src=blobURL;audio.load();});
+    }
+    audio.currentTime=Math.min(pending?pending.target:audio.currentTime,duration());
+    if(resume)await audio.play();
+    report(subtitleState);
+  }catch(e){console.error(e);report('SEEK UNAVAILABLE');}
+  finally{switching=false;pending=null;sync();updateCaption();}
+}
+function verify(id){if(!pending||pending.id!==id||switching)return;const p=pending;const elapsed=(performance.now()-p.started)/1000;const t=audio.currentTime;const ok=!audio.seeking&&t>=p.target-1&&t<=p.target+elapsed+1.5;if(ok){pending=null;report(subtitleState);sync();}else if(!blobURL){swapAndSeek();}else{pending=null;report('SEEK NOT CONFIRMED');sync();}}
+function commit(){if(!drag||!valid())return;const target=Number(seek.value);drag=false;pending={target,id:++serial,started:performance.now()};clearTimeout(seekTimer);if(!switching){if(supportsRange===false&&!blobURL){swapAndSeek();}else{try{audio.currentTime=target;const id=serial;seekTimer=setTimeout(()=>verify(id),2500);}catch(e){if(!blobURL)swapAndSeek();else{pending=null;report('SEEK UNAVAILABLE');}}}}sync();updateCaption();}
+seek.addEventListener('pointerdown',()=>{if(!seek.disabled)drag=true;});seek.addEventListener('input',()=>{if(!valid())return;drag=true;sync();updateCaption();});
+for(const e of ['change','pointerup','pointercancel','blur'])seek.addEventListener(e,commit);
+window.addEventListener('pagehide',()=>{if(blobURL)URL.revokeObjectURL(blobURL);});
+function stamp(s){const p=s.trim().replace(',','.').split(':').map(Number);return p.reduce((a,b)=>a*60+b,0);}
+async function subtitles(){try{const r=await fetch('Computing_with_Circulating_Fluid_Pods.vtt');if(!r.ok)throw Error(r.status);const text=(await r.text()).replace(/^\uFEFF/,'').replace(/\r\n?/g,'\n');for(const block of text.split(/\n\s*\n/)){const lines=block.trim().split('\n');const i=lines.findIndex(l=>l.includes('-->'));if(i<0||/^(NOTE|STYLE|REGION)(\s|$)/.test(lines[0]))continue;const [a,b]=lines[i].split('-->');const start=stamp(a),end=stamp(b.trim().split(/\s+/)[0]);const value=lines.slice(i+1).join(' ').replace(/<[^>]*>/g,'').trim();if(Number.isFinite(start)&&Number.isFinite(end)&&end>start&&value)cues.push({start,end,value});}cues.sort((a,b)=>a.start-b.start);subtitleState=cues.length?'SUBTITLES READY':'NO SUBTITLE CUES';}catch(e){subtitleState='SUBTITLES UNAVAILABLE';}if(!switching)report(subtitleState);}
+function updateCaption(){const t=position();let text='';for(const c of cues){if(c.start>t)break;if(t<c.end)text+=(text?' ':'')+c.value;}if(text!==lastCaption){caption.textContent=text;lastCaption=text;}}
+
+
+let data,timeData;
+/* visualizer */
+
+
+const ctx = canvas.getContext("2d");
+
+const W = 440;
+const H = 440;
+const cx = W/2;
+const cy = H/2;
+const R = W*.39;
+
+canvas.width = W;
+canvas.height = H;
+
+let frame = 0;
+let bass = 0;
+let mid = 0;
+let high = 0;
+
+function updateEnergy(){
+  if(!analyser || audio.paused || audio.seeking) return;
+
+  analyser.getByteFrequencyData(data);
+
+  let b=0,m=0,h=0;
+
+  for(let i=0;i<36;i++) b += data[i];
+  for(let i=36;i<160;i++) m += data[i];
+  for(let i=160;i<data.length;i++) h += data[i];
+
+  b /= 36*255;
+  m /= 124*255;
+  h /= (data.length-160)*255;
+
+  bass += (b-bass)*.08;
+  mid += (m-mid)*.06;
+  high += (h-high)*.05;
+}
+
+function clearPortal(){
+  ctx.fillStyle = "rgba(0,5,0,.10)";
+  ctx.fillRect(0,0,W,H);
+
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(cx,cy,R,0,Math.PI*2);
+  ctx.clip();
+
+  const g = ctx.createRadialGradient(cx,cy,0,cx,cy,R);
+  g.addColorStop(0,"rgba(0,32,12,.25)");
+  g.addColorStop(.72,"rgba(0,8,0,.44)");
+  g.addColorStop(1,"rgba(0,0,0,.94)");
+
+  ctx.fillStyle = g;
+  ctx.fillRect(0,0,W,H);
+
+  drawStars();
+
+  ctx.restore();
+
+  ctx.beginPath();
+  ctx.arc(cx,cy,R,0,Math.PI*2);
+  ctx.strokeStyle = "rgba(124,255,196,.35)";
+  ctx.lineWidth = 3;
+  ctx.shadowBlur = 12;
+  ctx.shadowColor = "#00ff66";
+  ctx.stroke();
+  ctx.shadowBlur = 0;
+}
+
+function drawStars(){
+  ctx.fillStyle = "rgba(180,255,210,.15)";
+
+  for(let i=0;i<28;i++){
+    const x = ((Math.sin(i*91.7)*43758.5453)%1+1)%1;
+    const y = ((Math.sin(i*47.3+2)*19341.13)%1+1)%1;
+    const px = x*W;
+    const py = y*H;
+    const dx = px-cx;
+    const dy = py-cy;
+
+    if(dx*dx+dy*dy < R*R)
+      ctx.fillRect(px,py,1.5,1.5);
+  }
+}
+
+function drawFluidics(){
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(cx,cy,R,0,Math.PI*2);
+  ctx.clip();
+
+  drawFieldLines();
+  drawMagneticChannels();
+  drawMagneticWells();
+  drawFluidDroplets();
+  drawWaveCurrent();
+
+  ctx.restore();
+}
+
+function drawFieldLines(){
+  for(let k=0;k<18;k++){
+    ctx.beginPath();
+
+    const r = R*(.12+k*.045);
+
+    for(let a=0;a<=Math.PI*2+.05;a+=.05){
+      const flux =
+        Math.sin(a*6 + frame*.012 + k) *
+        (4 + high*18);
+
+      const x = cx + Math.cos(a)*(r+flux);
+      const y = cy + Math.sin(a)*(r-flux*.25);
+
+      if(a===0) ctx.moveTo(x,y);
+      else ctx.lineTo(x,y);
+    }
+
+    ctx.strokeStyle = `rgba(124,255,196,${.015+k*.006})`;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  }
+}
+
+function drawMagneticChannels(){
+  const wells = getWells();
+
+  for(let i=0;i<wells.length;i++){
+    for(let j=i+1;j<wells.length;j++){
+      const a = wells[i];
+      const b = wells[j];
+
+      ctx.beginPath();
+      ctx.moveTo(a.x,a.y);
+
+      const mx =
+        (a.x+b.x)/2 +
+        Math.sin(frame*.012+i+j)*R*.10;
+
+      const my =
+        (a.y+b.y)/2 +
+        Math.cos(frame*.010+i-j)*R*.10;
+
+      ctx.quadraticCurveTo(mx,my,b.x,b.y);
+
+      ctx.strokeStyle = `rgba(124,255,196,${.035+mid*.06})`;
+      ctx.lineWidth = 5;
+      ctx.lineCap = "round";
+      ctx.shadowBlur = 10;
+      ctx.shadowColor = "#00ff88";
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+    }
+  }
+}
+
+function getWells(){
+  const base = [
+    [-.55,-.35],
+    [.48,-.25],
+    [-.22,.45],
+    [.32,.35],
+    [0,0]
+  ];
+
+  return base.map((w,i)=>({
+    x:cx + w[0]*R + Math.sin(frame*.006+i)*4,
+    y:cy + w[1]*R + Math.cos(frame*.007+i)*4
+  }));
+}
+
+function drawMagneticWells(){
+  const wells = getWells();
+
+  wells.forEach((w,i)=>{
+    const pulse =
+      1 +
+      Math.sin(frame*.03+i)*.12 +
+      bass*.35;
+
+    ctx.beginPath();
+    ctx.arc(
+      w.x,
+      w.y,
+      (10+mid*8)*pulse,
+      0,
+      Math.PI*2
+    );
+
+    ctx.fillStyle = "rgba(190,255,220,.92)";
+    ctx.shadowBlur = 18;
+    ctx.shadowColor = "#00ff88";
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(
+      w.x,
+      w.y,
+      28+high*20,
+      0,
+      Math.PI*2
+    );
+
+    ctx.strokeStyle = "rgba(124,255,196,.18)";
+    ctx.lineWidth = 3;
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+  });
+}
+
+function drawFluidDroplets(){
+  for(let i=0;i<72;i++){
+    const t = (frame*.002 + i*.031)%1;
+
+    const x =
+      cx +
+      Math.sin(t*6+i)*R*.55 +
+      Math.sin(frame*.011+i)*mid*10;
+
+    const y =
+      cy +
+      Math.cos(t*5+i*.7)*R*.45 +
+      Math.cos(frame*.009+i)*high*8;
+
+    const dx = x-cx;
+    const dy = y-cy;
+
+    if(dx*dx+dy*dy > R*R) continue;
+
+    ctx.beginPath();
+    ctx.arc(
+      x,
+      y,
+      2.2 + bass*6,
+      0,
+      Math.PI*2
+    );
+
+    ctx.fillStyle = "rgba(170,255,210,.62)";
+    ctx.shadowBlur = 8;
+    ctx.shadowColor = "#00ff88";
+    ctx.fill();
+    ctx.shadowBlur = 0;
+  }
+}
+
+function drawWaveCurrent(){
+  if(!analyser || audio.paused || audio.seeking) return;
+
+  analyser.getByteTimeDomainData(timeData);
+
+  ctx.beginPath();
+
+  for(let i=0;i<timeData.length;i+=4){
+    const v = (timeData[i]-128)/128;
+    const a = i/timeData.length*Math.PI*2;
+
+    const r =
+      R*.32 +
+      v*R*.16 +
+      Math.sin(a*5+frame*.018)*mid*8;
+
+    const x = cx + Math.cos(a+frame*.004)*r;
+    const y = cy + Math.sin(a+frame*.004)*r;
+
+    if(i===0) ctx.moveTo(x,y);
+    else ctx.lineTo(x,y);
+  }
+
+  ctx.closePath();
+
+  ctx.strokeStyle = "rgba(124,255,196,.82)";
+  ctx.lineWidth = 5;
+  ctx.lineCap = "round";
+  ctx.shadowBlur = 18;
+  ctx.shadowColor = "#00ff66";
+  ctx.stroke();
+  ctx.shadowBlur = 0;
+}
+
+function draw(){
+  if(!audio.paused && !audio.seeking) frame++;
+  else { bass *= .94; mid *= .94; high *= .94; }
+  updateEnergy();
+  clearPortal();
+  drawFluidics();
+  requestAnimationFrame(draw);
+}
+
+
+subtitles();probe();draw();sync();
+</script>
+</body>
+</html>
